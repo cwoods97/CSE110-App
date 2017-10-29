@@ -1,7 +1,24 @@
 {
   "name": "speakeasy",
   "version": "0.1.0",
+  "author": [
+    "Isaac Kim",
+    "John Elijah Yoon",
+    "Christopher Joseph Bonilla",
+    "Clara Marie Woods",
+    "Christopher Yaon Converse",
+    "James Zeng",
+    "John Bohan Yin",
+    "Michelle Tai",
+    "Michael Paul Harasti",
+    "Max Lingfei Zhao",
+    "Woo Jin Cheon"
+  ],
+  "description": "",
   "private": true,
+  "engines": {
+    "node": "6.11.5"
+  },
   "dependencies": {
     "react": "^16.0.0",
     "react-dom": "^16.0.0",
