@@ -1,0 +1,35 @@
+{
+  "name": "speakeasy",
+  "version": "0.1.0",
+  "author": "",
+  "description": "This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).",
+  "private": true,
+  "engines": {
+    "node": "6.11.5"
+  },
+  "dependencies": {
+    "firebase": "^4.6.0",
+    "react": "^16.0.0",
+    "react-dom": "^16.0.0",
+    "react-scripts": "1.0.14"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  },
+  "proxy": "http://localhost:3001/",
+  "main": "index.js",
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cwoods97/CSE110-App.git"
+  },
+  "keywords": [],
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/cwoods97/CSE110-App/issues"
+  },
+  "homepage": "https://github.com/cwoods97/CSE110-App#readme"
+}
