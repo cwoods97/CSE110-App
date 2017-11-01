@@ -36,13 +36,33 @@ class App extends Component {
 
   render() {
     return (
-      <div>
-        <p className="App-intro">
-          Message from our API: <b>{this.state.message}</b>
-        </p>
-        <Users db = {firebase}/>
-        <DisplayUserData db = {firebase}/>
+
+      <div style={{backgroundColor:'orange'}}>
+        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"></link>
+         <div style={{float:"left",padding:"20px"}}>
+           <h3>
+             Welcome to speakeasy, a web app designed to enhance presentations, speeches, and public speaking in general.
+           </h3>
+
+         </div>
+
+       <div>
+
+         <div style={{backgroundColor:'LightSkyBlue',float:'left',padding:"20px",margin:'15px'}}>
+            <h2>Login</h2>
+
+           <form action="">
+             Email: <input type="text" name="fname"></input><br></br>
+             Password: <input type="text" name="lname"></input><br></br>
+             <br></br>
+             <input class="w3-btn w3-blue-grey" type="submit" value="Submit"></input>
+             <button style={{float:"right"}} class="w3-btn w3-blue-grey">Create an Account</button>
+           </form>
+         </div>
+
+       </div>
       </div>
+
     );
   }
 }
