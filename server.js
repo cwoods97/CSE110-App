@@ -1,5 +1,8 @@
 const express = require('express')
+const path = require('path');
 const app = express()
+
+app.use(express.static(path.join(__dirname, 'client/build')))
 
 app.get('/api/hello', function(req, res){
 	res.json({message: "Hello World - Express API is live"});

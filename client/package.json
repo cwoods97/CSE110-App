@@ -19,7 +19,7 @@
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   },
-  "proxy": "http://localhost:3001/",
+  "proxy": "http://localhost:3000/",
   "main": "index.js",
   "devDependencies": {},
   "repository": {
@@ -30,6 +30,5 @@
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/cwoods97/CSE110-App/issues"
-  },
-  "homepage": "https://github.com/cwoods97/CSE110-App#readme"
+  }
 }
