@@ -4,8 +4,8 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js",
-    "dev": "npm run build --prefix client/ && node server.js",
+    "start": "node server.js false",
+    "dev": "npm run build --prefix client/ && node server.js true",
     "heroku-postbuild": "cd client && npm install --only=dev && npm install && npm run build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
