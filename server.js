@@ -8,15 +8,12 @@ var is_empty = (obj) => { return Object.keys(obj).length };
 
 // Initialize connection to firebase
 // https://firebase.google.com/docs/admin/setup
-var config = {
-  apiKey: "AIzaSyDSQVw9KUjmxhlxILCousROVR6PfOFcYQg",
-  authDomain: "speakeasy-25a66.firebaseapp.com",
-  databaseURL: "https://speakeasy-25a66.firebaseio.com",
-  projectId: "speakeasy-25a66",
-  storageBucket: "speakeasy-25a66.appspot.com",
-  messagingSenderId: "836790794762"
-};
-admin.initializeApp(config);
+var serviceAccount = require("./firebase_sac.json");
+
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount),
+  databaseURL: "https://speakeasy-25a66.firebaseio.com"
+});
 
 // Serves static files from the 'client/build' directory - Navigating to root of webserver serves, by default, the built 'index.html'
 var is_production = process.argv[2]
