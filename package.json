@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/cwoods97/CSE110-App#readme",
   "dependencies": {
-    "express": "^4.16.2"
+    "express": "^4.16.2",
+    "firebase-admin": "^5.4.3"
   }
 }
