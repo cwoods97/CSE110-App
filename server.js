@@ -3,8 +3,20 @@ const admin = require('firebase-admin');
 const path = require('path');
 const app = express();
 
+<<<<<<< HEAD
 // Check whether object has any members
 var is_empty = (obj) => { return Object.keys(obj).length };
+=======
+/*  
+ *  Serves static files from the 'client/build' directory
+ *  Navigating to root of webserver serves 'index.html'
+ *  Disable this functionality when not in production (running two separate servers)
+ */
+var is_production = process.argv[2]
+if (is_production) {
+	app.use(express.static(path.join(__dirname, 'client/build')));
+}
+>>>>>>> origin/master
 
 // Initialize connection to firebase
 // https://firebase.google.com/docs/admin/setup
