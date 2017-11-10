@@ -8,7 +8,7 @@ app.get('/api/hello', function(req, res){
 	res.json({message: "Hello World - Express API is live"});
 })
 
-const port = process.env.PORT || 3001;
+const port = process.env.PORT || 3000;
 app.listen(port, function() {
 	console.log('Server listening on port ' + port)
 })
