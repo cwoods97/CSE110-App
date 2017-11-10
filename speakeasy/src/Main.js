@@ -4,6 +4,10 @@ import Users from './components/Users.js';
 import DisplayUserData from './components/DisplayUserData.js';
 import './styles/App.css';
 
+import Join from './Join';
+import AppFront from './App';
+
+import ReactDOM from 'react-dom';
 class App extends Component {
 
     constructor(props) {
@@ -17,7 +21,7 @@ class App extends Component {
             storageBucket: "speakeasy-25a66.appspot.com",
             messagingSenderId: "836790794762"
         };
-        firebase.initializeApp(config);
+        !firebase.apps.length ? firebase.initializeApp(config) : firebase.app();
 
         this.state = {
             message: ""
@@ -34,6 +38,16 @@ class App extends Component {
             })
     }
 
+    front(e) {
+        ReactDOM.render(<AppFront />, document.getElementById('root'));
+
+
+    }
+    join(e){
+
+        ReactDOM.render(<Join />, document.getElementById('root'));
+
+    }
     render() {
         return (
 
@@ -54,11 +68,11 @@ class App extends Component {
                 </div>
 
                 <div class="w3-sidebar w3-bar-block" style={{width:'20%',height:'100%',backgroundColor:'lightgrey',zIndex:'0',overflow:'hidden'}}>
-                    <a href="#" class="w3-bar-item w3-button" style={{backgroundColor:'lightgrey'}}>Home</a>
+
+                    <a href="#" class="w3-bar-item" style={{backgroundColor:'aqua'}}>Michael Harasti</a>
                     <a href="#" class="w3-bar-item w3-button" style={{backgroundColor:'lightgrey'}}>Profile Settings</a>
                     <a href="#" class="w3-bar-item w3-button" style={{backgroundColor:'lightgrey'}}>Session History</a>
-                    <a href="#" class="w3-bar-item w3-button" style={{backgroundColor:'lightgrey'}}>Help</a>
-                    <a href="#" class="w3-bar-item w3-button" style={{backgroundColor:'lightgrey'}}>Logout</a>
+                    <a href="#" class="w3-bar-item w3-button" onClick={this.front} style={{backgroundColor:'lightgrey'}}>Logout</a>
                     <br></br>
                     <br></br>
                     <br></br>
@@ -110,7 +124,7 @@ class App extends Component {
                     </div>
                     <div class='w3-round' style={{width:'30%',float:'right',marginRight:'100px',marginTop:'99px'}}>
                         <center>
-                        <button class="w3-btn w3-large w3-round" style={{backgroundColor:'powderblue'}}>Join a Session</button>
+                        <button class="w3-btn w3-large w3-round" onClick={this.join} style={{backgroundColor:'powderblue'}}>Join a Session</button>
                         </center>
                     </div>
 

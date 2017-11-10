@@ -1,23 +1,28 @@
 import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
 import firebase from 'firebase';
 import Users from './components/Users.js';
 import DisplayUserData from './components/DisplayUserData.js';
 import './styles/App.css';
 
-class App extends Component {
+import Main from './Main';
+import About from './About';
+
+
+class AppFront extends Component {
 
     constructor(props) {
         super(props);
-        // Initialize Firebase
-        var config = {
-            apiKey: "AIzaSyDSQVw9KUjmxhlxILCousROVR6PfOFcYQg",
-            authDomain: "speakeasy-25a66.firebaseapp.com",
-            databaseURL: "https://speakeasy-25a66.firebaseio.com",
-            projectId: "speakeasy-25a66",
-            storageBucket: "speakeasy-25a66.appspot.com",
-            messagingSenderId: "836790794762"
-        };
-        firebase.initializeApp(config);
+         //Initialize Firebase
+         var config = {
+             apiKey: "AIzaSyDSQVw9KUjmxhlxILCousROVR6PfOFcYQg",
+             authDomain: "speakeasy-25a66.firebaseapp.com",
+             databaseURL: "https://speakeasy-25a66.firebaseio.com",
+             projectId: "speakeasy-25a66",
+             storageBucket: "speakeasy-25a66.appspot.com",
+             messagingSenderId: "836790794762"
+         };
+        !firebase.apps.length ? firebase.initializeApp(config) : firebase.app();
 
         this.state = {
             message: ""
@@ -34,6 +39,18 @@ class App extends Component {
             })
     }
 
+    main (e){
+
+        ReactDOM.render(<Main />, document.getElementById('root'));
+
+    }
+
+    about(e){
+
+        ReactDOM.render(<About />, document.getElementById('root'));
+
+    }
+
     render() {
         return (
 
@@ -43,7 +60,7 @@ class App extends Component {
 
                 <h3 style={{marginLeft:'10px',marginTop:'0px',marginBottom:'1px',height:'35px',fontFamily:'cursive'}}><b>speakeasy</b>
 
-                    <button style={{float:'right',backgroundColor:'lightskyblue', marginRight:'0px',height:'100%'}} class='w3-btn w3-medium'>About Us</button>
+                    <button onClick={this.about} style={{float:'right',backgroundColor:'lightskyblue', marginRight:'0px',height:'100%'}} class='w3-btn w3-medium'>About Us</button>
                 </h3>
               </div>
 
@@ -56,9 +73,13 @@ class App extends Component {
                     Email:<input  type="text" name="fname"></input><br></br>
                     Password: <input type="text" name="lname"></input><br></br>
                     <br></br>
-                    <input class="w3-btn w3-blue-grey" type="submit" value="Submit"></input>
+                    <input class="w3-btn w3-blue-grey" onClick={this.main} type="submit" value="Submit"></input>
                     <button style={{float:"right"}} class="w3-btn w3-blue-grey">Create an Account</button>
                   </form>
+
+                    <br></br>
+
+                    <a href="#" style={{textDecoration:'underline'}}>Forgot Your Password?</a>
                 </div>
 
               </div >
@@ -70,10 +91,12 @@ class App extends Component {
 
               </div>
 
+
             </div>
 
         );
     }
 }
 
-export default App;
+export default AppFront;
+

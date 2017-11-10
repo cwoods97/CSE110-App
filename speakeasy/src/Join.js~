@@ -3,11 +3,8 @@ import firebase from 'firebase';
 import Users from './components/Users.js';
 import DisplayUserData from './components/DisplayUserData.js';
 import './styles/App.css';
-import ReactDOM from 'react-dom';
 
-import Main from './Main';
-
-class Join extends Component {
+class App extends Component {
 
     constructor(props) {
         super(props);
@@ -20,7 +17,7 @@ class Join extends Component {
             storageBucket: "speakeasy-25a66.appspot.com",
             messagingSenderId: "836790794762"
         };
-        !firebase.apps.length ? firebase.initializeApp(config) : firebase.app();
+        firebase.initializeApp(config);
 
         this.state = {
             message: ""
@@ -37,12 +34,7 @@ class Join extends Component {
             })
     }
 
-    main(e){
 
-
-        ReactDOM.render(<Main />, document.getElementById('root'));
-
-    }
 
     render() {
         return (
@@ -65,9 +57,10 @@ class Join extends Component {
 
                 <div class="w3-sidebar w3-bar-block" style={{width:'20%',height:'100%',backgroundColor:'lightgrey',zIndex:'0',overflow:'hidden'}}>
 
-                    <a href="#" class="w3-bar-item" style={{backgroundColor:'aqua'}}>Michael Harasti</a>
-                    <a href="#" class="w3-bar-item w3-button" onClick={this.main} style={{backgroundColor:'lightgrey'}}>Leave Session</a>
+                    <a href="#" class="w3-bar-item w3-button" style={{backgroundColor:'lightgrey'}}>Profile:</a>
+                    <a href="#" class="w3-bar-item w3-button" style={{backgroundColor:'lightgrey'}}>Leave Session</a>
                     <a href="#" class="w3-bar-item w3-button" style={{backgroundColor:'lightgrey'}}>Share</a>
+                    <a href="#" class="w3-bar-item w3-button" style={{backgroundColor:'lightgrey'}}>Help</a>
                     <br></br>
                     <br></br>
                     <br></br>
@@ -135,4 +128,4 @@ class Join extends Component {
     }
 }
 
-export default Join;
+export default App;
