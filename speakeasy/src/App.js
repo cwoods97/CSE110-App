@@ -13,15 +13,15 @@ class AppFront extends Component {
 
     constructor(props) {
         super(props);
-         //Initialize Firebase
-         var config = {
-             apiKey: "AIzaSyDSQVw9KUjmxhlxILCousROVR6PfOFcYQg",
-             authDomain: "speakeasy-25a66.firebaseapp.com",
-             databaseURL: "https://speakeasy-25a66.firebaseio.com",
-             projectId: "speakeasy-25a66",
-             storageBucket: "speakeasy-25a66.appspot.com",
-             messagingSenderId: "836790794762"
-         };
+        //Initialize Firebase
+        var config = {
+            apiKey: "AIzaSyDSQVw9KUjmxhlxILCousROVR6PfOFcYQg",
+            authDomain: "speakeasy-25a66.firebaseapp.com",
+            databaseURL: "https://speakeasy-25a66.firebaseio.com",
+            projectId: "speakeasy-25a66",
+            storageBucket: "speakeasy-25a66.appspot.com",
+            messagingSenderId: "836790794762"
+        };
         !firebase.apps.length ? firebase.initializeApp(config) : firebase.app();
 
         this.state = {
@@ -39,10 +39,29 @@ class AppFront extends Component {
             })
     }
 
-    main (e){
+    main(e) {
 
-        ReactDOM.render(<Main />, document.getElementById('root'));
 
+        var x = document.getElementById("email").value;
+        // regex from http://stackoverflow.com/questions/46155/validate-email-address-in-javascript
+        var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
+
+        if (re.test(x)) {
+            ReactDOM.render(<Main/>, document.getElementById('root'));
+
+        }
+
+        else {
+            var c = document.getElementById('emailError');
+            c.innerHTML = "Please enter a valid email address"
+
+        }
+    }
+
+    process (e){
+
+        alert("test")
     }
 
     about(e){
@@ -50,6 +69,56 @@ class AppFront extends Component {
         ReactDOM.render(<About />, document.getElementById('root'));
 
     }
+
+    reset(e){
+
+        var a = document.createElement('b')
+        var b = document.createElement('center')
+        a.innerHTML = 'Reset Password'
+        b.appendChild(a)
+        var holder = document.createElement('p')
+        holder.id = "rError"
+
+        var form = document.createElement('form')
+        var inp =  document.createElement('input')
+        inp.classList.add('w3-input')
+        inp.type = 'Text'
+        inp.placeholder = "Email"
+        inp.id = "rset"
+        form.appendChild(inp)
+        var breaker = document.createElement('br')
+
+        var but =  document.createElement('button')
+        but.classList.add('w3-btn')
+        but.classList.add('w3-blue-grey')
+        but.onclick = function() {  var x = document.getElementById("rset").value;
+            // regex from http://stackoverflow.com/questions/46155/validate-email-address-in-javascript
+            var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+            ;
+        if(!re.test(x)){
+
+            document.getElementById("rError").innerHTML = "Please enter a valid email address"
+
+        }
+        else{
+
+            document.getElementById("rError").innerHTML = ""
+
+        }
+        };
+        but.innerHTML = "Reset"
+
+        this.refs.login.appendChild(b);
+        this.refs.login.appendChild(holder);
+        this.refs.login.appendChild(breaker);
+        this.refs.login.appendChild(form);
+        this.refs.login.appendChild(breaker);
+        this.refs.login.appendChild(but);
+        var remove = document.getElementById('reset')
+        this.refs.login.removeChild(remove)
+
+    }
+
 
     render() {
         return (
@@ -66,20 +135,21 @@ class AppFront extends Component {
 
               <div >
 
-                <div style={{backgroundColor:'LightSkyBlue',float:'right',padding:"20px",width:'30%',marginRight:'50px',marginLeft:'100px' ,marginTop:"50px"}}>
+                <div ref="login" style={{backgroundColor:'LightSkyBlue',float:'right',padding:"20px",width:'30%',marginRight:'50px',marginLeft:'100px' ,marginTop:"50px"}}>
                   <h2>Login</h2>
 
                   <form action="">
-                    Email:<input  type="text" name="fname"></input><br></br>
-                    Password: <input type="text" name="lname"></input><br></br>
+                      <p id="emailError"></p>
+                    <input  ref = 'email' id = "email"class = "w3-input" type="text" name="fname" placeholder={"Email"}></input><br></br>
+                    <input class= "w3-input"type="password" name="lname" placeholder={"Password"}></input><br></br>
                     <br></br>
-                    <input class="w3-btn w3-blue-grey" onClick={this.main} type="submit" value="Submit"></input>
+                    <input id= "submit" class="w3-btn w3-blue-grey" onClick={this.main} type="submit" value="Submit"></input>
                     <button style={{float:"right"}} class="w3-btn w3-blue-grey">Create an Account</button>
                   </form>
 
                     <br></br>
 
-                    <a href="#" style={{textDecoration:'underline'}}>Forgot Your Password?</a>
+                    <a href="#" ref="res" id="reset" onClick = {this.reset.bind(this)} style={{textDecoration:'underline'}}>Forgot Your Password?</a>
                 </div>
 
               </div >
