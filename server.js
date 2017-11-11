@@ -1,24 +1,46 @@
 const express = require('express');
 const admin = require('firebase-admin');
 const path = require('path');
-const firebase = require('firebase')
+const app = express();
+
+// Express routers
 const hello = require('./routes/hello');
 const account = require('./routes/account.js')
 const login = require('./routes/login')
-const app = express();
 
-app.use('/api/hello', hello);
-app.use('/api/account', account);
-// Check whether object has any members
-var is_empty = (obj) => { return Object.keys(obj).length };
-
-// Initialize connection to firebase
-// https://firebase.google.com/docs/admin/setup
+// Initialize a connection to Firebase
 var serviceAccount = require("./firebase_sac.json");
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
   databaseURL: "https://speakeasy-25a66.firebaseio.com"
 });
+
+/*
+The following method is executed before all other routing logic.
+All requests to the API require authentication.
+The token provided with the HTTP request will be verified with Firebase.
+
+Precondition: The request must populate a 'token' key in the header (as assigned by Firebase).
+Postcondition: The decoded token will be stored in 'req.decodedToken'
+*/
+app.use(function(req, res, next) {
+  var idToken = req.get('token');
+
+  if (idToken) {
+    admin.auth().verifyIdToken(idToken)
+      .then(function(decodedToken) {
+        req.decodedToken = decodedToken;
+        next();
+      })
+      .catch(function(error) {
+        console.log(error);
+        res.status(404).end();
+      })
+  }
+});
+
+app.use('/api/hello', hello);
+app.use('/api/account', account);
 
 // Serves static files from the 'client/build' directory - Navigating to root of webserver serves, by default, the built 'index.html'
 var is_production = process.argv[2]
