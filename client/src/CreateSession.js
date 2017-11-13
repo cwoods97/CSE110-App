@@ -3,6 +3,9 @@ import firebase from 'firebase';
 import Users from './components/Users.js';
 import DisplayUserData from './components/DisplayUserData.js';
 import './styles/App.css';
+import ReactDOM from 'react-dom';
+
+import Main from './Main';
 
 class CreateSession extends Component {
 
@@ -17,8 +20,12 @@ class CreateSession extends Component {
             storageBucket: "speakeasy-25a66.appspot.com",
             messagingSenderId: "836790794762"
         };
-        !firebase.apps.length ? firebase.initializeApp(config) : firebase.app();
-
+        if (firebase.apps.length == 0){
+            firebase.initializeApp(config);
+        }
+        else{
+            firebase.app()
+        }
         this.state = {
             message: ""
         }
@@ -34,7 +41,12 @@ class CreateSession extends Component {
             })
     }
 
+    close (e){
 
+
+        ReactDOM.render(<Main />, document.getElementById('root'));
+
+    }
 
     render() {
         return (
@@ -59,7 +71,7 @@ class CreateSession extends Component {
 
                     <a href="#" class="w3-bar-item w3-button" style={{backgroundColor:'lightgrey'}}>Profile:</a>
                     <a href="#" class="w3-bar-item w3-button" style={{backgroundColor:'lightgrey'}}>Share</a>
-                    <a href="#" class="w3-bar-item w3-button" style={{backgroundColor:'lightgrey'}}>Close Session</a>
+                    <a href="#" class="w3-bar-item w3-button" onClick={this.close} style={{backgroundColor:'lightgrey'}}>Close Session</a>
                     <br></br>
                     <br></br>
                     <br></br>
