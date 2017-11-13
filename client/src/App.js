@@ -23,7 +23,14 @@ class AppFront extends Component {
             storageBucket: "speakeasy-25a66.appspot.com",
             messagingSenderId: "836790794762"
         };
-        !firebase.apps.length ? firebase.initializeApp(config) : firebase.app();
+
+        if (firebase.apps.length == 0){
+            firebase.initializeApp(config);
+        }
+        else{
+            firebase.app()
+        }
+
 
         this.state = {
             message: ""
@@ -58,11 +65,6 @@ class AppFront extends Component {
             c.innerHTML = "Please enter a valid email address"
 
         }
-    }
-
-    process (e){
-
-        alert("test")
     }
 
     about(e){
