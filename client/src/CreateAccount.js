@@ -21,7 +21,13 @@ class CreateAccount extends Component {
             storageBucket: "speakeasy-25a66.appspot.com",
             messagingSenderId: "836790794762"
         };
-        !firebase.apps.length ? firebase.initializeApp(config) : firebase.app();
+
+        if (firebase.apps.length == 0) {
+            firebase.initializeApp(config);
+        }
+        else {
+            firebase.app()
+        }
 
         this.state = {
             message: ""
@@ -42,18 +48,29 @@ class CreateAccount extends Component {
 
 
         var x = document.getElementById("email").value;
+        var y = document.getElementById("pwd1").value;
+        var z = document.getElementById("pwd2").value;
+
         // regex from http://stackoverflow.com/questions/46155/validate-email-address-in-javascript
         var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
-        if (re.test(x)) {
+        if (re.test(x) && (y == z)) {
             ReactDOM.render(<App/>, document.getElementById('root'));
 
         }
 
         else {
-            var c = document.getElementById('emailError');
-            c.innerHTML = "Please enter a valid email address"
 
+            if (!re.test(x)) {
+                var c = document.getElementById('emailError');
+                c.innerHTML = "Please enter a valid email address";
+
+            }
+
+            if (y != z) {
+                var d = document.getElementById('diffPwdError');
+                d.innerHTML = "Passwords do not match";
+            }
         }
 
     }
@@ -75,10 +92,13 @@ class CreateAccount extends Component {
 
                         <form action="">
                             <p id="emailError"></p>
-                            Email:<input id="email" type="text" name="fname"></input><br></br>
-                            Display:<input type="text" name="dname"></input><br></br>
-                            Password: <input type="text" name="pwd"></input><br></br>
-                            Confirmed: <input type="text" name="confirmpwd"></input><br></br>
+                            Email:<input id="email" type="text" name="fname" placeholder={"Email"}></input><br></br>
+                            <p></p>
+                            Display Name:<input type="text" name="dname" placeholder={"Display Name"}></input><br></br>
+                            <p></p>
+                            Password: <input id="pwd1" type="text" name="pwd" placeholder={"Password"}></input><br></br>
+                            <p id="diffPwdError"></p>
+                            Re-enter Password: <input id="pwd2" type="text" name="reenter" placeholder={"Re-enter Password"}></input><br></br>
                             <br></br>
                             <input onClick={this.main} style={{float:"left"}} class="w3-btn w3-blue-grey" type="submit" value="Submit"></input>
                         </form>
