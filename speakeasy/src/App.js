@@ -7,6 +7,7 @@ import './styles/App.css';
 
 import Main from './Main';
 import About from './About';
+import CreateAccount from './CreateAccount';
 
 
 class AppFront extends Component {
@@ -67,6 +68,11 @@ class AppFront extends Component {
     about(e){
 
         ReactDOM.render(<About />, document.getElementById('root'));
+
+    }
+
+    create(e) {
+        ReactDOM.render(<CreateAccount />, document.getElementById('root'));
 
     }
 
@@ -144,7 +150,7 @@ class AppFront extends Component {
                     <input class= "w3-input"type="password" name="lname" placeholder={"Password"}></input><br></br>
                     <br></br>
                     <input id= "submit" class="w3-btn w3-blue-grey" onClick={this.main} type="submit" value="Submit"></input>
-                    <button style={{float:"right"}} class="w3-btn w3-blue-grey">Create an Account</button>
+                    <button onClick={this.create} style={{float:"right"}} class="w3-btn w3-blue-grey">Create an Account</button>
                   </form>
 
                     <br></br>

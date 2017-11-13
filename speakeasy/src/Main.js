@@ -6,6 +6,7 @@ import './styles/App.css';
 
 import Join from './Join';
 import AppFront from './App';
+import CreateSession from './CreateSession';
 
 import ReactDOM from 'react-dom';
 class App extends Component {
@@ -48,6 +49,12 @@ class App extends Component {
         ReactDOM.render(<Join />, document.getElementById('root'));
 
     }
+
+    create(e) {
+
+        ReactDOM.render(<CreateSession />, document.getElementById('root'));
+    }
+
     render() {
         return (
 
@@ -119,7 +126,7 @@ class App extends Component {
                         <br></br>
 
 
-                        <button class="w3-btn w3-large w3-round" style={{backgroundColor:'steelblue'}}>Create a Session</button>
+                        <button class="w3-btn w3-large w3-round" onClick={this.create} style={{backgroundColor:'steelblue'}}>Create a Session</button>
                         </center>
                     </div>
                     <div class='w3-round' style={{width:'30%',float:'right',marginRight:'100px',marginTop:'99px'}}>
