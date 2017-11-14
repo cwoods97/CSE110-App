@@ -45,19 +45,23 @@ class App extends Component {
             })
     }
 
-    front(e) {
+    front = function(ev) {
+
+        ev.preventDefault();
         ReactDOM.render(<AppFront />, document.getElementById('root'));
 
 
     }
-    join(e){
+    join= function(ev){
 
+        ev.preventDefault();
         ReactDOM.render(<Join />, document.getElementById('root'));
 
     }
 
-    create(e) {
+    create= function(ev) {
 
+        ev.preventDefault();
         ReactDOM.render(<CreateSession />, document.getElementById('root'));
     }
 

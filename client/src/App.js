@@ -47,10 +47,11 @@ class AppFront extends Component {
             })
     }
 
-    main(e) {
-
+    main = function(ev){
+        ev.preventDefault();
 
         var x = document.getElementById("email").value;
+
         // regex from http://stackoverflow.com/questions/46155/validate-email-address-in-javascript
         var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
@@ -58,27 +59,44 @@ class AppFront extends Component {
         if (re.test(x)) {
             ReactDOM.render(<Main/>, document.getElementById('root'));
 
+
+
+
+
+
+
+
+
+
+
+
+
+
         }
 
         else {
-            var c = document.getElementById('emailError');
-            c.innerHTML = "Please enter a valid email address"
+            document.getElementById('emailError').innerHTML = "Please enter a valid email address";
+            //ReactDOM.render(<Main />, document.getElementById('root'));
 
         }
+
     }
 
-    about(e){
+    about= function(ev){
 
+        ev.preventDefault();
         ReactDOM.render(<About />, document.getElementById('root'));
 
     }
 
-    create(e) {
+    create= function(ev) {
+        ev.preventDefault()
         ReactDOM.render(<CreateAccount />, document.getElementById('root'));
 
     }
 
-    reset(e){
+    reset = function(ev){
+        ev.preventDefault()
 
         var a = document.createElement('b')
         var b = document.createElement('center')
@@ -147,11 +165,12 @@ class AppFront extends Component {
                   <h2>Login</h2>
 
                   <form action="">
-                      <p id="emailError"></p>
+                    <p id="emailError"></p>
+
                     <input  ref = 'email' id = "email"class = "w3-input" type="text" name="fname" placeholder={"Email"}></input><br></br>
                     <input class= "w3-input"type="password" name="lname" placeholder={"Password"}></input><br></br>
                     <br></br>
-                    <input id= "submit" class="w3-btn w3-blue-grey" onClick={this.main} type="submit" value="Submit"></input>
+                    <input id= "submit" class="w3-btn w3-blue-grey" onClick= {this.main} type="submit" value="Submit"></input>
                     <button onClick={this.create} style={{float:"right"}} class="w3-btn w3-blue-grey">Create an Account</button>
                   </form>
 

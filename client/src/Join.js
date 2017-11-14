@@ -41,8 +41,9 @@ class Join extends Component {
             })
     }
 
-    main(e){
+    main= function(ev){
 
+        ev.preventDefault();
 
         ReactDOM.render(<Main />, document.getElementById('root'));
 

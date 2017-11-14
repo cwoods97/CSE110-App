@@ -41,8 +41,9 @@ class CreateSession extends Component {
             })
     }
 
-    close (e){
+    close = function(ev){
 
+        ev.preventDefault();
 
         ReactDOM.render(<Main />, document.getElementById('root'));
 
