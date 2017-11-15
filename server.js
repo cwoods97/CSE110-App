@@ -4,9 +4,10 @@ const path = require('path');
 const app = express();
 
 // Express routers
-const hello = require('./routes/hello');
+const hello = require('./routes/hello.js');
 const account = require('./routes/account.js')
-const login = require('./routes/login')
+const login = require('./routes/login.js')
+const session = require('./routes/session.js')
 
 // Initialize a connection to Firebase
 var serviceAccount = require("./firebase_sac.json");
@@ -41,6 +42,7 @@ app.use(function(req, res, next) {
 
 app.use('/api/hello', hello);
 app.use('/api/account', account);
+app.use('/api/session', session);
 
 // Serves static files from the 'client/build' directory - Navigating to root of webserver serves, by default, the built 'index.html'
 var is_production = process.argv[2]
