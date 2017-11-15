@@ -8,6 +8,7 @@ import './styles/App.css';
 import Main from './Main';
 import About from './About';
 import CreateAccount from './CreateAccount';
+import Reset from './Reset';
 
 
 class AppFront extends Component {
@@ -127,12 +128,10 @@ class AppFront extends Component {
 
         }
         else{
-
-            document.getElementById("rError").innerHTML = ""
-
+            ReactDOM.render(<Reset/>, document.getElementById('root'));
         }
         };
-        but.innerHTML = "Reset"
+        but.innerHTML = "Reset";
 
         this.refs.login.appendChild(b);
         this.refs.login.appendChild(holder);
