@@ -6,7 +6,7 @@ import DisplayUserData from './components/DisplayUserData.js';
 import './styles/App.css';
 
 import App from './App';
-
+import {createAccount} from './frontEndAccount'
 
 class CreateAccount extends Component {
 
@@ -48,28 +48,29 @@ class CreateAccount extends Component {
 
         ev.preventDefault();
 
-        var x = document.getElementById("email").value;
-        var y = document.getElementById("pwd1").value;
-        var z = document.getElementById("pwd2").value;
+        var email = document.getElementById("email").value;
+        var pwd1 = document.getElementById("pwd1").value;
+        var pwd2 = document.getElementById("pwd2").value;
 
 
         // regex from http://stackoverflow.com/questions/46155/validate-email-address-in-javascript
         var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
-        if (re.test(x) &&  y===z  && y !== "") {
+        if (re.test(email) &&  pwd1===pwd2  && pwd1 !== "") {
 
+	    createAccount("johng24",email,pwd2);
             ReactDOM.render(<App/>, document.getElementById('root'));
 
         }
 
         else {
 
-            if (!re.test(x)) {
+            if (!re.test(email)) {
                 document.getElementById('emailError').innerHTML = "Please enter a valid email address";
 
             }
 
-            if (y !== z || y === "") {
+            if (pwd1 !== pwd2 || pwd1 === "") {
                 document.getElementById('diffPwdError').innerHTML = "Passwords do not match";
 
             }
