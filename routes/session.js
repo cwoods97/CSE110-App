@@ -15,13 +15,17 @@ router.post('/join', (req, res) => {
 	//find session in database
 	ref.orderByKey().equalTo(session);
 	//add user to list of participants
-	ref.update({'/participants/' + user: true});
+	updateString = "/participants/" + user;
+	ref.update({updateString: true});
 
 	ref = db.ref("user"); //assuming users are stored here
 
 	//find user in database
 	ref.orderByKey().equalTo(user);
 	//add session to joinedSessions - update
-	ref.update({'/joinedSessions/' + session: session});
+	updateString = '/joinedSessions/' + session;
+	ref.update({updateString: session});
 
 });
+
+module.exports = router;
