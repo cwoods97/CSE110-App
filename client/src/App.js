@@ -152,7 +152,7 @@ class AppFront extends Component {
               <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"></link>
               <div style={{backgroundColor:'LightSkyBlue',height:"100%"}}>
 
-                <h3 style={{marginLeft:'10px',marginTop:'0px',marginBottom:'1px',height:'35px',fontFamily:'cursive'}}><b>speakeasy</b>
+                <h3 style={{marginLeft:'10px',marginTop:'0px',marginBottom:'1px',height:'35px',fontFamily:'cursive',cursor:'pointer'}}><b>speakeasy</b>
 
                     <button onClick={this.about} style={{float:'right',backgroundColor:'lightskyblue', marginRight:'0px',height:'100%'}} class='w3-btn w3-medium'>About Us</button>
                 </h3>
