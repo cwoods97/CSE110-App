@@ -6,7 +6,6 @@ const app = express();
 // Express routers
 const hello = require('./routes/hello.js');
 const account = require('./routes/account.js')
-const login = require('./routes/login.js')
 const session = require('./routes/session.js')
 
 // Initialize a connection to Firebase

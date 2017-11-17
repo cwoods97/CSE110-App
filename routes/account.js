@@ -10,7 +10,7 @@ router.get('/create_account', (req, res) => {
 	var q_email = res.query.email;
 	var q_passwd = res.query.passwd;
 
-	if (q_displayName && q_email && q_passwd) {
+	if (q_name && q_email && q_passwd) {
 		// Firebase logs a user in when account is created
 		// https://firebase.google.com/docs/reference/js/firebase.User
 		admin.auth().createUser({

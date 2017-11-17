@@ -11,7 +11,7 @@ if (displayName && email && passwd) {
     var firebaseUser;
 
 	firebase.auth().createUserWithEmailAndPassword(email, password)
-		.then(user => {
+		.then((user) => {
 			firebaseUser = user;
 
 			// TODO: IF display name is also unique, we need to iterate over all users to verify it's unique
