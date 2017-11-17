@@ -62,7 +62,7 @@ class Reset extends Component {
         }
 
         /* Error checks for blank passwords */
-        if (document.getElementById('pw').value === "" || document.getElementById('cpw').value === "") {
+        if (pw === "" || cpw === "") {
             document.getElementById('pwError').innerHTML = "Please enter a password";
             return;
         }
@@ -71,7 +71,7 @@ class Reset extends Component {
         }
 
         /* Error checks for passwords not matching */
-        if (document.getElementById('pw').value != document.getElementById('cpw').value) {
+        if (pw !== cpw) {
             document.getElementById('pwError').innerHTML = "Passwords do not match";
             return;
         }
@@ -97,9 +97,12 @@ class Reset extends Component {
         return (
             <div>
                 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"></link>
-                <div className={'Boxed'} style={{marginTop:'200px'}}>
+                <div style={{backgroundColor:'#c4a5ff',height:"100%"}}>
+                    <h3 style={{marginLeft:'10px',marginTop:'0px',marginBottom:'1px',height:'35px',fontFamil$ay:'cursive'}}><b>speakeasy</b></h3>
+                </div>
+                <div className={'Boxed'} style={{marginTop:'150px'}}>
                     <p style={{fontFamily:'Arial', fontSize:'30px', textAlign:'center'}}>
-                    Forgot Your Password? </p>
+                    Reset Your Password </p>
 
                     <p id={'emailError'}></p>
                     <form className='w3-container'>
