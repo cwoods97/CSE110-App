@@ -7,6 +7,9 @@ import ReactDOM from 'react-dom';
 
 import Main from './Main';
 
+import { ReactMic } from 'react-mic';
+
+
 class CreateSession extends Component {
 
     constructor(props) {
@@ -27,7 +30,9 @@ class CreateSession extends Component {
             firebase.app()
         }
         this.state = {
-            message: ""
+            message: "",
+            record: false,
+            blobObject: null
         }
     }
 
@@ -39,6 +44,24 @@ class CreateSession extends Component {
                     message: responseJson.message
                 });
             })
+    }
+
+    startRecording = () => {
+        this.setState({
+            record: true
+        });
+    }
+
+    stopRecording = () => {
+        this.setState({
+            record: false
+        });
+    }
+
+    onStop= (blobObject) => {
+        this.setState({
+            blobURL : blobObject.blobURL
+        });
     }
 
     close = function(ev){
@@ -85,9 +108,35 @@ class CreateSession extends Component {
                     <br></br>
                 </div>
 
+                <div>
+
+                    <center>
+                    <ReactMic
+                        record={this.state.record}
+                        className="sound-wave"
+                        onStop={this.onStop}
+                        strokeColor="#000000"
+                        backgroundColor="#66ccff" />
+                    <button onClick={this.startRecording} type="button">Start</button>
+                    <button onClick={this.stopRecording} type="button">Stop</button>
+                    </center>
+
+
+                    <br></br>
+                    <br></br>
+                    <br></br>
+                    <br></br>
+
+                    <center>
+                        <audio ref="audioSource" controls="controls" src={this.state.blobURL}></audio>
+
+                    </center>
+
+                </div>
 
 
                 <div class="w3-col" style={{float:'right',width:'20%',height:'100%',backgroundColor:'lightblue'}}>
+
 
                     <br></br>
                     <br></br>

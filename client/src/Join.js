@@ -6,6 +6,8 @@ import './styles/App.css';
 import ReactDOM from 'react-dom';
 
 import Main from './Main';
+import { Widget, addResponseMessage, addUserMessage } from 'react-chat-widget';
+
 
 class Join extends Component {
 
@@ -31,7 +33,12 @@ class Join extends Component {
         }
     }
 
+
     componentDidMount() {
+
+
+
+        //document.getElementsByClassName('conversation-container').style.display = "flex"
         return fetch('/api/hello')
             .then((response) => response.json())
             .then((responseJson) => {
@@ -40,6 +47,32 @@ class Join extends Component {
                 });
             })
     }
+
+    add = function (e){
+
+        e.preventDefault()
+
+        var mList = document.getElementById('messages')
+
+        var div1 = document.createElement('div');
+        div1.classList.add('message')
+        var div2 =  document.createElement('div');
+        div2.classList.add('client')
+        var div3 =  document.createElement('div');
+        div3.classList.add('message-text');
+        var p =  document.createElement('p');
+        p.innerHTML = document.getElementById("comment").value;
+
+        div3.appendChild(p);
+        div2.appendChild(div3);
+        div1.appendChild(div2);
+        mList.appendChild(div1);
+
+
+        document.getElementById("comment").value = ""
+
+
+    };
 
     main= function(ev){
 
@@ -123,7 +156,27 @@ class Join extends Component {
 
                     <div style={{backgroundColor:'',width:'25%',marginRight:'50px',marginTop:'10px',float:'right', height:'100%'}}>
                         <center>
-                            <p style={{width:'',overflow:'hidden'}}><h3><b>Give Comments</b></h3></p>
+
+
+
+                        <div id = "comments"class="widget-container"><div class="conversation-container">
+                            <div class="header"><button class="close-button">
+                                </button>
+                                <h4 class="title">Give Customized Feedback</h4><span></span></div>
+                            <div id="messages" class="messages-container">
+
+                            </div>
+
+
+                            <form class="sender">
+
+                                <input id="comment" type="text" class="new-message" name="message" placeholder="Type a message..." autocomplete="off"></input>
+
+
+                                <button type="submit" class="send" onClick={this.add.bind(this)} >Post</button>
+                            </form>
+                        </div>
+                        </div>
                         </center>
 
 
