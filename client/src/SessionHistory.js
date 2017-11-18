@@ -125,15 +125,26 @@ class App extends Component {
 
 
                 <div class="w3-bar w3-white">
-
+                    <br></br>
                     <center>
+                        <input style={{float:"right",width:"75%",marginRight:"30px"}}class="w3-input w3-light-blue" placeholder={"Search"}>
+
+                        </input>
+
+                    </center>
+                    <br></br>
+                    <br></br>
+                    <br></br>
+
+
+                    <div style={{float:"right", marginRight:"400px"}}>
                     <button id="jb"onClick={this.join} class="w3-btn w3-dark-grey">
                         Joined Sessions
                     </button>
                     <button id="cb"onClick={this.create} class="w3-btn w3-grey">
                         Created Sessions
                     </button>
-                    </center>
+                    </div>
 
                 </div>
                 <div id="joined">
