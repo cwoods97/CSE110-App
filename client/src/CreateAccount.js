@@ -56,14 +56,13 @@ class CreateAccount extends Component {
         var display = document.getElementById("display").value;
         var pwd1 = document.getElementById("pwd1").value;
         var pwd2 = document.getElementById("pwd2").value;
-	var displayName = document.getElementById("name").value;
 
         // regex from http://stackoverflow.com/questions/46155/validate-email-address-in-javascript
         var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
         if (re.test(email) &&  pwd1===pwd2  && pwd1 !== "" && display !== "") {
 
-	    createAccount(displayName,email,pwd2);
+	    createAccount(display,email,pwd2);
             ReactDOM.render(<App/>, document.getElementById('root'));
 
         }

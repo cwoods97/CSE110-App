@@ -9,6 +9,7 @@ import Main from './Main';
 import About from './About';
 import CreateAccount from './CreateAccount';
 import Reset from './Reset';
+import {login} from './frontEndAccount'
 
 
 class AppFront extends Component {
@@ -51,13 +52,14 @@ class AppFront extends Component {
     main = function(ev){
         ev.preventDefault();
 
-        var x = document.getElementById("email").value;
-
+        var email = document.getElementById("email").value;
+		var password = document.getElementById("password").value;
         // regex from http://stackoverflow.com/questions/46155/validate-email-address-in-javascript
         var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
 
-        if (re.test(x)) {
+        if (re.test(email)) {
+			login(email, password);
             ReactDOM.render(<Main/>, document.getElementById('root'));
 
 
@@ -167,7 +169,7 @@ class AppFront extends Component {
                     <p id="emailError"></p>
 
                     <input  ref = 'email' id = "email"class = "w3-input" type="text" name="fname" placeholder={"Email"}></input><br></br>
-                    <input class= "w3-input"type="password" name="lname" placeholder={"Password"}></input><br></br>
+                    <input class= "w3-input" id = "password" type="password" name="lname" placeholder={"Password"}></input><br></br>
                     <br></br>
                     <input id= "submit" class="w3-btn w3-blue-grey" onClick= {this.main} type="submit" value="Submit"></input>
                     <button onClick={this.create} style={{float:"right"}} class="w3-btn w3-blue-grey">Create an Account</button>

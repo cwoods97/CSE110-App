@@ -1,5 +1,4 @@
 const express = require('express');
-const path = require('path');
 const app = express();
 
 
@@ -10,7 +9,6 @@ admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
   databaseURL: "https://speakeasy-25a66.firebaseio.com"
 });
-var db = admin.database();
 app.set('admin', admin);
 
 app.use(function(req, res, next) {
@@ -33,48 +31,53 @@ The token provided with the HTTP request will be verified with Firebase.
 Precondition: The request must populate a 'token' key in the header (as assigned by Firebase).
 Postcondition: The decoded token will be stored in 'req.decodedToken'
 */
+	  console.log("1");
 
 
 app.use(function(req, res, next) {
-	
-	console.log("got here");
-  var idToken = req.body.token;
-  console.log(idToken);
+		  console.log(req.originalUrl);
 
-  if (idToken) {
+  var idToken = req.body.token;
+  if (typeof idToken === 'string') {
+	  console.log("3");
     admin.auth().verifyIdToken(idToken)
       .then(function(decodedToken) {
-        req.body.decodedToken = decodedToken;
-        next();
+        req.body.uid = decodedToken.uid;
+			  console.log("4");
+		next();
       })
       .catch(function(error) {
         console.log(error);
         res.status(404).end();
+		next();
       })
   }
-  
-  next();
+  else {
+	  next();
+  }
 });
-
+	  console.log("5");
 
 // Serves static files from the 'client/build' directory - Navigating to root of webserver serves, by default, the built 'index.html'
+const path = require('path');
 var is_production = process.argv[2]
 if (is_production) {
 	app.use(express.static(path.join(__dirname, 'client/build')));
 }
+	  console.log("6");
 
 
 const port = process.env.PORT || 3000;
 app.listen(port, function() {
 	console.log('Server listening on port ' + port)
 })
-
-module.exports.admin = admin;
+	  console.log("7");
 
 // Express routers
 const hello = require('./routes/hello');
 const account = require('./routes/account.js')
-
-app.use('/api/hello', hello);
+	  console.log("8");
 app.use('/api/account', account);
+app.use('/api/hello', hello);
+	  console.log("9");
 
