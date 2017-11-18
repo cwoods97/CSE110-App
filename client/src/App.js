@@ -8,6 +8,7 @@ import './styles/App.css';
 import Main from './Main';
 import About from './About';
 import CreateAccount from './CreateAccount';
+import Reset from './Reset';
 
 
 class AppFront extends Component {
@@ -127,12 +128,10 @@ class AppFront extends Component {
 
         }
         else{
-
-            document.getElementById("rError").innerHTML = ""
-
+            ReactDOM.render(<Reset/>, document.getElementById('root'));
         }
         };
-        but.innerHTML = "Reset"
+        but.innerHTML = "Reset";
 
         this.refs.login.appendChild(b);
         this.refs.login.appendChild(holder);
@@ -153,7 +152,7 @@ class AppFront extends Component {
               <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"></link>
               <div style={{backgroundColor:'LightSkyBlue',height:"100%"}}>
 
-                <h3 style={{marginLeft:'10px',marginTop:'0px',marginBottom:'1px',height:'35px',fontFamily:'cursive'}}><b>speakeasy</b>
+                <h3 style={{marginLeft:'10px',marginTop:'0px',marginBottom:'1px',height:'35px',fontFamily:'cursive',cursor:'pointer'}}><b>speakeasy</b>
 
                     <button onClick={this.about} style={{float:'right',backgroundColor:'lightskyblue', marginRight:'0px',height:'100%'}} class='w3-btn w3-medium'>About Us</button>
                 </h3>
