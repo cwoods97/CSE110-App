@@ -38,7 +38,7 @@ class AppFront extends Component {
     }
 
     componentDidMount() {
-        return fetch('/api/hello')
+        return fetch('/api/hello/hi')
             .then((response) => response.json())
             .then((responseJson) => {
                 this.setState({

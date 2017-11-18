@@ -35,7 +35,7 @@ class CreateAccount extends Component {
     }
 
     componentDidMount() {
-        return fetch('/api/hello')
+        return fetch('/api/hello/hi')
             .then((response) => response.json())
             .then((responseJson) => {
                 this.setState({
@@ -51,14 +51,14 @@ class CreateAccount extends Component {
         var email = document.getElementById("email").value;
         var pwd1 = document.getElementById("pwd1").value;
         var pwd2 = document.getElementById("pwd2").value;
-
+	var displayName = document.getElementById("name").value;
 
         // regex from http://stackoverflow.com/questions/46155/validate-email-address-in-javascript
         var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
         if (re.test(email) &&  pwd1===pwd2  && pwd1 !== "") {
 
-	    createAccount("johng24",email,pwd2);
+	    createAccount(displayName,email,pwd2);
             ReactDOM.render(<App/>, document.getElementById('root'));
 
         }
@@ -97,7 +97,7 @@ class CreateAccount extends Component {
                             <p id="emailError"></p>
                             <input class="w3-input"id="email" type="text" name="fname" placeholder={"Email"}></input><br></br>
                             <p></p>
-                            <input class="w3-input"type="text" name="dname" placeholder={"Display Name"}></input><br></br>
+                            <input class="w3-input"id="name" type="text" name="dname" placeholder={"Display Name"}></input><br></br>
                             <p></p>
                             <input class="w3-input"id="pwd1" type="text" name="pwd" placeholder={"Password"}></input><br></br>
                             <p id="diffPwdError"></p>

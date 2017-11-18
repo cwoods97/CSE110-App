@@ -1,5 +1,5 @@
 import firebase from 'firebase';
-
+var request = require('request');
 
 // Making HTTP requests in React: https://github.com/github/fetch
 // The frontend shall create a user account through completing two separate objectives:
@@ -14,7 +14,6 @@ if (displayName && email && password) {
 	// https://firebase.google.com/docs/reference/js/firebase.User
     // https://firebase.google.com/docs/reference/js/firebase.auth.Auth#createUserWithEmailAndPassword
     var firebaseUser;
-	console.log("tttttessstttt");
 	firebase.auth().createUserWithEmailAndPassword(email, password)
 		.then(user => {
 			firebaseUser = user;
@@ -28,20 +27,40 @@ if (displayName && email && password) {
 				});
 
 	// *** STEP 2 ***
-	var userData = new FormData();
-	userData.append('uid', user.uid);
-	userData.append('token', user.getIdToken());
+	console.log("1");
+	user.getIdToken().then(token => {
+		console.log("2");
+		console.log(token);
+		fetch('http://localhost:3000/api/account/create_account', {
+			
+			method: 'post',
+			body: JSON.stringify({
+				displayName: displayName,
+				email: email,
+				token: token
+			}),
+			headers: {
+				'Content-Type': 'application/json',
+				'Accept': 'application/json'
+			}
+		}).then(response => response.json())
+		.then(response => {
+			console.log(response);
+					console.log("6");
 
-	fetch('/api/register', {
-		method: 'POST',
-		body: userData,
-		headers: {
-			'Content-Type': 'application/json'
-		}
+		}).catch(error => {
+			console.log("error");
+			console.log(error);
+			// TODO: Could not create a backend account. Try again maybe?
+		})
+		console.log("5");
+
 	}).catch(error => {
-		// TODO: Could not create a backend account. Try again maybe?
-	})
-
+		console.log("3");
+		console.log(error);
+	});
+	console.log("4");
+	
 		}).catch(error => {
 			var errorCode = error.code;
 			var errorMessage = error.message;
@@ -52,12 +71,6 @@ if (displayName && email && password) {
 					break;
 				case 'auth/weak-password':
 					// TODO: Passwords must be at least 6 characters.
-					break;
-				case 'auth/invalid-email':
-					// Should already be handled by frontend input validation
-					break;
-				case 'auth/operation-not-allowed':
-					// Should not be a problem - account creation is enabled in Firebase.
 					break;
 
 			}
