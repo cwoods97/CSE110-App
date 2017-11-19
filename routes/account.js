@@ -5,22 +5,18 @@ var router = express.Router();
 // TODO Put in the actual route names (see design use cases)
 
 router.post('/create_account', (req, res) => {
-	
-	var name = req.body.displayName;
-	var email = req.body.email;
+
 	var uid = req.body.uid;
-	console.log("hey");
-	console.log(name);
-	console.log(uid);
+	console.log("Registering backend user under the following uid:", uid);
+	
 	res.type('application/json');
 	res.json({please: 'work'});
 	var admin = req.app.get('admin');
-	admin.database().ref("users").child(uid).set({
-			hostedSessions: '',
-			joinedSessions: '',
-			experience: '0'
-	});
-	
+	admin.database().ref("users").child(userData.uid).set({
+		hostedSessions: '',
+		joinedSessions: '',
+		experience: '0'
+	});	
 })
 
 module.exports = router;
