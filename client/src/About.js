@@ -55,9 +55,15 @@ class About extends Component {
 
                 <center>
                     <h3><b>About Us</b></h3>
-                <p>speakeasy is a web app designed to improve public speeches. We offer the ability to offer real
-                time feedback to speech givers.
+                <p style={{margin:"20px"}}>
+                    SpeakEasy is a web application developed and created by eleven UCSD students with the goal of improving future speeches of both speakers and presenters. SpeakyEasy empowers
+                    speakers and presenters with the ability to easily review speeches they have given in the past in order to identify elements they may improve in. Audience members can
+                    actively engage with speakers with quick and easy predefined feedback, such as communcicating they are speaking too fast/slow, to the speaker who can view it effortlessly.
+                    This in contrast to the current traditional and disruptive way of interrupting the speaker in order to tell them a piece of information that is trivial and interrupts the flow
+                    of the speaker. All of this is available to the audience at the tap of a simple button.
 
+                    Developed with a growth mindset, we believe that there is always room for improvement. SpeakEasy can be used in a range of environments, from small lectures to presentations
+                    with hundreds of people. Our application is easy to use with a simple goal to provide a positive experience with all users.
 
                 </p>
                 <p></p>

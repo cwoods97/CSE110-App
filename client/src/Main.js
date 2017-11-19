@@ -7,6 +7,7 @@ import './styles/App.css';
 import Join from './Join';
 import AppFront from './App';
 import CreateSession from './CreateSession';
+import SessionHistory from './SessionHistory';
 
 import ReactDOM from 'react-dom';
 class App extends Component {
@@ -51,19 +52,56 @@ class App extends Component {
         ReactDOM.render(<AppFront />, document.getElementById('root'));
 
 
-    }
+    };
     join= function(ev){
 
         ev.preventDefault();
-        ReactDOM.render(<Join />, document.getElementById('root'));
 
-    }
+        var coder = document.getElementById("code").value;
+
+        //Integer only regular expression from https://stackoverflow.com/questions/9011524/javascript-regexp-number-only-check
+        var reg = /^\d+$/;
+
+        if (reg.test(coder)){
+
+            /*
+            var XHR = new XMLHttpRequest();
+            var FD  = new FormData();
+            FD.append("accessCode",coder)
+            XHR.open('POST', 'https://example.com/mph.php');
+
+            // Send our FormData object; HTTP headers are set automatically
+            XHR.send(FD);
+            alert("Valid Session Code")
+*/
+
+            ReactDOM.render(<Join />, document.getElementById('root'));
+
+        }
+
+        else{
+            document.getElementById("error").innerHTML = "Please enter a valid session code"
+
+
+        }
+
+
+
+    };
 
     create= function(ev) {
 
         ev.preventDefault();
         ReactDOM.render(<CreateSession />, document.getElementById('root'));
-    }
+    };
+
+    history = function(ev){
+        ev.preventDefault();
+        ReactDOM.render(<SessionHistory />, document.getElementById('root'));
+
+
+
+    };
 
     render() {
         return (
@@ -88,7 +126,7 @@ class App extends Component {
 
                     <a href="#" class="w3-bar-item" style={{backgroundColor:'aqua'}}>Michael Harasti</a>
                     <a href="#" class="w3-bar-item w3-button" style={{backgroundColor:'lightgrey'}}>Profile Settings</a>
-                    <a href="#" class="w3-bar-item w3-button" style={{backgroundColor:'lightgrey'}}>Session History</a>
+                    <a href="#" class="w3-bar-item w3-button" onClick={this.history}style={{backgroundColor:'lightgrey'}}>Session History</a>
                     <a href="#" class="w3-bar-item w3-button" onClick={this.front} style={{backgroundColor:'lightgrey'}}>Logout</a>
                     <br></br>
                     <br></br>
@@ -138,8 +176,10 @@ class App extends Component {
                     <div class='w3-round' style={{width:'30%',float:'right',marginRight:'100px',marginTop:'0px'}}>
                         <center>
 
-                        <h6>Enter Session Code:</h6>
-                        <input></input>
+                            <h6><b>Enter Session Code:</b></h6>
+                            <p id = "error"></p>
+
+                        <input id="code"></input>
                         <br></br>
                         <br></br>
                         <button class="w3-btn w3-large w3-round" onClick={this.join} style={{backgroundColor:'powderblue'}}>Join a Session</button>
