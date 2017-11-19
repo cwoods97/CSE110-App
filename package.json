@@ -2,10 +2,10 @@
   "name": "speakeasy_server",
   "version": "1.0.0",
   "description": "",
-  "main": "server.js",
+  "main": "Server.js",
   "scripts": {
-    "start": "node server.js false",
-    "dev": "npm run build --prefix client/ && node server.js true",
+    "start": "node Server.js 0",
+    "dev": "npm run build --prefix client/ && node Server.js 1",
     "heroku-postbuild": "cd client && npm install --only=dev && npm install && npm run build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

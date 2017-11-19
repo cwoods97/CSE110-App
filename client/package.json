@@ -10,7 +10,9 @@
   "dependencies": {
     "firebase": "^4.6.0",
     "react": "^16.0.0",
+    "react-chat-widget": "^2.1.2",
     "react-dom": "^16.0.0",
+    "react-mic": "^9.0.0",
     "react-scripts": "1.0.14"
   },
   "scripts": {

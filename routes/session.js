@@ -1,15 +1,13 @@
 var express = require('express');
 var router = express.Router();
-var firebase = require('firebase');
 
 router.post('/join', (req, res) => {
-	res.json({message: "'join api' responding"});
 
 	var user = req.verifyIdToken().uid;
 	var session = req.accessCode; //assuming this is how it's stored
 
 	//get database reference
-	var db = firebase.database();
+	var db = req.locals.admin.database();
 	var ref = db.ref("sessions"); //assuming sessions are stored here
 	
 	//find session in database

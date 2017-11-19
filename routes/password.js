@@ -1,6 +1,5 @@
 var express = require('express');
 var router = express.Router();
-var firebase = require('firebase');
 
 router.post('/reset_password', (req, res) => {
 
@@ -9,11 +8,10 @@ router.post('/reset_password', (req, res) => {
 	var email = req.email; //assume this is how it's stored
 
 	firebase.auth().sendPasswordResetEmail(email)
-	.then(function() {
-		//password reset email sent
-	})
-	.catch(function(error) {
-		//relay error to frontend
+		.then(function() {
+			//password reset email sent
+		}).catch(function(error) {
+			//relay error to frontend
 	});
 }
 
