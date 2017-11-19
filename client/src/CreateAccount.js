@@ -62,12 +62,23 @@ class CreateAccount extends Component {
 
         if (re.test(email) &&  pwd1===pwd2  && pwd1 !== "" && display !== "") {
 
-	    createAccount(display,email,pwd2);
+            createAccount(display,email,pwd2)
+
+            .catch(error => {
+               var errorCode = error.code;
+
+               if(errorCode === 'auth/email-already-in-use') {
+                   document.getElementById('emailError').innerHTML = "Email is already in use";
+               }
+
+               if(errorCode === 'auth/weak-password') {
+                   document.getElementById('pwdError').innerHTML = "Password is not strong enough";
+               }
+
+            });
             ReactDOM.render(<App/>, document.getElementById('root'));
 
-        }
-
-        else {
+        } else {
 
             if (!re.test(email)) {
                 document.getElementById('emailError').innerHTML = "Please enter a valid email address";
@@ -110,6 +121,7 @@ class CreateAccount extends Component {
                         <h2>Create an Account</h2>
 
                         <form action="">
+                            <p id="emailError"></p>
                             <input class="w3-input" id="email" type="text" name="fname" placeholder={"Email"}></input><br></br>
                             <p id="displayNameError"></p>
                             <input class="w3-input" id="display" type="text" name="dname" placeholder={"Display Name"}></input><br></br>

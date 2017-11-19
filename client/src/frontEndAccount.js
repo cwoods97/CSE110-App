@@ -8,33 +8,30 @@ var request = require('request');
 
 export function createAccount(displayName, email, password) {
 
-    if (displayName && email && password) {
-        // *** STEP 1 ***
-        // Firebase logs a user in when account is created (Consider logging user out immediately since frontend redirects user to login page upon account creation)
-        // https://firebase.google.com/docs/reference/js/firebase.User
-        // https://firebase.google.com/docs/reference/js/firebase.auth.Auth#createUserWithEmailAndPassword
-        var firebaseUser;
-        firebase.auth().createUserWithEmailAndPassword(email, password)
-            .then(user => {
-                firebaseUser = user;
+    return new Promise((resolve, reject) => {
 
-                // TODO: IF display name is also unique, we need to iterate over all users to verify it's unique
-                // https://firebase.google.com/docs/reference/js/firebase.User#updateProfile
-                user.updateProfile({
+        if (displayName && email && password) {
+            // *** STEP 1 ***
+            // Firebase logs a user in when account is created (Consider logging user out immediately since frontend redirects user to login page upon account creation)
+            // https://firebase.google.com/docs/reference/js/firebase.User
+            // https://firebase.google.com/docs/reference/js/firebase.auth.Auth#createUserWithEmailAndPassword
+            var firebaseUser;
+            firebase.auth().createUserWithEmailAndPassword(email, password)
+                .then(user => {
+                    firebaseUser = user;
+
+                    // TODO: IF display name is also unique, we need to iterate over all users to verify it's unique
+                    // https://firebase.google.com/docs/reference/js/firebase.User#updateProfile
+                    user.updateProfile({
                         displayName: displayName
-                    })
-                    .catch(error => {
+                    }).catch(error => {
                         // TODO: Write code to handle this edge case - Firebase unable to update display name
                         // Either try to update again or just display an error in the front end
                     });
 
-                // *** STEP 2 ***
-                console.log("1");
-                user.getIdToken(true).then(token => {
-                    console.log("2");
-                    console.log(token);
-                    fetch('api/account/create_account', {
-
+                    // *** STEP 2 ***
+                    user.getIdToken(true).then(token => {
+                        fetch('api/account/create_account', {
                             method: 'post',
                             body: JSON.stringify({
                                 displayName: displayName,
@@ -46,40 +43,24 @@ export function createAccount(displayName, email, password) {
                                 'Accept': 'application/json'
                             }
                         }).then(response => response.json())
-                        .then(response => {
-                            console.log(response);
-                            console.log("6");
+                            .then(response => {
+                                console.log(response);
+                                console.log("6");
 
-                        }).catch(error => {
-                            console.log("error");
-                            console.log(error);
-                            // TODO: Could not create a backend account. Try again maybe?
-                        })
-                    console.log("5");
+                            }).catch(error => {
+                                console.log("error");
+                                console.log(error);
+                                // TODO: Could not create a backend account. Try again maybe?
+                            })
+                    }).catch(error => {
+                        return reject(error);
+                    });
 
                 }).catch(error => {
-                    console.log("3");
-                    console.log(error);
+                    return reject(error);
                 });
-                console.log("4");
-
-            }).catch(error => {
-                var errorCode = error.code;
-                var errorMessage = error.message;
-                console.log(errorMessage);
-                switch (errorCode) {
-                    case 'auth/email-already-in-use':
-                        // TODO: Write code to prompt user for different email address
-                        break;
-                    case 'auth/weak-password':
-                        // TODO: Passwords must be at least 6 characters.
-                        break;
-
-                }
-
-                return;
-            });
-    }
+        }
+    })
 }
 // =============================================================================================================
 // TODO: Write out code for logging in to Firebase
