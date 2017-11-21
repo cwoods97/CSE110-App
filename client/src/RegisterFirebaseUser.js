@@ -1,5 +1,4 @@
-//import firebase from 'firebase';
-const firebase;
+import firebase from 'firebase';
 
 /*
 Available functions:

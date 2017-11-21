@@ -6,7 +6,8 @@ import DisplayUserData from './components/DisplayUserData.js';
 import './styles/App.css';
 
 import App from './App';
-import { createAccount } as userAuth from './RegisterFirebaseUser';
+import Main from './Main';
+import { createAccount } from './RegisterFirebaseUser';
 
 class CreateAccount extends Component {
 
@@ -62,11 +63,11 @@ class CreateAccount extends Component {
 
         if (re.test(email) &&  pwd1===pwd2  && pwd1 !== "" && display !== "") {
 
-            userAuth.createAccount(display,email,pwd2)
+            createAccount(display,email,pwd2)
             .then((success) => {
                 // Only render user's main page when successfully logged in
                 if (success) {
-                    ReactDOM.render(<Main db=firebase />, document.getElementById('root'));
+                    ReactDOM.render(<Main db={firebase} />, document.getElementById('root'));
                 }
             })
             .catch((error) => {

@@ -9,7 +9,7 @@ import Main from './Main';
 import About from './About';
 import CreateAccount from './CreateAccount';
 import Reset from './Reset';
-import { login } as userAuth from './RegisterFirebaseUser'
+import { login } from './RegisterFirebaseUser'
 
 
 class AppFront extends Component {
@@ -69,10 +69,10 @@ class AppFront extends Component {
             return;
         }
 
-	      userAuth.login(email, password)
+	      login(email, password)
         .then(success => {
             if (success) {
-                ReactDOM.render(<Main db=firebase />, document.getElementById('root'));
+                ReactDOM.render(<Main db={firebase} />, document.getElementById('root'));
             }
         }).catch(error => {
             document.getElementById('error').innerHTML += '\n' + error.message;
