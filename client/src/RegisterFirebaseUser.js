@@ -20,7 +20,6 @@ On Success: Returned promise resolves as true.
 */
 export function createAccount(displayName, email, password) {
     return new Promise((resolve, reject) => {
-
         if (displayName && email && password) {
             // TODO: If display name is also unique, we need to iterate over all users to verify it's unique
             firebase.auth().createUserWithEmailAndPassword(email, password)
@@ -55,7 +54,6 @@ export function createAccount(displayName, email, password) {
             // Unable to create user in Firebase
             }).catch(error => { reject(error); });
         }
-
     })
 }
 
@@ -77,7 +75,6 @@ export function login(email, password) {
                 user.getIdToken()
                 .then((token) => { resolve(true) })
                 .catch((error) => { reject(error) });
-
             }).catch(error => {
                 reject(error);
             });

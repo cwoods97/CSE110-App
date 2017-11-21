@@ -9,7 +9,7 @@ import Main from './Main';
 import About from './About';
 import CreateAccount from './CreateAccount';
 import Reset from './Reset';
-import {login} from './frontEndAccount'
+import { login } as userAuth from './RegisterFirebaseUser'
 
 
 class AppFront extends Component {
@@ -28,8 +28,7 @@ class AppFront extends Component {
 
         if (firebase.apps.length == 0){
             firebase.initializeApp(config);
-        }
-        else{
+        } else {
             firebase.app()
         }
 
@@ -53,36 +52,31 @@ class AppFront extends Component {
         ev.preventDefault();
 
         var email = document.getElementById("email").value;
-		var password = document.getElementById("password").value;
+		    var password = document.getElementById("password").value;
         // regex from http://stackoverflow.com/questions/46155/validate-email-address-in-javascript
         var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
-
-        if (re.test(email)) {
-			login(email, password);
-            ReactDOM.render(<Main/>, document.getElementById('root'));
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        var errors = [];
+        if (!re.test(email)) {
+            errors += "Please enter a valid email address.";
+        }
+        if (password.length < 6) {
+            errors += "Please enter a password of at least 6 characters in length.";
         }
 
-        else {
-            document.getElementById('emailError').innerHTML = "Please enter a valid email address";
-            //ReactDOM.render(<Main />, document.getElementById('root'));
-
+        if (errors.length) {
+            document.getElementById('error').innerHTML = errors.join('-');
+            return;
         }
 
+	      userAuth.login(email, password)
+        .then(success => {
+            if (success) {
+                ReactDOM.render(<Main db=firebase />, document.getElementById('root'));
+            }
+        }).catch(error => {
+            document.getElementById('error').innerHTML += '\n' + error.message;
+        });
     }
 
     about= function(ev){
@@ -166,7 +160,7 @@ class AppFront extends Component {
                   <h2>Login</h2>
 
                   <form action="">
-                    <p id="emailError"></p>
+                    <p id="error"></p>
 
                     <input  ref = 'email' id = "email"class = "w3-input" type="text" name="fname" placeholder={"Email"}></input><br></br>
                     <input class= "w3-input" id = "password" type="password" name="lname" placeholder={"Password"}></input><br></br>

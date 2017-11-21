@@ -6,7 +6,7 @@ import DisplayUserData from './components/DisplayUserData.js';
 import './styles/App.css';
 
 import App from './App';
-import * as userAuth from './RegisterFirebaseUser';
+import { createAccount } as userAuth from './RegisterFirebaseUser';
 
 class CreateAccount extends Component {
 
