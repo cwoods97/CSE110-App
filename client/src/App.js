@@ -124,8 +124,13 @@ class AppFront extends Component {
 
         }
         else{
-            ReactDOM.render(<Reset/>, document.getElementById('root'));
-        }
+						firebase.auth().sendPasswordResetEmail(x)
+						.then(() => {
+							document.getElementById('rError').innerHTML = "Password reset email sent!";
+						}).catch((error) => {
+								document.getElementById('rError').innerHTML = error.message;
+						});
+				}
         };
         but.innerHTML = "Reset";
 
