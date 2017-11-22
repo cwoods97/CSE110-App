@@ -25,8 +25,8 @@ export function createAccount(displayName, email, password) {
                     user.updateProfile({
                         displayName: displayName
                     }).catch(error => {
-                        // TODO: Write code to handle this edge case - Firebase unable to update display name
-                        // Either try to update again or just display an error in the front end
+                        return reject(error);
+
                     });
 
                     // *** STEP 2 ***
@@ -42,16 +42,14 @@ export function createAccount(displayName, email, password) {
                                 'Content-Type': 'application/json',
                                 'Accept': 'application/json'
                             }
-                        }).then(response => response.json())
-                            .then(response => {
-                                console.log(response);
-                                console.log("6");
-
-                            }).catch(error => {
+                        }).catch(error => {
                                 console.log("error");
                                 console.log(error);
+								return reject(error);
+
                                 // TODO: Could not create a backend account. Try again maybe?
-                            })
+                        });
+					return resolve(token);
                     }).catch(error => {
                         return reject(error);
                     });

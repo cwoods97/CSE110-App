@@ -8,6 +8,7 @@ import Join from './Join';
 import AppFront from './App';
 import CreateSession from './CreateSession';
 import SessionHistory from './SessionHistory';
+import createBackendSession from './FrontEndSession';
 
 import ReactDOM from 'react-dom';
 class App extends Component {
@@ -47,7 +48,6 @@ class App extends Component {
     }
 
     front = function(ev) {
-
         ev.preventDefault();
         ReactDOM.render(<AppFront />, document.getElementById('root'));
 
@@ -90,7 +90,7 @@ class App extends Component {
     };
 
     create= function(ev) {
-
+		//createBackendSession(idToken);
         ev.preventDefault();
         ReactDOM.render(<CreateSession />, document.getElementById('root'));
     };
