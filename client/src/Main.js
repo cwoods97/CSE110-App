@@ -64,16 +64,36 @@ class App extends Component {
 
         if (reg.test(coder)){
 
-            /*
-            var XHR = new XMLHttpRequest();
-            var FD  = new FormData();
-            FD.append("accessCode",coder)
-            XHR.open('POST', 'https://example.com/mph.php');
-
-            // Send our FormData object; HTTP headers are set automatically
-            XHR.send(FD);
-            alert("Valid Session Code")
-*/
+						firebase.auth().onAuthStateChanged(function(user) {
+								if(user) {
+										user.getIdToken()
+										.then(token => {											
+												fetch('/api/session/join', {
+														method: 'post',
+														body: JSON.stringify({
+																token: token,
+																accessCode: coder
+														}),
+														headers: {
+																'Content-Type': 'application/json',
+																'Accept': 'application/json'
+														}
+												})
+												.then(data => {
+														//backend will send back the requested session
+												})
+												.catch(error => {
+														alert("post error: " + error.message);
+												})
+											})
+											.catch(error => {
+													alert("token error: " + error.message);
+											})
+								}
+								else {
+										alert("Please log in to join a session");
+								}
+						});
 
             ReactDOM.render(<Join />, document.getElementById('root'));
 
@@ -81,8 +101,6 @@ class App extends Component {
 
         else{
             document.getElementById("error").innerHTML = "Please enter a valid session code"
-
-
         }
 
 

@@ -72,7 +72,9 @@ app.listen(port, function() {
 
 // Express routers
 const hello = require('./routes/hello');
-const account = require('./routes/account')
+const account = require('./routes/account');
+const session = require('./routes/Session');
 
 app.use('/api/account', account);
 app.use('/api/hello', hello);
+app.use('/api/session', session);
