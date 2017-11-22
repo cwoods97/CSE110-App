@@ -10,11 +10,13 @@ router.post('/create_account', (req, res) => {
 
 		console.log("Registering backend user under the following uid:", uid);
 
-		admin.database().ref("users").child(userData.uid).set({
+		admin.database().ref("users").child(uid).set({
 				hostedSessions: '',
 				joinedSessions: '',
 				experience: '0'
 		});
+
+		res.sendStatus(200).end("Registered user account in the backend database.");
 })
 
 module.exports = router;
