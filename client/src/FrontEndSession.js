@@ -28,3 +28,29 @@ export function createBackendSession(idToken) {
         }
     })
 }
+
+export function joinBackendSession(idToken, code) {
+		return new Promise((resolve, reject) => {
+				if(idToken) {
+						fetch('/api/session/join', {
+								method: 'post',
+								body: JSON.stringify({
+										token: idToken,
+										accessCode: code
+								}),
+								headers: {
+										'Content-Type': 'application/json',
+										'Accept': 'application/json'
+								}
+						})
+						.then(response => response.json())
+						.then(response => {
+								resolve(response.key);
+						})
+						.catch(error => {
+								console.log(error);
+								return reject(error);
+						});
+				}
+		});
+}

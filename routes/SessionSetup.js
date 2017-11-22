@@ -5,13 +5,12 @@ router.post('/createSession', (req, res) => {
 	const uid = req.locals.uid;
 	const admin = req.locals.admin;
 	var sessionRef = admin.database().ref('sessions');
-	var userPath = 'users/'+req.body.uid;
-	var userRef = admin.database().ref(userPath);
+	var userRef = admin.database().ref("users").child(uid);
 	var accessCode = 0;
 	var uniqueAccessCode = false;
 	var max = 999999;
 	var min = 100001;
-	
+
 	//query database for active session with accessCode. If not found, uniqueAccessCode = true
 	sessionRef.orderByChild("accessCode").once('value', function(snapshot) {
 		
@@ -32,12 +31,14 @@ router.post('/createSession', (req, res) => {
 		newSessionRef.set({
 			presenter: uid,
 			accessCode: accessCode,
-			isActive: false,
+			isActive: true,
 			audienceCount: '0'
 		});
 		
 		//add the session ID to the list of presented sessions in the user object
-		userRef.child('hostedSessions').child(newSessionRef.key);
+		let json = {};
+		json[newSessionRef.key] = true;
+		userRef.child('hostedSessions').update(json);
 		res.json({accessCode: accessCode});
 	});
 })

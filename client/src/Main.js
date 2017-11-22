@@ -8,7 +8,7 @@ import Join from './Join';
 import AppFront from './App';
 import CreateSession from './CreateSession';
 import SessionHistory from './SessionHistory';
-import {createBackendSession} from './FrontEndSession';
+import {createBackendSession, joinBackendSession} from './FrontEndSession';
 import {getIdToken} from './RegisterFirebaseUser.js';
 
 import ReactDOM from 'react-dom';
@@ -64,47 +64,18 @@ class App extends Component {
 
         if (reg.test(coder)){
 
-						firebase.auth().onAuthStateChanged(function(user) {
-								if(user) {
-										user.getIdToken()
-										.then(token => {											
-												fetch('/api/session/join', {
-														method: 'post',
-														body: JSON.stringify({
-																token: token,
-																accessCode: coder
-														}),
-														headers: {
-																'Content-Type': 'application/json',
-																'Accept': 'application/json'
-														}
-												})
-												.then(data => {
-														//backend will send back the requested session
-												})
-												.catch(error => {
-														alert("post error: " + error.message);
-												})
-											})
-											.catch(error => {
-													alert("token error: " + error.message);
-											})
-								}
-								else {
-										alert("Please log in to join a session");
-								}
+						getIdToken().then(token => {
+								joinBackendSession(token, coder).then((key) => {
+										alert("Joining session: " + key);
+
+										ev.preventDefault();
+            				ReactDOM.render(<Join />, document.getElementById('root'));
+								});
 						});
-
-            ReactDOM.render(<Join />, document.getElementById('root'));
-
         }
-
         else{
             document.getElementById("error").innerHTML = "Please enter a valid session code"
         }
-
-
-
     };
 
     create= function(ev) {
