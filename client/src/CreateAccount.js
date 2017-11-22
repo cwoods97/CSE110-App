@@ -6,7 +6,8 @@ import DisplayUserData from './components/DisplayUserData.js';
 import './styles/App.css';
 
 import App from './App';
-import {createAccount} from './frontEndAccount'
+import Main from './Main';
+import { createAccount } from './RegisterFirebaseUser';
 
 class CreateAccount extends Component {
 
@@ -63,20 +64,22 @@ class CreateAccount extends Component {
         if (re.test(email) &&  pwd1===pwd2  && pwd1 !== "" && display !== "") {
 
             createAccount(display,email,pwd2)
-
-            .catch(error => {
+            .then((success) => {
+                // Only render user's main page when successfully logged in
+                if (success) {
+                    ReactDOM.render(<Main db={firebase} />, document.getElementById('root'));
+                }
+            })
+            .catch((error) => {
                var errorCode = error.code;
 
-               if(errorCode === 'auth/email-already-in-use') {
+               if (errorCode === 'auth/email-already-in-use') {
                    document.getElementById('emailError').innerHTML = "Email is already in use";
-               }
-
-               if(errorCode === 'auth/weak-password') {
+               } else if (errorCode === 'auth/weak-password') {
                    document.getElementById('pwdError').innerHTML = "Password is not strong enough";
                }
 
             });
-            ReactDOM.render(<App/>, document.getElementById('root'));
 
         } else {
 
