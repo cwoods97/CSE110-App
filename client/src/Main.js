@@ -8,7 +8,8 @@ import Join from './Join';
 import AppFront from './App';
 import CreateSession from './CreateSession';
 import SessionHistory from './SessionHistory';
-import createBackendSession from './FrontEndSession';
+import {createBackendSession} from './FrontEndSession';
+import {getIdToken} from './RegisterFirebaseUser.js';
 
 import ReactDOM from 'react-dom';
 class App extends Component {
@@ -30,7 +31,6 @@ class App extends Component {
         else{
             firebase.app()
         }
-
 
         this.state = {
             message: ""
@@ -90,7 +90,12 @@ class App extends Component {
     };
 
     create= function(ev) {
-		//createBackendSession(idToken);
+		getIdToken().then(token => {
+			createBackendSession(token).then(accessCode => {
+				console.log(accessCode);
+			});
+		});
+		
         ev.preventDefault();
         ReactDOM.render(<CreateSession />, document.getElementById('root'));
     };
