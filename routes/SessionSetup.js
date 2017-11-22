@@ -13,7 +13,7 @@ router.post('/createSession', (req, res) => {
 	var min = 100001;
 	
 	//query database for active session with accessCode. If not found, uniqueAccessCode = true
-	sessionRef.orderByChild("accessCode").equalTo(174699).once('value', function(snapshot) {
+	sessionRef.orderByChild("accessCode").once('value', function(snapshot) {
 		
 		while(!uniqueAccessCode) {
 			accessCode = Math.floor(Math.random()*(max - min))+min;
