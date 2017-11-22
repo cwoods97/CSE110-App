@@ -69,7 +69,7 @@ class AppFront extends Component {
             return;
         }
 
-	      login(email, password)
+	    login(email, password)
         .then(success => {
             if (success) {
                 ReactDOM.render(<Main db={firebase} />, document.getElementById('root'));

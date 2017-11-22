@@ -8,6 +8,8 @@ import Join from './Join';
 import AppFront from './App';
 import CreateSession from './CreateSession';
 import SessionHistory from './SessionHistory';
+import {createBackendSession} from './FrontEndSession';
+import {getIdToken} from './RegisterFirebaseUser.js';
 
 import ReactDOM from 'react-dom';
 class App extends Component {
@@ -30,14 +32,13 @@ class App extends Component {
             firebase.app()
         }
 
-
         this.state = {
             message: ""
         }
     }
 
     componentDidMount() {
-        return fetch('/api/hello')
+        return fetch('/api/hello/hi')
             .then((response) => response.json())
             .then((responseJson) => {
                 this.setState({
@@ -47,7 +48,6 @@ class App extends Component {
     }
 
     front = function(ev) {
-
         ev.preventDefault();
         ReactDOM.render(<AppFront />, document.getElementById('root'));
 
@@ -108,7 +108,12 @@ class App extends Component {
     };
 
     create= function(ev) {
-
+		getIdToken().then(token => {
+			createBackendSession(token).then(accessCode => {
+				console.log(accessCode);
+			});
+		});
+		
         ev.preventDefault();
         ReactDOM.render(<CreateSession />, document.getElementById('root'));
     };

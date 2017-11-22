@@ -36,7 +36,7 @@ class App extends Component {
     }
 
     componentDidMount() {
-        return fetch('/api/hello')
+        return fetch('/api/hello/hi')
             .then((response) => response.json())
             .then((responseJson) => {
                 this.setState({
@@ -246,4 +246,3 @@ class App extends Component {
 }
 
 export default App;
-
