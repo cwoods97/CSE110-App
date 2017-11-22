@@ -19,7 +19,7 @@ export function createBackendSession(idToken) {
 			}).then(response => response.json())
 			.then(response => {
 				//this should return the session access code
-				console.log(response);
+				resolve(response.accessCode);
 
 			}).catch(error => {
 				console.log(error);
