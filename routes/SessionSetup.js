@@ -25,6 +25,8 @@ router.post('/createSession', (req, res) => {
 			});			
 		}
 		
+		console.log("Creating session with access code:", accessCode);
+		
 		//create database object with default values and uid
 		var newSessionRef = sessionRef.push();
 		newSessionRef.set({
@@ -36,7 +38,6 @@ router.post('/createSession', (req, res) => {
 		
 		//add the session ID to the list of presented sessions in the user object
 		userRef.child('hostedSessions').child(newSessionRef.key);
-		console.log(accessCode);
 		res.json({accessCode: accessCode});
 	});
 })
