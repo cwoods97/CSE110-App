@@ -27,19 +27,42 @@ router.post('/join', (req, res) => {
 										json[child.key] = true;
 										userRef.child('joinedSessions').update(json);
 
-										res.json({key: child.key});
+										res.json({
+												session: {
+														id: child.key, 
+														code: session, 
+														audienceCount: audienceCount
+												} 
+										});
+
 								}
 								else {
-										console.log("Session no longer active");
+										res.status(400).json({error: "Session no longer active"});
 								}
 						});
 				}
 				else{
-						console.log("Session does not exist");
-						//res.status(404).json({error: 'Session not found'});
+						res.status(404).json({error: 'Session not found'});
 				}
 		});
 
+});
+
+router.post('/leave', (req, res) => {
+		
+		const session = req.body.session;
+		const db = req.locals.admin.database();
+
+		const ref = db.ref("sessions").child(session).once('value')
+		.then(function (snapshot) {
+				snapshot.forEach(function(child) {
+						const value = child.val();
+						audienceCount = parseInt(value.audienceCount);
+						audienceCount--;
+						ref.child('audienceCount').set(audienceCount.toString());
+				});
+		});
+		
 });
 
 module.exports = router;

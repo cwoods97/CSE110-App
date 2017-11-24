@@ -65,14 +65,18 @@ class App extends Component {
         if (reg.test(coder)){
 
 						getIdToken().then(token => {
-								joinBackendSession(token, coder).then((key) => {
-										alert("Joining session: " + key);
+								joinBackendSession(token, coder).then((session) => {
+										alert("Joining session: " + session.id);
+										alert("Access code is: " + session.code);
+										alert("Audience count is: " + session.audienceCount);
 
 										ev.preventDefault();
             				ReactDOM.render(<Join />, document.getElementById('root'));
+								}, (error) => {
+										document.getElementById("error").innerHTML = error;
 								});
-						});
-        }
+						});       
+				}
         else{
             document.getElementById("error").innerHTML = "Please enter a valid session code"
         }
