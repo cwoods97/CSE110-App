@@ -7,7 +7,8 @@ import ReactDOM from 'react-dom';
 
 import Main from './Main';
 import { Widget, addResponseMessage, addUserMessage } from 'react-chat-widget';
-
+import {leaveBackendSession} from './FrontEndSession';
+import {getIdToken} from './RegisterFirebaseUser.js';
 
 class Join extends Component {
 
@@ -52,7 +53,7 @@ class Join extends Component {
 
         e.preventDefault()
 
-        var mList = document.getElementById('messages')
+        var mList = document.getElementById('messages');
 
         var div1 = document.createElement('div');
         div1.classList.add('message')
@@ -78,7 +79,13 @@ class Join extends Component {
 
         ev.preventDefault();
 
-        ReactDOM.render(<Main />, document.getElementById('root'));
+				getIdToken().then(token => {
+						leaveBackendSession(token).then((message) => {
+								alert(message);
+				        ReactDOM.render(<Main />, document.getElementById('root'));
+						});
+				});
+
 
     }
 

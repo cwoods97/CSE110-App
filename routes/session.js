@@ -26,6 +26,7 @@ router.post('/join', (req, res) => {
 										json = {};
 										json[child.key] = true;
 										userRef.child('joinedSessions').update(json);
+										userRef.child('currentSession').set(child.key);
 
 										res.json({
 												session: {
@@ -49,17 +50,29 @@ router.post('/join', (req, res) => {
 });
 
 router.post('/leave', (req, res) => {
-		
-		const session = req.body.session;
+	
+		const user = req.locals.uid;
 		const db = req.locals.admin.database();
 
-		const ref = db.ref("sessions").child(session).once('value')
-		.then(function (snapshot) {
+		const userRef = db.ref("users").orderByKey().equalTo(user);
+		userRef.once('value').then(function (snapshot) {
 				snapshot.forEach(function(child) {
 						const value = child.val();
-						audienceCount = parseInt(value.audienceCount);
-						audienceCount--;
-						ref.child('audienceCount').set(audienceCount.toString());
+						const session = value.currentSession;
+						const uRef = db.ref("users").child(user);
+						uRef.child('currentSession').set(null);
+
+						const sessionRef = db.ref("sessions").orderByKey().equalTo(session);
+						sessionRef.once('value').then(function (snap) {
+								snap.forEach(function(child) {
+										let audienceCount = parseInt(child.val().audienceCount);
+										audienceCount--;
+										const sRef = db.ref("sessions").child(session);
+										sRef.child("audienceCount").set(audienceCount.toString());
+								});
+
+								res.json({message: "left session " + session});
+						});
 				});
 		});
 		

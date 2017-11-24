@@ -54,14 +54,13 @@ export function joinBackendSession(idToken, code) {
 		});
 }
 
-export function leaveBackendSession(idToken, sessionKey) {
+export function leaveBackendSession(idToken) {
 		return new Promise((resolve, reject) => {
 				if(idToken) {
 						fetch('/api/session/leave', {
 								method: 'post',
 								body: JSON.stringify({
 										token: idToken,
-										session: sessionKey
 								}),
 								headers: {
 										'Content-Type': 'application/json',
