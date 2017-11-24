@@ -2,26 +2,43 @@ var express = require('express');
 var router = express.Router();
 
 router.post('/join', (req, res) => {
-		var user = req.locals.uid;
-		var session = req.accessCode; //assuming this is how it's stored
 
-		//get database reference
-		var db = req.locals.admin.database();
-		var ref = db.ref("sessions"); //assuming sessions are stored here
+		const user = req.locals.uid;
+		const session = parseInt(req.body.accessCode);
+		
+		const db = req.locals.admin.database();
 
-		//find session in database
-		ref.orderByKey().equalTo(session);
-		//add user to list of participants
-		updateString = "/participants/" + user;
-		ref.update({updateString: true});
+		const ref = db.ref("sessions").orderByChild("accessCode").equalTo(session);
+		ref.once('value').then(function (snapshot) {
+				if(snapshot.val()){
+						snapshot.forEach(function(child) {
+								const value = child.val();
+								if(value.isActive){
+										const sessionRef = db.ref("sessions").child(child.key);
+										audienceCount = parseInt(value.audienceCount);
+										audienceCount++;
+										let json = {};
+										json[user] = true;
+										sessionRef.child('participants').update(json);
+										sessionRef.child('audienceCount').set(audienceCount.toString());
 
-		ref = db.ref("user"); //assuming users are stored here
+										const userRef = db.ref("users").child(user);
+										json = {};
+										json[child.key] = true;
+										userRef.child('joinedSessions').update(json);
 
-		//find user in database
-		ref.orderByKey().equalTo(user);
-		//add session to joinedSessions - update
-		updateString = '/joinedSessions/' + session;
-		ref.update({updateString: session});
+										res.json({key: child.key});
+								}
+								else {
+										console.log("Session no longer active");
+								}
+						});
+				}
+				else{
+						console.log("Session does not exist");
+						//res.status(404).json({error: 'Session not found'});
+				}
+		});
 
 });
 
