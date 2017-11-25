@@ -179,10 +179,20 @@ class CreateSession extends Component {
 
                     </div>
 
-                    <div id='chart' style={{width:'85%', height:'30em'}}>
+                    <div id= 'chart' style={{width:'85%',height:'30em'}}>
+                    <div class='chart' style={{width:'33%',display:'inline-block',height:'100%'}}>
 
                         <Chart/>
 
+                    </div>
+                    <div class="chart"style={{width:'33%',display:'inline-block',height:'100%'}}>
+                       <Chart/>
+
+                    </div>
+                    <div class = 'chart' style={{width:'33%',display:'inline-block',height:'100%'}}>
+
+                        <Chart/>
+                    </div>
                     </div>
 
 
