@@ -20,7 +20,27 @@ On Success: Returned promise resolves as true.
 export function createAccount(displayName, email, password) {
     return new Promise((resolve, reject) => {
         if (displayName && email && password) {
-            // TODO: If display name is also unique, we need to iterate over all users to verify it's unique
+            console.log("Verifying display name", displayName, "for new user account");
+
+            fetch('/api/account/verify', {
+                method: 'post',
+                body: JSON.stringify({
+                    displayName: displayName
+                }),
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                }
+            }).then((response) => {
+                if (response.status !== 200) {
+                    response.json().then((data) => {
+                        console.log("Is display name unique? ", data.isUnique);
+                    }).catch((error) => { reject(error); })
+                } else if (response.status === 404) {
+                    reject("Display name is not unique.");
+                }
+            }).catch((error) => { reject(error); })
+
             firebase.auth().createUserWithEmailAndPassword(email, password)
             .then(user => {
                 user.updateProfile({
@@ -72,7 +92,7 @@ export function login(email, password) {
             firebase.auth().signInWithEmailAndPassword(email, password)
             .then(user => {
                 user.getIdToken()
-                .then((token) => { 
+                .then((token) => {
 				resolve(true); })
                 .catch((error) => { reject(error) });
             }).catch(error => {

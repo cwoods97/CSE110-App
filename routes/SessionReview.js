@@ -9,7 +9,7 @@ router.get('/sessionData', (req, res) => {
 				res.sendStatus(200).end(snapshot);
 		}).catch((error) => {
 				res.sendStatus(404).end();
-		};
+		});
 });
 
 module.exports = router;
