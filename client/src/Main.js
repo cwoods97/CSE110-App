@@ -8,7 +8,8 @@ import Join from './Join';
 import AppFront from './App';
 import CreateSession from './CreateSession';
 import SessionHistory from './SessionHistory';
-import createBackendSession from './FrontEndSession';
+import {createBackendSession, joinBackendSession} from './FrontEndSession';
+import {getIdToken} from './RegisterFirebaseUser.js';
 
 import ReactDOM from 'react-dom';
 class App extends Component {
@@ -30,7 +31,6 @@ class App extends Component {
         else{
             firebase.app()
         }
-
 
         this.state = {
             message: ""
@@ -64,33 +64,31 @@ class App extends Component {
 
         if (reg.test(coder)){
 
-            /*
-            var XHR = new XMLHttpRequest();
-            var FD  = new FormData();
-            FD.append("accessCode",coder)
-            XHR.open('POST', 'https://example.com/mph.php');
+						getIdToken().then(token => {
+								joinBackendSession(token, coder).then((session) => {
+										alert("Joining session: " + session.id);
+										alert("Access code is: " + session.code);
+										alert("Audience count is: " + session.audienceCount);
 
-            // Send our FormData object; HTTP headers are set automatically
-            XHR.send(FD);
-            alert("Valid Session Code")
-*/
-
-            ReactDOM.render(<Join />, document.getElementById('root'));
-
-        }
-
+										ev.preventDefault();
+            				ReactDOM.render(<Join />, document.getElementById('root'));
+								}, (error) => {
+										document.getElementById("error").innerHTML = error;
+								});
+						});       
+				}
         else{
             document.getElementById("error").innerHTML = "Please enter a valid session code"
-
-
         }
-
-
-
     };
 
     create= function(ev) {
-		//createBackendSession(idToken);
+		getIdToken().then(token => {
+			createBackendSession(token).then(accessCode => {
+				console.log(accessCode);
+			});
+		});
+		
         ev.preventDefault();
         ReactDOM.render(<CreateSession />, document.getElementById('root'));
     };

@@ -72,7 +72,8 @@ export function login(email, password) {
             firebase.auth().signInWithEmailAndPassword(email, password)
             .then(user => {
                 user.getIdToken()
-                .then((token) => { resolve(true) })
+                .then((token) => { 
+				resolve(true); })
                 .catch((error) => { reject(error) });
             }).catch(error => {
                 reject(error);

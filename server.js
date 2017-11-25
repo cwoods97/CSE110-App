@@ -73,10 +73,12 @@ app.listen(port, function() {
 // Express routers
 const hello = require('./routes/hello');
 const account = require('./routes/account');
+const session = require('./routes/Session');
 const sessionSetup = require('./routes/sessionSetup');
 const feedback = require('./routes/feedback');
 
 app.use('/api/account', account);
 app.use('/api/hello', hello);
+app.use('/api/session', session);
 app.use('/api/sessionSetup', sessionSetup);
 app.use('/api/feedback', feedback);
