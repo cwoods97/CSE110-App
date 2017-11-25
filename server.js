@@ -74,7 +74,9 @@ app.listen(port, function() {
 const hello = require('./routes/hello');
 const account = require('./routes/account');
 const sessionSetup = require('./routes/sessionSetup');
+const feedback = require('./routes/feedback');
 
 app.use('/api/account', account);
 app.use('/api/hello', hello);
 app.use('/api/sessionSetup', sessionSetup);
+app.use('/api/feedback', feedback);
