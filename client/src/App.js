@@ -52,7 +52,7 @@ class AppFront extends Component {
         ev.preventDefault();
 
         var email = document.getElementById("email").value;
-		    var password = document.getElementById("password").value;
+        var password = document.getElementById("password").value;
         // regex from http://stackoverflow.com/questions/46155/validate-email-address-in-javascript
         var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
@@ -69,12 +69,12 @@ class AppFront extends Component {
             return;
         }
 
-	    login(email, password)
-        .then(success => {
-            if (success) {
-                ReactDOM.render(<Main db={firebase} />, document.getElementById('root'));
-            }
-        }).catch(error => {
+        login(email, password)
+            .then(success => {
+                if (success) {
+                    ReactDOM.render(<Main db={firebase} />, document.getElementById('root'));
+                }
+            }).catch(error => {
             document.getElementById('error').innerHTML += '\n' + error.message;
         });
     }
@@ -118,19 +118,19 @@ class AppFront extends Component {
             // regex from http://stackoverflow.com/questions/46155/validate-email-address-in-javascript
             var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
             ;
-        if(!re.test(x)){
+            if(!re.test(x)){
 
-            document.getElementById("rError").innerHTML = "Please enter a valid email address"
+                document.getElementById("rError").innerHTML = "Please enter a valid email address"
 
-        }
-        else{
-						firebase.auth().sendPasswordResetEmail(x)
-						.then(() => {
-							document.getElementById('rError').innerHTML = "Password reset email sent!";
-						}).catch((error) => {
-								document.getElementById('rError').innerHTML = error.message;
-						});
-				}
+            }
+            else{
+                firebase.auth().sendPasswordResetEmail(x)
+                    .then(() => {
+                        document.getElementById('rError').innerHTML = "Password reset email sent!";
+                    }).catch((error) => {
+                    document.getElementById('rError').innerHTML = error.message;
+                });
+            }
         };
         but.innerHTML = "Reset";
 
@@ -150,43 +150,43 @@ class AppFront extends Component {
         return (
 
             <div >
-              <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"></link>
-              <div style={{backgroundColor:'LightSkyBlue',height:"100%"}}>
+                <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"></link>
+                <div style={{backgroundColor:'LightSkyBlue',height:"100%"}}>
 
-                <h3 style={{marginLeft:'10px',marginTop:'0px',marginBottom:'1px',height:'35px',fontFamily:'cursive',cursor:'pointer'}}><b>speakeasy</b>
+                    <h3 style={{marginLeft:'10px',marginTop:'0px',marginBottom:'1px',height:'35px',fontFamily:'cursive',cursor:'pointer'}}><b>speakeasy</b>
 
-                    <button onClick={this.about} style={{float:'right',backgroundColor:'lightskyblue', marginRight:'0px',height:'100%'}} class='w3-btn w3-medium'>About Us</button>
-                </h3>
-              </div>
-
-              <div >
-
-                <div ref="login" style={{backgroundColor:'LightSkyBlue',float:'right',padding:"20px",width:'30%',marginRight:'50px',marginLeft:'100px' ,marginTop:"50px"}}>
-                  <h2>Login</h2>
-
-                  <form action="">
-                    <p id="error"></p>
-
-                    <input  ref = 'email' id = "email"class = "w3-input" type="text" name="fname" placeholder={"Email"}></input><br></br>
-                    <input class= "w3-input" id = "password" type="password" name="lname" placeholder={"Password"}></input><br></br>
-                    <br></br>
-                    <input id= "submit" class="w3-btn w3-blue-grey" onClick= {this.main} type="submit" value="Submit"></input>
-                    <button onClick={this.create} style={{float:"right"}} class="w3-btn w3-blue-grey">Create an Account</button>
-                  </form>
-
-                    <br></br>
-
-                    <a href="#" ref="res" id="reset" onClick = {this.reset.bind(this)} style={{textDecoration:'underline'}}>Forgot Your Password?</a>
+                        <button onClick={this.about} style={{float:'right',backgroundColor:'lightskyblue', marginRight:'0px',height:'100%'}} class='w3-btn w3-medium'>About Us</button>
+                    </h3>
                 </div>
 
-              </div >
+                <div >
 
-                 <div style={{padding:"20px", margin:'50px'}}>
-                <h3>
-                  Welcome to speakeasy, a web app designed to enhance presentations, speeches, and public speaking in general. Our goal is to improve the experiences of both the audience and speech givers.
-                </h3>
+                    <div ref="login" style={{backgroundColor:'LightSkyBlue',float:'right',padding:"20px",width:'30%',marginRight:'50px',marginLeft:'100px' ,marginTop:"50px"}}>
+                        <h2>Login</h2>
 
-              </div>
+                        <form action="">
+                            <p id="error"></p>
+
+                            <input  ref = 'email' id = "email"class = "w3-input" type="text" name="fname" placeholder={"Email"}></input><br></br>
+                            <input class= "w3-input" id = "password" type="password" name="lname" placeholder={"Password"}></input><br></br>
+                            <br></br>
+                            <input id= "submit" class="w3-btn w3-blue-grey" onClick= {this.main} type="submit" value="Submit"></input>
+                            <button onClick={this.create} style={{float:"right"}} class="w3-btn w3-blue-grey">Create an Account</button>
+                        </form>
+
+                        <br></br>
+
+                        <a href="#" ref="res" id="reset" onClick = {this.reset.bind(this)} style={{textDecoration:'underline'}}>Forgot Your Password?</a>
+                    </div>
+
+                </div >
+
+                <div style={{padding:"20px", margin:'50px'}}>
+                    <h3>
+                        Welcome to speakeasy, a web app designed to enhance presentations, speeches, and public speaking in general. Our goal is to improve the experiences of both the audience and speech givers.
+                    </h3>
+
+                </div>
 
 
             </div>

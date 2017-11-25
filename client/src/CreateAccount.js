@@ -64,22 +64,22 @@ class CreateAccount extends Component {
         if (re.test(email) &&  pwd1===pwd2  && pwd1 !== "" && display !== "") {
 
             createAccount(display,email,pwd2)
-            .then((success) => {
-                // Only render user's main page when successfully logged in
-                if (success) {
-                    ReactDOM.render(<Main db={firebase} />, document.getElementById('root'));
-                }
-            })
-            .catch((error) => {
-               var errorCode = error.code;
+                .then((success) => {
+                    // Only render user's main page when successfully logged in
+                    if (success) {
+                        ReactDOM.render(<Main db={firebase} />, document.getElementById('root'));
+                    }
+                })
+                .catch((error) => {
+                    var errorCode = error.code;
 
-               if (errorCode === 'auth/email-already-in-use') {
-                   document.getElementById('emailError').innerHTML = "Email is already in use";
-               } else if (errorCode === 'auth/weak-password') {
-                   document.getElementById('pwdError').innerHTML = "Password is not strong enough";
-               }
+                    if (errorCode === 'auth/email-already-in-use') {
+                        document.getElementById('emailError').innerHTML = "Email is already in use";
+                    } else if (errorCode === 'auth/weak-password') {
+                        document.getElementById('pwdError').innerHTML = "Password is not strong enough";
+                    }
 
-            });
+                });
 
         } else {
 
