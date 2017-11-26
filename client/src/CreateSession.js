@@ -6,6 +6,8 @@ import './styles/App.css';
 import ReactDOM from 'react-dom';
 
 import Main from './Main';
+import {updateTitle} from './FrontEndSession';
+import {getIdToken} from './RegisterFirebaseUser';
 
 import { ReactMic } from 'react-mic';
 
@@ -71,6 +73,18 @@ class CreateSession extends Component {
         ReactDOM.render(<Main />, document.getElementById('root'));
 
     }
+
+		updateTitle = function(){
+
+				var title = document.getElementById("title").value; 
+				var accessCode = document.getElementById("accessCode").value;
+
+				getIdToken().then(token => {
+						updateTitle(token, accessCode, title).then((title) => {
+								alert("title set to " + title);
+						});
+				});
+		}
 
     render() {
         return (

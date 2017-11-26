@@ -60,7 +60,7 @@ export function leaveBackendSession(idToken) {
 						fetch('/api/session/leave', {
 								method: 'post',
 								body: JSON.stringify({
-										token: idToken,
+										token: idToken
 								}),
 								headers: {
 										'Content-Type': 'application/json',
@@ -77,4 +77,32 @@ export function leaveBackendSession(idToken) {
 						});
 				}
 		});
+}
+
+export function updateTitle(idToken, code, newTitle) {
+		return new Promise((resolve, reject) => {
+				if(idToken) {
+						fetch('/api/session/title', {
+								method: 'post',
+								body: JSON.stringify({
+										token: idToken,
+										accessCode: code,
+										title: newTitle
+								}),
+								headers: {
+										'Content-Type': 'application/json',
+										'Accept': 'application/json'
+								}
+						})
+						.then(response => response.json())
+						.then(response => {
+								resolve(response.title);
+						})
+						.catch(error => {
+								console.log(error);
+								return reject(error);
+						});
+				}
+		});
+
 }

@@ -78,4 +78,24 @@ router.post('/leave', (req, res) => {
 		
 });
 
+router.post('/title', (req, res) => {
+
+		const user = req.locals.uid;
+		const code = parseInt(req.body.accessCode);
+		const title = req.body.title;
+
+		const db = req.locals.admin.database();
+
+		const ref = db.ref("sessions").orderByChild("accessCode").equalTo(code);
+		ref.once('value').then(function (snapshot) {
+				snapshot.forEach(function(child) {
+							const session = db.ref("sessions").child(child.key);
+							session.child('title').set(title);
+
+							res.json({title: title});
+				});
+		});
+
+});
+
 module.exports = router;
