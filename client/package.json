@@ -8,8 +8,12 @@
     "node": "6.11.5"
   },
   "dependencies": {
+    "bootstrap": "^3.3.7",
+    "chart.js": "^2.7.1",
     "firebase": "^4.6.0",
     "react": "^16.0.0",
+    "react-bootstrap": "^0.31.5",
+    "react-chartjs-2": "^2.6.4",
     "react-chat-widget": "^2.1.2",
     "react-dom": "^16.0.0",
     "react-mic": "^9.0.0",

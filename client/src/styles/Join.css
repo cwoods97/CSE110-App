@@ -1,0 +1,128 @@
+.App {
+    text-align: center;
+}
+
+.App-logo {
+    animation: App-logo-spin infinite 20s linear;
+    height: 80px;
+}
+
+.App-header {
+    background-color: #222;
+    height: 150px;
+    padding: 20px;
+    color: white;
+}
+
+.App-title {
+    font-size: 1.5em;
+}
+
+.App-intro {
+    font-size: large;
+}
+
+@keyframes App-logo-spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+#comments{
+    border-radius: 10px !important;
+    position:static;
+}
+
+.header{
+    background-color:#665084 !important;
+
+
+}
+
+*{
+    text-decoration: none !important;
+
+}
+.widget-container{
+    z-index: 0 !important;
+    margin: 0 !important;
+
+}
+
+.predefined{
+
+    margin: 0em 0em 4em 3px;
+
+}
+
+@media screen and (max-width: 800px){
+    #customized {
+
+        width: 100% !important;
+        height: 100% !important;
+
+    }
+    #comments{
+
+        height: 100% !important;
+        width: 100% !important;
+
+    }
+    #left{
+        width:100% !important;
+
+
+    }
+    #messages{
+        height: 50vh;
+
+    }
+    .header{
+        font-size: 70%;
+
+
+
+    }
+
+}
+
+@media screen and (max-width: 600px) {
+
+    #navigationJoin{
+        width:30% !important;
+        font-size: 75% !important;
+
+    }
+    #content{
+        width: 70% !important;
+
+    }
+
+    .predefined{
+
+        font-size: 60% !important;
+        margin: 0 0 2em 3px !important;
+
+    }
+
+
+}
+
+.w3-sidebar{
+    width: 15% !important;
+}
+
+.new-message{
+    width: 80% !important;
+    float: left !important;
+
+}
+#post{
+    float: right !important;
+
+}
+.message-text,.client{
+
+    background-color:#c4a5ff !important;
+    width: 100% !important;
+    max-width: 5000px !important;
+
+}

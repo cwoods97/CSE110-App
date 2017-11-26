@@ -39,8 +39,8 @@ app.use(function(req, res, next) {
         admin.auth().verifyIdToken(idToken)
         .then(decodedToken => {
             req.locals = {
-  					   'admin': admin,
-               'uid': decodedToken.uid
+                'admin': admin,
+                'uid': decodedToken.uid
             };
             next();
   			}).catch(error => {
@@ -50,9 +50,13 @@ app.use(function(req, res, next) {
   			})
   	// TODO This code is for debugging puroses ONLY and should be disabled in production.
   	} else {
-    		req.locals = { 'admin': admin };
-    		console.log("Token not provided. Overriding default behavior for development purposes.");
-    		next();
+        if (req.body.displayName) {
+            req.locals = { 'displayName': req.body.displayName, 'admin': admin };
+        } else {
+            req.locals = { 'admin': admin };
+        }
+		console.log("Token not provided. Overriding default behavior for development purposes.");
+		next();
   	}
 });
 
@@ -65,18 +69,24 @@ if (Boolean(parseInt(is_production))) {
   	app.use(express.static(path.join(__dirname, 'client/build')));
 }
 
+// Express routers
+const hello = require('./routes/Hello');
+const account = require('./routes/Account');
+const session = require('./routes/Session');
+const presenterSession = require('./routes/PresenterSession');
+const sessionReview = require('./routes/SessionReview');
+const sessionSetup = require('./routes/SessionSetup');
+const user = require('./routes/User');
+
+app.use('/api/hello', hello);
+app.use('/api/account', account);
+app.use('/api/session', session);
+app.use('/api/presenterSession', presenterSession)
+app.use('/api/sessionReview', sessionReview)
+app.use('/api/sessionSetup', sessionSetup)
+app.use('/api/user', user)
+
 const port = process.env.PORT || 3000;
 app.listen(port, function() {
 	 console.log('Server listening on port ' + port)
 })
-
-// Express routers
-const hello = require('./routes/hello');
-const account = require('./routes/account');
-const session = require('./routes/Session');
-const sessionSetup = require('./routes/sessionSetup');
-
-app.use('/api/account', account);
-app.use('/api/hello', hello);
-app.use('/api/session', session);
-app.use('/api/sessionSetup', sessionSetup);
