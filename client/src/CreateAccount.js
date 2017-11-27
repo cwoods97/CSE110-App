@@ -72,20 +72,23 @@ class CreateAccount extends Component {
                 })
                 .catch((error) => {
                     var errorCode = error.code;
+                    const getById = document.getElementById;
 
-                    if (errorCode === 'auth/email-already-in-use') {
-                        document.getElementById('emailError').innerHTML = "Email is already in use";
+                    if (errorCode === 'auth/invalid-name') {
+                        getById('displayNameError').innerHTML = "Please enter a valid display name";
+                    } else if (errorCode === 'auth/name-already-in-use') {
+                        getById('displayNameError').innerHTML = "Display name is already in use";
+                    } else if (errorCode === 'auth/email-already-in-use') {
+                        getById('emailError').innerHTML = "Email is already in use";
                     } else if (errorCode === 'auth/weak-password') {
-                        document.getElementById('pwdError').innerHTML = "Password is not strong enough";
+                        getById('pwdError').innerHTML = "Password is not strong enough";
                     }
-
                 });
 
         } else {
 
             if (!re.test(email)) {
                 document.getElementById('emailError').innerHTML = "Please enter a valid email address";
-
             } else {
                 document.getElementById('emailError').innerHTML = "";
             }
