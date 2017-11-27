@@ -71,15 +71,13 @@ if (Boolean(parseInt(is_production))) {
 const hello = require('./routes/Hello');
 const account = require('./routes/Account');
 const session = require('./routes/Session');
-<<<<<<< HEAD:server.js
 const sessionSetup = require('./routes/sessionSetup');
 const feedback = require('./routes/feedback');
-=======
+const feedback = require('./routes/feedback');
 const presenterSession = require('./routes/PresenterSession');
 const sessionReview = require('./routes/SessionReview');
 const sessionSetup = require('./routes/SessionSetup');
 const user = require('./routes/User');
->>>>>>> 5da9a41f8d0e32dc53cd699bb90a7e21a2b685b7:Server.js
 
 app.use('/api/hello', hello);
 app.use('/api/account', account);
