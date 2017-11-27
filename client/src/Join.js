@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import firebase from 'firebase';
-import Users from './components/Users.js';
-import DisplayUserData from './components/DisplayUserData.js';
-import './styles/App.css';
+import './styles/Join.css';
 import ReactDOM from 'react-dom';
+import 'bootstrap/dist/css/bootstrap.css';
+import 'bootstrap/dist/css/bootstrap-theme.css';
+
 
 import Main from './Main';
 import { Widget, addResponseMessage, addUserMessage } from 'react-chat-widget';
@@ -23,7 +24,7 @@ class Join extends Component {
             storageBucket: "speakeasy-25a66.appspot.com",
             messagingSenderId: "836790794762"
         };
-        if (firebase.apps.length == 0){
+        if (firebase.apps.length === 0){
             firebase.initializeApp(config);
         }
         else{
@@ -36,17 +37,7 @@ class Join extends Component {
 
 
     componentDidMount() {
-
-
-
         //document.getElementsByClassName('conversation-container').style.display = "flex"
-        return fetch('/api/hello')
-            .then((response) => response.json())
-            .then((responseJson) => {
-                this.setState({
-                    message: responseJson.message
-                });
-            })
     }
 
     add = function (e){
@@ -92,100 +83,88 @@ class Join extends Component {
     render() {
         return (
 
-            <div >
+            <div style={{height:'100%'}}>
                 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"></link>
 
-                <div style={{height:'75px'}}>
-                    <div style={{backgroundColor:'CornFlowerBlue',height:"100%"}}>
-
-                        <center>
-                            <h1 style={{marginLeft:'10px',marginTop:'0px',marginBottom:'1px',height:'35px',fontFamily:'cursive'}}><b>speakeasy</b>
+                <div style={{height:'45px',borderBottom:'4px solid #665084'}}>
+                    <div style={{backgroundColor:'#c4a5ff',height:"100%"}}>
 
 
-                            </h1>
-                        </center>
+                        <h2 style={{marginLeft:'10px',marginTop:'0px',marginBottom:'1px',height:'35px',fontFamily:'cursive'}}><b>speakeasy</b>
+
+
+                        </h2>
+
 
                     </div>
                 </div>
 
-                <div class="w3-sidebar w3-bar-block" style={{width:'20%',height:'100%',backgroundColor:'lightgrey',zIndex:'0',overflow:'hidden'}}>
 
-                    <a href="#" class="w3-bar-item" style={{backgroundColor:'aqua'}}>Michael Harasti</a>
-                    <a href="#" class="w3-bar-item w3-button" onClick={this.main} style={{backgroundColor:'lightgrey'}}>Leave Session</a>
-                    <a href="#" class="w3-bar-item w3-button" style={{backgroundColor:'lightgrey'}}>Share</a>
-                    <br></br>
-                    <br></br>
-                    <br></br>
-                    <br></br>
-                    <br></br>
-                    <br></br>
-                    <br></br>
-                    <br></br>
-                    <br></br>
+                <div id='navigationJoin' class=" w3-sidebar w3-bar-block w3-responsive" style={{float:'both',margin:'auto',height:'100%',backgroundColor:'lightgrey',zIndex:'0'}}>
+
+
+                    <a class="w3-bar-item" style={{backgroundColor:'PaleVioletRed'}}>Michael Harasti</a>
+                    <a class="w3-bar-item w3-button" onClick={this.main} style={{backgroundColor:'lightgrey'}}>Leave Session</a>
+                    <a class="w3-bar-item w3-button" style={{backgroundColor:'lightgrey'}}>Share</a>
+
+
                 </div>
 
 
 
 
-                <div style={{overflow:'hidden'}}>
+                <div id='content' class='w3-responsive' style={{height:'100%',float:'right',width:'85%'}}>
 
 
-                    <div style={{borderRight:'6px solid black',float:'left',width:"45%", marginLeft:'330px',marginTop:'10px', height:'100%'}}>
+                    <div id='left' class= 'w3-responsive' style={{display:'inline-block', float:'left', width:'50%',height:'100%'}}>
                         <center>
-                            <p style={{width:'', overflow:'hidden'}}><h3><b>Give Predefined Feedback</b></h3></p>
+                            <p style={{marginTop:'1em', overflow:'hidden'}}><h3><b>Give Predefined Feedback</b></h3></p>
                         </center>
 
                         <center>
 
-                        <button class="w3-btn w3-large w3-round" style={{margin:'10px',backgroundColor:'palegreen'}}>Pace of Speech too Fast</button>
-                        <button class="w3-btn w3-large w3-round" style={{margin:'10px',backgroundColor:'palegreen'}}>Pace of Speech too Slow</button>
+                            <button  bsStyle="Pace of Speech too Fast" class="predefined w3-btn w3-round" style={{backgroundColor:'#665084',color:'white'}}>Pace of Speech too Fast</button>
+                            <button bsStyle="Pace of Speech too Slow" class="predefined w3-btn w3-round" style={{backgroundColor:'#665084',color:'white'}}>Pace of Speech too Slow</button>
                             <br></br>
+                            <button bsStyle = "Speak Up"class="predefined w3-btn w3-round" style={{backgroundColor:'#6164a3',color:"white"}}>Speak Up</button>
+                            <button bsStyle = "Too Loud" class="predefined w3-btn w3-round" style={{backgroundColor:'#6164a3',color:"white"}}>Too Loud</button>
+
                             <br></br>
-                            <br></br>
-                            <br></br>
-                            <br></br>
-                            <br></br>
-                        <button class="w3-btn w3-large w3-round" style={{margin:'10px',backgroundColor:'powderblue'}}>Speak Up</button>
-                        <button class="w3-btn w3-large w3-round" style={{margin:'10px',backgroundColor:'powderblue'}}>Too Loud</button>
-                            <br></br>
-                            <br></br>
-                            <br></br>
-                            <br></br>
-                            <br></br>
-                            <br></br>
-                        <button class="w3-btn w3-large w3-round" style={{margin:'10px',backgroundColor:'mediumorchid'}}>Talking too Fast</button>
-                        <button class="w3-btn w3-large w3-round" style={{margin:'10px',backgroundColor:'mediumorchid'}}>Talking too Slow</button>
+
+                            <button bsStyle="Talking too Fast" class="predefined w3-btn w3-round" style={{backgroundColor:'#c4a5ff',color:'black'}}>Talking too Fast</button>
+                            <button bsStyle="Talking too Slow"class="predefined w3-btn w3-round" style={{backgroundColor:'#c4a5ff',color:'black'}}>Talking too Slow</button>
 
                         </center>
+
 
 
                     </div>
 
-                    <div style={{backgroundColor:'',width:'25%',marginRight:'50px',marginTop:'10px',float:'right', height:'100%'}}>
+                    <div id='customized' class='w3-responsive' style={{marginTop:'1em' ,display:'inline-block', float:'right',width:'50%', height:'100%'}}>
+
                         <center>
 
 
-
-                        <div id = "comments"class="widget-container"><div class="conversation-container">
-                            <div class="header"><button class="close-button">
-                                </button>
+                        <div id = "comments"class="widget-container" ><div class="w3-responsive conversation-container">
+                            <div class="header w3-responsive">
                                 <h4 class="title">Give Customized Feedback</h4><span></span></div>
-                            <div id="messages" class="messages-container">
+                            <div id="messages" class="messages-container w3-responsive">
 
                             </div>
 
 
-                            <form class="sender">
+                            <form class="sender w3-responsive">
 
-                                <input id="comment" type="text" class="new-message" name="message" placeholder="Type a message..." autocomplete="off"></input>
+                                <input id="comment" style={{display:'inline-block'}}type="text" class="new-message" name="message" placeholder="Type a message..." autocomplete="off"></input>
 
 
-                                <button type="submit" class="send" onClick={this.add.bind(this)} >Post</button>
+                                <button id='post' type="submit" style={{display:'inline-block'}} class="send" onClick={this.add.bind(this)} >Post</button>
                             </form>
                         </div>
                         </div>
-                        </center>
+                            <br></br>
 
+                        </center>
 
 
                     </div>

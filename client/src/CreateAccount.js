@@ -35,15 +35,7 @@ class CreateAccount extends Component {
         }
     }
 
-    componentDidMount() {
-        return fetch('/api/hello/hi')
-            .then((response) => response.json())
-            .then((responseJson) => {
-                this.setState({
-                    message: responseJson.message
-                });
-            })
-    }
+    componentDidMount() {}
 
     go_home = function(ev) {
         ReactDOM.render(<App />, document.getElementById('root'));
@@ -64,28 +56,29 @@ class CreateAccount extends Component {
         if (re.test(email) &&  pwd1===pwd2  && pwd1 !== "" && display !== "") {
 
             createAccount(display,email,pwd2)
-            .then((success) => {
-                // Only render user's main page when successfully logged in
-                if (success) {
+                .then(() => {
+                    // Only render user's main page when successfully logged in
                     ReactDOM.render(<Main db={firebase} />, document.getElementById('root'));
-                }
-            })
-            .catch((error) => {
-               var errorCode = error.code;
+                })
+                .catch((error) => {
+                    var errorCode = error.code;
+                    const getById = document.getElementById.bind(document);
 
-               if (errorCode === 'auth/email-already-in-use') {
-                   document.getElementById('emailError').innerHTML = "Email is already in use";
-               } else if (errorCode === 'auth/weak-password') {
-                   document.getElementById('pwdError').innerHTML = "Password is not strong enough";
-               }
-
-            });
+                    if (errorCode === 'auth/invalid-name') {
+                        getById('displayNameError').innerHTML = "Please enter a valid display name";
+                    } else if (errorCode === 'auth/name-already-in-use') {
+                        getById('displayNameError').innerHTML = "Display name is already in use";
+                    } else if (errorCode === 'auth/email-already-in-use') {
+                        getById('emailError').innerHTML = "Email is already in use";
+                    } else if (errorCode === 'auth/weak-password') {
+                        getById('pwdError').innerHTML = "Password is not strong enough";
+                    }
+                });
 
         } else {
 
             if (!re.test(email)) {
                 document.getElementById('emailError').innerHTML = "Please enter a valid email address";
-
             } else {
                 document.getElementById('emailError').innerHTML = "";
             }

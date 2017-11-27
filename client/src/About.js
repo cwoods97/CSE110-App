@@ -45,7 +45,7 @@ class About extends Component {
 
             <div>
               <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"></link>
-              <div style={{backgroundColor:'LightSkyBlue',height:"100%"}}>
+              <div style={{backgroundColor:'#6164a3',height:"100%"}}>
 
                   <h3 style={{marginLeft:'10px',marginTop:'0px',marginBottom:'1px',height:'35px',fontFamily:'cursive'}}><a style={{cursor:"pointer"}}onClick ={this.app}><b>speakeasy</b></a>
 

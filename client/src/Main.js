@@ -37,15 +37,7 @@ class App extends Component {
         }
     }
 
-    componentDidMount() {
-        return fetch('/api/hello/hi')
-            .then((response) => response.json())
-            .then((responseJson) => {
-                this.setState({
-                    message: responseJson.message
-                });
-            })
-    }
+    componentDidMount() {}
 
     front = function(ev) {
         ev.preventDefault();
@@ -75,7 +67,7 @@ class App extends Component {
 								}, (error) => {
 										document.getElementById("error").innerHTML = error;
 								});
-						});       
+						});
 				}
         else{
             document.getElementById("error").innerHTML = "Please enter a valid session code"
@@ -88,7 +80,7 @@ class App extends Component {
 				console.log(accessCode);
 			});
 		});
-		
+
         ev.preventDefault();
         ReactDOM.render(<CreateSession />, document.getElementById('root'));
     };

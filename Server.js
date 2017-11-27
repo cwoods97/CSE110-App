@@ -10,7 +10,6 @@ admin.initializeApp({
     databaseURL: "https://speakeasy-25a66.firebaseio.com"
 });
 
-
 const app = express();
 app.use(bodyParser.json());         // to support JSON-encoded bodies
 app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
@@ -39,20 +38,23 @@ app.use(function(req, res, next) {
         admin.auth().verifyIdToken(idToken)
         .then(decodedToken => {
             req.locals = {
-  					   'admin': admin,
-               'uid': decodedToken.uid
+                'admin': admin,
+                'uid': decodedToken.uid
             };
             next();
-  			}).catch(error => {
-    				res.send("Firebase could not verify the provided token." +
-    				          + "\n" + error.message );
-    				res.sendStatus(404).end();
-  			})
+		}).catch(error => {
+			res.status(404).send("Firebase could not verify the provided token." +
+			                     + "\n" + error.message );
+		})
   	// TODO This code is for debugging puroses ONLY and should be disabled in production.
   	} else {
-    		req.locals = { 'admin': admin };
-    		console.log("Token not provided. Overriding default behavior for development purposes.");
-    		next();
+        if (req.body.displayName) {
+            req.locals = { 'displayName': req.body.displayName, 'admin': admin };
+        } else {
+            req.locals = { 'admin': admin };
+        }
+		console.log("Token not provided. Overriding default behavior for development purposes.");
+		next();
   	}
 });
 
@@ -65,20 +67,30 @@ if (Boolean(parseInt(is_production))) {
   	app.use(express.static(path.join(__dirname, 'client/build')));
 }
 
+// Express routers
+const hello = require('./routes/Hello');
+const account = require('./routes/Account');
+const session = require('./routes/Session');
+<<<<<<< HEAD:server.js
+const sessionSetup = require('./routes/sessionSetup');
+const feedback = require('./routes/feedback');
+=======
+const presenterSession = require('./routes/PresenterSession');
+const sessionReview = require('./routes/SessionReview');
+const sessionSetup = require('./routes/SessionSetup');
+const user = require('./routes/User');
+>>>>>>> 5da9a41f8d0e32dc53cd699bb90a7e21a2b685b7:Server.js
+
+app.use('/api/hello', hello);
+app.use('/api/account', account);
+app.use('/api/session', session);
+app.use('/api/feedback', feedback);
+app.use('/api/presenterSession', presenterSession)
+app.use('/api/sessionReview', sessionReview)
+app.use('/api/sessionSetup', sessionSetup)
+app.use('/api/user', user)
+
 const port = process.env.PORT || 3000;
 app.listen(port, function() {
 	 console.log('Server listening on port ' + port)
 })
-
-// Express routers
-const hello = require('./routes/hello');
-const account = require('./routes/account');
-const session = require('./routes/Session');
-const sessionSetup = require('./routes/sessionSetup');
-const feedback = require('./routes/feedback');
-
-app.use('/api/account', account);
-app.use('/api/hello', hello);
-app.use('/api/session', session);
-app.use('/api/sessionSetup', sessionSetup);
-app.use('/api/feedback', feedback);
