@@ -19,7 +19,7 @@ On Success: Returned promise resolves as true.
 export function createAccount(displayName, email, password) {
     return new Promise((resolve, reject) => {
         if (displayName && email && password) {
-            log("Creating firebase and backend user accounts for", displayName + ".");
+            log("Creating firebase and backend user accounts for " + displayName + ".");
 
             fetch('/api/account/verify', {
                 method: 'post',
@@ -31,51 +31,50 @@ export function createAccount(displayName, email, password) {
                     'Accept': 'application/json'
                 }
             }).then((response) => {
-                if (response.status !== 200) {
-                    response.json().then((data) => {
-                        if (data.isUnique) {
-                            firebase.auth().createUserWithEmailAndPassword(email, password)
-                                .then(user => {
-                                    user.updateProfile({
-                                        displayName: displayName
-                                    }).catch(error => {
-                                        reject('auth/invalid-name');
-                                    });
-
-                                    // Create backend account upon successful firebase registration
-                                    user.getIdToken()
-                                        .then(token => {
-                                            fetch('/api/account/createAccount', {
-                                                method: 'post',
-                                                body: JSON.stringify({
-                                                    displayName: displayName,
-                                                    email: email,
-                                                    token: token
-                                                }),
-                                                headers: {
-                                                    'Content-Type': 'application/json',
-                                                    'Accept': 'application/json'
-                                                }
-                                            }).then((response) => {
-                                                if (response.status === 200) {
-                                                    log("Successfully created both firebase and backend accounts for", displayName);
-                                                    resolve();
-                                                } else {
-                                                    reject({ code: 'auth/backend-error' });
-                                                }
-                                            // Backend API returned an error
-                                            }).catch(error => { reject(error); })
-                                        // Unable to retrieve user login session
-                                        }).catch(error => { reject(error); });
-                                // Unable to create user in Firebase
-                                }).catch(error => { reject(error); });
-                        } else {
-                            reject({ code: 'auth/name-already-in-use'});
-                        }
-                    // Invalid JSON response from backend
-                    }).catch((error) => { reject(error); })
+                if (response.status === 200) {
+                    return response.json();
                 } else if (response.status === 500) {
                     reject({ code: 'auth/backend-error'});
+                }
+            }).then((data) => {
+                if (data.isUnique) {
+                    firebase.auth().createUserWithEmailAndPassword(email, password)
+                        .then(user => {
+                            user.updateProfile({
+                                displayName: displayName
+                            }).catch(error => {
+                                reject('auth/invalid-name');
+                            });
+
+                            // Create backend account upon successful firebase registration
+                            user.getIdToken()
+                                .then(token => {
+                                    fetch('/api/account/createAccount', {
+                                        method: 'post',
+                                        body: JSON.stringify({
+                                            displayName: displayName,
+                                            email: email,
+                                            token: token
+                                        }),
+                                        headers: {
+                                            'Content-Type': 'application/json',
+                                            'Accept': 'application/json'
+                                        }
+                                    }).then((response) => {
+                                        if (response.status === 200) {
+                                            log("Successfully created both firebase and backend accounts for " + displayName);
+                                            resolve();
+                                        } else {
+                                            reject({ code: 'auth/backend-error' });
+                                        }
+                                    // Backend API returned an error
+                                    }).catch(error => { reject(error); })
+                                // Unable to retrieve user login session
+                                }).catch(error => { reject(error); });
+                        // Unable to create user in Firebase
+                        }).catch(error => { reject(error); });
+                } else {
+                    reject({ code: 'auth/name-already-in-use'});
                 }
             // Network failure in communicating with backend
             }).catch((error) => { reject(error); })
@@ -97,7 +96,7 @@ export function login(email, password) {
             firebase.auth().signInWithEmailAndPassword(email, password)
                 .then(user => {
                     user.getIdToken()
-                        .then((token) => { resolve(true) })
+                        .then((token) => { resolve() })
                         .catch((error) => { reject(error) });
                 }).catch(error => {
                 reject(error);

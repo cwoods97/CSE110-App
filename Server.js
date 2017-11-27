@@ -10,7 +10,6 @@ admin.initializeApp({
     databaseURL: "https://speakeasy-25a66.firebaseio.com"
 });
 
-
 const app = express();
 app.use(bodyParser.json());         // to support JSON-encoded bodies
 app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
@@ -43,11 +42,10 @@ app.use(function(req, res, next) {
                 'uid': decodedToken.uid
             };
             next();
-  			}).catch(error => {
-    				res.send("Firebase could not verify the provided token." +
-    				          + "\n" + error.message );
-    				res.sendStatus(404).end();
-  			})
+		}).catch(error => {
+			res.status(404).send("Firebase could not verify the provided token." +
+			                     + "\n" + error.message );
+		})
   	// TODO This code is for debugging puroses ONLY and should be disabled in production.
   	} else {
         if (req.body.displayName) {

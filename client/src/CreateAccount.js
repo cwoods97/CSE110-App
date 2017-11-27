@@ -56,15 +56,13 @@ class CreateAccount extends Component {
         if (re.test(email) &&  pwd1===pwd2  && pwd1 !== "" && display !== "") {
 
             createAccount(display,email,pwd2)
-                .then((success) => {
+                .then(() => {
                     // Only render user's main page when successfully logged in
-                    if (success) {
-                        ReactDOM.render(<Main db={firebase} />, document.getElementById('root'));
-                    }
+                    ReactDOM.render(<Main db={firebase} />, document.getElementById('root'));
                 })
                 .catch((error) => {
                     var errorCode = error.code;
-                    const getById = document.getElementById;
+                    const getById = document.getElementById.bind(document);
 
                     if (errorCode === 'auth/invalid-name') {
                         getById('displayNameError').innerHTML = "Please enter a valid display name";
