@@ -73,7 +73,6 @@ const account = require('./routes/Account');
 const session = require('./routes/Session');
 const sessionSetup = require('./routes/sessionSetup');
 const feedback = require('./routes/feedback');
-const feedback = require('./routes/feedback');
 const presenterSession = require('./routes/PresenterSession');
 const sessionReview = require('./routes/SessionReview');
 const sessionSetup = require('./routes/SessionSetup');
