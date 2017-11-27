@@ -56,7 +56,7 @@ export function createAccount(displayName, email, password) {
                                                     'Content-Type': 'application/json',
                                                     'Accept': 'application/json'
                                                 }
-                                            }).then((response)) => {
+                                            }).then((response) => {
                                                 if (response.status === 200) {
                                                     log("Successfully created both firebase and backend accounts for", displayName);
                                                     resolve();

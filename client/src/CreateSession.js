@@ -43,15 +43,7 @@ class CreateSession extends Component {
         }
     }
 
-    componentDidMount() {
-        return fetch('/api/hello/hi')
-            .then((response) => response.json())
-            .then((responseJson) => {
-                this.setState({
-                    message: responseJson.message
-                });
-            })
-    }
+    componentDidMount() {}
 
     startRecording = () => {
 
@@ -98,7 +90,7 @@ class CreateSession extends Component {
 
 		updateTitle = function(){
 
-				var title = document.getElementById("title").value; 
+				var title = document.getElementById("title").value;
 				var accessCode = document.getElementById("accessCode").value;
 
 				getIdToken().then(token => {
@@ -107,7 +99,7 @@ class CreateSession extends Component {
 						});
 				});
 		}
-    
+
 		noAudio = () => {
         this.setState({
             audio: false

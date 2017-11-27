@@ -37,17 +37,7 @@ class Join extends Component {
 
 
     componentDidMount() {
-
-
-
         //document.getElementsByClassName('conversation-container').style.display = "flex"
-        return fetch('/api/hello/hi')
-            .then((response) => response.json())
-            .then((responseJson) => {
-                this.setState({
-                    message: responseJson.message
-                });
-            })
     }
 
     add = function (e){

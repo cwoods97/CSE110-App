@@ -35,15 +35,7 @@ class CreateAccount extends Component {
         }
     }
 
-    componentDidMount() {
-        return fetch('/api/hello/hi')
-            .then((response) => response.json())
-            .then((responseJson) => {
-                this.setState({
-                    message: responseJson.message
-                });
-            })
-    }
+    componentDidMount() {}
 
     go_home = function(ev) {
         ReactDOM.render(<App />, document.getElementById('root'));
