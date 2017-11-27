@@ -13,11 +13,11 @@ router.post('/createAccount', (req, res) => {
 		joinedSessions: '',
 		experience: '0'
 	}).then(() => {
-		log("Registered backend user with the following uid:", uid);
-		res.sendStatus(200).end();
+		log("Registered backend user with the following uid: " + uid);
+		res.status(200).end();
 	}).catch((error) => {
 		log(error);
-		res.sendStatus(500).end(error);
+		res.status(500).json(error);
 	});
 })
 
@@ -30,16 +30,20 @@ router.post('/verify', (req, res) => {
 		function checkDisplayNames(nextPageToken) {
 			admin.auth().listUsers(1000, nextPageToken)
 			.then((listUsersResult) => {
+				var isUnique = true;
 				listUsersResult.users.forEach((userRecord) => {
-					log(displayName, "is already registered under a user account with Firebase.");
 					// The provided display name is not unique
 					if (userRecord.toJSON().displayName === displayName) {
-						reject({ code: NON_UNIQUE_DNAME });
+						isUnique = false;
 					}
 				})
+				if (!isUnique) {
+					log(displayName + " is already registered under a user account with Firebase.");
+					return reject(NON_UNIQUE_DNAME);
+				}
 				// Continue checking through next batch of users
 				if (listUsersResult.pageToken) {
-					checkDisplayNames(listUsersResult.pageToken)
+					checkDisplayNames(listUsersResult.pageToken);
 				} else {
 					resolve();
 				}
@@ -54,15 +58,15 @@ router.post('/verify', (req, res) => {
 
 	verifyDisplayNames
 	.then(() => {
-		log(displayName, "is unique.");
-		res.sendStatus(200).end( { isUnique: true } );
+		log(displayName + " is unique.");
+		res.status(200).json( { isUnique: true } );
 	}).catch((error) => {
 		if (error === NON_UNIQUE_DNAME) {
-			log(NON_UNIQUE_DNAME, displayName);
-			res.sendStatus(200).end( { isUnique: false } );
+			log(NON_UNIQUE_DNAME);
+			res.status(200).json( { isUnique: false } );
 		} else {
 			log(error);
-			res.sendStatus(500).end(error);
+			res.status(500).json(error);
 		}
 	})
 })
