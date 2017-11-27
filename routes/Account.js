@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 
-const log = (message) => { console.log("[Account.js]", message); }
+const log = (message) => { console.log("[Account.js] " + message); }
 const NON_UNIQUE_DNAME = "Display name is not unique.";
 
 router.post('/createAccount', (req, res) => {

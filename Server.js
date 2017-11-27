@@ -3,6 +3,8 @@ const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser')
 
+const log = (message) => { console.log("[Server.js] " + message); }
+
 // Initialize a connection to Firebase
 var serviceAccount = require("./FirebaseSac.json");
 admin.initializeApp({
@@ -31,7 +33,7 @@ Precondition: The request must populate a 'token' key in the header (as assigned
 Postcondition: The decoded token will be stored in 'req.decodedToken'
 */
 app.use(function(req, res, next) {
-  	console.log("Authenticating request for", req.originalUrl);
+  	log("Authenticating request for " + req.originalUrl);
 
   	var idToken = req.body.token;
   	if (typeof idToken === 'string') {
@@ -53,7 +55,7 @@ app.use(function(req, res, next) {
         } else {
             req.locals = { 'admin': admin };
         }
-		console.log("Token not provided. Overriding default behavior for development purposes.");
+		log("Token not provided. Overriding default behavior for development purposes.");
 		next();
   	}
 });
@@ -63,7 +65,7 @@ app.use(function(req, res, next) {
 // Disabled by default - Activate functionality by running 'node server.js 1'
 var is_production = process.argv[2]
 if (Boolean(parseInt(is_production))) {
-  	console.log('Serving files');
+  	log('Serving files');
   	app.use(express.static(path.join(__dirname, 'client/build')));
 }
 
@@ -86,5 +88,5 @@ app.use('/api/user', user)
 
 const port = process.env.PORT || 3000;
 app.listen(port, function() {
-	 console.log('Server listening on port ' + port)
+	 log('Server listening on port ' + port)
 })
