@@ -9,7 +9,7 @@ import AppFront from './App';
 import CreateSession from './CreateSession';
 import SessionHistory from './SessionHistory';
 import {createBackendSession} from './FrontEndSession';
-import {getIdToken} from './RegisterFirebaseUser.js';
+import {getIdToken, logout} from './RegisterFirebaseUser.js';
 
 import ReactDOM from 'react-dom';
 class App extends Component {
@@ -48,6 +48,9 @@ class App extends Component {
     }
 
     front = function(ev) {
+		
+		logout();
+		
         ev.preventDefault();
         ReactDOM.render(<AppFront />, document.getElementById('root'));
 
