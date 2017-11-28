@@ -123,3 +123,14 @@ export function getIdToken() {
             .catch(error => { reject(error); })
     })
 }
+
+export function getDisplayName() {
+		return new Promise((resolve, reject) => {
+				const user = firebase.auth().currentUser;
+				if(user != null){
+						const name = user.displayName;
+						resolve(name);
+				}
+				reject("User is not logged in.");
+		});
+}
