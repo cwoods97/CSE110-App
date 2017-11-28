@@ -10,7 +10,6 @@ import About from './About';
 import CreateAccount from './CreateAccount';
 import Reset from './Reset';
 import { login } from './RegisterFirebaseUser'
-import GiveFeedback from './GiveFeedback';
 
 
 class AppFront extends Component {
@@ -138,11 +137,6 @@ class AppFront extends Component {
 
     }
 
-    feedback = function(ev){
-        ev.preventDefault();
-        ReactDOM.render(<GiveFeedback />, document.getElementById('root'));
-    }
-
 
     render() {
         return (
@@ -185,9 +179,6 @@ class AppFront extends Component {
                     </h3>
 
               </div>
-              <form action="">
-                    <button onClick={this.feedback} style={{float:"right"}} class="w3-btn w3-blue-grey">Feedback test</button>
-              </form>
 
 
 

@@ -10,6 +10,7 @@ import Main from './Main';
 import { Widget, addResponseMessage, addUserMessage } from 'react-chat-widget';
 import {leaveBackendSession} from './FrontEndSession';
 import {getIdToken} from './RegisterFirebaseUser.js';
+import {sendPredefinedFeedback} from './SendFeedback.js';
 
 class Join extends Component {
 
@@ -42,7 +43,15 @@ class Join extends Component {
         getDisplayName().then(name =>{this.setState({display: name});});
     }
 
-    add = function (e){
+    sendPredef = function(comment, e){
+        e.preventDefault();
+        getIdToken().then(token =>{
+            sendPredefinedFeedback(token, comment, 0);
+        })
+
+    }
+
+    sendComment = function (e){
 
         e.preventDefault()
 
@@ -55,15 +64,21 @@ class Join extends Component {
         var div3 =  document.createElement('div');
         div3.classList.add('message-text');
         var p =  document.createElement('p');
-        p.innerHTML = document.getElementById("comment").value;
+
+        var comment = document.getElementById("comment").value;
+        p.innerHTML = comment;
+        console.log("sending comment" + comment);
 
         div3.appendChild(p);
         div2.appendChild(div3);
         div1.appendChild(div2);
         mList.appendChild(div1);
 
-
         document.getElementById("comment").value = ""
+
+        getIdToken().then(token =>{
+            sendPredefinedFeedback(token, comment, 1);
+        })
 
 
     };
@@ -125,11 +140,11 @@ class Join extends Component {
 
                         <center>
 
-                            <button  bsStyle="Pace of Speech too Fast" class="predefined w3-btn w3-round" style={{backgroundColor:'#665084',color:'white'}}>Pace of Speech too Fast</button>
-                            <button bsStyle="Pace of Speech too Slow" class="predefined w3-btn w3-round" style={{backgroundColor:'#665084',color:'white'}}>Pace of Speech too Slow</button>
+                            <button  bsStyle="Pace of Speech too Fast" onClick={(e) => this.sendPredef('fast', e)} class="predefined w3-btn w3-round" style={{backgroundColor:'#665084',color:'white'}}>Pace of Speech too Fast</button>
+                            <button bsStyle="Pace of Speech too Slow" onClick={(e) => this.sendPredef('slow', e)} class="predefined w3-btn w3-round" style={{backgroundColor:'#665084',color:'white'}}>Pace of Speech too Slow</button>
                             <br></br>
-                            <button bsStyle = "Speak Up"class="predefined w3-btn w3-round" style={{backgroundColor:'#6164a3',color:"white"}}>Speak Up</button>
-                            <button bsStyle = "Too Loud" class="predefined w3-btn w3-round" style={{backgroundColor:'#6164a3',color:"white"}}>Too Loud</button>
+                            <button bsStyle = "Speak Up" onClick={(e) => this.sendPredef('quiet', e)} class="predefined w3-btn w3-round" style={{backgroundColor:'#6164a3',color:"white"}}>Speak Up</button>
+                            <button bsStyle = "Too Loud" onClick={(e) => this.sendPredef('loud', e)} class="predefined w3-btn w3-round" style={{backgroundColor:'#6164a3',color:"white"}}>Too Loud</button>
 
                             <br></br>
 
@@ -160,7 +175,7 @@ class Join extends Component {
                                 <input id="comment" style={{display:'inline-block'}}type="text" class="new-message" name="message" placeholder="Type a message..." autocomplete="off"></input>
 
 
-                                <button id='post' type="submit" style={{display:'inline-block'}} class="send" onClick={this.add.bind(this)} >Post</button>
+                                <button id='post' type="submit" style={{display:'inline-block'}} class="send" onClick={this.sendComment.bind(this)} >Post</button>
                             </form>
                         </div>
                         </div>
