@@ -13,7 +13,7 @@ router.post('/join', (req, res) => {
 				if(snapshot.val()){
 						snapshot.forEach(function(child) {
 								const value = child.val();
-								if(value.isActive){
+								if(value){
 										const sessionRef = db.ref("sessions").child(child.key);
 										audienceCount = parseInt(value.audienceCount);
 										audienceCount++;
@@ -36,9 +36,6 @@ router.post('/join', (req, res) => {
 												} 
 										});
 
-								}
-								else {
-										res.status(400).json({error: "Session no longer active"});
 								}
 						});
 				}

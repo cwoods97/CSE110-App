@@ -32,7 +32,7 @@ router.post('/createSession', (req, res) => {
 		newSessionRef.set({
 			presenter: uid,
 			accessCode: accessCode,
-			isActive: true,
+			isActive: false,
 			audienceCount: '0'
 		});
 
