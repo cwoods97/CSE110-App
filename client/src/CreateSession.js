@@ -41,9 +41,12 @@ class CreateSession extends Component {
             started: false,
             blobObject: null,
             end: false,
-            display: ""
+            display: "",
+            coder: props.code
 
         };
+
+
 
     }
     componentDidMount() {
@@ -178,7 +181,8 @@ class CreateSession extends Component {
                     <div id = 'right' class="w3-col" style={{float:'right',width:'15%',height:'60em',backgroundColor:'#c4a5ff',display:'inline-block',position:'fixed'}}>
 
                         <br></br>
-                        <br></br>
+                        <p>Session Title:</p>
+                        <p id='code'>Session Code: {this.state.coder}</p>
 
                         <form action="">
                             <input id='nAudio' onClick={this.noAudio} type="radio" name="audioOff" value="noaudio" defaultChecked={true}></input>No Audio<br></br>
