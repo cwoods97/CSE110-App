@@ -6,7 +6,7 @@ Available functions:
     login(email, password)
     getIdToken()
 */
-const log = (message) => { console.log("[RegisterFirebaseUser.js]", message); }
+const log = (message) => { console.log("[RegisterFirebaseUser.js] " + message); }
 
 /*
 Description: Generates a user account in Firebase, upon which a parallel
@@ -19,7 +19,7 @@ On Success: Returned promise resolves as true.
 export function createAccount(displayName, email, password) {
     return new Promise((resolve, reject) => {
         if (displayName && email && password) {
-            log("Creating firebase and backend user accounts for " + displayName + ".");
+            log("Creating parallel Firebase and backend user accounts for " + displayName + ".");
 
             fetch('/api/account/verify', {
                 method: 'post',
@@ -42,13 +42,15 @@ export function createAccount(displayName, email, password) {
                         .then(user => {
                             user.updateProfile({
                                 displayName: displayName
+                            }).then(() => {
+                                log("Firebase user successfully created.");
                             }).catch(error => {
                                 reject('auth/invalid-name');
                             });
 
                             // Create backend account upon successful firebase registration
                             user.getIdToken()
-                                .then(token => {
+                                .then((token) => {
                                     fetch('/api/account/createAccount', {
                                         method: 'post',
                                         body: JSON.stringify({
@@ -62,7 +64,7 @@ export function createAccount(displayName, email, password) {
                                         }
                                     }).then((response) => {
                                         if (response.status === 200) {
-                                            log("Successfully created both firebase and backend accounts for " + displayName);
+                                            log("Backend user successfully created.");
                                             resolve();
                                         } else {
                                             reject({ code: 'auth/backend-error' });
