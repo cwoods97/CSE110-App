@@ -98,11 +98,11 @@ export function login(email, password) {
             firebase.auth().signInWithEmailAndPassword(email, password)
                 .then(user => {
                     user.getIdToken()
-                        .then((token) => { resolve() })
+                        .then((token) => { resolve(token) })
                         .catch((error) => { reject(error) });
                 }).catch(error => {
-                reject(error);
-            });
+                    reject(error);
+                });
         }
     })
 }
@@ -126,4 +126,15 @@ export function getIdToken() {
             })
             .catch(error => { reject(error); })
     })
+}
+
+export function getDisplayName() {
+		return new Promise((resolve, reject) => {
+				const user = firebase.auth().currentUser;
+				if(user != null){
+						const name = user.displayName;
+						resolve(name);
+				}
+				reject("User is not logged in.");
+		});
 }

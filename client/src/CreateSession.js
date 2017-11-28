@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
-import firebase from 'firebase';
 import './styles/CreateSession.css';
 import ReactDOM from 'react-dom';
 import 'bootstrap/dist/css/bootstrap-theme.css';
 import 'bootstrap/dist/css/bootstrap.css';
 import {Button} from 'react-bootstrap';
-
+import {getDisplayName} from "./RegisterFirebaseUser";
 
 import Chart from './Chart';
 import Main from './Main';
@@ -19,36 +18,31 @@ class CreateSession extends Component {
 
     constructor(props) {
         super(props);
-        // Initialize Firebase
-        var config = {
-            apiKey: "AIzaSyDSQVw9KUjmxhlxILCousROVR6PfOFcYQg",
-            authDomain: "speakeasy-25a66.firebaseapp.com",
-            databaseURL: "https://speakeasy-25a66.firebaseio.com",
-            projectId: "speakeasy-25a66",
-            storageBucket: "speakeasy-25a66.appspot.com",
-            messagingSenderId: "836790794762"
-        };
-        if (firebase.apps.length === 0){
-            firebase.initializeApp(config);
-        }
-        else{
-            firebase.app()
-        }
+
+        this.db = props.db;
+        this.sessionID = props.sessionID;
+        this.onStop = this.onStop.bind(this);
         this.state = {
             audio: false,
             message: "",
             record: false,
             started: false,
-            blobObject: null
-        }
+            blobObject: null,
+            end: false,
+            display: "",
+            coder: props.code
+        };
     }
 
-    componentDidMount() {}
+    componentDidMount() {
+        getDisplayName().then(name =>{this.setState({display: name});});
+    }
 
     startRecording = () => {
 
         this.setState({
-            started: true
+            started: true,
+            end: true
         });
 
         if (this.state.audio) {
@@ -60,23 +54,32 @@ class CreateSession extends Component {
 
         //Timer should start here regardless if audio recording is on
 
-
-    }
+    };
 
     stopRecording = () => {
-
         this.setState({
-            started: false
+            record: false,
+            started: false,
+            end: true
         });
+    };
 
-        this.setState({
-            record: false
+    onStop = (blobObject) => {
+        const storageRef = this.db.storage().ref().child(this.sessionID);
+        const recordingRef = storageRef.child('media');
+        recordingRef.put(blobObject.blob).then((snapshot) => {
+            console.log("Successfully uploaded audio recording to Firebase.");
+        }).catch((error) => {
+            console.log(error);
         });
-    }
+    };
 
-    onStop= (blobObject) => {
+    close = (ev) => {
+        ev.preventDefault();
         this.setState({
-            blobURL : blobObject.blobURL
+            record: false,
+            started: false,
+            end: true
         });
     }
 
@@ -86,33 +89,28 @@ class CreateSession extends Component {
 		var title = document.getElementById("title").value;
 		//var audiodata = 
 		//var accessCode
-		
         ReactDOM.render(<Main />, document.getElementById('root'));
-
     }
 
-		updateTitle = function(){
+	updateTitle = () => {
+		var title = document.getElementById("title").value;
+		var accessCode = document.getElementById("accessCode").value;
 
-				var title = document.getElementById("title").value;
-				var accessCode = document.getElementById("accessCode").value;
+		getIdToken().then(token => {
+			updateTitle(token, accessCode, title).then((title) => {
+				alert("title set to " + title);
+			});
+		});
+	}
 
-				getIdToken().then(token => {
-						updateTitle(token, accessCode, title).then((title) => {
-								alert("title set to " + title);
-						});
-				});
-		}
-
-		noAudio = () => {
+	noAudio = () => {
         this.setState({
             audio: false
         });
         document.getElementById('audio').checked = false;
-
-
     }
 
-    audioOn = () =>{
+    audioOn = () => {
         this.setState({
             audio: true
         });
@@ -121,6 +119,7 @@ class CreateSession extends Component {
     }
 
     render() {
+
         return (
 
             <div style={{width:'100%',height:'100%',borderBottom:'4px solid #665084',zIndex:'9' }}>
@@ -139,11 +138,11 @@ class CreateSession extends Component {
                     </div>
                 </div>
 
-                <div id="navigation" class="w3-sidebar w3-bar-block" style={{height:'100%',backgroundColor:'lightgrey',zIndex:'-1',overflow:'hidden'}}>
+                <div id="navigation" class="w3-sidebar w3-bar-block" style={{borderRight:'1px solid #665084', height:'100%',backgroundColor:'lightgrey',zIndex:'-1',overflow:'hidden'}}>
 
-                    <a class="w3-bar-item w3-button menuLeft" style={{backgroundColor:'PaleVioletRed'}}>Display Name</a>
-                    <a class="w3-bar-item w3-button menuLeft" style={{backgroundColor:'lightgrey'}}>Share</a>
-                    <a class="w3-bar-item w3-button menuLeft" onClick={this.close} style={{backgroundColor:'lightgrey'}}>Close Session</a>
+                    <a id='display' class="w3-bar-item menuLeft" style={{backgroundColor:'PaleVioletRed',fontFamily:'Poppins, sans-serif'}}><b>{this.state.display}</b></a>
+                    <a class="w3-bar-item w3-button menuLeft" style={{backgroundColor:'lightgrey',fontFamily:'Poppins, sans-serif'}}><b>Share</b></a>
+                    <a class="w3-bar-item w3-button menuLeft" onClick={this.close} style={{backgroundColor:'lightgrey',fontFamily:'Poppins, sans-serif'}}><b>Close Session</b></a>
 
 
                 </div>
@@ -164,10 +163,11 @@ class CreateSession extends Component {
 
                     </div>
 
-                    <div id = 'right' class="w3-col" style={{float:'right',width:'15%',height:'60em',backgroundColor:'#c4a5ff',display:'inline-block',position:'fixed'}}>
+                    <div id = 'right' class="w3-col" style={{borderLeft:'1px solid #665084',float:'right',width:'15%',height:'60em',backgroundColor:'#c4a5ff',display:'inline-block',position:'fixed'}}>
 
                         <br></br>
-                        <br></br>
+                        <p>Session Title:</p>
+                        <p id='code'>Session Code: {this.state.coder}</p>
 
                         <form action="">
                             <input id='nAudio' onClick={this.noAudio} type="radio" name="audioOff" value="noaudio" defaultChecked={true}></input>No Audio<br></br>
@@ -175,8 +175,8 @@ class CreateSession extends Component {
 
                             <br></br>
 
-                            <Button id='buttons' bsStyle="Start" onClick={this.startRecording} style={{margin:'1px'}} type="button">Start</Button>
-                            <Button id='buttons' disabled={!this.state.started} bsStyle="Start" onClick={this.stopRecording} style={{margin:'1px'}} type="button">Stop</Button>
+                            <Button id='buttons' disabled={this.state.end} onClick={this.startRecording} style={{margin:'1px'}} type="button">Start</Button>
+                            <Button id='buttons' disabled={!this.state.started} onClick={this.stopRecording} style={{margin:'1px'}} type="button">Stop</Button>
                         </form>
 
                         <br></br>

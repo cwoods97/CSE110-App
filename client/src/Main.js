@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import firebase from 'firebase';
+import ReactDOM from 'react-dom';
 import Users from './components/Users.js';
 import DisplayUserData from './components/DisplayUserData.js';
 import './styles/App.css';
@@ -11,28 +11,21 @@ import SessionHistory from './SessionHistory';
 import {createBackendSession, joinBackendSession} from './FrontEndSession';
 import {getIdToken, logout} from './RegisterFirebaseUser.js';
 
-import ReactDOM from 'react-dom';
 class App extends Component {
 
     constructor(props) {
         super(props);
-        // Initialize Firebase
-        var config = {
-            apiKey: "AIzaSyDSQVw9KUjmxhlxILCousROVR6PfOFcYQg",
-            authDomain: "speakeasy-25a66.firebaseapp.com",
-            databaseURL: "https://speakeasy-25a66.firebaseio.com",
-            projectId: "speakeasy-25a66",
-            storageBucket: "speakeasy-25a66.appspot.com",
-            messagingSenderId: "836790794762"
-        };
-        if (firebase.apps.length == 0){
-            firebase.initializeApp(config);
-        }
-        else{
-            firebase.app()
-        }
+
+        this.db = props.db;
+        this.join = this.join.bind(this);
+        this.create = this.create.bind(this);
+
+        var displayName = this.db.auth().currentUser.displayName;
+        displayName = displayName ? displayName : "ERROR RETRIEVING DISPLAY NAME";
 
         this.state = {
+            displayName: displayName,
+            coder: 0,
             message: ""
         }
     }
@@ -45,9 +38,8 @@ class App extends Component {
 		
         ev.preventDefault();
         ReactDOM.render(<AppFront />, document.getElementById('root'));
-
-
     };
+
     join= function(ev){
 
         ev.preventDefault();
@@ -57,42 +49,45 @@ class App extends Component {
         //Integer only regular expression from https://stackoverflow.com/questions/9011524/javascript-regexp-number-only-check
         var reg = /^\d+$/;
 
-        if (reg.test(coder)){
+        if (reg.test(coder)) {
 
-						getIdToken().then(token => {
-								joinBackendSession(token, coder).then((session) => {
-										alert("Joining session: " + session.id);
-										alert("Access code is: " + session.code);
-										alert("Audience count is: " + session.audienceCount);
+			getIdToken().then(token => {
+				joinBackendSession(token, coder).then((session) => {
+						alert("Joining session: " + session.id);
+						alert("Access code is: " + session.code);
+						alert("Audience count is: " + session.audienceCount);
 
-										ev.preventDefault();
-            				ReactDOM.render(<Join />, document.getElementById('root'));
-								}, (error) => {
-										document.getElementById("error").innerHTML = error;
-								});
-						});
-				}
-        else{
+						ev.preventDefault();
+				ReactDOM.render(<Join code= {coder} db={this.db}/>, document.getElementById('root'));
+					}, (error) => {
+							document.getElementById("error").innerHTML = error;
+					});
+			});
+		} else {
             document.getElementById("error").innerHTML = "Please enter a valid session code"
         }
     };
 
     create= function(ev) {
+
+        ev.preventDefault();
+
 		getIdToken().then(token => {
-			createBackendSession(token).then(accessCode => {
-				console.log(accessCode);
+			createBackendSession(token).then((response) => {
+
+				this.setState({
+                    coder: response.accessCode
+                });
+
+                ReactDOM.render(<CreateSession code={this.state.coder} db={this.db} sessionID={response.sessionID} />, document.getElementById('root'));
 			});
 		});
 
-        ev.preventDefault();
-        ReactDOM.render(<CreateSession />, document.getElementById('root'));
     };
 
     history = function(ev){
         ev.preventDefault();
         ReactDOM.render(<SessionHistory />, document.getElementById('root'));
-
-
 
     };
 
@@ -117,7 +112,7 @@ class App extends Component {
 
                 <div class="w3-sidebar w3-bar-block" style={{width:'20%',height:'100%',backgroundColor:'lightgrey',zIndex:'0',overflow:'hidden'}}>
 
-                    <a href="#" class="w3-bar-item" style={{backgroundColor:'aqua'}}>Michael Harasti</a>
+                    <a href="#" class="w3-bar-item" style={{backgroundColor:'aqua'}}>{this.state.displayName}</a>
                     <a href="#" class="w3-bar-item w3-button" style={{backgroundColor:'lightgrey'}}>Profile Settings</a>
                     <a href="#" class="w3-bar-item w3-button" onClick={this.history}style={{backgroundColor:'lightgrey'}}>Session History</a>
                     <a href="#" class="w3-bar-item w3-button" onClick={this.front} style={{backgroundColor:'lightgrey'}}>Logout</a>
@@ -162,7 +157,7 @@ class App extends Component {
 
                         <center>
 
-                       <button class="w3-btn w3-large w3-round" onClick={this.create} style={{backgroundColor:'steelblue'}}>Create a Session</button>
+                       <button class="w3-btn w3-large w3-round" onClick={this.create.bind(this)} style={{backgroundColor:'steelblue'}}>Create a Session</button>
 
                         </center>
                     </div>
