@@ -21,6 +21,7 @@ class CreateSession extends Component {
 
         this.db = props.db;
         this.sessionID = props.sessionID;
+        this.onStop = this.onStop.bind(this);
         this.state = {
             audio: false,
             message: "",

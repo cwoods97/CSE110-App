@@ -17,6 +17,8 @@ class App extends Component {
         super(props);
 
         this.db = props.db;
+        this.join = this.join.bind(this);
+        this.create = this.create.bind(this);
 
         var displayName = this.db.auth().currentUser.displayName;
         displayName = displayName ? displayName : "ERROR RETRIEVING DISPLAY NAME";
