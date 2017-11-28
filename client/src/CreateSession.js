@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import firebase from 'firebase';
 import './styles/CreateSession.css';
 import ReactDOM from 'react-dom';
 import 'bootstrap/dist/css/bootstrap-theme.css';
@@ -19,21 +18,9 @@ class CreateSession extends Component {
 
     constructor(props) {
         super(props);
-        // Initialize Firebase
-        var config = {
-            apiKey: "AIzaSyDSQVw9KUjmxhlxILCousROVR6PfOFcYQg",
-            authDomain: "speakeasy-25a66.firebaseapp.com",
-            databaseURL: "https://speakeasy-25a66.firebaseio.com",
-            projectId: "speakeasy-25a66",
-            storageBucket: "speakeasy-25a66.appspot.com",
-            messagingSenderId: "836790794762"
-        };
-        if (firebase.apps.length === 0){
-            firebase.initializeApp(config);
-        }
-        else{
-            firebase.app()
-        }
+
+        this.db = props.db;
+        this.sessionID = props.sessionID;
         this.state = {
             audio: false,
             message: "",
@@ -43,21 +30,14 @@ class CreateSession extends Component {
             end: false,
             display: "",
             coder: props.code
-
         };
-
-
-
     }
+
     componentDidMount() {
-
-
         getDisplayName().then(name =>{this.setState({display: name});});
-
     }
 
     startRecording = () => {
-
 
         this.setState({
             started: true,
@@ -73,11 +53,9 @@ class CreateSession extends Component {
 
         //Timer should start here regardless if audio recording is on
 
-
     };
 
     stopRecording = () => {
-
         this.setState({
             record: false,
             started: false,
@@ -85,14 +63,17 @@ class CreateSession extends Component {
         });
     };
 
-    onStop= (blobObject) => {
-        this.setState({
-            blobURL : blobObject.blobURL
+    onStop = (blobObject) => {
+        const storageRef = this.db.storage().ref().child(this.sessionID);
+        const recordingRef = storageRef.child('media');
+        recordingRef.put(blobObject.blob).then((snapshot) => {
+            console.log("Successfully uploaded audio recording to Firebase.");
+        }).catch((error) => {
+            console.log(error);
         });
     };
 
     close = (ev) => {
-
         ev.preventDefault();
         this.setState({
             record: false,
@@ -101,31 +82,27 @@ class CreateSession extends Component {
         });
 
         ReactDOM.render(<Main />, document.getElementById('root'));
-
     }
 
-		updateTitle = function(){
+	updateTitle = () => {
+		var title = document.getElementById("title").value;
+		var accessCode = document.getElementById("accessCode").value;
 
-				var title = document.getElementById("title").value;
-				var accessCode = document.getElementById("accessCode").value;
+		getIdToken().then(token => {
+			updateTitle(token, accessCode, title).then((title) => {
+				alert("title set to " + title);
+			});
+		});
+	}
 
-				getIdToken().then(token => {
-						updateTitle(token, accessCode, title).then((title) => {
-								alert("title set to " + title);
-						});
-				});
-		}
-
-		noAudio = () => {
+	noAudio = () => {
         this.setState({
             audio: false
         });
         document.getElementById('audio').checked = false;
-
-
     }
 
-    audioOn = () =>{
+    audioOn = () => {
         this.setState({
             audio: true
         });
@@ -190,8 +167,8 @@ class CreateSession extends Component {
 
                             <br></br>
 
-                            <Button id='buttons' disabled={this.state.end} bsStyle="Start" onClick={this.startRecording} style={{margin:'1px'}} type="button">Start</Button>
-                            <Button id='buttons' disabled={!this.state.started} bsStyle="Start" onClick={this.stopRecording} style={{margin:'1px'}} type="button">Stop</Button>
+                            <Button id='buttons' disabled={this.state.end} onClick={this.startRecording} style={{margin:'1px'}} type="button">Start</Button>
+                            <Button id='buttons' disabled={!this.state.started} onClick={this.stopRecording} style={{margin:'1px'}} type="button">Stop</Button>
                         </form>
 
                         <br></br>
