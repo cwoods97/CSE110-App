@@ -153,11 +153,11 @@ class CreateSession extends Component {
                     </div>
                 </div>
 
-                <div id="navigation" class="w3-sidebar w3-bar-block" style={{height:'100%',backgroundColor:'lightgrey',zIndex:'-1',overflow:'hidden'}}>
+                <div id="navigation" class="w3-sidebar w3-bar-block" style={{borderRight:'1px solid #665084', height:'100%',backgroundColor:'lightgrey',zIndex:'-1',overflow:'hidden'}}>
 
-                    <a id='display' class="w3-bar-item menuLeft" style={{backgroundColor:'PaleVioletRed'}}>{this.state.display}</a>
-                    <a class="w3-bar-item w3-button menuLeft" style={{backgroundColor:'lightgrey'}}>Share</a>
-                    <a class="w3-bar-item w3-button menuLeft" onClick={this.close} style={{backgroundColor:'lightgrey'}}>Close Session</a>
+                    <a id='display' class="w3-bar-item menuLeft" style={{backgroundColor:'PaleVioletRed',fontFamily:'Poppins, sans-serif'}}><b>{this.state.display}</b></a>
+                    <a class="w3-bar-item w3-button menuLeft" style={{backgroundColor:'lightgrey',fontFamily:'Poppins, sans-serif'}}><b>Share</b></a>
+                    <a class="w3-bar-item w3-button menuLeft" onClick={this.close} style={{backgroundColor:'lightgrey',fontFamily:'Poppins, sans-serif'}}><b>Close Session</b></a>
 
 
                 </div>
@@ -178,7 +178,7 @@ class CreateSession extends Component {
 
                     </div>
 
-                    <div id = 'right' class="w3-col" style={{float:'right',width:'15%',height:'60em',backgroundColor:'#c4a5ff',display:'inline-block',position:'fixed'}}>
+                    <div id = 'right' class="w3-col" style={{borderLeft:'1px solid #665084',float:'right',width:'15%',height:'60em',backgroundColor:'#c4a5ff',display:'inline-block',position:'fixed'}}>
 
                         <br></br>
                         <p>Session Title:</p>
