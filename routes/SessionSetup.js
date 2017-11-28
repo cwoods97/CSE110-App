@@ -13,7 +13,7 @@ router.post('/createSession', (req, res) => {
 
 	//query database for active session with accessCode. If not found, uniqueAccessCode = true
 	sessionRef.orderByChild("accessCode").once('value', function(snapshot) {
-		
+
 		while(!uniqueAccessCode) {
 			accessCode = Math.floor(Math.random()*(max - min))+min;
 			uniqueAccessCode = true;
@@ -21,27 +21,28 @@ router.post('/createSession', (req, res) => {
 				if(accessCode === childSnapshot.child("accessCode").val()){
 					uniqueAccessCode = false;
 				}
-			});			
+			});
 		}
-		
-		console.log("Creating session with access code:", accessCode);
-		
+
+		console.log("Creating session with access code: ", accessCode);
+
 		//create database object with default values and uid
 		var newSessionRef = sessionRef.push();
+		var sessionID = newSessionRef.key;
 		newSessionRef.set({
 			presenter: uid,
 			accessCode: accessCode,
 			isActive: true,
 			audienceCount: '0'
 		});
-		
-		//add the session ID to the list of presented sessions in the user object
-		let json = {};
-		json[newSessionRef.key] = true;
-		userRef.child('hostedSessions').update(json);
-		res.json({accessCode: accessCode});
+
+		// add the session ID to the list of presented sessions in the user object
+		userRef.child('hostedSessions').update({ sessionID: true });
+		res.json({
+			sessionID: sessionID,
+			accessCode: accessCode
+		});
 	});
 })
 
 module.exports = router;
-
