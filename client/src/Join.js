@@ -4,7 +4,7 @@ import './styles/Join.css';
 import ReactDOM from 'react-dom';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/css/bootstrap-theme.css';
-
+import {getDisplayName} from "./RegisterFirebaseUser";
 
 import Main from './Main';
 import { Widget, addResponseMessage, addUserMessage } from 'react-chat-widget';
@@ -31,13 +31,15 @@ class Join extends Component {
             firebase.app()
         }
         this.state = {
-            message: ""
+            message: "",
+            display: ""
         }
     }
 
 
     componentDidMount() {
-        //document.getElementsByClassName('conversation-container').style.display = "flex"
+
+        getDisplayName().then(name =>{this.setState({display: name});});
     }
 
     add = function (e){
@@ -103,7 +105,7 @@ class Join extends Component {
                 <div id='navigationJoin' class=" w3-sidebar w3-bar-block w3-responsive" style={{float:'both',margin:'auto',height:'100%',backgroundColor:'lightgrey',zIndex:'0'}}>
 
 
-                    <a class="w3-bar-item" style={{backgroundColor:'PaleVioletRed'}}>Michael Harasti</a>
+                    <a class="w3-bar-item" style={{backgroundColor:'PaleVioletRed'}}>{this.state.display}</a>
                     <a class="w3-bar-item w3-button" onClick={this.main} style={{backgroundColor:'lightgrey'}}>Leave Session</a>
                     <a class="w3-bar-item w3-button" style={{backgroundColor:'lightgrey'}}>Share</a>
 

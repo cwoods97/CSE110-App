@@ -5,7 +5,7 @@ import ReactDOM from 'react-dom';
 import 'bootstrap/dist/css/bootstrap-theme.css';
 import 'bootstrap/dist/css/bootstrap.css';
 import {Button} from 'react-bootstrap';
-
+import {getDisplayName} from "./RegisterFirebaseUser";
 
 import Chart from './Chart';
 import Main from './Main';
@@ -40,13 +40,21 @@ class CreateSession extends Component {
             record: false,
             started: false,
             blobObject: null,
-            end: false
-        }
+            end: false,
+            display: ""
+
+        };
+
+    }
+    componentDidMount() {
+
+
+        getDisplayName().then(name =>{this.setState({display: name});});
+
     }
 
-    componentDidMount() {}
-
     startRecording = () => {
+
 
         this.setState({
             started: true,
@@ -123,6 +131,7 @@ class CreateSession extends Component {
     }
 
     render() {
+
         return (
 
             <div style={{width:'100%',height:'100%',borderBottom:'4px solid #665084',zIndex:'9' }}>
@@ -143,7 +152,7 @@ class CreateSession extends Component {
 
                 <div id="navigation" class="w3-sidebar w3-bar-block" style={{height:'100%',backgroundColor:'lightgrey',zIndex:'-1',overflow:'hidden'}}>
 
-                    <a class="w3-bar-item menuLeft" style={{backgroundColor:'PaleVioletRed'}}>Display Name</a>
+                    <a id='display' class="w3-bar-item menuLeft" style={{backgroundColor:'PaleVioletRed'}}>{this.state.display}</a>
                     <a class="w3-bar-item w3-button menuLeft" style={{backgroundColor:'lightgrey'}}>Share</a>
                     <a class="w3-bar-item w3-button menuLeft" onClick={this.close} style={{backgroundColor:'lightgrey'}}>Close Session</a>
 

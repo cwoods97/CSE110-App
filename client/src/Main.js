@@ -63,7 +63,7 @@ class App extends Component {
 										alert("Audience count is: " + session.audienceCount);
 
 										ev.preventDefault();
-            				ReactDOM.render(<Join />, document.getElementById('root'));
+            				ReactDOM.render(<Join db={firebase}/>, document.getElementById('root'));
 								}, (error) => {
 										document.getElementById("error").innerHTML = error;
 								});
@@ -82,7 +82,7 @@ class App extends Component {
 		});
 
         ev.preventDefault();
-        ReactDOM.render(<CreateSession />, document.getElementById('root'));
+        ReactDOM.render(<CreateSession db={firebase}/>, document.getElementById('root'));
     };
 
     history = function(ev){
