@@ -26,3 +26,31 @@
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
+
+.header{
+  background-color:#665084 !important;
+
+
+}
+
+a{
+  text-decoration: none;
+
+}
+
+@media screen and (max-width: 800px){
+  #comments {
+
+
+  }
+}
+
+.w3-sidebar{
+  width: 15% !important;
+}
+
+.sound-wave{
+  width:100% !important;
+  height: 60px !important;
+
+}
