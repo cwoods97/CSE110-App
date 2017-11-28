@@ -33,7 +33,8 @@ class App extends Component {
         }
 
         this.state = {
-            message: ""
+            message: "",
+            coder: 0
         }
     }
 
@@ -63,7 +64,7 @@ class App extends Component {
 										alert("Audience count is: " + session.audienceCount);
 
 										ev.preventDefault();
-            				ReactDOM.render(<Join />, document.getElementById('root'));
+            				ReactDOM.render(<Join code= {coder} db={firebase}/>, document.getElementById('root'));
 								}, (error) => {
 										document.getElementById("error").innerHTML = error;
 								});
@@ -75,14 +76,21 @@ class App extends Component {
     };
 
     create= function(ev) {
+
+        ev.preventDefault();
+
 		getIdToken().then(token => {
 			createBackendSession(token).then(accessCode => {
 				console.log(accessCode);
+
+				this.setState({
+                    coder: accessCode
+                });
+
+                ReactDOM.render(<CreateSession code={this.state.coder} db={firebase}/>, document.getElementById('root'));
 			});
 		});
 
-        ev.preventDefault();
-        ReactDOM.render(<CreateSession />, document.getElementById('root'));
     };
 
     history = function(ev){
@@ -159,7 +167,7 @@ class App extends Component {
 
                         <center>
 
-                       <button class="w3-btn w3-large w3-round" onClick={this.create} style={{backgroundColor:'steelblue'}}>Create a Session</button>
+                       <button class="w3-btn w3-large w3-round" onClick={this.create.bind(this)} style={{backgroundColor:'steelblue'}}>Create a Session</button>
 
                         </center>
                     </div>

@@ -63,11 +63,11 @@ class AppFront extends Component {
         }
 
         login(email, password)
-            .then(success => {
-                if (success) {
-                    ReactDOM.render(<Main db={firebase} />, document.getElementById('root'));
-                }
-            }).catch(error => {
+        .then((success) => {
+            if (success) {
+                ReactDOM.render(<Main db={firebase} />, document.getElementById('root'));
+            }
+        }).catch((error) => {
             document.getElementById('error').innerHTML += '\n' + error.message;
         });
     }
