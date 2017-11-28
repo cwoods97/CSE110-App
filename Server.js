@@ -75,7 +75,6 @@ const sessionSetup = require('./routes/sessionSetup');
 const feedback = require('./routes/feedback');
 const presenterSession = require('./routes/PresenterSession');
 const sessionReview = require('./routes/SessionReview');
-const sessionSetup = require('./routes/SessionSetup');
 const user = require('./routes/User');
 
 app.use('/api/hello', hello);
