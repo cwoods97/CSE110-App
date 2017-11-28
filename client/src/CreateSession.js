@@ -39,7 +39,8 @@ class CreateSession extends Component {
             message: "",
             record: false,
             started: false,
-            blobObject: null
+            blobObject: null,
+            end: false
         }
     }
 
@@ -48,7 +49,8 @@ class CreateSession extends Component {
     startRecording = () => {
 
         this.setState({
-            started: true
+            started: true,
+            end: true
         });
 
         if (this.state.audio) {
@@ -61,28 +63,31 @@ class CreateSession extends Component {
         //Timer should start here regardless if audio recording is on
 
 
-    }
+    };
 
     stopRecording = () => {
 
         this.setState({
-            started: false
+            record: false,
+            started: false,
+            end: true
         });
-
-        this.setState({
-            record: false
-        });
-    }
+    };
 
     onStop= (blobObject) => {
         this.setState({
             blobURL : blobObject.blobURL
         });
-    }
+    };
 
-    close = function(ev){
+    close = (ev) => {
 
         ev.preventDefault();
+        this.setState({
+            record: false,
+            started: false,
+            end: true
+        });
 
         ReactDOM.render(<Main />, document.getElementById('root'));
 
@@ -138,7 +143,7 @@ class CreateSession extends Component {
 
                 <div id="navigation" class="w3-sidebar w3-bar-block" style={{height:'100%',backgroundColor:'lightgrey',zIndex:'-1',overflow:'hidden'}}>
 
-                    <a class="w3-bar-item w3-button menuLeft" style={{backgroundColor:'PaleVioletRed'}}>Display Name</a>
+                    <a class="w3-bar-item menuLeft" style={{backgroundColor:'PaleVioletRed'}}>Display Name</a>
                     <a class="w3-bar-item w3-button menuLeft" style={{backgroundColor:'lightgrey'}}>Share</a>
                     <a class="w3-bar-item w3-button menuLeft" onClick={this.close} style={{backgroundColor:'lightgrey'}}>Close Session</a>
 
@@ -172,7 +177,7 @@ class CreateSession extends Component {
 
                             <br></br>
 
-                            <Button id='buttons' bsStyle="Start" onClick={this.startRecording} style={{margin:'1px'}} type="button">Start</Button>
+                            <Button id='buttons' disabled={this.state.end} bsStyle="Start" onClick={this.startRecording} style={{margin:'1px'}} type="button">Start</Button>
                             <Button id='buttons' disabled={!this.state.started} bsStyle="Start" onClick={this.stopRecording} style={{margin:'1px'}} type="button">Stop</Button>
                         </form>
 
