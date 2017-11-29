@@ -110,7 +110,6 @@ export function updateTitle(idToken, session, newTitle) {
 
 export function endSession(idToken, code) {
 	return new Promise((resolve, reject) => {
-		console.log(code);
 		if(idToken) {
 			fetch('/api/PresenterSession/endSession', {
 				method: 'post',
@@ -126,6 +125,33 @@ export function endSession(idToken, code) {
 			.catch(error => {
 					console.log(error);
 					return reject(error);
+			});
+		}
+	});
+}
+
+export function toggleActive(idToken, code) {
+
+	return new Promise((resolve, reject) => {
+		if(idToken) {
+			fetch('/api/PresenterSession/toggleActive', {
+				method: 'post',
+				body: JSON.stringify({
+					token: idToken,
+					accessCode: code
+				}),
+				headers: {
+					'Content-Type': 'application/json',
+					'Accept': 'application/json'
+				}
+			})
+			.then(response => response.json())
+						.then(response => {
+							console.log(response);
+						})
+			.catch(error => {
+				console.log(error);
+				return reject(error);
 			});
 		}
 	});
