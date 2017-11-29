@@ -37,3 +37,39 @@
     }
 
 }
+@media screen and (max-width: 650px) {
+
+    .reviewContent{
+        float:left;
+
+    }
+    .reviewContainer{
+
+        font-size: 70%;
+    }
+
+    #innerReview{
+        width: 100% !important;
+    }
+
+    #rightReview{
+
+        border: 1px solid #665084 !important;
+        width: 100% !important;
+    }
+    #chartReview{
+
+        width: 100% !important;
+
+    }
+    #titleReview{
+        width:100% !important;
+    }
+
+}
+
+
+
+.w3-sidebar{
+    width: 15% !important;
+}

@@ -76,17 +76,39 @@ class ReviewFeedback extends Component {
                 </div>
 
                 <div id="center" style={{width:'85%',float:'right',marginTop:'4px',height:'100%'}}>
-                    <div class= 'inner' style={{width:'65%',display:'inline-block'}}>
+                    <div id= 'innerReview' style={{width:'65%',display:'inline-block',float:'left'}}>
 
                         <audio controls={"controls"} style={{width:'100%', height:'3em'}}></audio>
 
 
                     </div>
 
-                    <div id = 'right' class='w3-round' style={{ borderLeft:'1px solid #665084',width:'35%',backgroundColor:'#c4a5ff',display:'inline-block',float:'right',overflow:'auto',maxHeight:'33em'}}>
+
+                    <div id= 'chartReview' style={{width:'65%',height:'30em',display:'inline-block',float:'left'}}>
+                        <div class='chart' style={{width:'33%',display:'inline-block',height:'100%'}}>
+
+                            <Chart/>
+
+                        </div>
+                        <div class="chart"style={{width:'33%',display:'inline-block',height:'100%'}}>
+                            <Chart/>
+
+                        </div>
+                        <div class = 'chart' style={{width:'33%',display:'inline-block',height:'100%'}}>
+
+                            <Chart/>
+                        </div>
+                    </div>
 
 
+                    <div id='titleReview' style={{width:'35%',display:'inline-block',float:'both',overflow:'auto'}}>
+                        <center><h3>
+                        Feedback
+                        </h3>
+                        </center>
+                    </div>
 
+                    <div id = 'rightReview' class='w3-round' style={{float:'right',border:'2px solid #665084',width:'35%',backgroundColor:'#c4a5ff',overflow:'auto',maxHeight:'33em'}}>
 
                             <div class="reviewContainer w3-round-xlarge">
                             <p class="'reviewContent">
@@ -151,22 +173,6 @@ class ReviewFeedback extends Component {
 
 
 
-                    </div>
-
-                    <div id= 'chart' style={{width:'65%',height:'30em'}}>
-                        <div class='chart' style={{width:'33%',display:'inline-block',height:'100%'}}>
-
-                            <Chart/>
-
-                        </div>
-                        <div class="chart"style={{width:'33%',display:'inline-block',height:'100%'}}>
-                            <Chart/>
-
-                        </div>
-                        <div class = 'chart' style={{width:'33%',display:'inline-block',height:'100%'}}>
-
-                            <Chart/>
-                        </div>
                     </div>
 
 
