@@ -20,21 +20,15 @@ class App extends Component {
         this.join = this.join.bind(this);
         this.create = this.create.bind(this);
 
-        var displayName = "";
-				getDisplayName().then(name => {
-						displayName = name;
-				}, (error) => {
-						displayName = "ERROR RETRIEVING DISPLAY NAME";
-				});
-
         this.state = {
-            displayName: displayName,
             coder: 0,
             message: ""
         }
     }
 
-    componentDidMount() {}
+    componentDidMount() {
+				getDisplayName().then(name => {this.setState({displayName: name});});
+		}
 
     front = function(ev) {
         ev.preventDefault();
