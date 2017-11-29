@@ -6,7 +6,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 import {Button} from 'react-bootstrap';
 import {getDisplayName} from "./RegisterFirebaseUser";
 
-import Chart from './Chart';
+import Chart from './components/Chart';
 import Main from './Main';
 import {updateTitle, endSession} from './FrontEndSession';
 import {getIdToken} from './RegisterFirebaseUser';
