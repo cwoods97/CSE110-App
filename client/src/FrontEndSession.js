@@ -109,6 +109,7 @@ export function updateTitle(idToken, code, newTitle) {
 
 export function endSession(idToken, code) {
 	return new Promise((resolve, reject) => {
+		console.log(code);
 		if(idToken) {
 			fetch('/api/PresenterSession/endSession', {
 				method: 'post',

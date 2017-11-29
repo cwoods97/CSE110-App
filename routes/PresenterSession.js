@@ -9,22 +9,19 @@ router.post('/endSession', (req, res) => {
 	var userPath = 'users/'+uid;
 	var userRef = admin.database().ref(userPath);
 	
-    var accessCode = res.body.accessCode;
-	var title = res.body.title;
+    var accessCode = req.body.accessCode;
 	
   	//query the database for session with accessCode
 	sessionRef.orderByChild("accessCode").equalTo(accessCode).once('value', function(snapshot) {
 		
 		//should be only one loop, but this is the only way I know how to code
 		snapshot.forEach(function(childSnapshot) {
-			var thisSession = sessionRef.child(childsnapshot.key) //gets the session
+			var thisSession = sessionRef.child(childSnapshot.key) //gets the session
 			thisSession.set({
 				accessCode: '',
-				isActive: false,
-				title: title,
 			});
 		});
-	}
+	});
 })
 
 module.exports = router;

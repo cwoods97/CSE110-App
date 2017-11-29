@@ -81,9 +81,8 @@ class CreateSession extends Component {
             started: false,
             end: true
         });
-		var accessCode = document.getElementById("accessCode").value;
 		getIdToken().then(token => {
-			endSession(token, accessCode);
+			endSession(token, this.state.coder);
 		});
 		
         ReactDOM.render(<Main />, document.getElementById('root'));
