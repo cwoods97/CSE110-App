@@ -105,6 +105,16 @@
 
 
 }
+#mainTitle{
+    font-family: cursive, sans-serif !important;
+
+}
+*{
+    font-family: Poppins, sans-serif;
+
+}
+
+
 
 .w3-sidebar{
     width: 15% !important;

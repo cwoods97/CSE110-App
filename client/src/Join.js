@@ -44,7 +44,6 @@ class Join extends Component {
 
 
     componentDidMount() {
-
         getDisplayName().then(name =>{this.setState({display: name});});
     }
 
@@ -111,7 +110,7 @@ class Join extends Component {
                     <div style={{backgroundColor:'#c4a5ff',height:"100%"}}>
 
 
-                        <h2 style={{marginLeft:'10px',marginTop:'0px',marginBottom:'1px',height:'35px',fontFamily:'cursive'}}><b>speakeasy</b>
+                        <h2 style={{marginLeft:'10px',marginTop:'0px',marginBottom:'1px',height:'35px'}}><b id="mainTitle">speakeasy</b>
 
 
                         </h2>
@@ -121,12 +120,12 @@ class Join extends Component {
                 </div>
 
 
-                <div id='navigationJoin' class=" w3-sidebar w3-bar-block w3-responsive" style={{float:'both',margin:'auto',height:'100%',backgroundColor:'lightgrey',zIndex:'0'}}>
+                <div id='navigationJoin' class=" w3-sidebar w3-bar-block w3-responsive" style={{borderRight:'1px solid #665084', float:'both',margin:'auto',height:'100%',backgroundColor:'lightgrey',zIndex:'0'}}>
 
 
-                    <a class="w3-bar-item" style={{backgroundColor:'PaleVioletRed'}}>{this.state.display}</a>
-                    <a class="w3-bar-item w3-button" onClick={this.main} style={{backgroundColor:'lightgrey'}}>Leave Session</a>
-                    <a class="w3-bar-item w3-button" style={{backgroundColor:'lightgrey'}}>Share</a>
+                    <a class="w3-bar-item" style={{backgroundColor:'PaleVioletRed'}}><b>{this.state.display}</b></a>
+                    <a class="w3-bar-item w3-button" onClick={this.main} style={{backgroundColor:'lightgrey'}}><b>Leave Session</b></a>
+                    <a class="w3-bar-item w3-button" style={{backgroundColor:'lightgrey'}}><b>Share</b></a>
 
 
                 </div>

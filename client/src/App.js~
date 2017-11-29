@@ -38,7 +38,15 @@ class AppFront extends Component {
         }
     }
 
-    componentDidMount() {}
+    componentDidMount() {
+        return fetch('/api/hello/hi')
+            .then((response) => response.json())
+            .then((responseJson) => {
+                this.setState({
+                    message: responseJson.message
+                });
+            })
+    }
 
     main = function(ev){
         ev.preventDefault();
@@ -61,14 +69,22 @@ class AppFront extends Component {
             return;
         }
 
-        login(email, password)
-
-        .then((success) => {
+<<<<<<< Updated upstream
+	    login(email, password)
+        .then(success => {
             if (success) {
                 ReactDOM.render(<Main db={firebase} />, document.getElementById('root'));
             }
-        }).catch((error) => {
-            document.getElementById('error').innerHTML = '\n' + error.message;
+        }).catch(error => {
+=======
+        login(email, password)
+            .then(success => {
+                if (success) {
+                    ReactDOM.render(<Main db={firebase} />, document.getElementById('root'));
+                }
+            }).catch(error => {
+>>>>>>> Stashed changes
+            document.getElementById('error').innerHTML += '\n' + error.message;
         });
     }
 
@@ -115,6 +131,17 @@ class AppFront extends Component {
 
                 document.getElementById("rError").innerHTML = "Please enter a valid email address"
 
+<<<<<<< Updated upstream
+        }
+        else{
+						firebase.auth().sendPasswordResetEmail(x)
+						.then(() => {
+							document.getElementById('rError').innerHTML = "Password reset email sent!";
+						}).catch((error) => {
+								document.getElementById('rError').innerHTML = error.message;
+						});
+				}
+=======
             }
             else{
                 firebase.auth().sendPasswordResetEmail(x)
@@ -124,6 +151,7 @@ class AppFront extends Component {
                     document.getElementById('rError').innerHTML = error.message;
                 });
             }
+>>>>>>> Stashed changes
         };
         but.innerHTML = "Reset";
 
@@ -179,8 +207,7 @@ class AppFront extends Component {
                         Welcome to speakeasy, a web app designed to enhance presentations, speeches, and public speaking in general. Our goal is to improve the experiences of both the audience and speech givers.
                     </h3>
 
-              </div>
-
+                </div>
 
 
             </div>
