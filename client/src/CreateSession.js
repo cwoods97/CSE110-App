@@ -8,7 +8,7 @@ import {getDisplayName} from "./RegisterFirebaseUser";
 
 import Chart from './Chart';
 import Main from './Main';
-import {updateTitle, endSession} from './FrontEndSession';
+import {updateTitle, endSession, toggleActive} from './FrontEndSession';
 import {getIdToken} from './RegisterFirebaseUser';
 
 import { ReactMic } from 'react-mic';
@@ -39,8 +39,10 @@ class CreateSession extends Component {
     }
 
     startRecording = () => {
-
-        this.setState({
+        getIdToken().then(token => {
+			toggleActive(token, this.state.coder);
+		});
+		this.setState({
             started: true,
             end: true
         });
@@ -57,11 +59,15 @@ class CreateSession extends Component {
     };
 
     stopRecording = () => {
-        this.setState({
+        getIdToken().then(token => {
+			toggleActive(token, this.state.coder);
+		});
+		this.setState({
             record: false,
             started: false,
             end: true
         });
+		
     };
 
     onStop = (blobObject) => {
