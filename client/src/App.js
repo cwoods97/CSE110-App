@@ -38,15 +38,7 @@ class AppFront extends Component {
         }
     }
 
-    componentDidMount() {
-        return fetch('/api/hello/hi')
-            .then((response) => response.json())
-            .then((responseJson) => {
-                this.setState({
-                    message: responseJson.message
-                });
-            })
-    }
+    componentDidMount() {}
 
     main = function(ev){
         ev.preventDefault();
@@ -70,11 +62,11 @@ class AppFront extends Component {
         }
 
         login(email, password)
-            .then(success => {
-                if (success) {
-                    ReactDOM.render(<Main db={firebase} />, document.getElementById('root'));
-                }
-            }).catch(error => {
+        .then((success) => {
+            if (success) {
+                ReactDOM.render(<Main db={firebase} />, document.getElementById('root'));
+            }
+        }).catch((error) => {
             document.getElementById('error').innerHTML += '\n' + error.message;
         });
     }
@@ -186,7 +178,8 @@ class AppFront extends Component {
                         Welcome to speakeasy, a web app designed to enhance presentations, speeches, and public speaking in general. Our goal is to improve the experiences of both the audience and speech givers.
                     </h3>
 
-                </div>
+              </div>
+
 
 
             </div>

@@ -31,15 +31,7 @@ class Reset extends Component {
         this.handleEmailChange = this.handleEmailChange.bind(this);
     }
 
-    componentDidMount() {
-        return fetch('/api/hello/hi')
-            .then((response) => response.json())
-            .then((responseJson) => {
-                this.setState({
-                    message: responseJson.message
-                });
-            })
-    }
+    componentDidMount() {}
 
     checkInput = function(event) {
 

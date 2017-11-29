@@ -16,8 +16,8 @@ export function createBackendSession(idToken) {
 				}
 			}).then(response => response.json())
 			.then(response => {
-				//this should return the session access code
-				resolve(response.accessCode);
+				// this should return the session ID and access code
+				resolve(response);
 
 			}).catch(error => {
 				console.log(error);
@@ -54,13 +54,14 @@ export function joinBackendSession(idToken, code) {
 		});
 }
 
-export function leaveBackendSession(idToken) {
+export function leaveBackendSession(idToken, accessCode) {
 		return new Promise((resolve, reject) => {
 				if(idToken) {
 						fetch('/api/session/leave', {
 								method: 'post',
 								body: JSON.stringify({
-										token: idToken
+										token: idToken,
+										code: accessCode
 								}),
 								headers: {
 										'Content-Type': 'application/json',

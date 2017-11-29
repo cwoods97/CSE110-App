@@ -4,17 +4,23 @@ import './styles/Join.css';
 import ReactDOM from 'react-dom';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/css/bootstrap-theme.css';
-
+import {getDisplayName} from "./RegisterFirebaseUser";
 
 import Main from './Main';
 import { Widget, addResponseMessage, addUserMessage } from 'react-chat-widget';
 import {leaveBackendSession} from './FrontEndSession';
 import {getIdToken} from './RegisterFirebaseUser.js';
+import {sendPredefinedFeedback} from './SendFeedback.js';
 
 class Join extends Component {
 
     constructor(props) {
         super(props);
+
+				this.sessionID = props.code;
+				this.db = props.db;
+				this.main = this.main.bind(this);
+
         // Initialize Firebase
         var config = {
             apiKey: "AIzaSyDSQVw9KUjmxhlxILCousROVR6PfOFcYQg",
@@ -31,26 +37,26 @@ class Join extends Component {
             firebase.app()
         }
         this.state = {
-            message: ""
+            message: "",
+            display: ""
         }
     }
 
 
     componentDidMount() {
 
-
-
-        //document.getElementsByClassName('conversation-container').style.display = "flex"
-        return fetch('/api/hello/hi')
-            .then((response) => response.json())
-            .then((responseJson) => {
-                this.setState({
-                    message: responseJson.message
-                });
-            })
+        getDisplayName().then(name =>{this.setState({display: name});});
     }
 
-    add = function (e){
+    sendPredef = function(comment, e){
+        e.preventDefault();
+        getIdToken().then(token =>{
+            sendPredefinedFeedback(token, comment, 0);
+        })
+
+    }
+
+    sendComment = function (e){
 
         e.preventDefault()
 
@@ -63,15 +69,21 @@ class Join extends Component {
         var div3 =  document.createElement('div');
         div3.classList.add('message-text');
         var p =  document.createElement('p');
-        p.innerHTML = document.getElementById("comment").value;
+
+        var comment = document.getElementById("comment").value;
+        p.innerHTML = comment;
+        console.log("sending comment" + comment);
 
         div3.appendChild(p);
         div2.appendChild(div3);
         div1.appendChild(div2);
         mList.appendChild(div1);
 
-
         document.getElementById("comment").value = ""
+
+        getIdToken().then(token =>{
+            sendPredefinedFeedback(token, comment, 1);
+        })
 
 
     };
@@ -81,9 +93,8 @@ class Join extends Component {
         ev.preventDefault();
 
 				getIdToken().then(token => {
-						leaveBackendSession(token).then((message) => {
-								alert(message);
-				        ReactDOM.render(<Main />, document.getElementById('root'));
+						leaveBackendSession(token, this.sessionID).then((message) => {
+				        ReactDOM.render(<Main db={this.db}/>, document.getElementById('root'));
 						});
 				});
 
@@ -113,7 +124,7 @@ class Join extends Component {
                 <div id='navigationJoin' class=" w3-sidebar w3-bar-block w3-responsive" style={{float:'both',margin:'auto',height:'100%',backgroundColor:'lightgrey',zIndex:'0'}}>
 
 
-                    <a class="w3-bar-item" style={{backgroundColor:'PaleVioletRed'}}>Michael Harasti</a>
+                    <a class="w3-bar-item" style={{backgroundColor:'PaleVioletRed'}}>{this.state.display}</a>
                     <a class="w3-bar-item w3-button" onClick={this.main} style={{backgroundColor:'lightgrey'}}>Leave Session</a>
                     <a class="w3-bar-item w3-button" style={{backgroundColor:'lightgrey'}}>Share</a>
 
@@ -133,11 +144,11 @@ class Join extends Component {
 
                         <center>
 
-                            <button  bsStyle="Pace of Speech too Fast" class="predefined w3-btn w3-round" style={{backgroundColor:'#665084',color:'white'}}>Pace of Speech too Fast</button>
-                            <button bsStyle="Pace of Speech too Slow" class="predefined w3-btn w3-round" style={{backgroundColor:'#665084',color:'white'}}>Pace of Speech too Slow</button>
+                            <button  bsStyle="Pace of Speech too Fast" onClick={(e) => this.sendPredef('fast', e)} class="predefined w3-btn w3-round" style={{backgroundColor:'#665084',color:'white'}}>Pace of Speech too Fast</button>
+                            <button bsStyle="Pace of Speech too Slow" onClick={(e) => this.sendPredef('slow', e)} class="predefined w3-btn w3-round" style={{backgroundColor:'#665084',color:'white'}}>Pace of Speech too Slow</button>
                             <br></br>
-                            <button bsStyle = "Speak Up"class="predefined w3-btn w3-round" style={{backgroundColor:'#6164a3',color:"white"}}>Speak Up</button>
-                            <button bsStyle = "Too Loud" class="predefined w3-btn w3-round" style={{backgroundColor:'#6164a3',color:"white"}}>Too Loud</button>
+                            <button bsStyle = "Speak Up" onClick={(e) => this.sendPredef('quiet', e)} class="predefined w3-btn w3-round" style={{backgroundColor:'#6164a3',color:"white"}}>Speak Up</button>
+                            <button bsStyle = "Too Loud" onClick={(e) => this.sendPredef('loud', e)} class="predefined w3-btn w3-round" style={{backgroundColor:'#6164a3',color:"white"}}>Too Loud</button>
 
                             <br></br>
 
@@ -168,7 +179,7 @@ class Join extends Component {
                                 <input id="comment" style={{display:'inline-block'}}type="text" class="new-message" name="message" placeholder="Type a message..." autocomplete="off"></input>
 
 
-                                <button id='post' type="submit" style={{display:'inline-block'}} class="send" onClick={this.add.bind(this)} >Post</button>
+                                <button id='post' type="submit" style={{display:'inline-block'}} class="send" onClick={this.sendComment.bind(this)} >Post</button>
                             </form>
                         </div>
                         </div>

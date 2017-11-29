@@ -5,7 +5,9 @@ Available functions:
     createAccount(displayName, email, password)
     login(email, password)
     getIdToken()
+		getDisplayName()
 */
+const log = (message) => { console.log("[RegisterFirebaseUser.js] " + message); }
 
 /*
 Description: Generates a user account in Firebase, upon which a parallel
@@ -18,7 +20,7 @@ On Success: Returned promise resolves as true.
 export function createAccount(displayName, email, password) {
     return new Promise((resolve, reject) => {
         if (displayName && email && password) {
-            console.log("Verifying display name", displayName, "for new user account");
+            log("Creating parallel Firebase and backend user accounts for " + displayName + ".");
 
             fetch('/api/account/verify', {
                 method: 'post',
@@ -30,46 +32,55 @@ export function createAccount(displayName, email, password) {
                     'Accept': 'application/json'
                 }
             }).then((response) => {
-                if (response.status !== 200) {
-                    response.json().then((data) => {
-                        console.log("Is display name unique? ", data.isUnique);
-                    }).catch((error) => { reject(error); })
-                } else if (response.status === 404) {
-                    reject("Display name is not unique.");
+                if (response.status === 200) {
+                    return response.json();
+                } else if (response.status === 500) {
+                    reject({ code: 'auth/backend-error'});
                 }
-            }).catch((error) => { reject(error); })
+            }).then((data) => {
+                if (data.isUnique) {
+                    firebase.auth().createUserWithEmailAndPassword(email, password)
+                        .then(user => {
+                            user.updateProfile({
+                                displayName: displayName
+                            }).then(() => {
+                                log("Firebase user successfully created.");
+                            }).catch(error => {
+                                reject('auth/invalid-name');
+                            });
 
-            firebase.auth().createUserWithEmailAndPassword(email, password)
-                .then(user => {
-                    user.updateProfile({
-                        displayName: displayName
-                    }).catch(error => {
-                        // Firebase is unable to update display name
-                        reject(error);
-                    });
-
-                    // Create backend account upon successful firebase registration
-                    user.getIdToken()
-                        .then(token => {
-                            fetch('/api/account/create_account', {
-                                method: 'post',
-                                body: JSON.stringify({
-                                    displayName: displayName,
-                                    email: email,
-                                    token: token
-                                }),
-                                headers: {
-                                    'Content-Type': 'application/json',
-                                    'Accept': 'application/json'
-                                }
-                            }).then(data => {
-                                resolve(true);
-                                // Backend API returned an error
-                            }).catch(error => { reject(error); })
-                            // Unable to retrieve user login session
+                            // Create backend account upon successful firebase registration
+                            user.getIdToken()
+                                .then((token) => {
+                                    fetch('/api/account/createAccount', {
+                                        method: 'post',
+                                        body: JSON.stringify({
+                                            displayName: displayName,
+                                            email: email,
+                                            token: token
+                                        }),
+                                        headers: {
+                                            'Content-Type': 'application/json',
+                                            'Accept': 'application/json'
+                                        }
+                                    }).then((response) => {
+                                        if (response.status === 200) {
+                                            log("Backend user successfully created.");
+                                            resolve();
+                                        } else {
+                                            reject({ code: 'auth/backend-error' });
+                                        }
+                                    // Backend API returned an error
+                                    }).catch(error => { reject(error); })
+                                // Unable to retrieve user login session
+                                }).catch(error => { reject(error); });
+                        // Unable to create user in Firebase
                         }).catch(error => { reject(error); });
-                    // Unable to create user in Firebase
-                }).catch(error => { reject(error); });
+                } else {
+                    reject({ code: 'auth/name-already-in-use'});
+                }
+            // Network failure in communicating with backend
+            }).catch((error) => { reject(error); })
         }
     })
 }
@@ -88,11 +99,11 @@ export function login(email, password) {
             firebase.auth().signInWithEmailAndPassword(email, password)
                 .then(user => {
                     user.getIdToken()
-                        .then((token) => { resolve(true) })
+                        .then((token) => { resolve(token) })
                         .catch((error) => { reject(error) });
                 }).catch(error => {
-                reject(error);
-            });
+                    reject(error);
+                });
         }
     })
 }
@@ -112,4 +123,15 @@ export function getIdToken() {
             })
             .catch(error => { reject(error); })
     })
+}
+
+export function getDisplayName() {
+		return new Promise((resolve, reject) => {
+				const user = firebase.auth().currentUser;
+				if(user != null){
+						const name = user.displayName;
+						resolve(name);
+				}
+				reject("User is not logged in.");
+		});
 }

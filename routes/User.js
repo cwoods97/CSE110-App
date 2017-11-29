@@ -8,9 +8,9 @@ router.get('/joinedSessions', (req, res) => {
     admin.database().ref("users").child(uid + '/' + 'joinedSessions')
     .then((dataSnapshot) => {
         sessionKeys = Object.keys(dataSnapshot);
-        res.sendStatus(200).end(sessionKeys);
+        res.status(200).json(sessionKeys);
     }).catch((error) => {
-        res.sendStatus(404).end(error);
+        res.status(404).json(error);
     })
 })
 
@@ -21,9 +21,9 @@ router.get('/hostedSessions', (req, res) => {
     admin.database().ref("users").child(uid + '/' + 'hostedSessions')
     .then((dataSnapshot) => {
         sessionKeys = Object.keys(dataSnapshot);
-        res.sendStatus(200).end(sessionKeys);
+        res.status(200).json(sessionKeys);
     }).catch((error) => {
-        res.sendStatus(404).end();
+        res.status(404).json();
     })
 })
 
