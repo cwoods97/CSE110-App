@@ -52,6 +52,9 @@ class CreateSession extends Component {
             });
         }
 
+        document.getElementById('nAudio').disabled = true;
+        document.getElementById('audio').disabled = true;
+
         //Timer should start here regardless if audio recording is on
 
     };
@@ -97,19 +100,29 @@ class CreateSession extends Component {
 	}
 
 	noAudio = () => {
-        this.setState({
-            audio: false
-        });
-        document.getElementById('audio').checked = false;
-    }
+
+        if ((this.state.record == false && this.state.end == false)) {
+            this.setState({
+                audio: false
+            });
+
+            document.getElementById('audio').checked = false;
+        }
+
+     };
 
     audioOn = () => {
-        this.setState({
-            audio: true
-        });
 
-        document.getElementById('nAudio').checked = false;
-    }
+        if ( this.state.record == false && this.state.end == false) {
+            this.setState({
+                audio: true
+            });
+
+
+            document.getElementById('nAudio').checked = false;
+        }
+
+    };
 
     render() {
 
