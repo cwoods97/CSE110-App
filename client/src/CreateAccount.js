@@ -37,24 +37,30 @@ class CreateAccount extends Component {
 
     componentDidMount() {}
 
-    go_home = function(ev) {
+    goHome = function(ev) {
         ReactDOM.render(<App />, document.getElementById('root'));
     }
 
-    create_main = function(ev) {
+    createMain = function(ev) {
 
         ev.preventDefault();
 
-        var email = document.getElementById("email").value;
-        var display = document.getElementById("display").value;
-        var pwd1 = document.getElementById("pwd1").value;
-        var pwd2 = document.getElementById("pwd2").value;
+        const email = document.getElementById("email").value;
+        const display = document.getElementById("display").value;
+        const pwd1 = document.getElementById("pwd1").value;
+        const pwd2 = document.getElementById("pwd2").value;
 
         // regex from http://stackoverflow.com/questions/46155/validate-email-address-in-javascript
-        var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        const re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        var validations = [
+            re.test(email),
+            display.replace(' ', '') !== display,
+            pwd1.replace(' ', '') !== pwd1,
+            pwd2.replace(' ', '') !== pwd2,
+            pwd1 === pwd2
+        ]
 
-        if (re.test(email) &&  pwd1===pwd2  && pwd1 !== "" && display !== "") {
-
+        if (validations.every(Boolean)) {
             createAccount(display,email,pwd2)
                 .then(() => {
                     // Only render user's main page when successfully logged in
@@ -71,30 +77,34 @@ class CreateAccount extends Component {
                     } else if (errorCode === 'auth/email-already-in-use') {
                         getById('emailError').innerHTML = "Email is already in use";
                     } else if (errorCode === 'auth/weak-password') {
-                        getById('pwdError').innerHTML = "Password is not strong enough";
+                        getById('pwdError').innerHTML = "Password must be at least 6 characters";
                     }
                 });
 
         } else {
 
-            if (!re.test(email)) {
-                document.getElementById('emailError').innerHTML = "Please enter a valid email address";
-            } else {
+            if (validations[0]) {
                 document.getElementById('emailError').innerHTML = "";
+            } else {
+                document.getElementById('emailError').innerHTML = "Please enter a valid email address";
             }
 
-            if (display === "") {
-                document.getElementById('displayNameError').innerHTML = "Please enter a valid display name";
-            } else {
+            if (validations[1]) {
                 document.getElementById('displayNameError').innerHTML = "";
+            } else {
+                document.getElementById('displayNameError').innerHTML = "Please enter a valid display name (Spaces not allowed)";
             }
 
-            if(pwd1 === "") {
+            if (validations[2] && validations[3]) {
+                if (validations[4]) {
+                    document.getElementById('pwdError').innerHTML = "";
+                } else {
+                    document.getElementById('pwdError').innerHTML = "Passwords do not match";
+                }
+            } else if (validations[2]) {
                 document.getElementById('pwdError').innerHTML = "Please enter a password";
-            } else if (pwd1 !== pwd2){
-                document.getElementById('pwdError').innerHTML = "Passwords do not match";
-            } else {
-                document.getElementById('pwdError').innerHTML = "";
+            } else if (validations[3]) {
+                document.getElementById('pwdError').innerHTML = "Please re-enter your password";
             }
 
         }
@@ -107,7 +117,7 @@ class CreateAccount extends Component {
                 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"></link>
                 <div style={{backgroundColor:'LightSkyBlue',height:"100%"}}>
 
-                    <h3 onClick={this.go_home} style={{cursor:'pointer',marginLeft:'10px',marginTop:'0px',marginBottom:'1px',height:'35px',fontFamily:'cursive'}}><b>speakeasy</b>
+                    <h3 onClick={this.goHome} style={{cursor:'pointer',marginLeft:'10px',marginTop:'0px',marginBottom:'1px',height:'35px',fontFamily:'cursive'}}><b>speakeasy</b>
                     </h3>
                 </div>
 
@@ -126,7 +136,7 @@ class CreateAccount extends Component {
                             <p></p>
                             <input class="w3-input" id="pwd2" type="password" name="reenter" placeholder={"Re-enter Password"}></input><br></br>
                             <br></br>
-                            <input onClick={this.create_main} style={{float:"left"}} class="w3-btn w3-blue-grey" type="submit" value="Create"></input>
+                            <input onClick={this.createMain} style={{float:"left"}} class="w3-btn w3-blue-grey" type="submit" value="Create"></input>
                         </form>
                     </div>
                 </div >
