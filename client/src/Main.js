@@ -9,7 +9,7 @@ import AppFront from './App';
 import CreateSession from './CreateSession';
 import SessionHistory from './SessionHistory';
 import {createBackendSession, joinBackendSession} from './FrontEndSession';
-import {getIdToken, getDisplayName} from './RegisterFirebaseUser.js';
+import {getIdToken, getDisplayName, logout} from './RegisterFirebaseUser.js';
 
 class App extends Component {
 
@@ -20,23 +20,20 @@ class App extends Component {
         this.join = this.join.bind(this);
         this.create = this.create.bind(this);
 
-        var displayName = "";
-				getDisplayName().then(name => {
-						displayName = name;
-				}, (error) => {
-						displayName = "ERROR RETRIEVING DISPLAY NAME";
-				});
-
         this.state = {
-            displayName: displayName,
             coder: 0,
             message: ""
         }
     }
 
-    componentDidMount() {}
+    componentDidMount() {
+				getDisplayName().then(name => {this.setState({displayName: name});});
+		}
 
     front = function(ev) {
+		
+		logout();
+		
         ev.preventDefault();
         ReactDOM.render(<AppFront />, document.getElementById('root'));
     };

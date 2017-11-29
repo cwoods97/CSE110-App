@@ -80,14 +80,14 @@ export function leaveBackendSession(idToken, accessCode) {
 		});
 }
 
-export function updateTitle(idToken, code, newTitle) {
+export function updateTitle(idToken, session, newTitle) {
 		return new Promise((resolve, reject) => {
 				if(idToken) {
 						fetch('/api/session/title', {
 								method: 'post',
 								body: JSON.stringify({
 										token: idToken,
-										accessCode: code,
+										code: session,
 										title: newTitle
 								}),
 								headers: {
@@ -106,4 +106,27 @@ export function updateTitle(idToken, code, newTitle) {
 				}
 		});
 
+}
+
+export function endSession(idToken, code) {
+	return new Promise((resolve, reject) => {
+		console.log(code);
+		if(idToken) {
+			fetch('/api/PresenterSession/endSession', {
+				method: 'post',
+				body: JSON.stringify({
+						token: idToken,
+						accessCode: code,
+				}),
+				headers: {
+						'Content-Type': 'application/json',
+						'Accept': 'application/json'
+				}
+			})
+			.catch(error => {
+					console.log(error);
+					return reject(error);
+			});
+		}
+	});
 }
