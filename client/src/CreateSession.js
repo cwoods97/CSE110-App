@@ -163,17 +163,27 @@ class CreateSession extends Component {
                     <div id = 'right' class="w3-col" style={{borderLeft:'1px solid #665084',float:'right',width:'15%',height:'60em',backgroundColor:'#c4a5ff',display:'inline-block',position:'fixed'}}>
 
                         <br></br>
-                        <p>Session Title:</p>
-                        <p id='code'>Session Code: {this.state.coder}</p>
+                        <p style={{fontFamily:'Poppins, sans-serif'}}>Session Title:</p>
 
                         <form action="">
-                            <input id='nAudio' onClick={this.noAudio} type="radio" name="audioOff" value="noaudio" defaultChecked={true}></input>No Audio<br></br>
-                            <input id= 'audio' onClick={this.audioOn} type="radio" name="audioOn" value="record"></input>Record<br></br>
+                            <input class="w3-input" type="input" name="editTitle" placeholder={"Edit Title"}></input>
+
+                            <br></br>
+                            <Button>Change</Button>
+                        </form>
+
+                        <br></br>
+
+                        <p id='code' style={{fontFamily:'Poppins, sans-serif'}}>Session Code: {this.state.coder}</p>
+
+                        <form action="">
+                            <input id='nAudio' onClick={this.noAudio} type="radio" name="audioOff" value="noaudio" defaultChecked={true} style={{fontFamily:'Poppins, sans-serif'}}></input>No Audio<br></br>
+                            <input id= 'audio' onClick={this.audioOn} type="radio" name="audioOn" value="record" style={{fontFamily:'Poppins, sans-serif'}}></input>Record<br></br>
 
                             <br></br>
 
-                            <Button id='buttons' disabled={this.state.end} onClick={this.startRecording} style={{margin:'1px'}} type="button">Start</Button>
-                            <Button id='buttons' disabled={!this.state.started} onClick={this.stopRecording} style={{margin:'1px'}} type="button">Stop</Button>
+                            <Button id='buttons' disabled={this.state.end} onClick={this.startRecording} style={{margin:'1px',fontFamily:'Poppins, sans-serif'}} type="button">Start</Button>
+                            <Button id='buttons' disabled={!this.state.started} onClick={this.stopRecording} style={{margin:'1px',fontFamily:'Poppins, sans-serif'}} type="button">Stop</Button>
                         </form>
 
                         <br></br>
