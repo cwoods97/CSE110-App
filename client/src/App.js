@@ -67,7 +67,7 @@ class AppFront extends Component {
                 ReactDOM.render(<Main db={firebase} />, document.getElementById('root'));
             }
         }).catch((error) => {
-            document.getElementById('error').innerHTML += '\n' + error.message;
+            document.getElementById('error').innerHTML = '\n' + error.message;
         });
     }
 

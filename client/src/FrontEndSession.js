@@ -80,14 +80,14 @@ export function leaveBackendSession(idToken, accessCode) {
 		});
 }
 
-export function updateTitle(idToken, code, newTitle) {
+export function updateTitle(idToken, session, newTitle) {
 		return new Promise((resolve, reject) => {
 				if(idToken) {
 						fetch('/api/session/title', {
 								method: 'post',
 								body: JSON.stringify({
 										token: idToken,
-										accessCode: code,
+										code: session,
 										title: newTitle
 								}),
 								headers: {

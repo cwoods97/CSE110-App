@@ -22,6 +22,7 @@ class CreateSession extends Component {
         this.db = props.db;
         this.sessionID = props.sessionID;
         this.onStop = this.onStop.bind(this);
+				this.updateTitle = this.updateTitle.bind(this);
         this.state = {
             audio: false,
             message: "",
@@ -85,12 +86,14 @@ class CreateSession extends Component {
         ReactDOM.render(<Main />, document.getElementById('root'));
     }
 
-	updateTitle = () => {
+	updateTitle = (ev) => {
+		ev.preventDefault();
+
 		var title = document.getElementById("title").value;
-		var accessCode = document.getElementById("accessCode").value;
+		var session = this.sessionID;
 
 		getIdToken().then(token => {
-			updateTitle(token, accessCode, title).then((title) => {
+			updateTitle(token, session, title).then((title) => {
 				alert("title set to " + title);
 			});
 		});
@@ -162,10 +165,10 @@ class CreateSession extends Component {
                         <p style={{fontFamily:'Poppins, sans-serif'}}>Session Title:</p>
 
                         <form action="">
-                            <input class="w3-input" type="input" name="editTitle" placeholder={"Edit Title"}></input>
+                            <input id="title" class="w3-input" type="input" name="editTitle" placeholder={"Edit Title"}></input>
 
                             <br></br>
-                            <Button>Change</Button>
+                            <Button onClick={this.updateTitle}>Change</Button>
                         </form>
 
                         <br></br>
