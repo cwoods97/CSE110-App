@@ -4,7 +4,7 @@
   "description": "",
   "main": "Server.js",
   "scripts": {
-    "start": "concurrently 'node Server.js' 'cd client && npm start'",
+    "start": "concurrently \"node Server.js\" \"cd client && npm start\"",
     "dev": "npm run build --prefix client/ && node Server.js 1",
     "heroku-postbuild": "cd client && npm install --only=dev && npm install && npm run build",
     "test": "echo \"Error: no test specified\" && exit 1"
