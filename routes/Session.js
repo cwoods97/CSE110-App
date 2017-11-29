@@ -26,7 +26,6 @@ router.post('/join', (req, res) => {
 										json = {};
 										json[child.key] = true;
 										userRef.child('joinedSessions').update(json);
-										userRef.child('currentSession').set(child.key);
 
 										res.json({
 												session: {
@@ -48,28 +47,19 @@ router.post('/join', (req, res) => {
 
 router.post('/leave', (req, res) => {
 	
-		const user = req.locals.uid;
 		const db = req.locals.admin.database();
+		const code = parseInt(req.body.code);
 
-		const userRef = db.ref("users").orderByKey().equalTo(user);
-		userRef.once('value').then(function (snapshot) {
+		const ref = db.ref("sessions").orderByChild("accessCode").equalTo(code);
+		ref.once('value').then(function (snapshot) {
 				snapshot.forEach(function(child) {
 						const value = child.val();
-						const session = value.currentSession;
-						const uRef = db.ref("users").child(user);
-						uRef.child('currentSession').set(null);
+						let audienceCount = parseInt(value.audienceCount);
+						audienceCount--;
+						const sessionRef = db.ref("sessions").child(child.key);
+						sessionRef.child('audienceCount').set(audienceCount.toString());
 
-						const sessionRef = db.ref("sessions").orderByKey().equalTo(session);
-						sessionRef.once('value').then(function (snap) {
-								snap.forEach(function(child) {
-										let audienceCount = parseInt(child.val().audienceCount);
-										audienceCount--;
-										const sRef = db.ref("sessions").child(session);
-										sRef.child("audienceCount").set(audienceCount.toString());
-								});
-
-								res.json({message: "left session " + session});
-						});
+						res.json({message: "left session " + child.key});
 				});
 		});
 		

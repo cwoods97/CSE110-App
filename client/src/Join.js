@@ -16,6 +16,11 @@ class Join extends Component {
 
     constructor(props) {
         super(props);
+
+				this.sessionID = props.code;
+				this.db = props.db;
+				this.main = this.main.bind(this);
+
         // Initialize Firebase
         var config = {
             apiKey: "AIzaSyDSQVw9KUjmxhlxILCousROVR6PfOFcYQg",
@@ -88,9 +93,8 @@ class Join extends Component {
         ev.preventDefault();
 
 				getIdToken().then(token => {
-						leaveBackendSession(token).then((message) => {
-								alert(message);
-				        ReactDOM.render(<Main />, document.getElementById('root'));
+						leaveBackendSession(token, this.sessionID).then((message) => {
+				        ReactDOM.render(<Main db={this.db}/>, document.getElementById('root'));
 						});
 				});
 

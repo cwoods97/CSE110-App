@@ -17,9 +17,8 @@ router.post('/endSession', (req, res) => {
 		//should be only one loop, but this is the only way I know how to code
 		snapshot.forEach(function(childSnapshot) {
 			var thisSession = sessionRef.child(childSnapshot.key) //gets the session
-			thisSession.set({
-				accessCode: '',
-			});
+			thisSession.child("accessCode").set('');
+			console.log("ended session with accessCode: ", accessCode);
 		});
 	});
 })
