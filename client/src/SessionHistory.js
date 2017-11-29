@@ -3,6 +3,7 @@ import firebase from 'firebase';
 import Users from './components/Users.js';
 import DisplayUserData from './components/DisplayUserData.js';
 import './styles/App.css';
+import './styles/SessionHistory.css';
 
 import Main from './Main';
 import AppFront from './App';
@@ -93,10 +94,10 @@ class App extends Component {
                 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"></link>
 
                 <div style={{height:'75px'}}>
-                    <div style={{backgroundColor:'CornFlowerBlue',height:"100%"}}>
+                    <div style={{backgroundColor:'#2C4A52',height:"100%"}}>
 
                         <center>
-                            <h1 style={{marginLeft:'10px',marginTop:'0px',marginBottom:'1px',height:'35px',fontFamily:'cursive'}}><b>speakeasy</b>
+                            <h1 style={{ fontFamily:'Poppins', marginLeft:'10px',marginTop:'0px',marginBottom:'1px',height:'35px', float:'left', color:'#E7E7E7'}}><b>SpeakEasy</b>
 
 
                             </h1>
@@ -105,7 +106,7 @@ class App extends Component {
                     </div>
                 </div>
 
-                <div class="w3-sidebar w3-bar-block" style={{width:'20%',height:'100%',backgroundColor:'lightgrey',zIndex:'0',overflow:'hidden'}}>
+                <div id="sidebar" className="w3-sidebar w3-bar-block" style={{width:'20%',height:'100%',backgroundColor:'lightgrey',zIndex:'0',overflow:'hidden'}}>
 
                     <a href="#" class="w3-bar-item" style={{backgroundColor:'aqua'}}>Michael Harasti</a>
                     <a href="#" class="w3-bar-item w3-button" onClick={this.home}style={{backgroundColor:'lightgrey'}}>Home</a>
@@ -127,7 +128,7 @@ class App extends Component {
                 <div class="w3-bar w3-white">
                     <br></br>
                     <center>
-                        <input style={{float:"right",width:"75%",marginRight:"30px"}}class="w3-input w3-light-blue" placeholder={"Search"}>
+                        <input style={{float:"right",width:"75%",marginRight:"30px", borderRadius:'10px', outline:'none'}}class="w3-input w3-light-blue" placeholder={"Search"}>
 
                         </input>
 
@@ -137,18 +138,18 @@ class App extends Component {
                     <br></br>
 
 
-                    <div style={{float:"right", marginRight:"400px"}}>
-                    <button id="jb"onClick={this.join} class="w3-btn w3-dark-grey">
+                    <div id="buttons" style={{float:"right", marginRight:"475px"}}>
+                    <button id="jb"onClick={this.join} class="w3-btn w3-dark-grey" style={{borderRadius:'10px'}}>
                         Joined Sessions
                     </button>
-                    <button id="cb"onClick={this.create} class="w3-btn w3-grey">
+                    <button id="cb"onClick={this.create} class="w3-btn w3-grey" style={{borderRadius:'10px'}}>
                         Created Sessions
                     </button>
                     </div>
 
                 </div>
                 <div id="joined">
-                    <div style={{margin:'10px',backgroundColor:'lightgrey',float:'right',width:'75%',marginRight:'30px'}}>
+                    <div style={{margin:'10px',backgroundColor:'lightgrey',float:'right',width:'75%',marginRight:'30px', borderRadius:'10px'}}>
                         <h6 style={{float:'right',marginRight:'10px'}}>
                             Delete
 
@@ -169,7 +170,7 @@ class App extends Component {
                     <br></br>
                     <br></br>
 
-                    <div style={{margin:'10px',backgroundColor:'lightgrey',float:'right',width:'75%',marginRight:'30px'}}>
+                    <div style={{margin:'10px',backgroundColor:'lightgrey',float:'right',width:'75%',marginRight:'30px', borderRadius:'10px'}}>
                         <h6 style={{float:'right',marginRight:'10px'}}>
                             Delete
 
