@@ -8,7 +8,7 @@ import {getDisplayName} from "./RegisterFirebaseUser";
 
 import Chart from './Chart';
 import Main from './Main';
-import {updateTitle} from './FrontEndSession';
+import {updateTitle, endSession} from './FrontEndSession';
 import {getIdToken} from './RegisterFirebaseUser';
 
 import { ReactMic } from 'react-mic';
@@ -81,14 +81,11 @@ class CreateSession extends Component {
             started: false,
             end: true
         });
-    }
-
-    close = function(ev){
-
-        ev.preventDefault();
-		var title = document.getElementById("title").value;
-		//var audiodata = 
-		//var accessCode
+		var accessCode = document.getElementById("accessCode").value;
+		getIdToken().then(token => {
+			endSession(token, accessCode);
+		});
+		
         ReactDOM.render(<Main />, document.getElementById('root'));
     }
 

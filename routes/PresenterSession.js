@@ -10,7 +10,6 @@ router.post('/endSession', (req, res) => {
 	var userRef = admin.database().ref(userPath);
 	
     var accessCode = res.body.accessCode;
-  	var artifacts = res.body.artifacts;
 	var title = res.body.title;
 	
   	//query the database for session with accessCode
@@ -23,7 +22,6 @@ router.post('/endSession', (req, res) => {
 				accessCode: '',
 				isActive: false,
 				title: title,
-				artifacts: artifacts
 			});
 		});
 	}
