@@ -1,0 +1,39 @@
+
+
+.reviewContent{
+
+    display:block;
+
+
+}
+
+.reviewContainer{
+
+
+    background-color:#DDDDDD;
+    width: 90%;
+    display: inline-block;
+    padding: 1em;
+    margin: 3px;
+     /*
+    Source: https://css-tricks.com/snippets/css/prevent-long-urls-from-breaking-out-of-container/
+     */
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+
+}
+
+@media screen and (max-width: 700px) {
+    .reviewContainer{
+
+        font-size: 80%;
+    }
+
+}
+@media screen and (max-width: 600px) {
+    .reviewContainer{
+
+        font-size: 70%;
+    }
+
+}

@@ -6,7 +6,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 import {Button} from 'react-bootstrap';
 import {getDisplayName} from "./RegisterFirebaseUser";
 
-import Chart from './Chart';
+import Chart from './components/Chart';
 import Main from './Main';
 import {updateTitle, endSession, toggleActive} from './FrontEndSession';
 import {getIdToken} from './RegisterFirebaseUser';
@@ -22,6 +22,7 @@ class CreateSession extends Component {
         this.db = props.db;
         this.sessionID = props.sessionID;
         this.onStop = this.onStop.bind(this);
+				this.updateTitle = this.updateTitle.bind(this);
         this.state = {
             audio: false,
             message: "",
@@ -53,6 +54,9 @@ class CreateSession extends Component {
                 record: true
             });
         }
+
+        document.getElementById('nAudio').disabled = true;
+        document.getElementById('audio').disabled = true;
 
         //Timer should start here regardless if audio recording is on
 
@@ -94,31 +98,43 @@ class CreateSession extends Component {
         ReactDOM.render(<Main />, document.getElementById('root'));
     }
 
-	updateTitle = () => {
+	updateTitle = (ev) => {
+		ev.preventDefault();
+
 		var title = document.getElementById("title").value;
-		var accessCode = document.getElementById("accessCode").value;
+		var session = this.sessionID;
 
 		getIdToken().then(token => {
-			updateTitle(token, accessCode, title).then((title) => {
+			updateTitle(token, session, title).then((title) => {
 				alert("title set to " + title);
 			});
 		});
 	}
 
 	noAudio = () => {
-        this.setState({
-            audio: false
-        });
-        document.getElementById('audio').checked = false;
-    }
+
+        if ((this.state.record == false && this.state.end == false)) {
+            this.setState({
+                audio: false
+            });
+
+            document.getElementById('audio').checked = false;
+        }
+
+     };
 
     audioOn = () => {
-        this.setState({
-            audio: true
-        });
 
-        document.getElementById('nAudio').checked = false;
-    }
+        if ( this.state.record == false && this.state.end == false) {
+            this.setState({
+                audio: true
+            });
+
+
+            document.getElementById('nAudio').checked = false;
+        }
+
+    };
 
     render() {
 
@@ -171,10 +187,10 @@ class CreateSession extends Component {
                         <p style={{fontFamily:'Poppins, sans-serif'}}>Session Title:</p>
 
                         <form action="">
-                            <input class="w3-input" type="input" name="editTitle" placeholder={"Edit Title"}></input>
+                            <input id="title" class="w3-input" type="input" name="editTitle" placeholder={"Edit Title"}></input>
 
                             <br></br>
-                            <Button>Change</Button>
+                            <Button onClick={this.updateTitle}>Change</Button>
                         </form>
 
                         <br></br>
