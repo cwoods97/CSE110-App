@@ -6,9 +6,9 @@ import 'bootstrap/dist/css/bootstrap.css';
 import {Button} from 'react-bootstrap';
 import {getDisplayName} from "./RegisterFirebaseUser";
 
-import Chart from './Chart';
+import Chart from './components/Chart';
 import Main from './Main';
-import {updateTitle} from './FrontEndSession';
+import {updateTitle, endSession} from './FrontEndSession';
 import {getIdToken} from './RegisterFirebaseUser';
 
 import { ReactMic } from 'react-mic';
@@ -82,7 +82,10 @@ class CreateSession extends Component {
             started: false,
             end: true
         });
-
+		getIdToken().then(token => {
+			endSession(token, this.state.coder);
+		});
+		
         ReactDOM.render(<Main />, document.getElementById('root'));
     }
 

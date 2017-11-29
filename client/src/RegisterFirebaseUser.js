@@ -108,6 +108,10 @@ export function login(email, password) {
     })
 }
 
+export function logout() {
+	firebase.auth().signOut();
+}
+
 /*
 Description: Creates a login session using Firebase's authentication service.
 Precondition: User must be logged in.

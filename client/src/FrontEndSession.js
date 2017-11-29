@@ -107,3 +107,26 @@ export function updateTitle(idToken, session, newTitle) {
 		});
 
 }
+
+export function endSession(idToken, code) {
+	return new Promise((resolve, reject) => {
+		console.log(code);
+		if(idToken) {
+			fetch('/api/PresenterSession/endSession', {
+				method: 'post',
+				body: JSON.stringify({
+						token: idToken,
+						accessCode: code,
+				}),
+				headers: {
+						'Content-Type': 'application/json',
+						'Accept': 'application/json'
+				}
+			})
+			.catch(error => {
+					console.log(error);
+					return reject(error);
+			});
+		}
+	});
+}
