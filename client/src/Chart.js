@@ -13,6 +13,11 @@ class Chart extends Component {
 
     constructor(props) {
         super(props);
+
+        this.db = props.db;
+        this.sessionID = props.sessionID;
+        this.type = props.type;
+
         this.state = {
             chartData: {
                 labels: this.props.labels,
@@ -25,7 +30,29 @@ class Chart extends Component {
                 }]
             }
         };
+
+        var type = this.type;
+        var chartData = this.state.chartData;
+        function handleFeedback(snapshot){
+            if(type == 'pace'){
+                var parsedFeedback = snapshot.val();
+                if(parsedFeedback.type == 0){
+                    if(parsedFeedback.message == "slow"){
+                        chartData.datasets[0].data[0]++;
+                    }else if(parsedFeedback.message == "fast"){
+                        chartData.datasets[0].data[1]++;
+                    }
+                    this.update()
+                } 
+                }
+        }
+
+        var feedbackRef = this.db.database().ref("feedback").child(this.sessionID);
+        feedbackRef.on("child_added", function(snapshot, prevChildKey){
+                handleFeedback(snapshot);
+        });
     }
+
 
     /*
      * Defined default props, if no props are passed in
@@ -103,6 +130,7 @@ class Chart extends Component {
                     onClick: function () {
                         this.data.datasets[0].data[0] = 0;
                         this.data.datasets[0].data[1] = 0;
+                        console.log(this.update);
                         this.update();
                     },
                     width: this.props.width,

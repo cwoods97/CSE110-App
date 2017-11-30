@@ -193,16 +193,16 @@ class CreateSession extends Component {
                     <div id= 'chart' style={{width:'85%',height:'30em'}}>
                     <div class='chart' style={{width:'33%',display:'inline-block',height:'100%'}}>
 
-                        <Chart/>
+                        <Chart db={this.db} sessionID={this.sessionID} type='pace'/>
 
                     </div>
                     <div class="chart"style={{width:'33%',display:'inline-block',height:'100%'}}>
-                       <Chart/>
+                       <Chart db={this.db} sessionID={this.sessionID} type='volume'/>
 
                     </div>
                     <div class = 'chart' style={{width:'33%',display:'inline-block',height:'100%'}}>
 
-                        <Chart/>
+                        <Chart db={this.db} sessionID={this.sessionID} type='speed'/>
                     </div>
                     </div>
 
