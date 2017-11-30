@@ -1,0 +1,75 @@
+
+
+.reviewContent{
+
+    display:block;
+
+
+}
+
+.reviewContainer{
+
+
+    background-color:#DDDDDD;
+    width: 90%;
+    display: inline-block;
+    padding: 1em;
+    margin: 3px;
+     /*
+    Source: https://css-tricks.com/snippets/css/prevent-long-urls-from-breaking-out-of-container/
+     */
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+
+}
+
+@media screen and (max-width: 700px) {
+    .reviewContainer{
+
+        font-size: 80%;
+    }
+
+}
+@media screen and (max-width: 600px) {
+    .reviewContainer{
+
+        font-size: 70%;
+    }
+
+}
+@media screen and (max-width: 650px) {
+
+    .reviewContent{
+        float:left;
+
+    }
+    .reviewContainer{
+
+        font-size: 70%;
+    }
+
+    #innerReview{
+        width: 100% !important;
+    }
+
+    #rightReview{
+
+        border: 1px solid #665084 !important;
+        width: 100% !important;
+    }
+    #chartReview{
+
+        width: 100% !important;
+
+    }
+    #titleReview{
+        width:100% !important;
+    }
+
+}
+
+
+
+.w3-sidebar{
+    width: 15% !important;
+}
