@@ -51,7 +51,6 @@ router.post('/verify', (req, res) => {
 				reject(error);
 			});
 		}
-
 		log("Verifying display name " + displayName + " is unique.");
 		checkDisplayNames(undefined);
 	});

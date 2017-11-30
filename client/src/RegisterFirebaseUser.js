@@ -5,6 +5,7 @@ Available functions:
     createAccount(displayName, email, password)
     login(email, password)
     getIdToken()
+		getDisplayName()
 */
 const log = (message) => { console.log("[RegisterFirebaseUser.js] " + message); }
 
@@ -105,6 +106,10 @@ export function login(email, password) {
                 });
         }
     })
+}
+
+export function logout() {
+	firebase.auth().signOut();
 }
 
 /*

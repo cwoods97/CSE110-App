@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import firebase from 'firebase';
-import Users from './components/Users.js';
-import DisplayUserData from './components/DisplayUserData.js';
 import './styles/App.css';
 
 import Main from './Main';
@@ -26,7 +24,7 @@ class AppFront extends Component {
             messagingSenderId: "836790794762"
         };
 
-        if (firebase.apps.length == 0){
+        if (firebase.apps.length === 0){
             firebase.initializeApp(config);
         } else {
             firebase.app()
@@ -62,12 +60,13 @@ class AppFront extends Component {
         }
 
         login(email, password)
+
         .then((success) => {
             if (success) {
                 ReactDOM.render(<Main db={firebase} />, document.getElementById('root'));
             }
         }).catch((error) => {
-            document.getElementById('error').innerHTML += '\n' + error.message;
+            document.getElementById('error').innerHTML = '\n' + error.message;
         });
     }
 
