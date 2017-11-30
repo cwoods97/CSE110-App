@@ -54,9 +54,8 @@ class CreateAccount extends Component {
         const re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         var validations = [
             re.test(email),
-            display.replace(' ', '') !== display,
-            pwd1.replace(' ', '') !== pwd1,
-            pwd2.replace(' ', '') !== pwd2,
+            Boolean(display) && !display.includes(' '),
+            Boolean(pwd1) && !pwd1.includes(' ') && pwd1.length >= 6,
             pwd1 === pwd2
         ]
 
@@ -96,15 +95,11 @@ class CreateAccount extends Component {
             }
 
             if (validations[2] && validations[3]) {
-                if (validations[4]) {
-                    document.getElementById('pwdError').innerHTML = "";
-                } else {
-                    document.getElementById('pwdError').innerHTML = "Passwords do not match";
-                }
+                document.getElementById('pwdError').innerHTML = "";
             } else if (validations[2]) {
-                document.getElementById('pwdError').innerHTML = "Please enter a password";
+                document.getElementById('pwdError').innerHTML = "Passwords do not match";
             } else if (validations[3]) {
-                document.getElementById('pwdError').innerHTML = "Please re-enter your password";
+                document.getElementById('pwdError').innerHTML = "Please enter a valid password (Spaces not allowed)";
             }
 
         }
