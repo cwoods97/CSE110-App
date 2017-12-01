@@ -10,6 +10,8 @@ import AppFront from './App';
 
 
 import ReactDOM from 'react-dom';
+
+import {getJoinedSessions, getPresentedSessions} from './RegisterFirebaseUser.js'
 class App extends Component {
 
     constructor(props) {
@@ -56,6 +58,7 @@ class App extends Component {
     join = function(ev){
 
         ev.preventDefault();
+		getJoinedSessions();
         document.getElementById('joined').style.display = 'inline'
         document.getElementById('created').style.display = 'none'
         document.getElementById("jb").classList.remove('w3-grey');
@@ -68,6 +71,7 @@ class App extends Component {
     create = function(ev){
 
         ev.preventDefault();
+		getPresentedSessions();
         document.getElementById('created').style.display = 'inline'
         document.getElementById('joined').style.display = 'none'
 
