@@ -16,26 +16,23 @@ class App extends Component {
 
     constructor(props) {
         super(props);
-        // Initialize Firebase
-        var config = {
-            apiKey: "AIzaSyDSQVw9KUjmxhlxILCousROVR6PfOFcYQg",
-            authDomain: "speakeasy-25a66.firebaseapp.com",
-            databaseURL: "https://speakeasy-25a66.firebaseio.com",
-            projectId: "speakeasy-25a66",
-            storageBucket: "speakeasy-25a66.appspot.com",
-            messagingSenderId: "836790794762"
-        };
-        if (firebase.apps.length == 0){
-            firebase.initializeApp(config);
-        }
-        else{
-            firebase.app()
-        }
 
-
+        this.db = props.db;
         this.state = {
-            message: ""
+            message: "",
+            joinedSessions: [],
+            presentedSessions: []
         }
+        getJoinedSessions().then((response) => {
+            this.setState({
+                joinedSessions : response
+            });
+        })
+        getPresentedSessions().then((response) => {
+            this.setState({
+                presentedSessions : response
+            })
+        })
     }
 
     componentDidMount() {}
@@ -47,18 +44,18 @@ class App extends Component {
 
 
     }
+
     front = function(ev) {
 
         ev.preventDefault();
         ReactDOM.render(<AppFront />, document.getElementById('root'));
-
 
     }
 
     join = function(ev){
 
         ev.preventDefault();
-		getJoinedSessions();
+
         document.getElementById('joined').style.display = 'inline'
         document.getElementById('created').style.display = 'none'
         document.getElementById("jb").classList.remove('w3-grey');
@@ -71,7 +68,7 @@ class App extends Component {
     create = function(ev){
 
         ev.preventDefault();
-		getPresentedSessions();
+
         document.getElementById('created').style.display = 'inline'
         document.getElementById('joined').style.display = 'none'
 
@@ -135,84 +132,44 @@ class App extends Component {
 
                 </div>
                 <div id="joined" >
-                    <div class= 'sessions'>
+                    {
+                        this.state.joinedSessions.map((sessionData) => (
+                            <div class= 'sessions'>
 
-                        <center>
-                            <h4>
-                                Speakeasy Customer Meeting Practice
-                            </h4>
-                            <h6>
-                                Michael Harasti
-                            </h6>
+                                <center>
+                                    <h4>
+                                        {sessionData.title}
+                                    </h4>
+                                    <h6>
+                                        {sessionData.displayName}
+                                    </h6>
 
-                        </center>
+                                </center>
 
-                    </div>
-                    <br></br>
-                    <br></br>
-                    <br></br>
-                    <br></br>
-
-                    <div class='sessions'>
-
-                        <center>
-                            <h4>
-                                How to Cook Food
-                            </h4>
-                            <h6>
-                                Woojin Cheon
-                            </h6>
-                        </center>
-                    </div>
+                            </div>
+                        ))
+                    }
                 </div>
-
                 <div id="created" style={{display:'none'}}>
+                    {
+                        this.state.presentedSessions.map((sessionData) => (
+                            <div class= 'sessions'>
 
-                    <div class='sessions'>
+                                <center>
+                                    <h4>
+                                        {sessionData.title}
+                                    </h4>
+                                    <h6>
+                                        {sessionData.displayName}
+                                    </h6>
 
-                        <h6 style={{float:'left',marginLeft:'10px'}}>
-                               No Audio
+                                </center>
 
-                        </h6>
-                        <center>
-                            <h4>
-                                The Art of Giving Speeches
-                            </h4>
-                            <h6>
-                                Isaac Kim
-                            </h6>
-
-                        </center>
-
-                    </div>
-                    <br></br>
-                    <br></br>
-                    <br></br>
-                    <br></br>
-
-                    <div class='sessions'>
-
-                        <h6 style={{float:'left',marginLeft:'10px'}}>
-                                Audio
-
-                            </h6>
-                        <center>
-                            <h4>
-                                Why you should use Tinder
-                            </h4>
-                            <h6>
-                                Chris Bonilla
-                            </h6>
-                        </center>
-
-                    </div>
-
+                            </div>
+                        ))
+                    }
                 </div>
-
-
-
             </div>
-
 
         );
     }

@@ -17,6 +17,7 @@ class App extends Component {
         super(props);
 
         this.db = props.db;
+        this.root = document.getElementById('root');
         this.join = this.join.bind(this);
         this.create = this.create.bind(this);
 
@@ -31,9 +32,9 @@ class App extends Component {
 		}
 
     front = function(ev) {
-		
+
 		logout();
-		
+
         ev.preventDefault();
         ReactDOM.render(<AppFront />, document.getElementById('root'));
     };
@@ -80,9 +81,7 @@ class App extends Component {
     };
 
     history = function(ev){
-        ev.preventDefault();
-        ReactDOM.render(<SessionHistory />, document.getElementById('root'));
-
+        ReactDOM.render(<SessionHistory db={this.db} />, this.root);
     };
 
     render() {
@@ -108,7 +107,7 @@ class App extends Component {
 
                     <a href="#" class="w3-bar-item" style={{backgroundColor:'aqua'}}>{this.state.displayName}</a>
                     <a href="#" class="w3-bar-item w3-button" style={{backgroundColor:'lightgrey'}}>Profile Settings</a>
-                    <a href="#" class="w3-bar-item w3-button" onClick={this.history}style={{backgroundColor:'lightgrey'}}>Session History</a>
+                    <a href="#" class="w3-bar-item w3-button" onClick={this.history.bind(this)}style={{backgroundColor:'lightgrey'}}>Session History</a>
                     <a href="#" class="w3-bar-item w3-button" onClick={this.front} style={{backgroundColor:'lightgrey'}}>Logout</a>
                     <br></br>
                     <br></br>

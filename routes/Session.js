@@ -5,7 +5,7 @@ router.post('/join', (req, res) => {
 
 		const user = req.locals.uid;
 		const session = parseInt(req.body.accessCode);
-		
+
 		const db = req.locals.admin.database();
 
 		const ref = db.ref("sessions").orderByChild("accessCode").equalTo(session);
@@ -24,15 +24,17 @@ router.post('/join', (req, res) => {
 
 										const userRef = db.ref("users").child(user);
 										json = {};
+										console.log("User ID updating", user);
+										console.log("Child.key when joining session", child.key);
 										json[child.key] = true;
 										userRef.child('joinedSessions').update(json);
 
 										res.json({
 												session: {
-														id: child.key, 
-														code: session, 
+														id: child.key,
+														code: session,
 														audienceCount: audienceCount
-												} 
+												}
 										});
 
 								}
@@ -46,7 +48,7 @@ router.post('/join', (req, res) => {
 });
 
 router.post('/leave', (req, res) => {
-	
+
 		const db = req.locals.admin.database();
 		const code = parseInt(req.body.code);
 
@@ -62,7 +64,7 @@ router.post('/leave', (req, res) => {
 						res.json({message: "left session " + child.key});
 				});
 		});
-		
+
 });
 
 router.post('/title', (req, res) => {
