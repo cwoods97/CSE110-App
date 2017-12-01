@@ -7,11 +7,11 @@ const NON_UNIQUE_DNAME = "Display name is not unique.";
 router.post('/createAccount', (req, res) => {
 	const uid = req.locals.uid;
 	const admin = req.locals.admin;
-
+	
 	admin.database().ref("users").child(uid).set({
 		hostedSessions: '',
 		joinedSessions: '',
-		experience: '0'
+		experience: '0',
 	}).then(() => {
 		log("Registered backend user with the following uid: " + uid);
 		res.status(200).end();
@@ -69,5 +69,53 @@ router.post('/verify', (req, res) => {
 		}
 	})
 })
+
+router.post('/getPresentedSessions', (req, res) => {
+	const uid = req.locals.uid;
+	const admin = req.locals.admin;
+
+	var sessionArray = [];
+	admin.database().ref("users").child(uid).child("hostedSessions").once('value', (snapshot) => {
+		var promises = [];
+		snapshot.forEach(function(childSnapshot) {
+			var presenterID = childSnapshot.child("uid").val();
+			promises.push(admin.auth().getUser(uid).then(function(userRecord){
+				//console.log(admin);
+				//console.log(Boolean(admin.storage().bucket().child(childSnapshot.key)));
+				//console.log(admin.storage().bucket().child(childSnapshot.key));
+				sessionArray.push({
+					title: childSnapshot.child("title").val(),
+					displayName: userRecord.displayName
+				});
+			}));
+		});
+		Promise.all(promises).then(() => {
+			res.json(sessionArray);
+		});
+	});
+})
+
+router.post('/getJoinedSessions', (req, res) => {
+	const uid = req.locals.uid;
+	const admin = req.locals.admin;
+
+	var sessionArray = [];
+	admin.database().ref("users").child(uid).child("joinedSessions").once('value', (snapshot) => {
+		var promises = [];
+		snapshot.forEach(function(childSnapshot) {
+			var presenterID = childSnapshot.child("uid").val();
+			promises.push(admin.auth().getUser(uid).then(function(userRecord){
+				sessionArray.push({
+					title: childSnapshot.child("title").val(),
+					displayName: userRecord.displayName
+				});
+			}));
+		});
+		Promise.all(promises).then(() => {
+			res.json(sessionArray);
+		});
+	});
+})
+
 
 module.exports = router;

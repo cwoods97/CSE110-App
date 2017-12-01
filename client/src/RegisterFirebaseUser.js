@@ -139,3 +139,57 @@ export function getDisplayName() {
 				reject("User is not logged in.");
 		});
 }
+
+export function getPresentedSessions() {
+	return new Promise((resolve, reject) => {
+        firebase.auth().currentUser.getIdToken()
+            .then(token => {
+                fetch('/api/account/getPresentedSessions', {
+				method: 'post',
+				body: JSON.stringify({
+					token: token
+				}),
+				headers: {
+					'Content-Type': 'application/json',
+					'Accept': 'application/json'
+				}
+			})
+			.then(response => response.json())
+			.then(response => {
+				console.log(response);
+				resolve(response);
+			})
+			.catch(error => {
+				console.log(error);
+				return reject(error);
+			});
+        }).catch(error => { reject(error); })
+    })
+}
+
+export function getJoinedSessions() {
+	return new Promise((resolve, reject) => {
+        firebase.auth().currentUser.getIdToken()
+            .then(token => {
+                fetch('/api/account/getJoinedSessions', {
+				method: 'post',
+				body: JSON.stringify({
+					token: token
+				}),
+				headers: {
+					'Content-Type': 'application/json',
+					'Accept': 'application/json'
+				}
+			})
+			.then(response => response.json())
+			.then(response => {
+				console.log(response);
+				resolve(response);
+			})
+			.catch(error => {
+				console.log(error);
+				return reject(error);
+			});
+        }).catch(error => { reject(error); })
+    })
+}

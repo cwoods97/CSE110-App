@@ -10,6 +10,8 @@ import AppFront from './App';
 
 
 import ReactDOM from 'react-dom';
+
+import {getJoinedSessions, getPresentedSessions} from './RegisterFirebaseUser.js'
 class App extends Component {
 
     constructor(props) {
@@ -56,6 +58,7 @@ class App extends Component {
     join = function(ev){
 
         ev.preventDefault();
+		getJoinedSessions();
         document.getElementById('joined').style.display = 'inline'
         document.getElementById('created').style.display = 'none'
         document.getElementById("jb").classList.remove('w3-grey');
@@ -68,6 +71,7 @@ class App extends Component {
     create = function(ev){
 
         ev.preventDefault();
+		getPresentedSessions();
         document.getElementById('created').style.display = 'inline'
         document.getElementById('joined').style.display = 'none'
 
@@ -117,20 +121,10 @@ class App extends Component {
                 </div>
 
 
-                <div class="w3-bar w3-white">
-                    <br></br>
-                    <center>
-                        <input style={{float:"right",width:"75%",marginRight:"30px", borderRadius:'10px', outline:'none'}}class="w3-input w3-light-blue" placeholder={"Search"}>
-
-                        </input>
-
-                    </center>
-                    <br></br>
-                    <br></br>
+                <div style={{width:'80%',float:'right'}}>
                     <br></br>
 
-
-                    <div id="buttons" style={{float:"right", marginRight:"475px"}}>
+                    <div id="buttons" style={{textAlign:'center'}}>
                     <button id="jb"onClick={this.join} class="w3-btn w3-dark-grey" style={{borderRadius:'10px'}}>
                         Joined Sessions
                     </button>
@@ -140,18 +134,15 @@ class App extends Component {
                     </div>
 
                 </div>
-                <div id="joined">
-                    <div style={{margin:'10px',backgroundColor:'lightgrey',float:'right',width:'75%',marginRight:'30px', borderRadius:'10px'}}>
-                        <h6 style={{float:'right',marginRight:'10px'}}>
-                            Delete
+                <div id="joined" >
+                    <div class= 'sessions'>
 
-                        </h6>
                         <center>
                             <h4>
                                 Speakeasy Customer Meeting Practice
                             </h4>
                             <h6>
-                                Michael Harasti: 11/14/17 5 p.m.
+                                Michael Harasti
                             </h6>
 
                         </center>
@@ -162,17 +153,14 @@ class App extends Component {
                     <br></br>
                     <br></br>
 
-                    <div style={{margin:'10px',backgroundColor:'lightgrey',float:'right',width:'75%',marginRight:'30px', borderRadius:'10px'}}>
-                        <h6 style={{float:'right',marginRight:'10px'}}>
-                            Delete
+                    <div class='sessions'>
 
-                        </h6>
                         <center>
                             <h4>
                                 How to Cook Food
                             </h4>
                             <h6>
-                                Woojin Cheon: 11/15/17 5 p.m.
+                                Woojin Cheon
                             </h6>
                         </center>
                     </div>
@@ -180,13 +168,8 @@ class App extends Component {
 
                 <div id="created" style={{display:'none'}}>
 
-                    <div style={{margin:'10px',backgroundColor:'lightgrey',float:'right',width:'75%',marginRight:'30px'}}>
-                        <a>
-                            <h6 style={{float:'right',marginRight:'10px'}}>
-                            Delete
+                    <div class='sessions'>
 
-                            </h6>
-                        </a>
                         <h6 style={{float:'left',marginLeft:'10px'}}>
                                No Audio
 
@@ -196,7 +179,7 @@ class App extends Component {
                                 The Art of Giving Speeches
                             </h4>
                             <h6>
-                                Isaac Kim: 11/16/17 4 p.m.
+                                Isaac Kim
                             </h6>
 
                         </center>
@@ -207,11 +190,8 @@ class App extends Component {
                     <br></br>
                     <br></br>
 
-                    <div style={{margin:'10px',backgroundColor:'lightgrey',float:'right',width:'75%',marginRight:'30px'}}>
-                        <h6 style={{float:'right',marginRight:'10px'}}>
-                            Delete
+                    <div class='sessions'>
 
-                        </h6>
                         <h6 style={{float:'left',marginLeft:'10px'}}>
                                 Audio
 
@@ -221,7 +201,7 @@ class App extends Component {
                                 Why you should use Tinder
                             </h4>
                             <h6>
-                                Chris Bonilla: 11/17/17 1 p.m.
+                                Chris Bonilla
                             </h6>
                         </center>
 
