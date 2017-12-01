@@ -106,7 +106,6 @@ router.post('/getJoinedSessions', (req, res) => {
 
 	var sessions = [];
 	admin.database().ref("users").child(uid).child("joinedSessions").once('value').then((joinedSessions) => {
-		console.log("Retrieved joined sessions");
 		var promises = [];
 		joinedSessions = Object.keys(joinedSessions.val());
 		joinedSessions.forEach((sessionID) => {
@@ -126,8 +125,6 @@ router.post('/getJoinedSessions', (req, res) => {
 		});
 
 		Promise.all(promises).then(() => {
-			console.log("Sending joined sessions");
-			console.log(sessions);
 			res.json(sessions);
 		});
 	});

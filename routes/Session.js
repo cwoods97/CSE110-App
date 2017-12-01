@@ -17,15 +17,13 @@ router.post('/join', (req, res) => {
 										const sessionRef = db.ref("sessions").child(child.key);
 										audienceCount = parseInt(value.audienceCount);
 										audienceCount++;
-										let json = {};
+										json = {};
 										json[user] = true;
 										sessionRef.child('participants').update(json);
 										sessionRef.child('audienceCount').set(audienceCount.toString());
 
 										const userRef = db.ref("users").child(user);
 										json = {};
-										console.log("User ID updating", user);
-										console.log("Child.key when joining session", child.key);
 										json[child.key] = true;
 										userRef.child('joinedSessions').update(json);
 
