@@ -17,9 +17,11 @@ class Join extends Component {
     constructor(props) {
         super(props);
 
-				this.sessionID = props.code;
+				this.sessionAccessCode = props.code;
+				this.sessionID = props.session;
 				this.db = props.db;
 				this.main = this.main.bind(this);
+				this.sendComment = this.sendComment.bind(this);
 
         // Initialize Firebase
         var config = {
@@ -48,14 +50,22 @@ class Join extends Component {
     }
 
     sendPredef = function(comment, e){
+				var currTime = Date.now() / 1000;
+
+				alert("sending feedback for session: " + this.sessionID);
+
         e.preventDefault();
         getIdToken().then(token =>{
-            sendPredefinedFeedback(token, comment, 0);
+            sendPredefinedFeedback(token, this.sessionID, comment, currTime, 0);
         })
 
     }
 
     sendComment = function (e){
+
+				var currTime = Date.now() / 1000;
+
+				alert("sending feedback for session: " + this.sessionID);
 
         e.preventDefault()
 
@@ -81,7 +91,7 @@ class Join extends Component {
         document.getElementById("comment").value = ""
 
         getIdToken().then(token =>{
-            sendPredefinedFeedback(token, comment, 1);
+            sendPredefinedFeedback(token, this.sessionID, comment, currTime, 1);
         })
 
 
@@ -92,7 +102,7 @@ class Join extends Component {
         ev.preventDefault();
 
 				getIdToken().then(token => {
-						leaveBackendSession(token, this.sessionID).then((message) => {
+						leaveBackendSession(token, this.sessionAccessCode).then((message) => {
 				        ReactDOM.render(<Main db={this.db}/>, document.getElementById('root'));
 						});
 				});
@@ -151,8 +161,8 @@ class Join extends Component {
 
                             <br></br>
 
-                            <button bsStyle="Talking too Fast" class="predefined w3-btn w3-round" style={{backgroundColor:'#c4a5ff',color:'black'}}>Talking too Fast</button>
-                            <button bsStyle="Talking too Slow"class="predefined w3-btn w3-round" style={{backgroundColor:'#c4a5ff',color:'black'}}>Talking too Slow</button>
+                            <button bsStyle="Talking too Fast" onClick={(e) => this.sendPredef('talking too fast', e)} class="predefined w3-btn w3-round" style={{backgroundColor:'#c4a5ff',color:'black'}}>Talking too Fast</button>
+                            <button bsStyle="Talking too Slow" onClick={(e) => this.sendPredef('talking too slow', e)} class="predefined w3-btn w3-round" style={{backgroundColor:'#c4a5ff',color:'black'}}>Talking too Slow</button>
 
                         </center>
 

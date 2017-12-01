@@ -156,3 +156,27 @@ export function toggleActive(idToken, code) {
 		}
 	});
 }
+
+export function setStartTime(idToken, sessionId, timestamp){
+		return new Promise((resolve, reject) => {
+			fetch('/api/PresenterSession/addStartTime', {
+					method: 'post',
+					body: JSON.stringify({
+							token: idToken,
+							sessionCode: sessionId,
+							time: timestamp
+					}),
+					headers: {
+							'Content-Type': 'application/json',
+							'Accept': 'application/json'
+					}
+				})
+				.then(response => response.json())
+				.then(response => {
+						resolve(response.success);
+				})
+				.catch((error) => {
+						return reject(error);
+				});
+		});
+}
