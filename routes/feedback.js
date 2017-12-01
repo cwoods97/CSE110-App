@@ -23,7 +23,17 @@ router.post('/predefined_feedback', (req, res) => {
 	const type = req.body.type;
 	const timestamp = req.body.timestamp;
 
-	const sessionRef = admin.database().ref('session').child(sessionID);
+					const ref = admin.database().ref('feedback').child(sessionID).push();
+					ref.set({
+							uid: uid,
+							timestamp: timestamp,
+							type: type,
+							message: message,
+							starred: false
+					});
+
+	//DO NOT DELETE
+	/*const sessionRef = admin.database().ref('session').child(sessionID);
 	sessionRef.once('value').then(function (snapshot) {
 			snapshot.forEach(function(child) {
 					const value = child.val();
@@ -38,7 +48,7 @@ router.post('/predefined_feedback', (req, res) => {
 							starred: false
 					});
 			});
-	});
+	});*/
 
 	/*const userRef = admin.database().ref("users").orderByKey().equalTo(uid);
 	userRef.once('value').then(function (snapshot) {
