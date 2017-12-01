@@ -23,7 +23,7 @@ class Users extends Component {
 	pushToFirebase(event){
 		event.preventDefault();
 		this.firebaseRef.child(this.state.name).set({
-			name: this.state.name, 
+			name: this.state.name,
 			username: this.state.username,
 			password: this.state.password
 		});

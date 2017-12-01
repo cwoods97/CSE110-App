@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import Users from './components/Users.js';
-import DisplayUserData from './components/DisplayUserData.js';
 import './styles/App.css';
 
 import Join from './Join';
