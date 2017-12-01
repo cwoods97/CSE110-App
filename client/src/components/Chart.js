@@ -7,53 +7,13 @@
  */
 
 import React, {Component} from 'react';
+import ReactDOM from 'react-dom';
 import {Bar} from 'react-chartjs-2';
 
-class Chart extends Component {
-
-    constructor(props) {
-        super(props);
-        this.state = {
-            chartData: {
-                labels: this.props.labels,
-                datasets: [{
-                    data: this.props.data,
-                    label: 'Votes',
-                    backgroundColor: this.backgroundColors(this.props.type),
-                    borderColor: this.borderColors(this.props.type),
-                    borderWidth: 1
-                }]
-            }
-        };
-    }
-
-    componentWillReceiveProps(nextProps) {
-        this.setState({
-            chartData: {
-                datasets: [{
-                    data: this.props.data
-                }]
-            }
-        });
-        this.update();
-    }
-
-    /*
-     * Defined default props, if no props are passed in
-     */
-    static defaultProps = {
-        title: 'Predefined Feedback',
-        labels: ['Label 1', 'Label 2'],
-        data: [12, 5],
-        width: 200,
-        height: 200,
-        type: 1
-    }
-
-    /*
+ /*
      * Function to decide color of bar based on type
      */
-    backgroundColors(type) {
+function backgroundColors(type) {
         if (type == 1) {
             return ['rgba(255, 99, 132, 0.2)',
             'rgba(255, 159, 64, 0.2)'];
@@ -69,7 +29,7 @@ class Chart extends Component {
     /*
      * Function to decide color of bar border based on type
      */
-    borderColors(type) {
+function borderColors(type) {
         if (type == 1) {
             return ['rgb(255, 99, 132)',
             'rgb(255, 159, 64)'];
@@ -82,13 +42,85 @@ class Chart extends Component {
         }
     }
 
+var chart = {
+    labels: ['test1', 'test2'],
+    datasets: [{
+        data: [0,0],
+        label: 'Votes',
+        backgroundColor: backgroundColors(1),
+        borderColor: borderColors(1),
+        borderWidth: 1
+    }]
+}
+
+class Chart extends Component {
+
+    constructor(props) {
+        super(props);
+
+        this.db = props.db;
+        this.sessionID = props.sessionID;
+        this.type = props.type;
+
+        console.log(chart);
+
+        this.state = {
+            chartData: chart
+        };
+
+        // this.ctx = document.getElementById("chart");
+        // this.chart = new Chart(this.ctx, config);
+        var type = this.type;
+        var chartData = this.state.chartData;
+
+
+        // function changeHandler(value){
+        //     this.chart.update();
+        // }
+
+        function handleFeedback(snapshot){
+            if(type == 'pace'){
+                var parsedFeedback = snapshot.val();
+                if(parsedFeedback.type == 0){
+                    if(parsedFeedback.message == "fast"){
+                        chartData.datasets[0].data[0]++;
+                        console.log("fast");
+                    }else if(parsedFeedback.message == "slow"){
+                        chartData.datasets[0].data[1]++;
+                        console.log("slow");
+                    }
+                } 
+                console.log(chartData);
+                }
+        }
+
+        var feedbackRef = this.db.database().ref("feedback").child(this.sessionID);
+        feedbackRef.on("child_added", function(snapshot, prevChildKey){
+                handleFeedback(snapshot);
+                this.setState({chartData});
+        }.bind(this));
+    }
+
+
+    /*
+     * Defined default props, if no props are passed in
+     */
+    // static defaultProps = {
+    //     title: 'Predefined Feedback',
+    //     labels: ['Label 1', 'Label 2'],
+    //     data: [0,0],
+    //     width: 200,
+    //     height: 200,
+    //     type: 1
+    // }
+
     render() {
         return (
-            <Bar
-                data={this.state.chartData}
+            <Bar 
+                data={this.state.chartData} 
                 options={{
                     title: {
-                        display: true,
+                        display: this.props.displayTitle,
                         text: this.props.title,
                         fontSize: 25
                     },
@@ -114,6 +146,7 @@ class Chart extends Component {
                     onClick: function () {
                         this.data.datasets[0].data[0] = 0;
                         this.data.datasets[0].data[1] = 0;
+                        console.log(this.update);
                         this.update();
                     },
                     width: this.props.width,
