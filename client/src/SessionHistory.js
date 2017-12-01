@@ -6,6 +6,7 @@ import './styles/SessionHistory.css';
 import Main from './Main';
 import AppFront from './App';
 
+import {getDisplayName} from './RegisterFirebaseUser.js';
 
 import ReactDOM from 'react-dom';
 
@@ -18,6 +19,7 @@ class App extends Component {
         this.db = props.db;
         this.state = {
             message: "",
+            display: "",
             joinedSessions: [],
             presentedSessions: []
         }
@@ -33,7 +35,11 @@ class App extends Component {
         })
     }
 
-    componentDidMount() {}
+    componentDidMount() {
+
+        getDisplayName().then(name => {this.setState({display: name});});
+
+    }
 
     home = function(ev) {
 
@@ -99,10 +105,9 @@ class App extends Component {
 
                 <div id="sidebar" className="w3-sidebar w3-bar-block" style={{width:'20%',height:'100%',backgroundColor:'lightgrey',zIndex:'0',overflow:'hidden'}}>
 
-                    <a href="#" class="w3-bar-item" style={{backgroundColor:'aqua'}}>Michael Harasti</a>
+                    <a href="#" class="w3-bar-item" style={{backgroundColor:'aqua'}}>{this.state.display}</a>
                     <a href="#" class="w3-bar-item w3-button" onClick={this.home}style={{backgroundColor:'lightgrey'}}>Home</a>
                     <a href="#" class="w3-bar-item w3-button" style={{backgroundColor:'lightgrey'}}>Profile Settings</a>
-                    <a href="#" class="w3-bar-item w3-button" style={{backgroundColor:'lightgrey'}}>Session History</a>
                     <a href="#" class="w3-bar-item w3-button" onClick={this.front} style={{backgroundColor:'lightgrey'}}>Logout</a>
                     <br></br>
                     <br></br>

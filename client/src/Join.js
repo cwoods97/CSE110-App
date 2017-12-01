@@ -143,7 +143,6 @@ class Join extends Component {
 
                     <a class="w3-bar-item" style={{backgroundColor:'PaleVioletRed'}}><b>{this.state.display}</b></a>
                     <a class="w3-bar-item w3-button" onClick={this.main} style={{backgroundColor:'lightgrey'}}><b>Leave Session</b></a>
-                    <a class="w3-bar-item w3-button" style={{backgroundColor:'lightgrey'}}><b>Share</b></a>
 
 
                 </div>
