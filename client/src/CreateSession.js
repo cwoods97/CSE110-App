@@ -8,7 +8,7 @@ import {getDisplayName} from "./RegisterFirebaseUser";
 
 import Chart from './components/Chart';
 import Main from './Main';
-import {updateTitle, endSession, toggleActive} from './FrontEndSession';
+import {updateTitle, endSession, toggleActive, setStartTime} from './FrontEndSession';
 import {getIdToken} from './RegisterFirebaseUser';
 
 import { ReactMic } from 'react-mic';
@@ -31,7 +31,7 @@ class CreateSession extends Component {
             blobObject: null,
             end: false,
             display: "",
-            coder: props.code
+            coder: props.code,
         };
     }
 
@@ -40,6 +40,8 @@ class CreateSession extends Component {
     }
 
     startRecording = () => {
+				var currTime = Date.now() / 1000;
+
         getIdToken().then(token => {
 			toggleActive(token, this.state.coder);
 		});
@@ -58,8 +60,9 @@ class CreateSession extends Component {
         document.getElementById('nAudio').disabled = true;
         document.getElementById('audio').disabled = true;
 
-        //Timer should start here regardless if audio recording is on
-
+				getIdToken().then(token => {
+						setStartTime(token, this.sessionID, currTime);
+				});
     };
 
     stopRecording = () => {
@@ -75,6 +78,7 @@ class CreateSession extends Component {
     };
 
     onStop = (blobObject) => {
+				this.setState({endTime: Math.floor(Date.now() / 1000)});
         const storageRef = this.db.storage().ref().child(this.sessionID);
         const recordingRef = storageRef.child('media');
         recordingRef.put(blobObject.blob).then((snapshot) => {

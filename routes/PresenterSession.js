@@ -72,4 +72,17 @@ router.post('/toggleActive', (req, res) => {
 	});
 })
 
+router.post('/addStartTime', (req, res) => {
+
+		const admin = req.locals.admin;
+		const session = req.body.sessionCode;
+		const timestamp = req.body.time;
+
+		ref = admin.database.ref("sessions").child(session);
+		ref.child('startTime').set(timestamp);
+
+		res.json({success: true});
+
+});
+
 module.exports = router;

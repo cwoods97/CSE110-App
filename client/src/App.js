@@ -48,14 +48,14 @@ class AppFront extends Component {
 
         var errors = [];
         if (!re.test(email)) {
-            errors += "Please enter a valid email address.";
+            errors.push("Please enter a valid email address.");
         }
         if (password.length < 6) {
-            errors += "Please enter a password of at least 6 characters in length.";
+            errors.push("Please enter a valid password.");
         }
 
         if (errors.length) {
-            document.getElementById('error').innerHTML = errors.join('-');
+            document.getElementById('error').innerHTML = errors.join('<br />');
             return;
         }
 
@@ -66,7 +66,7 @@ class AppFront extends Component {
                 ReactDOM.render(<Main db={firebase} />, document.getElementById('root'));
             }
         }).catch((error) => {
-            document.getElementById('error').innerHTML = '\n' + error.message;
+            document.getElementById('error').innerHTML = "The credentials are invalid";
         });
     }
 
@@ -119,7 +119,7 @@ class AppFront extends Component {
                     .then(() => {
                         document.getElementById('rError').innerHTML = "Password reset email sent!";
                     }).catch((error) => {
-                    document.getElementById('rError').innerHTML = error.message;
+                        document.getElementById('rError').innerHTML = "Unable to reset password. Please try again later.";
                 });
             }
         };

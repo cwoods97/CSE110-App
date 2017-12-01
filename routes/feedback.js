@@ -18,11 +18,29 @@ router.post('/predefined_feedback', (req, res) => {
 
 	const uid = req.locals.uid;
 	const admin = req.locals.admin;
-	var message = req.body.feedback;
-	var type = req.body.type;
-	var timestamp = Date.now();
+	const sessionID = req.body.sessionId;
+	const message = req.body.feedback;
+	const type = req.body.type;
+	const timestamp = req.body.timestamp;
 
-	const userRef = admin.database().ref("users").orderByKey().equalTo(uid);
+	const sessionRef = admin.database().ref('session').child(sessionID);
+	sessionRef.once('value').then(function (snapshot) {
+			snapshot.forEach(function(child) {
+					const value = child.val();
+					const startTime = value.startTime;
+					const relTime = timestamp - startTime;
+					const ref = admin.database().ref('feedback').child(sessionID).push();
+					ref.set({
+							uid: uid,
+							timestamp: relTime,
+							type: type,
+							message: message,
+							starred: false
+					});
+			});
+	});
+
+	/*const userRef = admin.database().ref("users").orderByKey().equalTo(uid);
 	userRef.once('value').then(function (snapshot) {
 		snapshot.forEach(function(child){
 			var value = child.val();
@@ -40,7 +58,7 @@ router.post('/predefined_feedback', (req, res) => {
 		console.log("pushed feedback to database");
 		})
 
-	})
+	})*/
 
 	res.json({message: message})
 

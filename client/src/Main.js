@@ -52,7 +52,7 @@ class App extends Component {
 			getIdToken().then(token => {
 				joinBackendSession(token, coder).then((session) => {
 						ev.preventDefault();
-				ReactDOM.render(<Join code={coder} db={this.db}/>, document.getElementById('root'));
+				ReactDOM.render(<Join code={coder} session={session.id} db={this.db}/>, document.getElementById('root'));
 					}, (error) => {
 							document.getElementById("error").innerHTML = error;
 					});
