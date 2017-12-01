@@ -21,12 +21,13 @@ class App extends Component {
 
         this.state = {
             coder: 0,
-            message: ""
+            message: "",
+            display: ""
         }
     }
 
     componentDidMount() {
-				getDisplayName().then(name => {this.setState({displayName: name});});
+				getDisplayName().then(name => {this.setState({display: name});});
 		}
 
     front = function(ev) {
@@ -103,7 +104,7 @@ class App extends Component {
 
                 <div class="w3-sidebar w3-bar-block" style={{width:'20%',height:'100%',backgroundColor:'lightgrey',zIndex:'0',overflow:'hidden'}}>
 
-                    <a href="#" class="w3-bar-item" style={{backgroundColor:'aqua'}}>{this.state.displayName}</a>
+                    <a href="#" class="w3-bar-item" style={{backgroundColor:'aqua'}}>{this.state.display}</a>
                     <a href="#" class="w3-bar-item w3-button" style={{backgroundColor:'lightgrey'}}>Profile Settings</a>
                     <a href="#" class="w3-bar-item w3-button" onClick={this.history.bind(this)}style={{backgroundColor:'lightgrey'}}>Session History</a>
                     <a href="#" class="w3-bar-item w3-button" onClick={this.front} style={{backgroundColor:'lightgrey'}}>Logout</a>
