@@ -168,8 +168,8 @@ class Join extends Component {
 
                             <br></br>
 
-                            <button bsStyle="Talking too Fast" onClick={(e) => this.sendPredef('talking too fast', e)} class="predefined w3-btn w3-round" style={{backgroundColor:'#c4a5ff',color:'black'}}>Talking too Fast</button>
-                            <button bsStyle="Talking too Slow" onClick={(e) => this.sendPredef('talking too slow', e)} class="predefined w3-btn w3-round" style={{backgroundColor:'#c4a5ff',color:'black'}}>Talking too Slow</button>
+                            <button bsStyle="Talking too Fast" onClick={(e) => this.sendPredef('tfast', e)} class="predefined w3-btn w3-round" style={{backgroundColor:'#c4a5ff',color:'black'}}>Talking too Fast</button>
+                            <button bsStyle="Talking too Slow" onClick={(e) => this.sendPredef('tslow', e)} class="predefined w3-btn w3-round" style={{backgroundColor:'#c4a5ff',color:'black'}}>Talking too Slow</button>
 
                         </center>
 

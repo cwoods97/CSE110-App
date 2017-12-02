@@ -50,6 +50,20 @@ var chart = {
         backgroundColor: backgroundColors(1),
         borderColor: borderColors(1),
         borderWidth: 1
+    },
+    {
+        data: [0,0],
+        label: 'Votes',
+        backgroundColor: backgroundColors(1),
+        borderColor: borderColors(1),
+        borderWidth: 1
+    },
+    {
+        data: [0,0],
+        label: 'Votes',
+        backgroundColor: backgroundColors(1),
+        borderColor: borderColors(1),
+        borderWidth: 1
     }]
 }
 
@@ -62,42 +76,84 @@ class Chart extends Component {
         this.sessionID = props.sessionID;
         this.type = props.type;
 
-        console.log(chart);
+        // console.log(chart);
 
         this.state = {
-            chartData: chart
+            chartData: chart,
+            chartData1: chart,
+            chartData2: chart,
+            chartData3: chart
         };
 
-        // this.ctx = document.getElementById("chart");
-        // this.chart = new Chart(this.ctx, config);
         var type = this.type;
+        
         var chartData = this.state.chartData;
-
-
-        // function changeHandler(value){
-        //     this.chart.update();
+        // if(type == "pace"){
+        //     chartData = this.state.chartDataPace;
         // }
 
-        function handleFeedback(snapshot){
-            if(type == 'pace'){
-                var parsedFeedback = snapshot.val();
-                if(parsedFeedback.type == 0){
-                    if(parsedFeedback.message == "fast"){
-                        chartData.datasets[0].data[0]++;
-                        console.log("fast");
-                    }else if(parsedFeedback.message == "slow"){
-                        chartData.datasets[0].data[1]++;
-                        console.log("slow");
-                    }
-                } 
-                console.log(chartData);
-                }
-        }
+        // var chartDataPace = this.state.chartDataPace;
+        // var chartDataVolume = this.state.chartDataVolume;
+        // var chartDataSpeed = this.state.chartDataSpeed;
+
+        // console.log(type);
+
+        // ***must keep function inside feedbackRef.on for access to updating
+        // function handleFeedback(snapshot){
+        //     if(type == 'pace'){
+        //         var parsedFeedback = snapshot.val();
+        //         if(parsedFeedback.type == 0){
+        //             if(parsedFeedback.message == "fast"){
+        //                 chartData.datasets[0].data[0]++;
+        //                 console.log("fast");
+        //             }else if(parsedFeedback.message == "slow"){
+        //                 chartData.datasets[0].data[1]++;
+        //                 console.log("slow");
+        //             }
+        //         } 
+        //         console.log(chartData);
+        //         }
+        // }
+
 
         var feedbackRef = this.db.database().ref("feedback").child(this.sessionID);
         feedbackRef.on("child_added", function(snapshot, prevChildKey){
-                handleFeedback(snapshot);
-                this.setState({chartData});
+                if(type == 'pace'){
+                    // chartData.datasets[0].data[0] = 0;
+                    // chartData.datasets[0].data[1] = 0;
+                    var parsedFeedback = snapshot.val();
+                    if(parsedFeedback.type == 0){
+                        if(parsedFeedback.message == "slow"){
+                            this.state.chartData.datasets[0].data[0]++;
+                        }else if(parsedFeedback.message == "fast"){
+                            this.state.chartData.datasets[0].data[1]++;
+                        }
+                    } 
+                    this.setState({chartData});
+                }else if(type == 'volume'){
+                    var parsedFeedback = snapshot.val();
+                    if(parsedFeedback.type == 0){
+                        if(parsedFeedback.message == "quiet"){
+                            this.state.chartData.datasets[1].data[0]++;
+                        }else if(parsedFeedback.message == "loud"){
+                            this.state.chartData.datasets[1].data[1]++;
+                        }
+                    } 
+                    this.setState({chartData});
+                }else if(type == 'speed'){
+                    var parsedFeedback = snapshot.val();
+                    if(parsedFeedback.type == 0){
+                        if(parsedFeedback.message == "tslow"){
+                            this.state.chartData.datasets[2].data[0]++;
+                        }else if(parsedFeedback.message == "tfast"){
+                            this.state.chartData.datasets[2].data[1]++;
+                        }
+                    } 
+                    this.setState({chartData});
+                }
+                console.log("pace dataset: " + this.state.chartData.datasets[0].data[0] + this.state.chartData.datasets[0].data[1]);
+                console.log("volume dataset: " + this.state.chartData.datasets[1].data[0] + this.state.chartData.datasets[1].data[1]);
+                console.log("speed dataset: " + this.state.chartData.datasets[2].data[0] + this.state.chartData.datasets[2].data[1]);
         }.bind(this));
     }
 
