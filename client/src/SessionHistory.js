@@ -17,6 +17,7 @@ class App extends Component {
         super(props);
 
         this.db = props.db;
+        this.home = this.home.bind(this);
         this.state = {
             message: "",
             display: "",
@@ -44,7 +45,7 @@ class App extends Component {
     home = function(ev) {
 
         ev.preventDefault();
-        ReactDOM.render(<Main />, document.getElementById('root'));
+        ReactDOM.render(<Main db={this.db} />, document.getElementById('root'));
 
 
     }
