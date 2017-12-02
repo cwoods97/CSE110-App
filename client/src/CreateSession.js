@@ -99,22 +99,26 @@ class CreateSession extends Component {
 			endSession(token, this.state.coder);
 		});
 		
-        ReactDOM.render(<Main />, document.getElementById('root'));
+        ReactDOM.render(<Main db={this.db}/>, document.getElementById('root'));
     }
 
 	updateTitle = (ev) => {
 
-        alert("TEST")
 		ev.preventDefault();
 
 		var title = document.getElementById("title").value;
 		var session = this.sessionID;
 
-		getIdToken().then(token => {
-			updateTitle(token, session, title).then((title) => {
-				alert("title set to " + title);
-			});
-		});
+		if(title.length > 0 && title.charAt(0) != ' ') {
+				document.getElementById('titleError').innerHTML = "";
+				getIdToken().then(token => {
+						updateTitle(token, session, title).then((title) => {
+							alert("title set to " + title);
+						});
+				});
+		} else {
+				document.getElementById('titleError').innerHTML = "Title must contain at least one character and cannot start with a space"
+		}
 	}
 
 	noAudio = () => {
@@ -192,6 +196,7 @@ class CreateSession extends Component {
                         <p style={{fontFamily:'Poppins, sans-serif'}}>Session Title:</p>
 
                             <input id="title" class="w3-input" type="input" name="editTitle" placeholder={"Edit Title"}></input>
+														<p id="titleError"></p>
 
                             <br></br>
                             <Button onClick={this.updateTitle}>Change</Button>

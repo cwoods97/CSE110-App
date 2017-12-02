@@ -48,9 +48,9 @@ router.post('/join', (req, res) => {
 router.post('/leave', (req, res) => {
 
 		const db = req.locals.admin.database();
-		const code = parseInt(req.body.code);
+		const sessionId = req.body.session;
 
-		const ref = db.ref("sessions").orderByChild("accessCode").equalTo(code);
+		const ref = db.ref("sessions").orderByKey().equalTo(sessionId);
 		ref.once('value').then(function (snapshot) {
 				snapshot.forEach(function(child) {
 						const value = child.val();

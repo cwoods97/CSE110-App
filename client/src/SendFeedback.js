@@ -16,9 +16,8 @@ export function sendPredefinedFeedback(token, session, comment, time, type) {
                         }
                     }).then(response => response.json())
                     .then(response => {
-                        //this should return the session access code
-                        console.log(response);
-
+												if(response.error) return reject(response.error);
+												else resolve(response.message);
                     }).catch(error => {
                         console.log(error);
                         return reject(error);
