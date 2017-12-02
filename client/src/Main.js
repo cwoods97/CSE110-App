@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import './styles/App.css';
+import './styles/Main.css';
+import 'bootstrap/dist/css/bootstrap.css';
+import 'bootstrap/dist/css/bootstrap-theme.css';
 
 import Join from './Join';
 import AppFront from './App';
@@ -83,91 +86,117 @@ class App extends Component {
         ReactDOM.render(<SessionHistory db={this.db} />, this.root);
     };
 
+    settings = function(ev) {
+        ev.preventDefault();
+
+        var modal = document.getElementById('popup');
+
+        var btn = document.getElementById('profile');
+
+        var span = document.getElementById('close');
+
+        btn.onclick = function(ev) {
+            ev.preventDefault();
+            modal.style.display = "block";
+        }
+
+        span.onclick = function(ev) {
+            ev.preventDefault();
+            modal.style.display = "none";
+        }
+
+        window.onclick = function(ev) {
+            ev.preventDefault();
+            if(ev.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+    };
+
     render() {
         return (
 
-            <div >
+            <div style={{width:'100%',height:'100%',display:'inline-block',outline:'1px solid red'}}>
                 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"></link>
+                <div style={{backgroundColor:'#c4a5ff',height:"100%"}}>
 
-                <div style={{height:'75px'}}>
-                    <div style={{backgroundColor:'CornFlowerBlue',height:"100%"}}>
+                    <h2 style={{marginLeft:'10px',marginTop:'0px',marginBottom:'5px',height:'35px',fontFamily:'cursive',cursor:'pointer'}}><b>speakeasy</b>
 
-                        <center>
-                            <h1 style={{marginLeft:'10px',marginTop:'0px',marginBottom:'1px',height:'35px',fontFamily:'cursive'}}><b>speakeasy</b>
-
-
-                            </h1>
-                        </center>
-
-                    </div>
-                </div>
-
-                <div class="w3-sidebar w3-bar-block" style={{width:'20%',height:'100%',backgroundColor:'lightgrey',zIndex:'0',overflow:'hidden'}}>
-
-                    <a href="#" class="w3-bar-item" style={{backgroundColor:'aqua'}}>{this.state.display}</a>
-                    <a href="#" class="w3-bar-item w3-button" style={{backgroundColor:'lightgrey'}}>Profile Settings</a>
-                    <a href="#" class="w3-bar-item w3-button" onClick={this.history.bind(this)}style={{backgroundColor:'lightgrey'}}>Session History</a>
-                    <a href="#" class="w3-bar-item w3-button" onClick={this.front} style={{backgroundColor:'lightgrey'}}>Logout</a>
-                    <br></br>
-                    <br></br>
-                    <br></br>
-                    <br></br>
-                    <br></br>
-                    <br></br>
-                    <br></br>
-                    <br></br>
-                    <br></br>
+                    </h2>
                 </div>
 
 
+                <div id='navMain' class="w3-sidebar w3-bar-block w3-responsive" style={{height:'100%',backgroundColor:'lightgrey',zIndex:'0'}}>
 
+                    <a class="w3-bar-item" style={{backgroundColor:'aqua'}}>{this.state.displayName}</a>
+                    <a class="w3-bar-item w3-button" id='profile' onClick={this.settings} style={{backgroundColor:'lightgrey'}}>Profile Settings</a>
+                    <a class="w3-bar-item w3-button" onClick={this.history}style={{backgroundColor:'lightgrey'}}>Session History</a>
+                    <a class="w3-bar-item w3-button" onClick={this.front} style={{backgroundColor:'lightgrey'}}>Logout</a>
 
-                <div style={{overflow:'hidden'}}>
+                </div>
 
-
-                    <div style={{float:'left',width:"30%", marginLeft:'310px',marginTop:'100px'}}>
-                        <p style={{width:'', overflow:'hidden'}}>Are you about to give a speech? If you answered yes then click "Create a Session" in which audience members can join and give feedback to your speech</p>
-
-                    </div>
-
-                    <div style={{width:'30%',marginRight:'70px',marginTop:'100px',float:'right'}}>
-                        <p style={{width:'',overflow:'hidden'}}>Are you an audience member of a speech? If you answered yes then click "Join Session" in which you will be able to provide feedback to whoevers speech you are listening to</p>
-
+                <div id='popup' class="modal" style={{display:'none', position:'fixed', zIndex:'1', left:'0', top:'0', width:'100%', height:'100%', overflow:'auto'}}>
+                    <div class="modal-content" style={{margin:'15% auto', padding:'20px', border:'1px solid #888', width:'80%'}}>
+                        <span id="close" style={{float:'right', fontSize:'28px', fontWeight:'bold'}}>&times;</span>
+                        <h1><b>Profile Settings</b></h1>
+                        <form>
+                            <h6><b>Enter a new display name:</b></h6>
+                            <input id='newDisplay'></input>
+                            <br></br>
+                            <input style={{backgroundColor:'#665084',color:'white'}} class="w3-btn w3-round" type="submit" value="Submit"></input>
+                        </form>
+                        <br></br>
+                        <form>
+                            <h6><b>Enter a new password:</b></h6>
+                            <input id='newPassword'></input>
+                            <br></br>
+                            <input id='confirm'></input>
+                            <br></br>
+                            <input style={{backgroundColor:'#665084',color:'white'}} class="w3-btn w3-round" type="submit" value="Submit"></input>
+                        </form>
                     </div>
                 </div>
 
-                <br></br>
-                <br></br>
-                <br></br>
-                <br></br>
-                <br></br>
-                <br></br>
+                <div id='content' class='w3-responsive' style={{display:'inline-block',float:'right',width:'85%',maxHeight:'700px', position:'fixed',left:'15%'}}>
 
 
-                <div style = {{backgroundColor:'blue'}}>
-                    <div class='w3-round' style={{width:'30%', float:'left', marginLeft:'300px',marginTop:'89px'}}>
-
-                        <center>
-
-                       <button class="w3-btn w3-large w3-round" onClick={this.create.bind(this)} style={{backgroundColor:'steelblue'}}>Create a Session</button>
-
-                        </center>
+                    {/*<div style={{display:'flex',flexDirection:'row',justifyContent:'space-between'}}>*/}
+                    {/*This will hold the the content for creating a session*/}
+                    <div class='w3-responsive' style={{display:'inline-block', float:'left', width:'50%',height:'100%',margin:'auto'}}>
+                        <div style={{height:'50%',textAlign:'center'}}>
+                        <div class='w3-responsive' style={{margin:'25% 10% 20%', width:'80%', overflow:'hidden',textAlign:'center'}}>
+                            <p>Are you about to give a speech? If you answered yes then click "Create a Session" in which audience members can join and give feedback to your speech</p>
+                        </div>
+                        </div>
+                        <div style={{height:'50%',textAlign:'center'}}>
+                        <div class='w3-responsive' style={{margin:'20% 10% 50%', display:'flex',justifyContent:'center'}}>
+                            <button class="w3-btn w3-large w3-round" onClick={this.create.bind(this)} style={{backgroundColor:'#665084'}}>Create a Session</button>
+                        </div>
+                        </div>
                     </div>
-                    <div class='w3-round' style={{width:'30%',float:'right',marginRight:'100px',marginTop:'0px'}}>
-                        <center>
 
+                    {/*This will hold the the content for joining a session*/}
+                    <div class='w3-responsive' style={{display:'inline-block', float:'right', width:'50%', height:'100%', margin:'auto'}}>
+                        <div style={{height:'50%',textAlign:'center'}}>
+                        <div class='w3-responsive' style={{margin:'25% 10% 20%', width:'80%', overflow:'hidden',textAlign:'center'}}>
+                            <p>Are you an audience member of a speech? If you answered yes then click "Join Session" in which you will be able to provide feedback to whoevers speech you are listening to</p>
+                        </div>
+                        </div>
+                        <div style={{height:'50%',textAlign:'center'}}>
+                        <div class='w3-responsive' style={{margin:'20% 10% 50%',textAlign:'center'}}>
                             <h6><b>Enter Session Code:</b></h6>
                             <p id = "error"></p>
 
-                        <input id="code"></input>
-                        <br></br>
-                        <br></br>
-                        <button class="w3-btn w3-large w3-round" onClick={this.join} style={{backgroundColor:'powderblue'}}>Join a Session</button>
-                        </center>
+                            <input id="code"></input>
+                            <br></br>
+                            <br></br>
+                            <button class="w3-btn w3-large w3-round" onClick={this.join} style={{backgroundColor:'#6164a3'}}>Join a Session</button>
+                        </div>
+                        </div>
                     </div>
-
-
+                    {/*</div>*/}
                 </div>
+
 
 
             </div>

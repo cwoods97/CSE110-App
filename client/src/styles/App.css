@@ -1,3 +1,7 @@
+html {
+  background-color: #FFFFFF;
+}
+
 .App {
   text-align: center;
 }
@@ -52,5 +56,38 @@ a{
 .sound-wave{
   width:100% !important;
   height: 60px !important;
+
+}
+
+
+@media screen and (max-width: 1000px) {
+  #startpage {
+    display: block !important;
+    position: relative !important;
+  }
+
+  #infocontainer {
+    width: 100% !important;
+    position: absolute !important;
+    z-index: 0 !important;
+  }
+
+  #startcontainer {
+    position: absolute !important;
+    z-index: 1 !important;
+    width: 100% !important;
+    height: auto !important;
+    margin: 0 auto !important;
+    padding: 10px !important;
+    position: relative !important;
+  }
+
+  #startform{
+    min-width: 60% !important;
+  }
+
+  #infoheader {
+    font-size: 150% !important;
+  }
 
 }
