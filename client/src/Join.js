@@ -52,55 +52,62 @@ class Join extends Component {
     sendPredef = function(comment, e){
 				var currTime = Date.now() / 1000;
 
-				alert("sending feedback for session: " + this.sessionID);
-
         e.preventDefault();
         getIdToken().then(token =>{
-            sendPredefinedFeedback(token, this.sessionID, comment, currTime, 0);
+            sendPredefinedFeedback(token, this.sessionID, comment, currTime, 0)
+						.then((message) => {
+								alert("Sent " + message);
+						})
+						.catch((error) => {
+								alert("Error:" + error);
+						});
         })
 
     }
 
     sendComment = function (e){
 
+				var currTime = Date.now() / 1000;
+				var session = this.sessionID;
 
         e.preventDefault()
         var comment = document.getElementById("comment").value;
 
         if (comment === ""){
 
-
         }
         else {
 
-            var currTime = Date.now() / 1000;
+						getIdToken().then(token => {
+								sendPredefinedFeedback(token, session, comment, currTime, 1)
+								.then((message) => {
+										alert("Message: " + message);
+										var mList = document.getElementById('messages');
 
-            alert("sending feedback for session: " + this.sessionID);
+        				    var div1 = document.createElement('div');
+				            div1.classList.add('message')
+        				    var div2 = document.createElement('div');
+				            div2.classList.add('client')
+        				    var div3 = document.createElement('div');
+				            div3.classList.add('message-text');
+        				    var p = document.createElement('p');
 
+          				  p.innerHTML = comment;
+   				          console.log("sending comment" + comment);
 
-            var mList = document.getElementById('messages');
+				            div3.appendChild(p);
+        				    div2.appendChild(div3);
+ 				            div1.appendChild(div2);
+        				    mList.appendChild(div1);
 
-            var div1 = document.createElement('div');
-            div1.classList.add('message')
-            var div2 = document.createElement('div');
-            div2.classList.add('client')
-            var div3 = document.createElement('div');
-            div3.classList.add('message-text');
-            var p = document.createElement('p');
+								}).catch((error) => {
+										alert(error);
+								});
+						});
 
-            p.innerHTML = comment;
-            console.log("sending comment" + comment);
-
-            div3.appendChild(p);
-            div2.appendChild(div3);
-            div1.appendChild(div2);
-            mList.appendChild(div1);
 
             document.getElementById("comment").value = ""
 
-            getIdToken().then(token => {
-                sendPredefinedFeedback(token, this.sessionID, comment, currTime, 1);
-            })
         }
 
     };
@@ -110,7 +117,7 @@ class Join extends Component {
         ev.preventDefault();
 
 				getIdToken().then(token => {
-						leaveBackendSession(token, this.sessionAccessCode).then((message) => {
+						leaveBackendSession(token, this.sessionID).then((message) => {
 				        ReactDOM.render(<Main db={this.db}/>, document.getElementById('root'));
 						});
 				});

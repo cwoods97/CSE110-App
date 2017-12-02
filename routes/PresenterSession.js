@@ -78,7 +78,7 @@ router.post('/addStartTime', (req, res) => {
 		const session = req.body.sessionCode;
 		const timestamp = req.body.time;
 
-		ref = admin.database.ref("sessions").child(session);
+		ref = admin.database().ref("sessions").child(session);
 		ref.child('startTime').set(timestamp);
 
 		res.json({success: true});
