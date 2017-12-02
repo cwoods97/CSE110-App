@@ -32,6 +32,7 @@ class CreateSession extends Component {
             end: false,
             display: "",
             coder: props.code,
+						title: "untitled"
         };
     }
 
@@ -116,7 +117,7 @@ class CreateSession extends Component {
 				document.getElementById('titleError').innerHTML = "";
 				getIdToken().then(token => {
 						updateTitle(token, session, title).then((title) => {
-							alert("title set to " + title);
+							this.setState({title: title});
 						});
 				});
 		} else {
