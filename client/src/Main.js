@@ -9,6 +9,7 @@ import Join from './Join';
 import AppFront from './App';
 import CreateSession from './CreateSession';
 import SessionHistory from './SessionHistory';
+import ReviewFeedback from './ReviewFeedback';
 import {createBackendSession, joinBackendSession} from './FrontEndSession';
 import {getIdToken, getDisplayName, logout} from './RegisterFirebaseUser.js';
 
@@ -20,7 +21,6 @@ class App extends Component {
         this.db = props.db;
         this.root = document.getElementById('root');
         this.join = this.join.bind(this);
-        this.create = this.create.bind(this);
 
         this.state = {
             coder: 0,
@@ -64,6 +64,11 @@ class App extends Component {
             document.getElementById("error").innerHTML = "Please enter a valid session code"
         }
     };
+
+    tempReviewFeedback = function(ev){
+        ev.preventDefault();
+        ReactDOM.render(<ReviewFeedback db={this.db} />, this.root);
+    }
 
     create= function(ev) {
 
@@ -193,6 +198,8 @@ class App extends Component {
                             <br></br>
                             <br></br>
                             <button class="w3-btn w3-large w3-round" onClick={this.join} style={{backgroundColor:'#6164a3'}}>Join a Session</button>
+                            <button class="w3-btn w3-large w3-round" onClick={this.tempReviewFeedback.bind(this)} style={{backgroundColor:'#665084'}}>tempReviewFeedback</button>
+
                         </div>
                         </div>
                     </div>

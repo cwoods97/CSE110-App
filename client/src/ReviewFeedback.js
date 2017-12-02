@@ -7,7 +7,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 
 
 import './styles/ReviewFeedback.css';
-import Chart from './components/Chart';
+import ReviewChart from './components/ReviewChart';
 
 import { ReactMic } from 'react-mic';
 
@@ -87,16 +87,17 @@ class ReviewFeedback extends Component {
                     <div id= 'chartReview' style={{width:'65%',height:'30em',display:'inline-block',float:'left'}}>
                         <div class='chart' style={{width:'33%',display:'inline-block',height:'100%'}}>
 
-                            <Chart/>
+                            <ReviewChart db={this.db} sessionID='L-ENZJWW31uX9fWNq2p' type='pace'/>
 
                         </div>
                         <div class="chart"style={{width:'33%',display:'inline-block',height:'100%'}}>
-                            <Chart/>
+                            
+                            <ReviewChart db={this.db} sessionID='L-ENZJWW31uX9fWNq2p' type='volume'/>
 
                         </div>
                         <div class = 'chart' style={{width:'33%',display:'inline-block',height:'100%'}}>
 
-                            <Chart/>
+                            <ReviewChart db={this.db} sessionID='L-ENZJWW31uX9fWNq2p' type='speed'/>
                         </div>
                     </div>
 
