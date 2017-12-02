@@ -34,7 +34,8 @@ router.post('/createSession', (req, res) => {
 			accessCode: accessCode,
 			isActive: false,
 			audienceCount: '0',
-			title: "untitled"
+			title: "untitled",
+			hasAudio: false
 		});
 
 		// add the session ID to the list of presented sessions in the user object

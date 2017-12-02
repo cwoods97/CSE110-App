@@ -108,7 +108,7 @@ class CreateAccount extends Component {
         return (
             <div style={{height:'100%',width:'100%'}}>
                 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"></link>
-                <div style={{backgroundColor:'LightSkyBlue',height:"100%"}}>
+                <div style={{backgroundColor:'#c4a5ff',height:"100%"}}>
 
                     <h3 onClick={this.goHome} style={{cursor:'pointer',marginLeft:'10px',marginTop:'0px',marginBottom:'1px',height:'35px',fontFamily:'cursive'}}><b>speakeasy</b>
                     </h3>
@@ -116,7 +116,7 @@ class CreateAccount extends Component {
 
                 <div style={{display:'flex',alightItems:'center',justifyContent:'center',margin:'0 auto'}}>
 
-                    <div style={{backgroundColor:'#EDEDED',padding:"20px",marginTop:'25px',textAlign:'center'}}>
+                    <div style={{backgroundColor:'#c4a5ff',padding:"20px",marginTop:'25px',textAlign:'center'}}>
                         <h2>Create an Account</h2>
 
                         <form action="">
@@ -129,7 +129,7 @@ class CreateAccount extends Component {
                             <p></p>
                             <input class="w3-input" id="pwd2" type="password" name="reenter" placeholder={"Re-enter Password"}></input><br></br>
                             <br></br>
-                            <input onClick={this.createMain} style={{float:"left"}} class="w3-btn w3-blue-grey" type="submit" value="Create"></input>
+                            <input onClick={this.createMain} style={{float:"left",backgroundColor:"#665084",color:"white"}} class="w3-btn w3-round" type="submit" value="Create"></input>
                         </form>
                     </div>
                 </div >

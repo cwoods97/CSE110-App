@@ -41,6 +41,7 @@ class CreateSession extends Component {
 
     startRecording = () => {
 				var currTime = Date.now() / 1000;
+				var type = false;
 
         getIdToken().then(token => {
 			toggleActive(token, this.state.coder);
@@ -55,13 +56,15 @@ class CreateSession extends Component {
             this.setState({
                 record: true
             });
+
+						type = true;
         }
 
         document.getElementById('nAudio').disabled = true;
         document.getElementById('audio').disabled = true;
 
 				getIdToken().then(token => {
-						setStartTime(token, this.sessionID, currTime);
+						setStartTime(token, this.sessionID, currTime, type);
 				});
     };
 

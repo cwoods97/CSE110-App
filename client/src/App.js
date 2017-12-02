@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import firebase from 'firebase';
 import './styles/App.css';
+import 'bootstrap/dist/css/bootstrap.css';
+import 'bootstrap/dist/css/bootstrap-theme.css';
 
 import Main from './Main';
 import About from './About';
@@ -106,7 +108,9 @@ class AppFront extends Component {
 
         var but =  document.createElement('button')
         but.classList.add('w3-btn')
-        but.classList.add('w3-blue-grey')
+        but.classList.add('w3-round')
+        but.style.backgroundColor = '#665084'
+        but.style.color = 'white'
         but.onclick = function() {  var x = document.getElementById("rset").value;
             // regex from http://stackoverflow.com/questions/46155/validate-email-address-in-javascript
             var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -142,30 +146,39 @@ class AppFront extends Component {
     render() {
         return (
 
-            <div >
+            <div id='startpage' style={{width:'100%',height:'100%',display:'inline-block'}}>
                 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"></link>
-                <div style={{backgroundColor:'LightSkyBlue',height:"100%"}}>
+                <div style={{backgroundColor:'#c4a5ff',height:"100%"}}>
 
-                    <h3 style={{marginLeft:'10px',marginTop:'0px',marginBottom:'1px',height:'35px',fontFamily:'cursive',cursor:'pointer'}}><b>speakeasy</b>
+                    <h2 style={{marginLeft:'10px',marginTop:'0px',marginBottom:'5px',height:'35px',fontFamily:'cursive',cursor:'pointer'}}><b>speakeasy</b>
 
-                        <button onClick={this.about} style={{float:'right',backgroundColor:'lightskyblue', marginRight:'0px',height:'100%'}} class='w3-btn w3-medium'>About Us</button>
-                    </h3>
+                        <button onClick={this.about} style={{float:'right',backgroundColor:'#c4a5ff', marginRight:'0px',height:'110%'}} class='w3-btn w3-medium'>About Us</button>
+                    </h2>
+                </div>
+                <div id='infocontianer' style={{width:'60%',float:'left'}}>
+                    <div id='info' style={{padding:"20px", margin:'50px'}}>
+                        <h3 id='infoheader'>
+                            Welcome to speakeasy, a web app designed to enhance presentations, speeches, and public speaking in general. Our goal is to improve the experiences of both the audience and speech givers.
+                        </h3>
+
+                    </div>
                 </div>
 
-                <div >
+                <div id='startcontianer' style={{width:'40%',float:'right'}}>
 
-                    <div ref="login" style={{backgroundColor:'LightSkyBlue',float:'right',padding:"20px",width:'30%',marginRight:'50px',marginLeft:'100px' ,marginTop:"50px"}}>
+                    <div id='startform' ref="login" style={{borderRadius:'10px',backgroundColor:'#c4a5ff',padding:"20px",width:'80%',marginRight:'auto',marginLeft:'auto' ,marginTop:"50px"}}>
                         <h2>Login</h2>
-
                         <form action="">
                             <p id="error"></p>
 
                             <input  ref = 'email' id = "email"class = "w3-input" type="text" name="fname" placeholder={"Email"}></input><br></br>
                             <input class= "w3-input" id = "password" type="password" name="lname" placeholder={"Password"}></input><br></br>
-                            <br></br>
-                            <input id= "submit" class="w3-btn w3-blue-grey" onClick= {this.main} type="submit" value="Submit"></input>
-                            <button onClick={this.create} style={{float:"right"}} class="w3-btn w3-blue-grey">Create an Account</button>
+                            <input id= "submit" style={{backgroundColor:'#665084',color:'white'}} class="w3-btn w3-round" onClick= {this.main} type="submit" value="Submit"></input>
                         </form>
+
+                        <br></br>
+
+                        <a href="#" onClick={this.create} style={{textDecoration:'underline'}}>Create an Account</a>
 
                         <br></br>
 
@@ -174,12 +187,7 @@ class AppFront extends Component {
 
                 </div >
 
-                <div style={{padding:"20px", margin:'50px'}}>
-                    <h3>
-                        Welcome to speakeasy, a web app designed to enhance presentations, speeches, and public speaking in general. Our goal is to improve the experiences of both the audience and speech givers.
-                    </h3>
 
-              </div>
 
 
 
