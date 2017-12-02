@@ -32,7 +32,7 @@ class CreateSession extends Component {
             end: false,
             display: "",
             coder: props.code,
-						title: "untitled"
+            title: "Untitled"
         };
     }
 
@@ -197,17 +197,16 @@ class CreateSession extends Component {
                     <div id = 'right' class="w3-col" style={{borderLeft:'1px solid #665084',float:'right',width:'15%',height:'60em',backgroundColor:'#c4a5ff',display:'inline-block',position:'fixed'}}>
 
                         <br></br>
-                        <p style={{fontFamily:'Poppins, sans-serif'}}>Session Title:</p>
+                        <p id= 'titleDisplay' style={{fontFamily:'Poppins, sans-serif'}}><b>Session Title:</b> {this.state.title}</p>
 
                             <input id="title" class="w3-input" type="input" name="editTitle" placeholder={"Edit Title"}></input>
 														<p id="titleError"></p>
 
-                            <br></br>
                             <Button onClick={this.updateTitle}>Change</Button>
 
                         <br></br>
-
-                        <p id='code' style={{fontFamily:'Poppins, sans-serif'}}>Session Code: {this.state.coder}</p>
+                        <br></br>
+                        <p id='code' style={{fontFamily:'Poppins, sans-serif'}}><b>Session Code:</b> {this.state.coder}</p>
 
                         <form action="">
                             <input id='nAudio' onClick={this.noAudio} type="radio" name="audioOff" value="noaudio" defaultChecked={true} style={{fontFamily:'Poppins, sans-serif'}}></input>No Audio<br></br>
