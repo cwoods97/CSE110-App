@@ -167,16 +167,21 @@ class Join extends Component {
 
                         <center>
 
-                            <button  bsStyle="Pace of Speech too Fast" onClick={(e) => this.sendPredef('fast', e)} class="predefined w3-btn w3-round" style={{backgroundColor:'#665084',color:'white'}}>Pace of Speech too Fast</button>
-                            <button bsStyle="Pace of Speech too Slow" onClick={(e) => this.sendPredef('slow', e)} class="predefined w3-btn w3-round" style={{backgroundColor:'#665084',color:'white'}}>Pace of Speech too Slow</button>
+                            <p>Pace of Speech too Fast?</p>
+                            <button  onClick={(e) => this.sendPredef('fast', e)} class="predefined w3-button w3-round" style={{backgroundColor:'#665084',color:'white',width:'45px',height:'40px'}}><img src='http://icons.iconarchive.com/icons/iconsmind/outline/256/Unlike-2-icon.png' height='40' width='40'></img> </button>
+                            <button  onClick={(e) => this.sendPredef('slow', e)} class="predefined w3-round w3-button" style={{backgroundColor:'#665084',width:'45px',height:'40px',border:'none'}}><img src='https://d30y9cdsu7xlg0.cloudfront.net/png/100266-200.png' height="40" width="40"></img></button>
                             <br></br>
-                            <button bsStyle = "Speak Up" onClick={(e) => this.sendPredef('quiet', e)} class="predefined w3-btn w3-round" style={{backgroundColor:'#6164a3',color:"white"}}>Speak Up</button>
-                            <button bsStyle = "Too Loud" onClick={(e) => this.sendPredef('loud', e)} class="predefined w3-btn w3-round" style={{backgroundColor:'#6164a3',color:"white"}}>Too Loud</button>
+
+
+                            <p>Speaker is Speaking Too Loud</p>
+                            <button  onClick={(e) => this.sendPredef('quiet', e)} class="predefined w3-button w3-round" style={{backgroundColor:'#665084',color:'white',width:'45px',height:'40px'}}><img src='http://icons.iconarchive.com/icons/iconsmind/outline/256/Unlike-2-icon.png' height='40' width='40'></img> </button>
+                            <button  onClick={(e) => this.sendPredef('loud', e)} class="predefined w3-round w3-button" style={{backgroundColor:'#665084',width:'45px',height:'40px',border:'none'}}><img src='https://d30y9cdsu7xlg0.cloudfront.net/png/100266-200.png' height="40" width="40"></img></button>
 
                             <br></br>
 
-                            <button bsStyle="Talking too Fast" onClick={(e) => this.sendPredef('tfast', e)} class="predefined w3-btn w3-round" style={{backgroundColor:'#c4a5ff',color:'black'}}>Talking too Fast</button>
-                            <button bsStyle="Talking too Slow" onClick={(e) => this.sendPredef('tslow', e)} class="predefined w3-btn w3-round" style={{backgroundColor:'#c4a5ff',color:'black'}}>Talking too Slow</button>
+                            <p>Speaker is Talking too Fast?</p>
+                            <button  onClick={(e) => this.sendPredef('tfast', e)} class="predefined w3-button w3-round" style={{backgroundColor:'#665084',color:'white',width:'45px',height:'40px'}}><img src='http://icons.iconarchive.com/icons/iconsmind/outline/256/Unlike-2-icon.png' height='40' width='40'></img> </button>
+                            <button  onClick={(e) => this.sendPredef('tslow', e)} class="predefined w3-round w3-button" style={{backgroundColor:'#665084',width:'45px',height:'40px',border:'none'}}><img src='https://d30y9cdsu7xlg0.cloudfront.net/png/100266-200.png' height="40" width="40"></img></button>
 
                         </center>
 
