@@ -156,11 +156,9 @@ export function getPresentedSessions() {
 			})
 			.then(response => response.json())
 			.then(response => {
-				console.log(response);
 				resolve(response);
 			})
 			.catch(error => {
-				console.log(error);
 				return reject(error);
 			});
         }).catch(error => { reject(error); })
@@ -183,11 +181,9 @@ export function getJoinedSessions() {
 			})
 			.then(response => response.json())
 			.then(response => {
-				console.log(response);
 				resolve(response);
 			})
 			.catch(error => {
-				console.log(error);
 				return reject(error);
 			});
         }).catch(error => { reject(error); })

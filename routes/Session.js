@@ -5,7 +5,7 @@ router.post('/join', (req, res) => {
 
 		const user = req.locals.uid;
 		const session = parseInt(req.body.accessCode);
-		
+
 		const db = req.locals.admin.database();
 
 		const ref = db.ref("sessions").orderByChild("accessCode").equalTo(session);
@@ -17,7 +17,7 @@ router.post('/join', (req, res) => {
 										const sessionRef = db.ref("sessions").child(child.key);
 										audienceCount = parseInt(value.audienceCount);
 										audienceCount++;
-										let json = {};
+										json = {};
 										json[user] = true;
 										sessionRef.child('participants').update(json);
 										sessionRef.child('audienceCount').set(audienceCount.toString());
@@ -29,10 +29,10 @@ router.post('/join', (req, res) => {
 
 										res.json({
 												session: {
-														id: child.key, 
-														code: session, 
+														id: child.key,
+														code: session,
 														audienceCount: audienceCount
-												} 
+												}
 										});
 
 								}
@@ -46,7 +46,7 @@ router.post('/join', (req, res) => {
 });
 
 router.post('/leave', (req, res) => {
-	
+
 		const db = req.locals.admin.database();
 		const code = parseInt(req.body.code);
 
@@ -62,7 +62,7 @@ router.post('/leave', (req, res) => {
 						res.json({message: "left session " + child.key});
 				});
 		});
-		
+
 });
 
 router.post('/title', (req, res) => {

@@ -103,6 +103,8 @@ class CreateSession extends Component {
     }
 
 	updateTitle = (ev) => {
+
+        alert("TEST")
 		ev.preventDefault();
 
 		var title = document.getElementById("title").value;
@@ -163,7 +165,6 @@ class CreateSession extends Component {
                 <div id="navigation" class="w3-sidebar w3-bar-block" style={{borderRight:'1px solid #665084', height:'100%',backgroundColor:'lightgrey',zIndex:'-1',overflow:'hidden'}}>
 
                     <a id='display' class="w3-bar-item menuLeft" style={{backgroundColor:'PaleVioletRed',fontFamily:'Poppins, sans-serif'}}><b>{this.state.display}</b></a>
-                    <a class="w3-bar-item w3-button menuLeft" style={{backgroundColor:'lightgrey',fontFamily:'Poppins, sans-serif'}}><b>Share</b></a>
                     <a class="w3-bar-item w3-button menuLeft" onClick={this.close} style={{backgroundColor:'lightgrey',fontFamily:'Poppins, sans-serif'}}><b>Close Session</b></a>
 
 
@@ -190,12 +191,10 @@ class CreateSession extends Component {
                         <br></br>
                         <p style={{fontFamily:'Poppins, sans-serif'}}>Session Title:</p>
 
-                        <form action="">
                             <input id="title" class="w3-input" type="input" name="editTitle" placeholder={"Edit Title"}></input>
 
                             <br></br>
                             <Button onClick={this.updateTitle}>Change</Button>
-                        </form>
 
                         <br></br>
 

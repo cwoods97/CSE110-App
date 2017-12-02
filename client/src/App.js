@@ -24,12 +24,14 @@ class AppFront extends Component {
             messagingSenderId: "836790794762"
         };
 
-        if (firebase.apps.length === 0){
+        if (firebase.apps.length === 0) {
             firebase.initializeApp(config);
-        } else {
-            firebase.app()
+            firebase.auth().onAuthStateChanged((user) => {
+                if (user) {
+                    ReactDOM.render(<Main db={firebase} />, document.getElementById('root'));
+                }
+            })
         }
-
 
         this.state = {
             message: ""

@@ -38,7 +38,9 @@ router.post('/createSession', (req, res) => {
 		});
 
 		// add the session ID to the list of presented sessions in the user object
-		userRef.child('hostedSessions').update({ sessionID: true });
+		const json = {};
+		json[sessionID] = true;
+		userRef.child('hostedSessions').update(json);
 		res.json({
 			sessionID: sessionID,
 			accessCode: accessCode

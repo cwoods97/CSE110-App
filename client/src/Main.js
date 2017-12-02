@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import Users from './components/Users.js';
-import DisplayUserData from './components/DisplayUserData.js';
 import './styles/App.css';
 
 import Join from './Join';
@@ -17,23 +15,25 @@ class App extends Component {
         super(props);
 
         this.db = props.db;
+        this.root = document.getElementById('root');
         this.join = this.join.bind(this);
         this.create = this.create.bind(this);
 
         this.state = {
             coder: 0,
-            message: ""
+            message: "",
+            display: ""
         }
     }
 
     componentDidMount() {
-				getDisplayName().then(name => {this.setState({displayName: name});});
+				getDisplayName().then(name => {this.setState({display: name});});
 		}
 
     front = function(ev) {
-		
+
 		logout();
-		
+
         ev.preventDefault();
         ReactDOM.render(<AppFront />, document.getElementById('root'));
     };
@@ -80,9 +80,7 @@ class App extends Component {
     };
 
     history = function(ev){
-        ev.preventDefault();
-        ReactDOM.render(<SessionHistory />, document.getElementById('root'));
-
+        ReactDOM.render(<SessionHistory db={this.db} />, this.root);
     };
 
     render() {
@@ -106,9 +104,9 @@ class App extends Component {
 
                 <div class="w3-sidebar w3-bar-block" style={{width:'20%',height:'100%',backgroundColor:'lightgrey',zIndex:'0',overflow:'hidden'}}>
 
-                    <a href="#" class="w3-bar-item" style={{backgroundColor:'aqua'}}>{this.state.displayName}</a>
+                    <a href="#" class="w3-bar-item" style={{backgroundColor:'aqua'}}>{this.state.display}</a>
                     <a href="#" class="w3-bar-item w3-button" style={{backgroundColor:'lightgrey'}}>Profile Settings</a>
-                    <a href="#" class="w3-bar-item w3-button" onClick={this.history}style={{backgroundColor:'lightgrey'}}>Session History</a>
+                    <a href="#" class="w3-bar-item w3-button" onClick={this.history.bind(this)}style={{backgroundColor:'lightgrey'}}>Session History</a>
                     <a href="#" class="w3-bar-item w3-button" onClick={this.front} style={{backgroundColor:'lightgrey'}}>Logout</a>
                     <br></br>
                     <br></br>

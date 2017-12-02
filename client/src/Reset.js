@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import firebase from 'firebase';
-import Users from './components/Users.js';
-import DisplayUserData from './components/DisplayUserData.js';
-import './components/Reset.css';
+import './styles/Reset.css';
 
 class Reset extends Component {
 

@@ -5,7 +5,7 @@ export function createBackendSession(idToken) {
 
         if (idToken) {
 			//Posts a request to backend to create a session
-            fetch('api/sessionSetup/createSession', {
+            fetch('/api/sessionSetup/createSession', {
 				method: 'post',
 				body: JSON.stringify({
 					token: idToken

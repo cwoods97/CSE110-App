@@ -7,7 +7,7 @@ const NON_UNIQUE_DNAME = "Display name is not unique.";
 router.post('/createAccount', (req, res) => {
 	const uid = req.locals.uid;
 	const admin = req.locals.admin;
-	
+
 	admin.database().ref("users").child(uid).set({
 		hostedSessions: '',
 		joinedSessions: '',
@@ -74,23 +74,28 @@ router.post('/getPresentedSessions', (req, res) => {
 	const uid = req.locals.uid;
 	const admin = req.locals.admin;
 
-	var sessionArray = [];
-	admin.database().ref("users").child(uid).child("hostedSessions").once('value', (snapshot) => {
+	var sessions = [];
+	admin.database().ref("users").child(uid).child("hostedSessions").once('value').then((presentedSessions) => {
 		var promises = [];
-		snapshot.forEach(function(childSnapshot) {
-			var presenterID = childSnapshot.child("uid").val();
-			promises.push(admin.auth().getUser(uid).then(function(userRecord){
-				//console.log(admin);
-				//console.log(Boolean(admin.storage().bucket().child(childSnapshot.key)));
-				//console.log(admin.storage().bucket().child(childSnapshot.key));
-				sessionArray.push({
-					title: childSnapshot.child("title").val(),
-					displayName: userRecord.displayName
-				});
-			}));
+		presentedSessions = Object.keys(presentedSessions.val());
+		presentedSessions.forEach((sessionID) => {
+			promises.push(
+				new Promise((resolve, reject) => {
+					admin.database().ref("sessions/" + sessionID).once('value').then((sessionData) => {
+						admin.auth().getUser(uid).then((userRecord) => {
+							sessions.push({
+								title: (sessionData.val().title ? sessionData.val().title : "UNTITLED"),
+								displayName: userRecord.displayName
+							})
+							resolve();
+						})
+					});
+				})
+			);
 		});
+
 		Promise.all(promises).then(() => {
-			res.json(sessionArray);
+			res.json(sessions);
 		});
 	});
 })
@@ -99,20 +104,28 @@ router.post('/getJoinedSessions', (req, res) => {
 	const uid = req.locals.uid;
 	const admin = req.locals.admin;
 
-	var sessionArray = [];
-	admin.database().ref("users").child(uid).child("joinedSessions").once('value', (snapshot) => {
+	var sessions = [];
+	admin.database().ref("users").child(uid).child("joinedSessions").once('value').then((joinedSessions) => {
 		var promises = [];
-		snapshot.forEach(function(childSnapshot) {
-			var presenterID = childSnapshot.child("uid").val();
-			promises.push(admin.auth().getUser(uid).then(function(userRecord){
-				sessionArray.push({
-					title: childSnapshot.child("title").val(),
-					displayName: userRecord.displayName
-				});
-			}));
+		joinedSessions = Object.keys(joinedSessions.val());
+		joinedSessions.forEach((sessionID) => {
+			promises.push(
+				new Promise((resolve, reject) => {
+					admin.database().ref("sessions/" + sessionID).once('value').then((sessionData) => {
+						admin.auth().getUser(sessionData.val().presenter).then((userRecord) => {
+							sessions.push({
+								title: (sessionData.val().title ? sessionData.val().title : "UNTITLED"),
+								displayName: userRecord.displayName
+							});
+							resolve();
+						});
+					});
+				})
+			);
 		});
+
 		Promise.all(promises).then(() => {
-			res.json(sessionArray);
+			res.json(sessions);
 		});
 	});
 })
