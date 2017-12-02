@@ -1,5 +1,5 @@
 html {
-  background-color: #FFFFFF;
+  background-color: #F3E6DE;
 }
 
 .App {
@@ -90,4 +90,8 @@ a{
     font-size: 150% !important;
   }
 
+}
+
+.HoverRed:hover {
+  color: #f44336;
 }
