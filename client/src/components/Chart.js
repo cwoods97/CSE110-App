@@ -42,23 +42,31 @@ function borderColors(type) {
         }
     }
 
-var chart = {
-    labels: ['test1', 'test2'],
+var chart1 = {
+    labels: ['Slow Down Pace', 'Speed Up Pace'],
     datasets: [{
         data: [0,0],
         label: 'Votes',
         backgroundColor: backgroundColors(1),
         borderColor: borderColors(1),
         borderWidth: 1
-    },
-    {
+    }]
+}
+
+var chart2 = {
+    labels: ['Speak Softer', 'Speak Louder'],
+    datasets: [{
         data: [0,0],
         label: 'Votes',
         backgroundColor: backgroundColors(1),
         borderColor: borderColors(1),
         borderWidth: 1
-    },
-    {
+    }]
+}
+
+var chart3 = {
+    labels: ['Speak Slower', 'Speak Faster'],
+    datasets: [{
         data: [0,0],
         label: 'Votes',
         backgroundColor: backgroundColors(1),
@@ -79,15 +87,32 @@ class Chart extends Component {
         // console.log(chart);
 
         this.state = {
-            chartData: chart,
-            chartData1: chart,
-            chartData2: chart,
-            chartData3: chart
+            // chartData: chart,
+            chartData1: chart1,
+            chartData2: chart2,
+            chartData3: chart3
         };
 
         var type = this.type;
-        
+
         var chartData = this.state.chartData;
+        var chartData1 = this.state.chartData1;
+        var chartData2 = this.state.chartData2;
+        var chartData3 = this.state.chartData3;
+
+        this.chartData = this.state.chartData;
+        this.title = "";
+        if(type == "pace"){
+            this.chartData = this.state.chartData1;
+            this.title = "Pace of Speech";
+        }else if(type == "volume"){
+            this.chartData = this.state.chartData2;
+            this.title = "Volume";
+        }else if(type == "speed"){
+            this.chartData = this.state.chartData3;
+            this.title = "Speed"
+        }
+
         // if(type == "pace"){
         //     chartData = this.state.chartDataPace;
         // }
@@ -119,41 +144,39 @@ class Chart extends Component {
         var feedbackRef = this.db.database().ref("feedback").child(this.sessionID);
         feedbackRef.on("child_added", function(snapshot, prevChildKey){
                 if(type == 'pace'){
-                    // chartData.datasets[0].data[0] = 0;
-                    // chartData.datasets[0].data[1] = 0;
                     var parsedFeedback = snapshot.val();
                     if(parsedFeedback.type == 0){
                         if(parsedFeedback.message == "slow"){
-                            this.state.chartData.datasets[0].data[0]++;
+                            this.state.chartData1.datasets[0].data[0]++;
                         }else if(parsedFeedback.message == "fast"){
-                            this.state.chartData.datasets[0].data[1]++;
+                            this.state.chartData1.datasets[0].data[1]++;
                         }
                     } 
-                    this.setState({chartData});
+                    this.setState({chartData1});
                 }else if(type == 'volume'){
                     var parsedFeedback = snapshot.val();
                     if(parsedFeedback.type == 0){
                         if(parsedFeedback.message == "quiet"){
-                            this.state.chartData.datasets[1].data[0]++;
+                            this.state.chartData2.datasets[0].data[0]++;
                         }else if(parsedFeedback.message == "loud"){
-                            this.state.chartData.datasets[1].data[1]++;
+                            this.state.chartData2.datasets[0].data[1]++;
                         }
                     } 
-                    this.setState({chartData});
+                    this.setState({chartData2});
                 }else if(type == 'speed'){
                     var parsedFeedback = snapshot.val();
                     if(parsedFeedback.type == 0){
                         if(parsedFeedback.message == "tslow"){
-                            this.state.chartData.datasets[2].data[0]++;
+                            this.state.chartData3.datasets[0].data[0]++;
                         }else if(parsedFeedback.message == "tfast"){
-                            this.state.chartData.datasets[2].data[1]++;
+                            this.state.chartData3.datasets[0].data[1]++;
                         }
                     } 
-                    this.setState({chartData});
+                    this.setState({chartData3});
                 }
-                console.log("pace dataset: " + this.state.chartData.datasets[0].data[0] + this.state.chartData.datasets[0].data[1]);
-                console.log("volume dataset: " + this.state.chartData.datasets[1].data[0] + this.state.chartData.datasets[1].data[1]);
-                console.log("speed dataset: " + this.state.chartData.datasets[2].data[0] + this.state.chartData.datasets[2].data[1]);
+                console.log("pace dataset: " + this.state.chartData1.datasets[0].data[0] + this.state.chartData1.datasets[0].data[1]);
+                console.log("volume dataset: " + this.state.chartData2.datasets[0].data[0] + this.state.chartData2.datasets[0].data[1]);
+                console.log("speed dataset: " + this.state.chartData3.datasets[0].data[0] + this.state.chartData3.datasets[0].data[1]);
         }.bind(this));
     }
 
@@ -173,11 +196,11 @@ class Chart extends Component {
     render() {
         return (
             <Bar 
-                data={this.state.chartData} 
+                data={this.chartData} 
                 options={{
                     title: {
-                        display: this.props.displayTitle,
-                        text: this.props.title,
+                        display: true,
+                        text: this.title,
                         fontSize: 25
                     },
                     legend: {
