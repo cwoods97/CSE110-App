@@ -64,7 +64,6 @@ class AppFront extends Component {
         }
 
         login(email, password)
-
         .then((success) => {
             if (success) {
                 ReactDOM.render(<Main db={firebase} />, document.getElementById('root'));
@@ -83,7 +82,7 @@ class AppFront extends Component {
 
     create= function(ev) {
         ev.preventDefault()
-        ReactDOM.render(<CreateAccount />, document.getElementById('root'));
+        ReactDOM.render(<CreateAccount db={firebase} />, document.getElementById('root'));
 
     }
 

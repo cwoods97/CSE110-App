@@ -19,64 +19,43 @@ class App extends Component {
 
         this.db = props.db;
         this.root = document.getElementById('root');
-        this.join = this.join.bind(this);
-        this.create = this.create.bind(this);
 
         this.state = {
-            coder: 0,
-            message: "",
-            display: ""
+            currentUser: this.db.auth().currentUser
         }
+
     }
 
-    componentDidMount() {
-				getDisplayName().then(name => {this.setState({display: name});});
-		}
-
     front = function(ev) {
-
 		logout();
-
-        ev.preventDefault();
         ReactDOM.render(<AppFront />, document.getElementById('root'));
     };
 
-    join= function(ev){
+    join = function(ev) {
+        var accessCode = document.getElementById("code").value;
 
-        ev.preventDefault();
-
-        var coder = document.getElementById("code").value;
-
-        //Integer only regular expression from https://stackoverflow.com/questions/9011524/javascript-regexp-number-only-check
+        // Integer only regular expression from https://stackoverflow.com/questions/9011524/javascript-regexp-number-only-check
         var reg = /^\d+$/;
 
-        if (reg.test(coder)) {
-
+        if (reg.test(accessCode)) {
 			getIdToken().then(token => {
-				joinBackendSession(token, coder).then((session) => {
-						ev.preventDefault();
-				ReactDOM.render(<Join code={coder} session={session.id} db={this.db}/>, document.getElementById('root'));
-					}, (error) => {
-							document.getElementById("error").innerHTML = error;
-					});
+				joinBackendSession(token, accessCode)
+                .then((session) => {
+		            ReactDOM.render(<Join code={accessCode} session={session.id} db={this.db}/>, document.getElementById('root'));
+				}).catch((error) => {
+					document.getElementById("error").innerHTML = error;
+				});
 			});
 		} else {
-            document.getElementById("error").innerHTML = "Please enter a valid session code"
+            document.getElementById("error").innerHTML = "Please enter a valid session code.";
         }
     };
 
-    create= function(ev) {
-
-        ev.preventDefault();
+    create = function(ev) {
 
 		getIdToken().then(token => {
 			createBackendSession(token).then((response) => {
-
-				this.setState({
-                    coder: response.accessCode
-                });
-
-                ReactDOM.render(<CreateSession code={this.state.coder} db={this.db} sessionID={response.sessionID} />, document.getElementById('root'));
+                ReactDOM.render(<CreateSession code={response.accessCode} db={this.db} sessionID={response.sessionID} />, document.getElementById('root'));
 			});
 		});
 
@@ -130,7 +109,7 @@ class App extends Component {
 
                 <div id='navMain' class="w3-sidebar w3-bar-block w3-responsive" style={{height:'100%',backgroundColor:'lightgrey',zIndex:'0'}}>
 
-                    <a class="w3-bar-item" style={{backgroundColor:'aqua'}}>{this.state.display}</a>
+                    <a class="w3-bar-item" style={{backgroundColor:'aqua'}}>{this.state.currentUser.displayName}</a>
                     <a class="w3-bar-item w3-button" id='profile' onClick={this.settings} style={{backgroundColor:'lightgrey'}}>Profile Settings</a>
                     <a class="w3-bar-item w3-button" onClick={this.history.bind(this)} style={{backgroundColor:'lightgrey'}}>Session History</a>
                     <a class="w3-bar-item w3-button" onClick={this.front} style={{backgroundColor:'lightgrey'}}>Logout</a>
@@ -196,7 +175,6 @@ class App extends Component {
                         </div>
                         </div>
                     </div>
-                    {/*</div>*/}
                 </div>
 
 

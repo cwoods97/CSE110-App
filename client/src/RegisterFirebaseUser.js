@@ -40,42 +40,49 @@ export function createAccount(displayName, email, password) {
             }).then((data) => {
                 if (data.isUnique) {
                     firebase.auth().createUserWithEmailAndPassword(email, password)
-                        .then(user => {
-                            user.updateProfile({
-                                displayName: displayName
-                            }).then(() => {
-                                log("Firebase user successfully created.");
-                            }).catch(error => {
-                                reject('auth/invalid-name');
-                            });
+                    .then(user => {
+                        var profileUpdated = user.updateProfile({ displayName: displayName })
+                                            .then(() => {
+                                                log("Firebase user successfully created.");
+                                            }).catch(error => {
+                                                reject('auth/invalid-name');
+                                            });
 
-                            // Create backend account upon successful firebase registration
+                        // Create backend account upon successful firebase registration
+                        var backendAccountCreated = new Promise((resolve, reject) => {
                             user.getIdToken()
-                                .then((token) => {
-                                    fetch('/api/account/createAccount', {
-                                        method: 'post',
-                                        body: JSON.stringify({
-                                            displayName: displayName,
-                                            email: email,
-                                            token: token
-                                        }),
-                                        headers: {
-                                            'Content-Type': 'application/json',
-                                            'Accept': 'application/json'
-                                        }
-                                    }).then((response) => {
-                                        if (response.status === 200) {
-                                            log("Backend user successfully created.");
-                                            resolve();
-                                        } else {
-                                            reject({ code: 'auth/backend-error' });
-                                        }
-                                    // Backend API returned an error
-                                    }).catch(error => { reject(error); })
-                                // Unable to retrieve user login session
-                                }).catch(error => { reject(error); });
-                        // Unable to create user in Firebase
-                        }).catch(error => { reject(error); });
+                            .then((token) => {
+                                fetch('/api/account/createAccount', {
+                                    method: 'post',
+                                    body: JSON.stringify({
+                                        displayName: displayName,
+                                        email: email,
+                                        token: token
+                                    }),
+                                    headers: {
+                                        'Content-Type': 'application/json',
+                                        'Accept': 'application/json'
+                                    }
+                                }).then((response) => {
+                                    if (response.status === 200) {
+                                        log("Backend user successfully created.");
+                                        resolve();
+                                    } else {
+                                        reject({ code: 'auth/backend-error' });
+                                    }
+                                // Backend API returned an error
+                                }).catch(error => { reject(error); })
+                            // Unable to retrieve user login session
+                            }).catch(error => { reject(error); });
+                        })
+
+                        Promise.all([profileUpdated, backendAccountCreated]).then(() => {
+                            resolve();
+                        }).catch((error) => {
+                            reject(error);
+                        })
+                    // Unable to create user in Firebase
+                    }).catch(error => { reject(error); });
                 } else {
                     reject({ code: 'auth/name-already-in-use'});
                 }
@@ -130,14 +137,13 @@ export function getIdToken() {
 }
 
 export function getDisplayName() {
-		return new Promise((resolve, reject) => {
-				const user = firebase.auth().currentUser;
-				if(user != null){
-						const name = user.displayName;
-						resolve(name);
-				}
-				reject("User is not logged in.");
-		});
+	return new Promise((resolve, reject) => {
+		const user = firebase.auth().currentUser;
+		if (user != null) {
+			resolve(user.displayName);
+		}
+		reject("User is not logged in.");
+	});
 }
 
 export function getPresentedSessions() {
