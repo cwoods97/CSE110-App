@@ -111,6 +111,8 @@ class App extends Component {
                 modal.style.display = "none";
             }
         }
+
+
     };
 
     render() {
@@ -128,9 +130,9 @@ class App extends Component {
 
                 <div id='navMain' class="w3-sidebar w3-bar-block w3-responsive" style={{height:'100%',backgroundColor:'lightgrey',zIndex:'0'}}>
 
-                    <a class="w3-bar-item" style={{backgroundColor:'aqua'}}>{this.state.displayName}</a>
+                    <a class="w3-bar-item" style={{backgroundColor:'aqua'}}>{this.state.display}</a>
                     <a class="w3-bar-item w3-button" id='profile' onClick={this.settings} style={{backgroundColor:'lightgrey'}}>Profile Settings</a>
-                    <a class="w3-bar-item w3-button" onClick={this.history}style={{backgroundColor:'lightgrey'}}>Session History</a>
+                    <a class="w3-bar-item w3-button" onClick={this.history.bind(this)} style={{backgroundColor:'lightgrey'}}>Session History</a>
                     <a class="w3-bar-item w3-button" onClick={this.front} style={{backgroundColor:'lightgrey'}}>Logout</a>
 
                 </div>
