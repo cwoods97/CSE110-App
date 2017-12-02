@@ -48,15 +48,13 @@ app.use(function(req, res, next) {
 			res.status(404).send("Firebase could not verify the provided token." +
 			                     + "\n" + error.message );
 		})
-  	// TODO This code is for debugging puroses ONLY and should be disabled in production.
   	} else {
-        if (req.body.displayName) {
+        if (req.path === "/api/account/verify" && req.body.displayName) {
             req.locals = { 'displayName': req.body.displayName, 'admin': admin };
+            next();
         } else {
-            req.locals = { 'admin': admin };
+            log("Authentication token not provided. Rejecting request.");
         }
-		log("Token not provided. Overriding default behavior for development purposes.");
-		next();
   	}
 });
 
@@ -70,7 +68,6 @@ if (Boolean(parseInt(is_production))) {
 }
 
 // Express routers
-const hello = require('./routes/Hello');
 const account = require('./routes/Account');
 const session = require('./routes/Session');
 const sessionSetup = require('./routes/sessionSetup');
@@ -79,7 +76,6 @@ const presenterSession = require('./routes/PresenterSession');
 const sessionReview = require('./routes/SessionReview');
 const user = require('./routes/User');
 
-app.use('/api/hello', hello);
 app.use('/api/account', account);
 app.use('/api/session', session);
 app.use('/api/feedback', feedback);
