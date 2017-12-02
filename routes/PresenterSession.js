@@ -77,9 +77,11 @@ router.post('/addStartTime', (req, res) => {
 		const admin = req.locals.admin;
 		const session = req.body.sessionCode;
 		const timestamp = req.body.time;
+		const audio = req.body.audio;
 
 		ref = admin.database().ref("sessions").child(session);
 		ref.child('startTime').set(timestamp);
+		ref.child('hasAudio').set(audio);
 
 		res.json({success: true});
 
