@@ -99,7 +99,7 @@ class CreateSession extends Component {
 			endSession(token, this.state.coder);
 		});
 		
-        ReactDOM.render(<Main />, document.getElementById('root'));
+        ReactDOM.render(<Main db={this.db}/>, document.getElementById('root'));
     }
 
 	updateTitle = (ev) => {
