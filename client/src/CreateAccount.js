@@ -6,6 +6,7 @@ import App from './App';
 import Main from './Main';
 import { createAccount } from './RegisterFirebaseUser';
 import logo from './Logo.png';
+import './styles/CreateAccount.css';
 
 class CreateAccount extends Component {
 
@@ -109,13 +110,13 @@ class CreateAccount extends Component {
 
                         <form action="" style={{color:'#525252'}}>
                             <p id="emailError"></p>
-                            <input class="w3-input" id="email" type="text" name="fname" placeholder={"Email"}></input><br></br>
+                            <input class="w3-input" id="email" type="text" name="fname" placeholder={"Email"}></input>
                             <p id="displayNameError"></p>
-                            <input class="w3-input" id="display" type="text" name="dname" placeholder={"Display Name"}></input><br></br>
+                            <input class="w3-input" id="display" type="text" name="dname" placeholder={"Display Name"}></input>
                             <p id="pwdError"></p>
-                            <input class="w3-input" id="pwd1" type="password" name="pwd" placeholder={"Password"}></input><br></br>
+                            <input class="w3-input" id="pwd1" type="password" name="pwd" placeholder={"Password"}></input>
                             <p></p>
-                            <input class="w3-input" id="pwd2" type="password" name="reenter" placeholder={"Re-enter Password"}></input><br></br>
+                            <input class="w3-input" id="pwd2" type="password" name="reenter" placeholder={"Re-enter Password"}></input>
                             <br></br>
                             <input onClick={this.createMain.bind(this)} style={{float:"left",backgroundColor:"#525252",color:"white"}} class="w3-button w3-round w3-hover-red" type="submit" value="Create"></input>
                         </form>
