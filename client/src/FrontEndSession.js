@@ -1,5 +1,5 @@
 
-export function createBackendSession(idToken) {
+export function createBackendSession(idToken, creationTime) {
 
     return new Promise((resolve, reject) => {
 
@@ -8,7 +8,8 @@ export function createBackendSession(idToken) {
             fetch('/api/sessionSetup/createSession', {
 				method: 'post',
 				body: JSON.stringify({
-					token: idToken
+					token: idToken,
+					creationTime: creationTime
 				}),
 				headers: {
 					'Content-Type': 'application/json',

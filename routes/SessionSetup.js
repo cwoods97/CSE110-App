@@ -4,6 +4,8 @@ var router = express.Router();
 router.post('/createSession', (req, res) => {
 	const uid = req.locals.uid;
 	const admin = req.locals.admin;
+	const creationTime = req.body.creationTime;
+
 	var sessionRef = admin.database().ref('sessions');
 	var userRef = admin.database().ref("users").child(uid);
 	var accessCode = 0;
@@ -35,7 +37,8 @@ router.post('/createSession', (req, res) => {
 			isActive: false,
 			audienceCount: '0',
 			title: "untitled",
-			hasAudio: false
+			hasAudio: false,
+			creationTime: creationTime
 		});
 
 		res.json({
