@@ -179,7 +179,9 @@ class App extends Component {
                         <span id="close" style={{float:'right', fontSize:'28px', fontWeight:'bold',cursor:'pointer'}}>&times;</span>
                         <br></br>
                         <h2 style={{textAlign:'center'}}><b>Profile Settings</b></h2>
-                        <div>
+                        <br></br>
+                        <div style={{display:'flex', justifyContent:'space-between'}}>
+                        <div style={{backgroundColor:'#999999',textAlign:'center',float:'left',width:'45%'}}>
                             <form id="displayForm">
                                 <h6><b>Update your display name</b></h6>
                                 <p id="displayError"></p>
@@ -188,10 +190,10 @@ class App extends Component {
                                 <input style={{backgroundColor:'#665084',color:'white'}} class="w3-btn w3-round" type="submit" value="Submit" onClick={this.updateDisplayName.bind(this)}></input>
                             </form>
                         </div>
-                        <div>
+                        <div style={{backgroundColor:'#999999',textAlign:'center',float:'left',overflow:'hidden',width:'45%'}}>
                             <form id="passwordForm">
                                 <h6><b>Update your password</b></h6>
-                                <input type="password" id='oldPwd' placeholder={"Enter curent password"}></input>
+                                <input type="password" id='oldPwd' placeholder={"Enter current password"}></input>
                                 <p id="passwordError"></p>
                                 <input type="password" id='newPassword' placeholder={"Enter new password"}></input>
                                 <p></p>
@@ -200,6 +202,7 @@ class App extends Component {
                                 <input style={{backgroundColor:'#665084',color:'white'}} class="w3-btn w3-round" type="submit" value="Submit" onClick={this.updatePassword}></input>
                             </form>
                         </div>
+                    </div>
                     </div>
                 </div>
 
