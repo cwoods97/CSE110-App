@@ -6,14 +6,14 @@ import firebase from 'firebase';
 import 'bootstrap/dist/css/bootstrap-theme.css';
 import 'bootstrap/dist/css/bootstrap.css';
 
-
 import './styles/ReviewFeedback.css';
 import ReviewChart from './components/ReviewChart';
-
+import SessionHistory from './SessionHistory';
 
 import { ReactMic } from 'react-mic';
 import { Media, Player, controls } from 'react-media-player'
 const { PlayPause, MuteUnmute, CurrentTime, Progress, SeekBar, Duration, Volume } = controls
+
 
 class ReviewFeedback extends Component {
 
@@ -85,6 +85,10 @@ class ReviewFeedback extends Component {
         });
     };
 
+    history = function(ev){
+        //ev.preventDefault();
+        ReactDOM.render(<SessionHistory db={this.db} />, document.getElementById('root'));
+    };
 
     render() {
 
@@ -109,7 +113,7 @@ class ReviewFeedback extends Component {
                 <div id="navigation" class="w3-sidebar w3-bar-block" style={{borderRight:'1px solid #665084', height:'100%',backgroundColor:'lightgrey',zIndex:'-1',overflow:'hidden'}}>
 
                     <a id='display' class="w3-bar-item menuLeft" style={{backgroundColor:'PaleVioletRed',fontFamily:'Poppins, sans-serif'}}><b>{this.state.display}</b></a>
-                    <a class="w3-bar-item w3-button menuLeft" style={{backgroundColor:'lightgrey',fontFamily:'Poppins, sans-serif'}}><b>Session History</b></a>
+                    <a class="w3-bar-item w3-button menuLeft" onClick={this.history.bind(this)} style={{backgroundColor:'lightgrey',fontFamily:'Poppins, sans-serif'}}><b>Session History</b></a>
 
 
                 </div>
