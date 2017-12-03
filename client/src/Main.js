@@ -76,12 +76,20 @@ class App extends Component {
         span.onclick = function(ev) {
             ev.preventDefault();
             modal.style.display = "none";
+						document.getElementById('displayForm').reset();
+						document.getElementById('passwordForm').reset();
+						document.getElementById('displayError').innerHTML = "";
+						document.getElementById('passwordError').innerHTML = "";
         }
 
         window.onclick = function(ev) {
             ev.preventDefault();
             if(ev.target == modal) {
                 modal.style.display = "none";
+								document.getElementById('displayForm').reset();
+								document.getElementById('passwordForm').reset();
+								document.getElementById('displayError').innerHTML = "";
+								document.getElementById('passwordError').innerHTML = "";
             }
         }
     };
@@ -121,7 +129,8 @@ class App extends Component {
 
 				var validations = [
 						Boolean(pswd1) && !pswd1.includes(' ') && pswd1.length >= 6,
-						pswd1 == pswd2
+						pswd1 == pswd2,
+						oldpswd != pswd1
 				]
 
 				if(validations.every(Boolean)) {
@@ -135,8 +144,10 @@ class App extends Component {
 				} else {
 						if(!validations[0]) {
 								error.innerHTML = "Please enter a valid password (Spaces not allowed; must be at least 6 characters)";
-						} else {
+						} else if(!validations[1]){
 								error.innerHTML = "Passwords do not match";
+						} else {
+								error.innerHTML = "New password cannot be old password";
 						}
 				}
 		};
