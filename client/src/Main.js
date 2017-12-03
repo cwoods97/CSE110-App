@@ -163,26 +163,31 @@ class App extends Component {
                 </div>
 
                 <div id='popup' class="modal" style={{display:'none', position:'fixed', zIndex:'1', left:'0', top:'0', width:'100%', height:'100%', overflow:'auto'}}>
-                    <div class="modal-content" style={{margin:'15% auto', padding:'20px', border:'1px solid #888', width:'80%'}}>
-                        <span id="close" style={{float:'right', fontSize:'28px', fontWeight:'bold'}}>&times;</span>
-                        <h1><b>Profile Settings</b></h1>
-                        <form id="displayForm">
-                            <h6><b>Enter a new display name:</b></h6>
-														<p id="displayError"></p>
-                            <input id='newDisplay'></input>
-                            <br></br>
-                            <input style={{backgroundColor:'#665084',color:'white'}} class="w3-btn w3-round" type="submit" value="Submit" onClick={this.updateDisplayName.bind(this)}></input>
-                        </form>
+                    <div class="modal-content" style={{margin:'15% auto', padding:'20px', border:'1px solid #888', width:'45%'}}>
+                        <span id="close" style={{float:'right', fontSize:'28px', fontWeight:'bold',cursor:'pointer'}}>&times;</span>
                         <br></br>
-                        <form id="passwordForm">
-                            <h6><b>Enter a new password:</b></h6>
-														<p id="passwordError"></p>
-                            <input type="password" id='newPassword'></input>
-                            <br></br>
-                            <input type="password" id='confirm'></input>
-                            <br></br>
-                            <input style={{backgroundColor:'#665084',color:'white'}} class="w3-btn w3-round" type="submit" value="Submit" onClick={this.updatePassword}></input>
-                        </form>
+                        <h2 style={{textAlign:'center'}}><b>Profile Settings</b></h2>
+                        <div>
+                            <form id="displayForm">
+                                <h6><b>Update your display name</b></h6>
+                                <p id="displayError"></p>
+                                <input id='newDisplay' placeholder={"Enter new display name"}></input>
+                                <p></p>
+                                <input style={{backgroundColor:'#665084',color:'white'}} class="w3-btn w3-round" type="submit" value="Submit" onClick={this.updateDisplayName.bind(this)}></input>
+                            </form>
+                        </div>
+                        <div>
+                            <form id="passwordForm">
+                                <h6><b>Update your password</b></h6>
+                                <input type="password" id='oldPwd' placeholder={"Enter curent password"}></input>
+                                <p id="passwordError"></p>
+                                <input type="password" id='newPassword' placeholder={"Enter new password"}></input>
+                                <p></p>
+                                <input type="password" id='confirm' placeholder={"Re-enter new password"}></input>
+                                <p></p>
+                                <input style={{backgroundColor:'#665084',color:'white'}} class="w3-btn w3-round" type="submit" value="Submit" onClick={this.updatePassword}></input>
+                            </form>
+                        </div>
                     </div>
                 </div>
 
