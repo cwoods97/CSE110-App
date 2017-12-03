@@ -220,7 +220,8 @@ class App extends Component {
                     <div class='w3-responsive' style={{display:'inline-block', float:'left', width:'50%',height:'100%',margin:'auto'}}>
                         <div style={{height:'50%',textAlign:'center'}}>
                         <div class='w3-responsive' style={{margin:'25% 10% 20%', width:'80%', overflow:'hidden',textAlign:'center'}}>
-                            <p><b style={{fontSize:'22px', borderBottom: '2px solid #000000' }}>About to give a speech?</b> <br /> Click "Create a Session" so that audience members can join and give feedback to your speech.
+                            <p><b style={{fontSize:'22px', borderBottom: '2px solid #000000' }}>About to give a speech?</b></p>
+                                <p><br /> Click "Create a Session" so that audience members can join and give feedback to your speech.
                                 Save your speeches in order to listen and review speeches you have given, as well as improve on future speeches!</p>
                         </div>
                         </div>
@@ -235,7 +236,8 @@ class App extends Component {
                     <div class='w3-responsive' style={{display:'inline-block', float:'right', width:'50%', height:'100%', margin:'auto'}}>
                         <div style={{height:'50%',textAlign:'center'}}>
                         <div class='w3-responsive' style={{margin:'25% 10% 20%', width:'80%', overflow:'hidden',textAlign:'center'}}>
-                            <p><b style={{fontSize:'22px', borderBottom: '2px solid #000000'}}> Joining a speech as an audience member?</b> <br /> Click "Join Session" in which you will be able to provide feedback to speakers.
+                            <p><b style={{fontSize:'22px', borderBottom: '2px solid #000000'}}> Joining a speech as an audience member?</b></p>
+                            <p><br />Click "Join Session" in which you will be able to provide feedback to speakers.
                                 Give feedback to speakers in order to help them improve and let them know what they can do better!</p>
                         </div>
                         </div>

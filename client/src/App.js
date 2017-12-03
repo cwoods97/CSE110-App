@@ -169,7 +169,7 @@ class AppFront extends Component {
                         <form action="">
                             <p id="error"></p>
 
-                            <input  ref = 'email' id = "email"class = "w3-input" type="text" name="fname" placeholder={"Email"} style={{color:'#525252'}}></input><br></br>
+                            <input  ref = 'email' id = "email"class = "w3-input" type="text" name="fname" placeholder={"Email"} style={{color:'#525252'}}></input>
                             <p id="errora"></p>
                             <input class= "w3-input" id = "password" type="password" name="lname" placeholder={"Password"} style={{color:'#525252'}}></input><br></br>
                             <input id= "submit" style={{backgroundColor:'#525252',color:'white'}} class="w3-button w3-round w3-hover-red" onClick= {this.main} type="submit" value="Submit"></input>
