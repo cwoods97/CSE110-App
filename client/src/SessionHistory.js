@@ -193,6 +193,9 @@ class App extends Component {
                                     <h6>
                                         {sessionData.displayName}
                                     </h6>
+																		<h7>
+																				{sessionData.creationTime}
+																		</h7>
                                 </center>
 
                             </div>
@@ -211,6 +214,9 @@ class App extends Component {
                                     <h6>
                                         {sessionData.displayName}
                                     </h6>
+																		<h7>
+																				{sessionData.creationTime}
+																		</h7>
 
                                 </center>
 
