@@ -68,6 +68,23 @@
 
 }
 
+#titleDisplay{
+    width: 80% !important;
+    /*
+    Source: https://css-tricks.com/snippets/css/prevent-long-urls-from-breaking-out-of-container/
+     */
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+
+
+}
+
+#title{
+    width: 80% !important;
+
+}
+
+
 
 .sound-wave{
     width:100% !important;
