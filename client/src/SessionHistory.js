@@ -114,11 +114,11 @@ class App extends Component {
 
         document.getElementById('joined').style.display = 'inline'
         document.getElementById('created').style.display = 'none'
-        document.getElementById("jb").classList.remove('w3-grey');
+        /*document.getElementById("jb").classList.remove('w3-grey');
         document.getElementById("jb").classList.add('w3-dark-grey');
 
         document.getElementById("cb").classList.remove('w3-dark-grey');
-        document.getElementById("cb").classList.add('w3-grey');
+        document.getElementById("cb").classList.add('w3-grey');*/
     }
 
     create = function(ev){
@@ -128,10 +128,10 @@ class App extends Component {
         document.getElementById('created').style.display = 'inline'
         document.getElementById('joined').style.display = 'none'
 
-        document.getElementById("jb").classList.remove('w3-dark-grey');
+        /*document.getElementById("jb").classList.remove('w3-dark-grey');
         document.getElementById("jb").classList.add('w3-grey');
         document.getElementById("cb").classList.remove('w3-grey');
-        document.getElementById("cb").classList.add('w3-dark-grey');
+        document.getElementById("cb").classList.add('w3-dark-grey');*/
 
     }
 
@@ -146,16 +146,17 @@ class App extends Component {
             <div >
                 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"></link>
 
-                <div style={{backgroundColor:'#333333',height:"100%"}}>
-                    <h2 style={{marginLeft:'8px',marginTop:'0px',marginBottom:'0px',height:'50px', color:'white'}}><b></b>
-                        <img src={logo} width="125" height="50" />
+                <div style={{backgroundColor:'#333333',height:"100%", outline: '1px solid red'}}>
+                    <h2 style={{marginLeft:'8px',marginTop:'0px',marginBottom:'0px',height:'50px', color:'white', cursor:'pointer'}}><b></b>
+                        <img src={logo} width="125" height="50" onClick={this.home}/>
                     </h2>
                 </div>
 
-                <div id="sidebar" className="w3-sidebar w3-bar-block" style={{width:'20%',height:'100%',backgroundColor:'lightgrey',zIndex:'0',overflow:'hidden'}}>
+                <div id="sidebar" className="w3-sidebar w3-bar-block" style={{width:'20%',height:'100%',backgroundColor:'#585858',
+                    color:'#F3E6DE', zIndex:'0',overflow:'hidden', boxShadow:'1px 1px 2px #f44336'}}>
 
-                    <a href="#" class="w3-bar-item" style={{backgroundColor:'aqua'}}>{this.state.display}</a>
-                    <a href="#" class="w3-bar-item w3-button" onClick={this.home}style={{backgroundColor:'lightgrey'}}>Home</a>
+                    <a href="#" class="w3-bar-item HoverRed" style={{outline:'2px solid #333333', fontSize:'20px'}}>{this.state.display}</a>
+                    <a href="#" class="w3-bar-item w3-button w3-hover-red" onClick={this.home}style={{boxShadow:'1px 0px 1px #333333'}}>Home</a>
                     <br></br>
                     <br></br>
                     <br></br>
@@ -172,10 +173,10 @@ class App extends Component {
                     <br></br>
 
                     <div id="buttons" style={{margin:'0 auto',textAlign:'center'}}>
-                    <button id="jb" onClick={this.join} class="w3-btn w3-dark-grey" style={{borderRadius:'10px',marginRight:'10px'}}>
+                    <button id="jb" onClick={this.join} class="w3-button w3-round w3-hover-red" style={{backgroundColor:'#525252', color:'white', marginRight:'10px'}}>
                         Joined Sessions
                     </button>
-                    <button id="cb" onClick={this.create} class="w3-btn w3-grey" style={{borderRadius:'10px',marginLeft:'10px'}}>
+                    <button id="cb" onClick={this.create} class="w3-button w3-round w3-hover-red" style={{backgroundColor:'#525252', color:'white',marginLeft:'10px'}}>
                         Created Sessions
                     </button>
                     </div>
