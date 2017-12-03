@@ -189,7 +189,7 @@ class App extends Component {
                         <div style={{background:'transparent',textAlign:'center',float:'left',width:'47%', borderRadius:'10px'}}>
                             <form id="displayForm" style={{margin:'5%'}}>
                                 <h6><b style={{color:'#f3e6de'}}>Update your display name</b></h6>
-                                <p id="displayError"></p>
+                                <p id="displayError" style={{color:'white'}}></p>
                                 <input type="text" id='newDisplay' class='w3-input' placeholder={"Enter new display name"}></input>
                                 <p></p>
                                 <input style={{backgroundColor:'#585858',color:'white'}} class="w3-button w3-round w3-hover-red" type="submit" value="Submit" onClick={this.updateDisplayName.bind(this)}></input>
@@ -199,7 +199,7 @@ class App extends Component {
                             <form id="passwordForm" style={{margin:'5%'}}>
                                 <h6><b style={{color:'#f3e6de'}}>Update your password</b></h6>
                                 <input type="password" id='oldPwd' class='w3-input' placeholder={"Enter current password"} style={{width:'80%'}}></input>
-                                <p id="passwordError"></p>
+                                <p id="passwordError" style={{color:'white'}}></p>
                                 <input type="password" id='newPassword' class='w3-input' placeholder={"Enter new password"} style={{width:'80%'}}></input>
                                 <p></p>
                                 <input type="password" id='confirm' class='w3-input' placeholder={"Re-enter new password"} style={{width:'80%'}}></input>
