@@ -59,7 +59,7 @@ class Join extends Component {
 								alert("Sent " + message);
 						})
 						.catch((error) => {
-								alert("Error:" + error);
+								alert("Error: " + error);
 						});
         })
 
@@ -81,7 +81,7 @@ class Join extends Component {
 						getIdToken().then(token => {
 								sendPredefinedFeedback(token, session, comment, currTime, 1)
 								.then((message) => {
-										alert("Message: " + message);
+										alert("Sent " + message);
 										var mList = document.getElementById('messages');
 
         				    var div1 = document.createElement('div');
@@ -101,7 +101,7 @@ class Join extends Component {
         				    mList.appendChild(div1);
 
 								}).catch((error) => {
-										alert(error);
+										alert("Error: " + error);
 								});
 						});
 
@@ -161,6 +161,10 @@ class Join extends Component {
 
 
                     <div id='left' class= 'w3-responsive' style={{display:'inline-block', float:'left', width:'50%',height:'100%'}}>
+
+                        <h5><b>Session Title:</b> </h5>
+                        <h5><b>Session Code:</b> {this.sessionAccessCode}</h5>
+
                         <center>
                             <p style={{marginTop:'1em', overflow:'hidden'}}><h3><b>Give Predefined Feedback</b></h3></p>
                         </center>

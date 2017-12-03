@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import firebase from 'firebase';
 import './styles/App.css';
 
 import App from './App';
@@ -11,23 +10,8 @@ class CreateAccount extends Component {
 
     constructor(props) {
         super(props);
-        // Initialize Firebase
-        var config = {
-            apiKey: "AIzaSyDSQVw9KUjmxhlxILCousROVR6PfOFcYQg",
-            authDomain: "speakeasy-25a66.firebaseapp.com",
-            databaseURL: "https://speakeasy-25a66.firebaseio.com",
-            projectId: "speakeasy-25a66",
-            storageBucket: "speakeasy-25a66.appspot.com",
-            messagingSenderId: "836790794762"
-        };
 
-        if (firebase.apps.length == 0) {
-            firebase.initializeApp(config);
-        }
-        else {
-            firebase.app()
-        }
-
+        this.db = props.db;
         this.state = {
             message: ""
         }
@@ -61,7 +45,7 @@ class CreateAccount extends Component {
             createAccount(display,email,pwd2)
                 .then(() => {
                     // Only render user's main page when successfully logged in
-                    ReactDOM.render(<Main db={firebase} />, document.getElementById('root'));
+                    ReactDOM.render(<Main db={this.db} />, document.getElementById('root'));
                 })
                 .catch((error) => {
                     var errorCode = error.code;
@@ -129,7 +113,7 @@ class CreateAccount extends Component {
                             <p></p>
                             <input class="w3-input" id="pwd2" type="password" name="reenter" placeholder={"Re-enter Password"}></input><br></br>
                             <br></br>
-                            <input onClick={this.createMain} style={{float:"left",backgroundColor:"#665084",color:"white"}} class="w3-btn w3-round" type="submit" value="Create"></input>
+                            <input onClick={this.createMain.bind(this)} style={{float:"left",backgroundColor:"#665084",color:"white"}} class="w3-btn w3-round" type="submit" value="Create"></input>
                         </form>
                     </div>
                 </div >

@@ -123,7 +123,7 @@ class App extends Component {
                 <div style={{width:'80%',float:'right'}}>
                     <br></br>
 
-                    <div id="buttons" style={{textAlign:'center'}}>
+                    <div id="buttons" style={{margin:'0 auto',textAlign:'center'}}>
                     <button id="jb"onClick={this.join} class="w3-btn w3-dark-grey" style={{borderRadius:'10px'}}>
                         Joined Sessions
                     </button>
