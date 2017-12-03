@@ -152,13 +152,10 @@ class AppFront extends Component {
             <div id='startpage' style={{width:'100%',height:'100%',display:'inline-block', backgroundColor:'#F3E6DE'}}>
                 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"></link>
                 <div style={{backgroundColor:'#333333',height:"100%"}}>
-
-                    <h2 style={{marginLeft:'8px',marginTop:'0px',marginBottom:'0px',height:'50px',cursor:'pointer', color:'white'}}><b></b>
+                    <h2 style={{marginLeft:'8px',marginTop:'0px',marginBottom:'0px',height:'50px', color:'white'}}><b></b>
                         <img src={logo} width="125" height="50" />
                         <a href={"#"} onClick={this.about} class = {'HoverRed'} style={{textDecoration:'underline', float:'right', marginTop:'17px', marginRight:'10px', height:'100%', fontSize:'50%'}} >About Us</a>
                     </h2>
-
-
                 </div>
                 <div id='infocontianer' style={{width:'60%',float:'left'}}>
                     <div id='info' style={{padding:"20px", margin:'100px'}}>

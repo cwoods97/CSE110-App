@@ -8,6 +8,7 @@ import AppFront from './App';
 import ReviewFeedback from './ReviewFeedback';
 
 import {getDisplayName} from './RegisterFirebaseUser.js';
+import logo from './Logo.png';
 
 import ReactDOM from 'react-dom';
 
@@ -145,16 +146,10 @@ class App extends Component {
             <div >
                 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"></link>
 
-                <div style={{height:'75px'}}>
-                    <div style={{backgroundColor:'#2C4A52',height:"100%"}}>
-
-                        <center>
-                            <h1 style={{ fontFamily:'Poppins', marginLeft:'10px',marginTop:'0px',marginBottom:'1px',height:'35px', float:'left', color:'#E7E7E7'}}>
-                                <b>SpeakEasy</b>
-                            </h1>
-                        </center>
-
-                    </div>
+                <div style={{backgroundColor:'#333333',height:"100%"}}>
+                    <h2 style={{marginLeft:'8px',marginTop:'0px',marginBottom:'0px',height:'50px', color:'white'}}><b></b>
+                        <img src={logo} width="125" height="50" />
+                    </h2>
                 </div>
 
                 <div id="sidebar" className="w3-sidebar w3-bar-block" style={{width:'20%',height:'100%',backgroundColor:'lightgrey',zIndex:'0',overflow:'hidden'}}>
