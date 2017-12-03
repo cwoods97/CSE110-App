@@ -97,7 +97,7 @@ class ReviewFeedback extends Component {
 
         return (
 
-            <div style={{width:'100%',height:'100%',borderBottom:'4px solid #665084',zIndex:'9' }}>
+            <div style={{width:'100%',height:'100%',borderBottom:'1px solid red',zIndex:'9' }}>
                 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"></link>
 
                 <div style={{backgroundColor:'#333333',height:"100%"}}>
@@ -106,10 +106,10 @@ class ReviewFeedback extends Component {
                     </h2>
                 </div>
 
-                <div id="navigation" class="w3-sidebar w3-bar-block" style={{borderRight:'1px solid #665084', height:'100%',backgroundColor:'lightgrey',zIndex:'-1',overflow:'hidden'}}>
+                <div id="navigation" class="w3-sidebar w3-bar-block" style={{borderRight:'1px solid #f44336', height:'100%',backgroundColor:'#585858',zIndex:'-1',overflow:'hidden'}}>
 
-                    <a id='display' class="w3-bar-item menuLeft" style={{backgroundColor:'PaleVioletRed',fontFamily:'Poppins, sans-serif'}}><b>{this.state.display}</b></a>
-                    <a class="w3-bar-item w3-button menuLeft" onClick={this.history.bind(this)} style={{backgroundColor:'lightgrey',fontFamily:'Poppins, sans-serif'}}><b>Session History</b></a>
+                    <a id='display' class="w3-bar-item menuLeft" style={{fontFamily:'Poppins, sans-serif'}}><b>{this.state.display}</b></a>
+                    <a class="w3-bar-item w3-button menuLeft w3-hover-red" onClick={this.history.bind(this)} style={{color:'white', boxShadow:'1px 0px 1px #333333', fontFamily:'Poppins, sans-serif'}}><b>Session History</b></a>
 
 
                 </div>
@@ -159,7 +159,7 @@ class ReviewFeedback extends Component {
                         </center>
                     </div>
 
-                    <div id = 'rightReview' class='w3-round' style={{float:'right',border:'2px solid #665084',width:'35%',backgroundColor:'#c4a5ff',overflow:'auto',maxHeight:'33em'}}>
+                    <div id = 'rightReview' class='w3-round' style={{float:'right',border:'2px solid #f44336',width:'35%',backgroundColor:'#585858',overflow:'auto',maxHeight:'33em'}}>
 
                             {
                                 this.state.customFeedback.map((feedbackData) => (
