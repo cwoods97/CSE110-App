@@ -146,18 +146,18 @@ export function getDisplayName() {
 	});
 }
 
-export function setPassword(password) {
+export function setPassword(oldPassword, newPassword) {
 		return new Promise((resolve, reject) => {
 				const user = firebase.auth().currentUser;
-				if(user != null){
-						user.updatePassword(password).then(function() {
+				user.reauthenticateWithCredential(firebase.auth.EmailAuthProvider.credential(user.email, oldPassword)).then(function() {
+						user.updatePassword(newPassword).then(function() {
 								resolve("Password updated");
 						}).catch(function(error) {
 								reject(error);
 						});
-				} else {
-						reject("User is not logged in");
-				}
+				}).catch(function(error) {
+						reject(error);
+				});
 		});
 }
 

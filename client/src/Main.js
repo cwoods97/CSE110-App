@@ -76,69 +76,81 @@ class App extends Component {
         span.onclick = function(ev) {
             ev.preventDefault();
             modal.style.display = "none";
+						document.getElementById('displayForm').reset();
+						document.getElementById('passwordForm').reset();
+						document.getElementById('displayError').innerHTML = "";
+						document.getElementById('passwordError').innerHTML = "";
         }
 
         window.onclick = function(ev) {
             ev.preventDefault();
             if(ev.target == modal) {
                 modal.style.display = "none";
+								document.getElementById('displayForm').reset();
+								document.getElementById('passwordForm').reset();
+								document.getElementById('displayError').innerHTML = "";
+								document.getElementById('passwordError').innerHTML = "";
             }
         }
     };
 
-	updateDisplayName = function(ev) {
-			ev.preventDefault();
+		updateDisplayName = function(ev) {
+				ev.preventDefault();
 
-			const name = document.getElementById('newDisplay').value;
-			const error = document.getElementById('displayError');
-			const form = document.getElementById('displayForm');
-			var validation = [Boolean(name) && !name.includes(' ')];
+				const name = document.getElementById('newDisplay').value;
+				const error = document.getElementById('displayError');
+				const form = document.getElementById('displayForm');
+				var validation = [Boolean(name) && !name.includes(' ')];
 
-			if(validation.every(Boolean)) {
-					error.innerHTML = "";
-					form.reset();
-					setDisplayName(name).then((success) => {
-							if(success){
-									error.innerHTML = "Display Name Updated";
-									this.setState({display: name});
-							}
-					}).catch((err) => {
-							error.innerHTML = err;
-					});
-			} else {
-					error.innerHTML = "Please enter a valid display name (Spaces not allowed)";
-			}
-	};
+				if(validation.every(Boolean)) {
+						error.innerHTML = "";
+						form.reset();
+						setDisplayName(name).then((success) => {
+								if(success){
+										error.innerHTML = "Display Name Updated";
+										this.setState({display: name});
+								}
+						}).catch((err) => {
+								error.innerHTML = err;
+						});
+				} else {
+						error.innerHTML = "Please enter a valid display name (Spaces not allowed)";
+				}
+		};
 
-	updatePassword = function(ev) {
-			ev.preventDefault();
+		updatePassword = function(ev) {
+				ev.preventDefault();
 
-			const pswd1 = document.getElementById('newPassword').value;
-			const pswd2 = document.getElementById('confirm').value;
-			const error = document.getElementById('passwordError');
-			const form = document.getElementById('passwordForm');
+				const oldpswd = document.getElementById('oldPwd').value;
+				const pswd1 = document.getElementById('newPassword').value;
+				const pswd2 = document.getElementById('confirm').value;
+				const error = document.getElementById('passwordError');
+				const form = document.getElementById('passwordForm');
 
-			var validations = [
-					Boolean(pswd1) && !pswd1.includes(' ') && pswd1.length >= 6,
-					pswd1 == pswd2
-			]
+				var validations = [
+						Boolean(pswd1) && !pswd1.includes(' ') && pswd1.length >= 6,
+						pswd1 == pswd2,
+						oldpswd != pswd1
+				]
 
-			if(validations.every(Boolean)) {
-					error.innerHTML = "";
-					form.reset();
-					setPassword(pswd1).then((success) => {
-							error.innerHTML = success;
-					}).catch((err) => {
-							error.innerHTML = err;
-					});
-			} else {
-					if(!validations[0]) {
-							error.innerHTML = "Please enter a valid password (Spaces not allowed; must be at least 6 characters)";
-					} else {
-							error.innerHTML = "Passwords do not match";
-					}
-			}
-	};
+				if(validations.every(Boolean)) {
+						error.innerHTML = "";
+						form.reset();
+						setPassword(oldpswd, pswd1).then((success) => {
+								error.innerHTML = success;
+						}).catch((err) => {
+								error.innerHTML = err;
+						});
+				} else {
+						if(!validations[0]) {
+								error.innerHTML = "Please enter a valid password (Spaces not allowed; must be at least 6 characters)";
+						} else if(!validations[1]){
+								error.innerHTML = "Passwords do not match";
+						} else {
+								error.innerHTML = "New password cannot be old password";
+						}
+				}
+		};
 
     render() {
         return (
@@ -163,26 +175,31 @@ class App extends Component {
                 </div>
 
                 <div id='popup' class="modal" style={{display:'none', position:'fixed', zIndex:'1', left:'0', top:'0', width:'100%', height:'100%', overflow:'auto'}}>
-                    <div class="modal-content" style={{margin:'15% auto', padding:'20px', border:'1px solid #888', width:'80%'}}>
-                        <span id="close" style={{float:'right', fontSize:'28px', fontWeight:'bold'}}>&times;</span>
-                        <h1><b>Profile Settings</b></h1>
-                        <form id="displayForm">
-                            <h6><b>Enter a new display name:</b></h6>
-														<p id="displayError"></p>
-                            <input id='newDisplay'></input>
-                            <br></br>
-                            <input style={{backgroundColor:'#665084',color:'white'}} class="w3-btn w3-round" type="submit" value="Submit" onClick={this.updateDisplayName.bind(this)}></input>
-                        </form>
+                    <div class="modal-content" style={{margin:'15% auto', padding:'20px', border:'1px solid #888', width:'45%'}}>
+                        <span id="close" style={{float:'right', fontSize:'28px', fontWeight:'bold',cursor:'pointer'}}>&times;</span>
                         <br></br>
-                        <form id="passwordForm">
-                            <h6><b>Enter a new password:</b></h6>
-														<p id="passwordError"></p>
-                            <input type="password" id='newPassword'></input>
-                            <br></br>
-                            <input type="password" id='confirm'></input>
-                            <br></br>
-                            <input style={{backgroundColor:'#665084',color:'white'}} class="w3-btn w3-round" type="submit" value="Submit" onClick={this.updatePassword}></input>
-                        </form>
+                        <h2 style={{textAlign:'center'}}><b>Profile Settings</b></h2>
+                        <div>
+                            <form id="displayForm">
+                                <h6><b>Update your display name</b></h6>
+                                <p id="displayError"></p>
+                                <input id='newDisplay' placeholder={"Enter new display name"}></input>
+                                <p></p>
+                                <input style={{backgroundColor:'#665084',color:'white'}} class="w3-btn w3-round" type="submit" value="Submit" onClick={this.updateDisplayName.bind(this)}></input>
+                            </form>
+                        </div>
+                        <div>
+                            <form id="passwordForm">
+                                <h6><b>Update your password</b></h6>
+                                <input type="password" id='oldPwd' placeholder={"Enter curent password"}></input>
+                                <p id="passwordError"></p>
+                                <input type="password" id='newPassword' placeholder={"Enter new password"}></input>
+                                <p></p>
+                                <input type="password" id='confirm' placeholder={"Re-enter new password"}></input>
+                                <p></p>
+                                <input style={{backgroundColor:'#665084',color:'white'}} class="w3-btn w3-round" type="submit" value="Submit" onClick={this.updatePassword}></input>
+                            </form>
+                        </div>
                     </div>
                 </div>
 
