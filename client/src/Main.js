@@ -59,8 +59,11 @@ class App extends Component {
 
         ev.preventDefault();
 
+				const date = new Date();
+				const creationTime = date.getMonth() + 1 + "-" + date.getDate() + "-" + date.getFullYear() + " " + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
+
 		getIdToken().then(token => {
-			createBackendSession(token).then((response) => {
+			createBackendSession(token, creationTime).then((response) => {
                 ReactDOM.render(<CreateSession code={response.accessCode} db={this.db} sessionID={response.sessionID} />, document.getElementById('root'));
 			});
 		});

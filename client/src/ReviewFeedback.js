@@ -46,10 +46,12 @@ class ReviewFeedback extends Component {
             })
             .then(response => response.json())
             .then((data) => {
-                this.setState({
-                    'predefinedFeedback' : data.predefinedFeedback,
-                    'customFeedback': data.customFeedback
-                })
+								if(data.predefinedFeedback){
+                		this.setState({
+                    		'predefinedFeedback' : data.predefinedFeedback,
+                   		  'customFeedback': data.customFeedback
+                		})
+								}
             })
         })
 
@@ -106,7 +108,7 @@ class ReviewFeedback extends Component {
 
                 <div id="navigation" class="w3-sidebar w3-bar-block" style={{borderRight:'1px solid #f44336', height:'100%',backgroundColor:'#585858',zIndex:'-1',overflow:'hidden'}}>
 
-                    <a id='display' class="w3-bar-item menuLeft" style={{fontFamily:'Poppins, sans-serif'}}><b>{this.state.display}</b></a>
+                    <a id='display' class="w3-bar-item menuLeft" style={{fontFamily:'Poppins, sans-serif', color:'white'}}><b>{this.state.display}</b></a>
                     <a class="w3-bar-item w3-button menuLeft w3-hover-red" onClick={this.history.bind(this)} style={{color:'white', boxShadow:'1px 0px 1px #333333', fontFamily:'Poppins, sans-serif'}}><b>Session History</b></a>
 
 

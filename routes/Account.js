@@ -97,6 +97,7 @@ router.post('/getPresentedSessions', (req, res) => {
 							sessions.push({
 								title: (sessionData.val().title ? sessionData.val().title : "UNTITLED"),
 								displayName: userRecord.displayName,
+								creationTime: sessionData.val().creationTime,
 								id: sessionID
 							})
 							resolve();
@@ -128,6 +129,7 @@ router.post('/getJoinedSessions', (req, res) => {
 							sessions.push({
 								title: (sessionData.val().title ? sessionData.val().title : "UNTITLED"),
 								displayName: userRecord.displayName,
+								creationTime: sessionData.val().creationTime,
 								id: sessionID
 							});
 							resolve();
