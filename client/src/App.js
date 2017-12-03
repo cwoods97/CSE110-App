@@ -10,6 +10,7 @@ import About from './About';
 import CreateAccount from './CreateAccount';
 import Reset from './Reset';
 import { login } from './RegisterFirebaseUser'
+import logo from './Logo.png';
 
 
 class AppFront extends Component {
@@ -145,19 +146,21 @@ class AppFront extends Component {
     render() {
         return (
 
-            <div id='startpage' style={{width:'100%',height:'100%',display:'inline-block'}}>
+            <div id='startpage' style={{width:'100%',height:'100%',display:'inline-block', backgroundColor:'#F3E6DE'}}>
                 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"></link>
-                <div style={{backgroundColor:'#c4a5ff',height:"100%"}}>
+                <div style={{backgroundColor:'#333333',height:"100%"}}>
 
-                    <h2 style={{marginLeft:'10px',marginTop:'0px',marginBottom:'5px',height:'35px',fontFamily:'cursive',cursor:'pointer'}}><b>speakeasy</b>
-
-                        <button onClick={this.about} style={{float:'right',backgroundColor:'#c4a5ff', marginRight:'0px',height:'110%'}} class='w3-btn w3-medium'>About Us</button>
+                    <h2 style={{marginLeft:'8px',marginTop:'0px',marginBottom:'0px',height:'50px',cursor:'pointer', color:'white'}}><b></b>
+                        <img src={logo} width="125" height="50" />
+                        <a href={"#"} onClick={this.about} class = {'HoverRed'} style={{textDecoration:'underline', float:'right', marginTop:'17px', marginRight:'10px', height:'100%', fontSize:'50%'}} >About Us</a>
                     </h2>
+
+
                 </div>
                 <div id='infocontianer' style={{width:'60%',float:'left'}}>
                     <div id='info' style={{padding:"20px", margin:'50px'}}>
                         <h3 id='infoheader'>
-                            Welcome to speakeasy, a web app designed to enhance presentations, speeches, and public speaking in general. Our goal is to improve the experiences of both the audience and speech givers.
+                            Welcome to SpeakEasy, a web application designed to enhance presentations, speeches, and public speaking in general. Our goal is to improve the experiences of both the audience and speech givers.
                         </h3>
 
                     </div>
@@ -165,23 +168,23 @@ class AppFront extends Component {
 
                 <div id='startcontianer' style={{width:'40%',float:'right'}}>
 
-                    <div id='startform' ref="login" style={{borderRadius:'10px',backgroundColor:'#c4a5ff',padding:"20px",width:'80%',marginRight:'auto',marginLeft:'auto' ,marginTop:"50px"}}>
-                        <h2>Login</h2>
+                    <div id='startform' ref="login" style={{borderRadius:'10px',backgroundColor:'#333333',padding:"20px",width:'80%',marginRight:'auto',marginLeft:'auto' ,marginTop:"50px", color:'#F3E6DE'}}>
+                        <h2 style={{color:'white'}}>Login</h2>
                         <form action="">
                             <p id="error"></p>
 
-                            <input  ref = 'email' id = "email"class = "w3-input" type="text" name="fname" placeholder={"Email"}></input><br></br>
-                            <input class= "w3-input" id = "password" type="password" name="lname" placeholder={"Password"}></input><br></br>
-                            <input id= "submit" style={{backgroundColor:'#665084',color:'white'}} class="w3-btn w3-round" onClick= {this.main} type="submit" value="Submit"></input>
+                            <input  ref = 'email' id = "email"class = "w3-input" type="text" name="fname" placeholder={"Email"} style={{color:'#525252'}}></input><br></br>
+                            <input class= "w3-input" id = "password" type="password" name="lname" placeholder={"Password"} style={{color:'#525252'}}></input><br></br>
+                            <input id= "submit" style={{backgroundColor:'#525252',color:'white'}} class="w3-button w3-round w3-hover-red" onClick= {this.main} type="submit" value="Submit"></input>
                         </form>
 
                         <br></br>
 
-                        <a href="#" onClick={this.create} style={{textDecoration:'underline'}}>Create an Account</a>
+                        <a href="#" onClick={this.create} class={'HoverRed'} style={{textDecoration:'underline' }}>Create an Account</a>
 
                         <br></br>
 
-                        <a href="#" ref="res" id="reset" onClick = {this.reset.bind(this)} style={{textDecoration:'underline'}}>Forgot Your Password?</a>
+                        <a href="#" ref="res" id="reset" class={'HoverRed'} onClick = {this.reset.bind(this)} style={{textDecoration:'underline'}}>Forgot Your Password?</a>
                     </div>
 
                 </div >

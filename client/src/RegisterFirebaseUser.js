@@ -146,6 +146,77 @@ export function getDisplayName() {
 	});
 }
 
+export function setPassword(password) {
+		return new Promise((resolve, reject) => {
+				const user = firebase.auth().currentUser;
+				if(user != null){
+						user.updatePassword(password).then(function() {
+								resolve("Password updated");
+						}).catch(function(error) {
+								reject(error);
+						});
+				} else {
+						reject("User is not logged in");
+				}
+		});
+}
+
+export function setDisplayName(name) {
+		return new Promise((resolve, reject) => {
+				const user = firebase.auth().currentUser;
+				if(user != null) {
+						fetch('/api/account/verify', {
+                method: 'post',
+                body: JSON.stringify({
+                    displayName: name
+                }),
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                }
+						}).then((response) => {
+                if (response.status === 200) {
+                    return response.json();
+                } else if (response.status === 500) {
+                    reject({ code: 'auth/backend-error'});
+                }
+            }).then((data) => {
+                if (data.isUnique) {
+										user.updateProfile({displayName: name}).then(function() {
+
+										}).catch(function(error) {
+												reject(error);
+										});
+
+										user.getIdToken().then(token => {
+												fetch('/api/account/updateDisplayName', {
+														method: 'post',
+														body: JSON.stringify({
+																token: token,
+																displayName: name
+														}),
+														headers: {
+																'Content-Type': 'application/json',
+																'Accept': 'application/json'
+														}
+												}).then(response => response.json())
+												.then(response => {
+														resolve(response);
+												})
+												.catch(error => {
+														return reject(error);
+												});
+											}).catch(error => {reject(error);});
+								} else {
+										reject("Display name is already in use");
+								}
+					});
+				} else {
+						reject("User is not logged in");
+				}
+		});
+}
+
 export function getPresentedSessions() {
 	return new Promise((resolve, reject) => {
         firebase.auth().currentUser.getIdToken()
