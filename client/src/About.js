@@ -3,7 +3,8 @@ import firebase from 'firebase';
 import './styles/App.css';
 
 import ReactDOM from 'react-dom';
-import App from  "./App"
+import App from  "./App";
+import logo from './Logo.png';
 
 class About extends Component {
 
@@ -38,22 +39,27 @@ class About extends Component {
 
     }
 
+
+
+
+
     render() {
         return (
 
-            <div>
+            <div style={{backgroundColor:'#F3E6DE'}}>
               <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"></link>
-              <div style={{backgroundColor:'#6164a3',height:"100%"}}>
+              <div style={{backgroundColor:'#333333',height:"100%"}}>
 
-                  <h3 style={{marginLeft:'10px',marginTop:'0px',marginBottom:'1px',height:'35px',fontFamily:'cursive'}}><a style={{cursor:"pointer"}}onClick ={this.app}><b>speakeasy</b></a>
+                  <h2 style={{marginLeft:'8px',marginTop:'0px',marginBottom:'0px',height:'50px',fontFamily:'cursive', color:'white', cursor:'pointer'}}><b></b>
+                      <img src={logo} width={'125'} height={'50'} onClick={this.app}/>
 
-                </h3>
+                </h2>
               </div>
 
 
                 <center>
-                    <h3><b>About Us</b></h3>
-                <p style={{margin:"20px"}}>
+                    <h3 style={{marginTop:'50px', fontSize:'35px'}}><b>About Us</b></h3>
+                <p style={{margin:'50px 250px 250px 200px', fontSize:'18px'}}>
                     SpeakEasy is a web application developed and created by eleven UCSD students with the goal of improving future speeches of both speakers and presenters. SpeakyEasy empowers
                     speakers and presenters with the ability to easily review speeches they have given in the past in order to identify elements they may improve in. Audience members can
                     actively engage with speakers with quick and easy predefined feedback, such as communcicating they are speaking too fast/slow, to the speaker who can view it effortlessly.

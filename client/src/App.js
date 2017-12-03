@@ -104,14 +104,16 @@ class AppFront extends Component {
         inp.type = 'Text'
         inp.placeholder = "Email"
         inp.id = "rset"
+        inp.style.color = '#525252';
         form.appendChild(inp)
         var breaker = document.createElement('br')
 
         var but =  document.createElement('button')
-        but.classList.add('w3-btn')
+        but.classList.add('w3-button')
         but.classList.add('w3-round')
-        but.style.backgroundColor = '#665084'
+        but.style.backgroundColor = '#525252'
         but.style.color = 'white'
+        but.classList.add('w3-hover-red')
         but.onclick = function() {  var x = document.getElementById("rset").value;
             // regex from http://stackoverflow.com/questions/46155/validate-email-address-in-javascript
             var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -159,9 +161,9 @@ class AppFront extends Component {
 
                 </div>
                 <div id='infocontianer' style={{width:'60%',float:'left'}}>
-                    <div id='info' style={{padding:"20px", margin:'50px'}}>
+                    <div id='info' style={{padding:"20px", margin:'100px'}}>
                         <h3 id='infoheader'>
-                            Welcome to SpeakEasy, a web application designed to enhance presentations, speeches, and public speaking in general. Our goal is to improve the experiences of both the audience and speech givers.
+                            <b>Welcome to SpeakEasy.</b> <br />A web application designed to enhance presentations, speeches, and public speaking in general. Our goal is to improve the experiences of both the audience and speech givers.
                         </h3>
 
                     </div>
