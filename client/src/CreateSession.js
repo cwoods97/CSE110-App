@@ -134,10 +134,8 @@ class CreateSession extends Component {
             this.setState({
                 audio: false
             });
-
             document.getElementById('audio').checked = false;
         }
-
      };
 
     audioOn = () => {
@@ -146,11 +144,8 @@ class CreateSession extends Component {
             this.setState({
                 audio: true
             });
-
-
             document.getElementById('nAudio').checked = false;
         }
-
     };
 
     render() {
@@ -169,80 +164,56 @@ class CreateSession extends Component {
                 <div id='navMain' class="w3-sidebar w3-bar-block w3-responsive" style={{height:'100%',backgroundColor:'#585858',zIndex:'0', color:'#F3E6DE', boxShadow:'1px 1px 2px #f44336'}}>
                     <a class="w3-bar-item HoverRed" id="name" style={{fontSize:'20px', outline:'2px solid #333333'}}>{this.state.display}</a>
                     <a class="w3-bar-item w3-button w3-hover-red" onClick={this.close}style={{boxShadow:'1px 0px 1px#333333'}}>Close Session</a>
+                    <p id= 'titleDisplay' style={{fontFamily:'Poppins, sans-serif'}}><b>Session Title:</b> {this.state.title}</p>
+
+                    <input id="title" class="w3-input" type="input" name="editTitle" placeholder={"Edit Title"}></input>
+                    <p id="titleError"></p>
+
+                    <a class="w3-bar-item w3-button w3-hover-red" onClick={this.updateTitle} style={{boxShadow:'1px 0px 1px#333333'}}>Change</a>
+                    <Button onClick={this.updateTitle}>Change</Button>
+
+                    <br></br>
+                    <br></br>
+                    <p id='code' style={{fontFamily:'Poppins, sans-serif'}}><b>Session Code:</b> {this.state.coder}</p>
+
+                    <form action="">
+                        <input id='nAudio' onClick={this.noAudio} type="radio" name="audioOff" value="noaudio" defaultChecked={true} style={{fontFamily:'Poppins, sans-serif'}}></input>No Audio<br></br>
+                        <input id= 'audio' onClick={this.audioOn} type="radio" name="audioOn" value="record" style={{fontFamily:'Poppins, sans-serif'}}></input>Record<br></br>
+
+                        <br></br>
+
+                        <a class="w3-bar-item w3-button w3-hover-red" disabled={this.state.end} onClick={this.startRecording} style={{boxShadow:'1px 0px 1px#333333'}}>Start</a>
+                        <a class="w3-bar-item w3-button w3-hover-red" disabled={this.state.started} onClick={this.stopRecording} style={{boxShadow:'1px 0px 1px#333333'}}>Stop</a>
+                        <Button id='buttons' disabled={this.state.end} onClick={this.startRecording} style={{margin:'1px',fontFamily:'Poppins, sans-serif'}} type="button">Start</Button>
+                        <Button id='buttons' disabled={!this.state.started} onClick={this.stopRecording} style={{margin:'1px',fontFamily:'Poppins, sans-serif'}} type="button">Stop</Button>
+                    </form>
                 </div>
 
-                <div id="center" style={{width:'85%',float:'right',marginTop:'4px',height:'100%'}}>
-                    <div class= 'inner' style={{width:'85%',display:'inline-block'}}>
-
-
+                <div id="center" style={{width:'85%',float:'right',height:'100%'}}>
+                    <div class= 'inner' style={{width:'100%',display:'inline-block'}}>
                         <ReactMic
                             record={this.state.record}
                             className="sound-wave"
                             onStop={this.onStop}
                             strokeColor="#000000"
                             backgroundColor="#F3E6DE"
-
                         />
-
-
                     </div>
 
-                    <div id = 'right' class="w3-col" style={{float:'right',width:'15%', height:'100%', backgroundColor:'#585858', display:'inline-block', position:'fixed', boxShadow:'1px 1px 2px #f44336', color:'#F3E6DE'}}>
-                        <br></br>
-                        <p id= 'titleDisplay' style={{fontFamily:'Poppins, sans-serif'}}><b>Session Title:</b> {this.state.title}</p>
+                    <div id= 'chart' style={{left:'15%',width:'100%',height:'30em'}}>
+                        <div class='chart' style={{width:'33%',display:'inline-block',height:'100%'}}>
+                            <Chart db={this.db} sessionID={this.sessionID} type='pace'/>
+                        </div>
 
-                            <input id="title" class="w3-input" type="input" name="editTitle" placeholder={"Edit Title"}></input>
-														<p id="titleError"></p>
+                        <div class="chart"style={{width:'33%',display:'inline-block',height:'100%'}}>
+                           <Chart db={this.db} sessionID={this.sessionID} type='volume'/>
+                        </div>
 
-                            <Button onClick={this.updateTitle}>Change</Button>
-
-                        <br></br>
-                        <br></br>
-                        <p id='code' style={{fontFamily:'Poppins, sans-serif'}}><b>Session Code:</b> {this.state.coder}</p>
-
-                        <form action="">
-                            <input id='nAudio' onClick={this.noAudio} type="radio" name="audioOff" value="noaudio" defaultChecked={true} style={{fontFamily:'Poppins, sans-serif'}}></input>No Audio<br></br>
-                            <input id= 'audio' onClick={this.audioOn} type="radio" name="audioOn" value="record" style={{fontFamily:'Poppins, sans-serif'}}></input>Record<br></br>
-
-                            <br></br>
-
-                            <a class="w3-bar-item w3-button w3-hover-red" disabled={this.state.end} onClick={this.startRecording} style={{boxShadow:'1px 0px 1px#333333'}}>Start</a>
-                            <a class="w3-bar-item w3-button w3-hover-red" disabled={this.state.started} onClick={this.stopRecording} style={{boxShadow:'1px 0px 1px#333333'}}>Stop</a>
-                            <Button id='buttons' disabled={this.state.end} onClick={this.startRecording} style={{margin:'1px',fontFamily:'Poppins, sans-serif'}} type="button">Start</Button>
-                            <Button id='buttons' disabled={!this.state.started} onClick={this.stopRecording} style={{margin:'1px',fontFamily:'Poppins, sans-serif'}} type="button">Stop</Button>
-                        </form>
-
-                        <br></br>
-                        <br></br>
-                        <br></br>
-
-
-
+                        <div class = 'chart' style={{width:'33%',display:'inline-block',height:'100%'}}>
+                            <Chart db={this.db} sessionID={this.sessionID} type='speed'/>
+                        </div>
                     </div>
-
-                    <div id= 'chart' style={{width:'85%',height:'30em'}}>
-                    <div class='chart' style={{width:'33%',display:'inline-block',height:'100%'}}>
-
-                        <Chart db={this.db} sessionID={this.sessionID} type='pace'/>
-
-                    </div>
-                    <div class="chart"style={{width:'33%',display:'inline-block',height:'100%'}}>
-                       <Chart db={this.db} sessionID={this.sessionID} type='volume'/>
-
-                    </div>
-                    <div class = 'chart' style={{width:'33%',display:'inline-block',height:'100%'}}>
-
-                        <Chart db={this.db} sessionID={this.sessionID} type='speed'/>
-                    </div>
-                    </div>
-
-
-
-
                 </div>
-
-
-
             </div>
         );
     }
