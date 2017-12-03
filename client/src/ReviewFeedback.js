@@ -12,6 +12,9 @@ import SessionHistory from './SessionHistory';
 
 import { ReactMic } from 'react-mic';
 import { Media, Player, controls } from 'react-media-player'
+
+import logo from './Logo.png';
+
 const { PlayPause, MuteUnmute, CurrentTime, Progress, SeekBar, Duration, Volume } = controls
 
 
@@ -97,17 +100,10 @@ class ReviewFeedback extends Component {
             <div style={{width:'100%',height:'100%',borderBottom:'4px solid #665084',zIndex:'9' }}>
                 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"></link>
 
-                <div style={{height:'45px'}}>
-                    <div style={{backgroundColor:'#c4a5ff',height:"100%"}}>
-
-
-                        <h2 style={{marginLeft:'10px',marginTop:'0px',marginBottom:'1px',height:'35px',fontFamily:'cursive'}}><b>speakeasy</b>
-
-
-                        </h2>
-
-
-                    </div>
+                <div style={{backgroundColor:'#333333',height:"100%"}}>
+                    <h2 style={{marginLeft:'8px',marginTop:'0px',marginBottom:'0px',height:'50px', color:'white'}}><b></b>
+                        <img src={logo} width="125" height="50" />
+                    </h2>
                 </div>
 
                 <div id="navigation" class="w3-sidebar w3-bar-block" style={{borderRight:'1px solid #665084', height:'100%',backgroundColor:'lightgrey',zIndex:'-1',overflow:'hidden'}}>

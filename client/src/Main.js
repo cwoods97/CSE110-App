@@ -165,10 +165,8 @@ class App extends Component {
             <div style={{width:'100%',height:'100%',display:'inline-block',outline:'1px solid red'}}>
                 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"></link>
                 <div style={{backgroundColor:'#333333',height:"100%"}}>
-
-                    <h2 style={{marginLeft:'8px',marginTop:'0px',marginBottom:'0px',height:'50px',fontFamily:'cursive', color:'white'}}><b></b>
-                        <img src={logo} width={'125'} height={'50'}/>
-
+                    <h2 style={{marginLeft:'8px',marginTop:'0px',marginBottom:'0px',height:'50px', color:'white'}}><b></b>
+                        <img src={logo} width="125" height="50" />
                     </h2>
                 </div>
 
