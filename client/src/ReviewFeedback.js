@@ -10,7 +10,7 @@ import './styles/ReviewFeedback.css';
 //import Chart from './components/Chart';
 
 import { ReactMic } from 'react-mic';
-
+import SessionHistory from './SessionHistory';
 
 class ReviewFeedback extends Component {
 
@@ -64,6 +64,10 @@ class ReviewFeedback extends Component {
         });
     };
 
+    history = function(ev){
+        //ev.preventDefault();
+        ReactDOM.render(<SessionHistory db={this.db} />, document.getElementById('root'));
+    };
 
 
 
@@ -90,7 +94,7 @@ class ReviewFeedback extends Component {
                 <div id="navigation" class="w3-sidebar w3-bar-block" style={{borderRight:'1px solid #665084', height:'100%',backgroundColor:'lightgrey',zIndex:'-1',overflow:'hidden'}}>
 
                     <a id='display' class="w3-bar-item menuLeft" style={{backgroundColor:'PaleVioletRed',fontFamily:'Poppins, sans-serif'}}><b>{this.state.display}</b></a>
-                    <a class="w3-bar-item w3-button menuLeft" style={{backgroundColor:'lightgrey',fontFamily:'Poppins, sans-serif'}}><b>Session History</b></a>
+                    <a class="w3-bar-item w3-button menuLeft" onClick={this.history.bind(this)} style={{backgroundColor:'lightgrey',fontFamily:'Poppins, sans-serif'}}><b>Session History</b></a>
 
 
                 </div>
