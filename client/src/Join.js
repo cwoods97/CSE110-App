@@ -12,6 +12,8 @@ import {leaveBackendSession} from './FrontEndSession';
 import {getIdToken} from './RegisterFirebaseUser.js';
 import {sendPredefinedFeedback} from './SendFeedback.js';
 
+import logo from './Logo.png';
+
 class Join extends Component {
 
     constructor(props) {
@@ -137,17 +139,10 @@ class Join extends Component {
             <div style={{height:'100%'}}>
                 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"></link>
 
-                <div style={{height:'45px',borderBottom:'4px solid #665084'}}>
-                    <div style={{backgroundColor:'#c4a5ff',height:"100%"}}>
-
-
-                        <h2 style={{marginLeft:'10px',marginTop:'0px',marginBottom:'1px',height:'35px'}}><b id="mainTitle">speakeasy</b>
-
-
-                        </h2>
-
-
-                    </div>
+                <div style={{backgroundColor:'#333333',height:"100%"}}>
+                    <h2 style={{marginLeft:'8px',marginTop:'0px',marginBottom:'0px',height:'50px', color:'white'}}><b></b>
+                        <img src={logo} width="125" height="50" />
+                    </h2>
                 </div>
 
 
