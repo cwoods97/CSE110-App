@@ -118,6 +118,7 @@ class CreateSession extends Component {
 				getIdToken().then(token => {
 						updateTitle(token, session, title).then((title) => {
 							this.setState({title: title});
+							document.getElementById('title').value = ""
 						});
 				});
 		} else {
