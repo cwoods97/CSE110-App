@@ -40,8 +40,14 @@ class Join extends Component {
         }
         this.state = {
             message: "",
-            display: ""
+            display: "",
+						title: "untitled"
         }
+
+				var sessRef = this.db.database().ref("sessions").child(this.sessionID);
+				sessRef.child('title').on('value', (snapshot) => {
+						this.setState({title: snapshot.val()});
+				});
     }
 
 
@@ -162,7 +168,7 @@ class Join extends Component {
 
                     <div id='left' class= 'w3-responsive' style={{display:'inline-block', float:'left', width:'50%',height:'100%'}}>
 
-                        <h5><b>Session Title:</b> </h5>
+                        <h5><b>Session Title:</b> {this.state.title} </h5>
                         <h5><b>Session Code:</b> {this.sessionAccessCode}</h5>
 
                         <center>
