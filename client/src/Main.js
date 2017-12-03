@@ -54,7 +54,6 @@ class App extends Component {
         }
     };
 
-<<<<<<< HEAD
     tempReviewFeedback = function(ev){
         ev.preventDefault();
         ReactDOM.render(<ReviewFeedback db={this.db} />, this.root);
@@ -63,9 +62,6 @@ class App extends Component {
     create= function(ev) {
 
         ev.preventDefault();
-=======
-    create = function(ev) {
->>>>>>> dd6d9aadda422f7c60a9db99d97c8adc937b4cd8
 
 		getIdToken().then(token => {
 			createBackendSession(token).then((response) => {
@@ -259,6 +255,7 @@ class App extends Component {
 
 
 
+            </div>
             </div>
 
         );

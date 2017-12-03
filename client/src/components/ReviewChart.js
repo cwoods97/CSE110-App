@@ -116,13 +116,15 @@ class Chart extends Component {
         console.log(this.sessionID);
 
         var feedbackRef = this.db.database().ref("feedback").child(this.sessionID);
-        feedbackRef.on("value", function(snapshot) {
-              snapshot.forEach(function(userSnapshot) {
-                var feedback = userSnapshot.val();
-                console.log(feedback);
-    });
-            }, function (errorObject) {
-              console.log("The read failed: " + errorObject.code);
+        feedbackRef.once("value", function(snapshot) {
+              var feedback = snapshot.val();
+              console.log(feedback);
+              // snapshot.forEach(function(userSnapshot) {
+              //   var feedback = userSnapshot.val();
+              //   console.log(feedback);
+         // });
+         //    }, function (errorObject) {
+         //      console.log("The read failed: " + errorObject.code);
         });
 
 
