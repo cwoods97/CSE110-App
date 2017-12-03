@@ -168,8 +168,8 @@ class Join extends Component {
                         <center>
 
                             <p>Pace of Speech too Fast?</p>
-                            <button  onClick={(e) => this.sendPredef('fast', e)} class="predefined w3-button w3-round" style={{backgroundColor:'#665084',color:'white',width:'45px',height:'40px'}}><img src='http://icons.iconarchive.com/icons/iconsmind/outline/256/Unlike-2-icon.png' height='40' width='40'></img> </button>
-                            <button  onClick={(e) => this.sendPredef('slow', e)} class="predefined w3-round w3-button" style={{backgroundColor:'#665084',width:'45px',height:'40px',border:'none'}}><img src='https://d30y9cdsu7xlg0.cloudfront.net/png/100266-200.png' height="40" width="40"></img></button>
+                            <button  onClick={(e) => this.sendPredef('slow', e)} class="predefined w3-button w3-round" style={{backgroundColor:'#665084',color:'white',width:'45px',height:'40px'}}><img src='http://icons.iconarchive.com/icons/iconsmind/outline/256/Unlike-2-icon.png' height='40' width='40'></img> </button>
+                            <button  onClick={(e) => this.sendPredef('fast', e)} class="predefined w3-round w3-button" style={{backgroundColor:'#665084',width:'45px',height:'40px',border:'none'}}><img src='https://d30y9cdsu7xlg0.cloudfront.net/png/100266-200.png' height="40" width="40"></img></button>
                             <br></br>
 
 
@@ -180,8 +180,8 @@ class Join extends Component {
                             <br></br>
 
                             <p>Speaker is Talking too Fast?</p>
-                            <button  onClick={(e) => this.sendPredef('tfast', e)} class="predefined w3-button w3-round" style={{backgroundColor:'#665084',color:'white',width:'45px',height:'40px'}}><img src='http://icons.iconarchive.com/icons/iconsmind/outline/256/Unlike-2-icon.png' height='40' width='40'></img> </button>
-                            <button  onClick={(e) => this.sendPredef('tslow', e)} class="predefined w3-round w3-button" style={{backgroundColor:'#665084',width:'45px',height:'40px',border:'none'}}><img src='https://d30y9cdsu7xlg0.cloudfront.net/png/100266-200.png' height="40" width="40"></img></button>
+                            <button  onClick={(e) => this.sendPredef('tslow', e)} class="predefined w3-button w3-round" style={{backgroundColor:'#665084',color:'white',width:'45px',height:'40px'}}><img src='http://icons.iconarchive.com/icons/iconsmind/outline/256/Unlike-2-icon.png' height='40' width='40'></img> </button>
+                            <button  onClick={(e) => this.sendPredef('tfast', e)} class="predefined w3-round w3-button" style={{backgroundColor:'#665084',width:'45px',height:'40px',border:'none'}}><img src='https://d30y9cdsu7xlg0.cloudfront.net/png/100266-200.png' height="40" width="40"></img></button>
 
                         </center>
 
