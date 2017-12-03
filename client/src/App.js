@@ -163,7 +163,8 @@ class AppFront extends Component {
                 <div id='infocontianer' style={{width:'60%',float:'left'}}>
                     <div id='info' style={{padding:"20px", margin:'100px'}}>
                         <h3 id='infoheader'>
-                            <b>Welcome to SpeakEasy.</b> <br />A web application designed to enhance presentations, speeches, and public speaking in general. Our goal is to improve the experiences of both the audience and speech givers.
+                            <b>Welcome to SpeakEasy.</b> <br />A web application designed to enhance presentations, speeches,
+                            and public speaking in general. Our goal is to improve the experiences of both the audience and speech givers.
                         </h3>
 
                     </div>
