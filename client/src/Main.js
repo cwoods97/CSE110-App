@@ -54,10 +54,6 @@ class App extends Component {
         }
     };
 
-    tempReviewFeedback = function(ev){
-        ev.preventDefault();
-        ReactDOM.render(<ReviewFeedback db={this.db} />, this.root);
-    }
 
     create= function(ev) {
 
@@ -247,7 +243,6 @@ class App extends Component {
                             <br></br>
                             <br></br>
                             <button class="w3-btn w3-large w3-round" onClick={this.join} style={{backgroundColor:'#6164a3'}}>Join a Session</button>
-                            <button class="w3-btn w3-large w3-round" onClick={this.tempReviewFeedback.bind(this)} style={{backgroundColor:'#665084'}}>tempReviewFeedback</button>
 
                         </div>
                     </div>

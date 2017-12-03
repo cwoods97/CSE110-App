@@ -2,19 +2,18 @@
 import React, { Component } from 'react';
 import './styles/CreateSession.css';
 import ReactDOM from 'react-dom';
+import firebase from 'firebase';
 import 'bootstrap/dist/css/bootstrap-theme.css';
 import 'bootstrap/dist/css/bootstrap.css';
 
 
 import './styles/ReviewFeedback.css';
-<<<<<<< HEAD
 import ReviewChart from './components/ReviewChart';
-=======
-//import Chart from './components/Chart';
->>>>>>> b0cd1913e40fa98a7de59b0731fa098ff904ef71
+
 
 import { ReactMic } from 'react-mic';
-
+import { Media, Player, controls } from 'react-media-player'
+const { PlayPause, MuteUnmute, CurrentTime, Progress, SeekBar, Duration, Volume } = controls
 
 class ReviewFeedback extends Component {
 
@@ -30,6 +29,9 @@ class ReviewFeedback extends Component {
             blobObject: null,
             display: ""
         };
+
+    }
+   componentWillMount() {
 
         this.db.auth().currentUser.getIdToken().then((token) => {
             fetch("/api/sessionReview/sessionData", {
@@ -51,12 +53,27 @@ class ReviewFeedback extends Component {
                 })
             })
         })
-    }
 
-    componentDidMount() {
 
     }
 
+    componentDidMount(){
+        var storage = firebase.storage();
+        var gsReference = storage.refFromURL('gs://speakeasy-25a66.appspot.com');
+        
+        // var childURL = "-L-4ElT12kH_Hd0xBT1C/media" // TESTING URL
+        console.log(this.sessionID);
+        var childURL = this.sessionID + "/media";
+
+        gsReference.child(childURL).getDownloadURL().then(function(url){
+            console.log(url);
+            var player = document.getElementById("player");
+            player.src = url;
+            console.log(player.src);
+        }).catch(function(error){
+
+        });
+    }
 
     onStop = (blobObject) => {
         const storageRef = this.db.storage().ref().child(this.sessionID);
@@ -67,8 +84,6 @@ class ReviewFeedback extends Component {
             console.log(error);
         });
     };
-
-
 
 
     render() {
@@ -102,33 +117,41 @@ class ReviewFeedback extends Component {
                 <div id="center" style={{width:'85%',float:'right',marginTop:'4px',height:'100%'}}>
                     <div id= 'innerReview' style={{width:'65%',display:'inline-block',float:'left'}}>
 
-                        <audio controls={"controls"} style={{width:'100%', height:'3em'}}></audio>
+                        <Media>
+                            <div className="media">
+                              <div className="media-player">
+                                <Player style={{width: '0%', height: '0%'}} id="player" src=""/>
+                              </div>
+
+                              <div className="media-controls">
+                                <PlayPause/>
+                                <CurrentTime/>
+                                <SeekBar/>
+                              </div>
+                            </div>
+                      </Media>
 
 
                     </div>
 
 
-<<<<<<< HEAD
                     <div id= 'chartReview' style={{width:'65%',height:'30em',display:'inline-block',float:'left'}}>
                         <div class='chart' style={{width:'33%',display:'inline-block',height:'100%'}}>
 
-                            <ReviewChart db={this.db} sessionID='L-ENZJWW31uX9fWNq2p' type='pace'/>
+                            <ReviewChart db={this.db} sessionID={this.sessionID} type='pace' data={this.state.predefinedFeedback}/>
 
                         </div>
                         <div class="chart"style={{width:'33%',display:'inline-block',height:'100%'}}>
                             
-                            <ReviewChart db={this.db} sessionID='L-ENZJWW31uX9fWNq2p' type='volume'/>
+                            <ReviewChart db={this.db} sessionID={this.sessionID} type='volume'/>
 
                         </div>
                         <div class = 'chart' style={{width:'33%',display:'inline-block',height:'100%'}}>
 
-                            <ReviewChart db={this.db} sessionID='L-ENZJWW31uX9fWNq2p' type='speed'/>
+                            <ReviewChart db={this.db} sessionID={this.sessionID} type='speed' />
                         </div>
                     </div>
 
-
-=======
->>>>>>> b0cd1913e40fa98a7de59b0731fa098ff904ef71
                     <div id='titleReview' style={{width:'35%',display:'inline-block',float:'both',overflow:'auto'}}>
                         <center><h3>
                         Feedback
@@ -146,6 +169,7 @@ class ReviewFeedback extends Component {
                                         <p class="reviewContent">{feedbackData.message}</p>
                                     </div>
                                 ))
+
                             }
 
                     </div>

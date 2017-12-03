@@ -84,10 +84,7 @@ class Chart extends Component {
         this.sessionID = props.sessionID;
         this.type = props.type;
 
-        // console.log(chart);
-
         this.state = {
-            // chartData: chart,
             chartData1: chart1,
             chartData2: chart2,
             chartData3: chart3
@@ -112,34 +109,6 @@ class Chart extends Component {
             this.chartData = this.state.chartData3;
             this.title = "Speed"
         }
-
-        // if(type == "pace"){
-        //     chartData = this.state.chartDataPace;
-        // }
-
-        // var chartDataPace = this.state.chartDataPace;
-        // var chartDataVolume = this.state.chartDataVolume;
-        // var chartDataSpeed = this.state.chartDataSpeed;
-
-        // console.log(type);
-
-        // ***must keep function inside feedbackRef.on for access to updating
-        // function handleFeedback(snapshot){
-        //     if(type == 'pace'){
-        //         var parsedFeedback = snapshot.val();
-        //         if(parsedFeedback.type == 0){
-        //             if(parsedFeedback.message == "fast"){
-        //                 chartData.datasets[0].data[0]++;
-        //                 console.log("fast");
-        //             }else if(parsedFeedback.message == "slow"){
-        //                 chartData.datasets[0].data[1]++;
-        //                 console.log("slow");
-        //             }
-        //         } 
-        //         console.log(chartData);
-        //         }
-        // }
-
 
         var feedbackRef = this.db.database().ref("feedback").child(this.sessionID);
         feedbackRef.on("child_added", function(snapshot, prevChildKey){
@@ -180,18 +149,6 @@ class Chart extends Component {
         }.bind(this));
     }
 
-
-    /*
-     * Defined default props, if no props are passed in
-     */
-    // static defaultProps = {
-    //     title: 'Predefined Feedback',
-    //     labels: ['Label 1', 'Label 2'],
-    //     data: [0,0],
-    //     width: 200,
-    //     height: 200,
-    //     type: 1
-    // }
 
     render() {
         return (

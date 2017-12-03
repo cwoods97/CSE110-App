@@ -84,8 +84,6 @@ class Chart extends Component {
         this.sessionID = props.sessionID;
         this.type = props.type;
 
-        // console.log(chart);
-
         this.state = {
             // chartData: chart,
             chartData1: chart1,
@@ -113,20 +111,28 @@ class Chart extends Component {
             this.title = "Speed"
         }
 
-        console.log(this.sessionID);
-
-        var feedbackRef = this.db.database().ref("feedback").child(this.sessionID);
-        feedbackRef.once("value", function(snapshot) {
-              var feedback = snapshot.val();
-              console.log(feedback);
-              // snapshot.forEach(function(userSnapshot) {
-              //   var feedback = userSnapshot.val();
-              //   console.log(feedback);
-         // });
-         //    }, function (errorObject) {
-         //      console.log("The read failed: " + errorObject.code);
-        });
-
+        this.db.auth().currentUser.getIdToken().then((token) => {
+            fetch("/api/sessionReview/sessionData", {
+                method: 'post',
+                body: JSON.stringify({
+                    token: token,
+                    sessionID: this.sessionID
+                }),
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                }
+            })
+            .then(response => response.json())
+            .then((data) => {
+                this.setState({
+                    'predefinedFeedback' : data.predefinedFeedback,
+                    'customFeedback': data.customFeedback
+                })
+                console.log("inside reviewchart")
+                console.log(this.state.predefinedFeedback);
+            })
+        })
 
     }
 
@@ -143,7 +149,7 @@ class Chart extends Component {
                     },
                     legend: {
                         display: false
-                    },
+                        },
                     scales: {
                         xAxes: [{
                             display: true,
