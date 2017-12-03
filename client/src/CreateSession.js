@@ -24,7 +24,7 @@ class CreateSession extends Component {
         this.db = props.db;
         this.sessionID = props.sessionID;
         this.onStop = this.onStop.bind(this);
-				this.updateTitle = this.updateTitle.bind(this);
+		this.updateTitle = this.updateTitle.bind(this);
         this.state = {
             audio: false,
             message: "",
@@ -80,7 +80,7 @@ class CreateSession extends Component {
             started: false,
             end: true
         });
-		
+
     };
 
     onStop = (blobObject) => {
@@ -104,7 +104,7 @@ class CreateSession extends Component {
 		getIdToken().then(token => {
 			endSession(token, this.state.coder);
 		});
-		
+
         ReactDOM.render(<Main db={this.db}/>, document.getElementById('root'));
     }
 
@@ -210,7 +210,7 @@ class CreateSession extends Component {
                         </div>
 
                         <div class = 'chart' style={{width:'33%',display:'inline-block',height:'100%'}}>
-                            <Chart db={this.db} sessionID={this.sessionID} type='speed'/>
+                            <Chart db={this.db} sessionID={this.sessionID} type='clarity'/>
                         </div>
                     </div>
                 </div>

@@ -145,7 +145,6 @@ export function toggleActive(idToken, code) {
 					'Accept': 'application/json'
 				}
 			})
-			.then(response => response.json())
 			.then(response => { resolve() })
 			.catch(error => {
 				return reject(error);

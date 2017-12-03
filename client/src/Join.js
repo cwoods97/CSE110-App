@@ -19,37 +19,22 @@ class Join extends Component {
     constructor(props) {
         super(props);
 
-				this.sessionAccessCode = props.code;
-				this.sessionID = props.session;
-				this.db = props.db;
-				this.main = this.main.bind(this);
-				this.sendComment = this.sendComment.bind(this);
+		this.sessionAccessCode = props.code;
+		this.sessionID = props.session;
+		this.db = props.db;
+		this.main = this.main.bind(this);
+		this.sendComment = this.sendComment.bind(this);
 
-        // Initialize Firebase
-        var config = {
-            apiKey: "AIzaSyDSQVw9KUjmxhlxILCousROVR6PfOFcYQg",
-            authDomain: "speakeasy-25a66.firebaseapp.com",
-            databaseURL: "https://speakeasy-25a66.firebaseio.com",
-            projectId: "speakeasy-25a66",
-            storageBucket: "speakeasy-25a66.appspot.com",
-            messagingSenderId: "836790794762"
-        };
-        if (firebase.apps.length === 0){
-            firebase.initializeApp(config);
-        }
-        else{
-            firebase.app()
-        }
         this.state = {
             message: "",
             display: "",
-						title: "untitled"
+			title: "untitled"
         }
 
-				var sessRef = this.db.database().ref("sessions").child(this.sessionID);
-				sessRef.child('title').on('value', (snapshot) => {
-						this.setState({title: snapshot.val()});
-				});
+		var sessRef = this.db.database().ref("sessions").child(this.sessionID);
+		sessRef.child('title').on('value', (snapshot) => {
+				this.setState({title: snapshot.val()});
+		});
     }
 
 
@@ -58,25 +43,25 @@ class Join extends Component {
     }
 
     sendPredef = function(comment, e){
-				var currTime = Date.now() / 1000;
+		var currTime = Date.now() / 1000;
 
         e.preventDefault();
         getIdToken().then(token =>{
             sendPredefinedFeedback(token, this.sessionID, comment, currTime, 0)
-						.then((message) => {
-								alert("Sent " + message);
-						})
-						.catch((error) => {
-								alert("Error: " + error);
-						});
+			.then((message) => {
+                console.log("Message sent.")
+			})
+			.catch((error) => {
+                console.log(error);
+                console.log("Failed to send message.")
+			});
         })
-
     }
 
     sendComment = function (e){
 
-				var currTime = Date.now() / 1000;
-				var session = this.sessionID;
+		var currTime = Date.now() / 1000;
+		var session = this.sessionID;
 
         e.preventDefault()
         var comment = document.getElementById("comment").value;
@@ -86,32 +71,31 @@ class Join extends Component {
         }
         else {
 
-						getIdToken().then(token => {
-								sendPredefinedFeedback(token, session, comment, currTime, 1)
-								.then((message) => {
-										alert("Sent " + message);
-										var mList = document.getElementById('messages');
+			getIdToken().then(token => {
+				sendPredefinedFeedback(token, session, comment, currTime, 1)
+				.then((message) => {
+					var mList = document.getElementById('messages');
 
-        				    var div1 = document.createElement('div');
-				            div1.classList.add('message')
-        				    var div2 = document.createElement('div');
-				            div2.classList.add('client')
-        				    var div3 = document.createElement('div');
-				            div3.classList.add('message-text');
-        				    var p = document.createElement('p');
+        		    var div1 = document.createElement('div');
+                    div1.classList.add('message')
+        		    var div2 = document.createElement('div');
+                    div2.classList.add('client')
+        		    var div3 = document.createElement('div');
+                    div3.classList.add('message-text');
+        		    var p = document.createElement('p');
 
-          				  p.innerHTML = comment;
-   				          console.log("sending comment" + comment);
+                    p.innerHTML = comment;
+                    console.log("sending comment" + comment);
 
-				            div3.appendChild(p);
-        				    div2.appendChild(div3);
- 				            div1.appendChild(div2);
-        				    mList.appendChild(div1);
+                    div3.appendChild(p);
+        		    div2.appendChild(div3);
+                    div1.appendChild(div2);
+        		    mList.appendChild(div1);
 
-								}).catch((error) => {
-										alert("Error: " + error);
-								});
-						});
+				}).catch((error) => {
+                    console.log(error);
+				});
+			});
 
 
             document.getElementById("comment").value = ""
@@ -124,11 +108,11 @@ class Join extends Component {
 
         ev.preventDefault();
 
-				getIdToken().then(token => {
-						leaveBackendSession(token, this.sessionID).then((message) => {
-				        ReactDOM.render(<Main db={this.db}/>, document.getElementById('root'));
-						});
-				});
+		getIdToken().then(token => {
+			leaveBackendSession(token, this.sessionID).then((message) => {
+    	        ReactDOM.render(<Main db={this.db}/>, document.getElementById('root'));
+			});
+		});
 
 
     }
@@ -172,21 +156,21 @@ class Join extends Component {
 
                         <center>
 
-                            <p>Pace of Speech too Fast?</p>
+                            <p>Speaker is speaking at an acceptable pace.</p>
                             <button  onClick={(e) => this.sendPredef('slow', e)} class="predefined w3-button w3-round" style={{backgroundColor:'#665084',color:'white',width:'45px',height:'40px'}}><img src='http://icons.iconarchive.com/icons/iconsmind/outline/256/Unlike-2-icon.png' height='40' width='40'></img> </button>
                             <button  onClick={(e) => this.sendPredef('fast', e)} class="predefined w3-round w3-button" style={{backgroundColor:'#665084',width:'45px',height:'40px',border:'none'}}><img src='https://d30y9cdsu7xlg0.cloudfront.net/png/100266-200.png' height="40" width="40"></img></button>
+
                             <br></br>
 
-
-                            <p>Speaker is Speaking Too Loud</p>
+                            <p>Speaker is speaking at an acceptable volume.</p>
                             <button  onClick={(e) => this.sendPredef('quiet', e)} class="predefined w3-button w3-round" style={{backgroundColor:'#665084',color:'white',width:'45px',height:'40px'}}><img src='http://icons.iconarchive.com/icons/iconsmind/outline/256/Unlike-2-icon.png' height='40' width='40'></img> </button>
                             <button  onClick={(e) => this.sendPredef('loud', e)} class="predefined w3-round w3-button" style={{backgroundColor:'#665084',width:'45px',height:'40px',border:'none'}}><img src='https://d30y9cdsu7xlg0.cloudfront.net/png/100266-200.png' height="40" width="40"></img></button>
 
                             <br></br>
 
-                            <p>Speaker is Talking too Fast?</p>
-                            <button  onClick={(e) => this.sendPredef('tslow', e)} class="predefined w3-button w3-round" style={{backgroundColor:'#665084',color:'white',width:'45px',height:'40px'}}><img src='http://icons.iconarchive.com/icons/iconsmind/outline/256/Unlike-2-icon.png' height='40' width='40'></img> </button>
-                            <button  onClick={(e) => this.sendPredef('tfast', e)} class="predefined w3-round w3-button" style={{backgroundColor:'#665084',width:'45px',height:'40px',border:'none'}}><img src='https://d30y9cdsu7xlg0.cloudfront.net/png/100266-200.png' height="40" width="40"></img></button>
+                            <p>Speaker is speaking clearly.</p>
+                            <button  onClick={(e) => this.sendPredef('unclear', e)} class="predefined w3-button w3-round" style={{backgroundColor:'#665084',color:'white',width:'45px',height:'40px'}}><img src='http://icons.iconarchive.com/icons/iconsmind/outline/256/Unlike-2-icon.png' height='40' width='40'></img> </button>
+                            <button  onClick={(e) => this.sendPredef('clear', e)} class="predefined w3-round w3-button" style={{backgroundColor:'#665084',width:'45px',height:'40px',border:'none'}}><img src='https://d30y9cdsu7xlg0.cloudfront.net/png/100266-200.png' height="40" width="40"></img></button>
 
                         </center>
 

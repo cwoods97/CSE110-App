@@ -2,7 +2,6 @@
 import React, { Component } from 'react';
 import './styles/CreateSession.css';
 import ReactDOM from 'react-dom';
-import firebase from 'firebase';
 import 'bootstrap/dist/css/bootstrap-theme.css';
 import 'bootstrap/dist/css/bootstrap.css';
 
@@ -11,12 +10,9 @@ import ReviewChart from './components/ReviewChart';
 import SessionHistory from './SessionHistory';
 
 import { ReactMic } from 'react-mic';
-import { Media, Player, controls } from 'react-media-player'
+import {getDisplayName} from "./RegisterFirebaseUser";
 
 import logo from './Logo.png';
-
-const { PlayPause, MuteUnmute, CurrentTime, Progress, SeekBar, Duration, Volume } = controls
-
 
 class ReviewFeedback extends Component {
 
@@ -61,9 +57,11 @@ class ReviewFeedback extends Component {
     }
 
     componentDidMount(){
-        var storage = firebase.storage();
-        var gsReference = storage.refFromURL('gs://speakeasy-25a66.appspot.com');
+        getDisplayName().then(name =>{this.setState({display: name});})
         
+        var storage = this.db.storage();
+        var gsReference = storage.refFromURL('gs://speakeasy-25a66.appspot.com');
+
         // var childURL = "-L-4ElT12kH_Hd0xBT1C/media" // TESTING URL
         console.log(this.sessionID);
         var childURL = this.sessionID + "/media";
@@ -117,19 +115,6 @@ class ReviewFeedback extends Component {
                 <div id="center" style={{width:'85%',float:'right',marginTop:'4px',height:'100%'}}>
                     <div id= 'innerReview' style={{width:'65%',display:'inline-block',float:'left'}}>
 
-                        <Media>
-                            <div className="media">
-                              <div className="media-player">
-                                <Player style={{width: '0%', height: '0%'}} id="player" src=""/>
-                              </div>
-
-                              <div className="media-controls">
-                                <PlayPause/>
-                                <CurrentTime/>
-                                <SeekBar/>
-                              </div>
-                            </div>
-                      </Media>
 
 
                     </div>
@@ -138,17 +123,17 @@ class ReviewFeedback extends Component {
                     <div id= 'chartReview' style={{width:'65%',height:'30em',display:'inline-block',float:'left'}}>
                         <div class='chart' style={{width:'33%',display:'inline-block',height:'100%'}}>
 
-                            <ReviewChart db={this.db} sessionID={this.sessionID} type='pace' data={this.state.predefinedFeedback}/>
+                            <ReviewChart type='pace' data={this.state.predefinedFeedback}/>
 
                         </div>
                         <div class="chart"style={{width:'33%',display:'inline-block',height:'100%'}}>
-                            
-                            <ReviewChart db={this.db} sessionID={this.sessionID} type='volume'/>
+
+                            <ReviewChart type='volume'/>
 
                         </div>
                         <div class = 'chart' style={{width:'33%',display:'inline-block',height:'100%'}}>
 
-                            <ReviewChart db={this.db} sessionID={this.sessionID} type='speed' />
+                            <ReviewChart type='clarity' />
                         </div>
                     </div>
 
