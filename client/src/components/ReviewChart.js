@@ -11,8 +11,8 @@ import ReactDOM from 'react-dom';
 import {Bar} from 'react-chartjs-2';
 
  /*
-     * Function to decide color of bar based on type
-     */
+ * Function to decide color of bar based on type
+ */
 function backgroundColors(type) {
         if (type == 1) {
             return ['rgba(255, 99, 132, 0.2)',
@@ -43,7 +43,7 @@ function borderColors(type) {
     }
 
 var chart1 = {
-    labels: ['Slow Down Pace', 'Speed Up Pace'],
+    labels: ['Bad', 'Good'],
     datasets: [{
         data: [0,0],
         label: 'Votes',
@@ -54,7 +54,7 @@ var chart1 = {
 }
 
 var chart2 = {
-    labels: ['Speak Softer', 'Speak Louder'],
+    labels: ['Bad', 'Good'],
     datasets: [{
         data: [0,0],
         label: 'Votes',
@@ -65,7 +65,7 @@ var chart2 = {
 }
 
 var chart3 = {
-    labels: ['Speak Slower', 'Speak Faster'],
+    labels: ['Bad', 'Good'],
     datasets: [{
         data: [0,0],
         label: 'Votes',
@@ -102,45 +102,23 @@ class Chart extends Component {
         this.title = "";
         if(type == "pace"){
             this.chartData = this.state.chartData1;
-            this.title = "Pace of Speech";
+            this.title = "Rate of Speech";
         }else if(type == "volume"){
             this.chartData = this.state.chartData2;
             this.title = "Volume";
-        }else if(type == "speed"){
+        }else if(type == "clarity"){
             this.chartData = this.state.chartData3;
-            this.title = "Speed"
+            this.title = "Clarity";
         }
 
-        this.db.auth().currentUser.getIdToken().then((token) => {
-            fetch("/api/sessionReview/sessionData", {
-                method: 'post',
-                body: JSON.stringify({
-                    token: token,
-                    sessionID: this.sessionID
-                }),
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json'
-                }
-            })
-            .then(response => response.json())
-            .then((data) => {
-                this.setState({
-                    'predefinedFeedback' : data.predefinedFeedback,
-                    'customFeedback': data.customFeedback
-                })
-                console.log("inside reviewchart")
-                console.log(this.state.predefinedFeedback);
-            })
-        })
 
     }
 
 
     render() {
         return (
-            <Bar 
-                data={this.chartData} 
+            <Bar
+                data={this.chartData}
                 options={{
                     title: {
                         display: true,
@@ -169,7 +147,6 @@ class Chart extends Component {
                     onClick: function () {
                         this.data.datasets[0].data[0] = 0;
                         this.data.datasets[0].data[1] = 0;
-                        console.log(this.update);
                         this.update();
                     },
                     width: this.props.width,

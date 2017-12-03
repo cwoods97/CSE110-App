@@ -88,7 +88,6 @@ class App extends Component {
     }
 
     componentDidMount() {
-
         getDisplayName().then(name => {this.setState({display: name});});
 
     }

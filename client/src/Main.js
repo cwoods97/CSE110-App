@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import './styles/App.css';
 import './styles/Main.css';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/css/bootstrap-theme.css';
@@ -162,7 +161,7 @@ class App extends Component {
     render() {
         return (
 
-            <div style={{width:'100%',height:'100%',display:'inline-block',outline:'1px solid red'}}>
+            <div style={{width:'100%',height:'100%',display:'inline-block',outline:'1px solid #525252'}}>
                 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"></link>
                 <div style={{backgroundColor:'#333333',height:"100%"}}>
                     <h2 style={{marginLeft:'8px',marginTop:'0px',marginBottom:'0px',height:'50px', color:'white'}}><b></b>
@@ -171,7 +170,7 @@ class App extends Component {
                 </div>
 
 
-                <div id='navMain' class="w3-sidebar w3-bar-block w3-responsive" style={{height:'100%',backgroundColor:'#585858',zIndex:'0', color:'#F3E6DE', boxShadow:'1px 1px 2px #f44336'}}>
+                <div id='navMain' class="w3-sidebar w3-bar-block w3-responsive" style={{height:'100%',backgroundColor:'#585858',zIndex:'0', color:'#F3E6DE', boxShadow:'1px 1px 2px #525252'}}>
 
                     <a class="w3-bar-item HoverRed" id="name" style={{fontSize:'20px', outline:'2px solid #333333'}}>{this.state.currentUser.displayName}</a>
                     <a class="w3-bar-item w3-button w3-hover-red" id='profile' onClick={this.settings} style={{boxShadow:'1px 0px 1px #333333'}}>Profile Settings</a>
@@ -181,33 +180,34 @@ class App extends Component {
                 </div>
 
                 <div id='popup' class="modal" style={{display:'none', position:'fixed', zIndex:'1', left:'0', top:'0', width:'100%', height:'100%', overflow:'auto'}}>
-                    <div class="modal-content" style={{margin:'15% auto', padding:'0px 20px 20px 20px ', border:'1px solid #888', width:'45%'}}>
-                        <span id="close" style={{float:'right', fontSize:'28px', fontWeight:'bold',cursor:'pointer'}}>&times;</span>
+                    <div class="modal-content" style={{margin:'15% auto', padding:'0px 20px 20px 20px ', border:'1px solid #888', width:'45%',backgroundColor:'#333333'}}>
+                        <div style={{margin:'2%'}}>
+                        <span id="close" style={{float:'right', fontSize:'28px', fontWeight:'bold',cursor:'pointer',color:'white'}}>&times;</span>
                         <br></br>
-                        <h2 style={{textAlign:'center'}}><b style={{borderBottom: '2px solid #000000'}}>Profile Settings</b></h2>
-                        <br></br>
+                        <h2 style={{textAlign:'center',color:'#ffffff'}}><b style={{borderBottom: '2px solid #ffffff'}}>Profile Settings</b></h2>
                         <div style={{display:'flex', justifyContent:'space-between'}}>
-                        <div style={{backgroundColor:'#333333',textAlign:'center',float:'left',width:'45%', borderRadius:'10px'}}>
-                            <form id="displayForm">
-                                <h6><b style={{color:'white'}}>Update your display name</b></h6>
+                        <div style={{background:'transparent',textAlign:'center',float:'left',width:'47%', borderRadius:'10px'}}>
+                            <form id="displayForm" style={{margin:'5%'}}>
+                                <h6><b style={{color:'#f3e6de'}}>Update your display name</b></h6>
                                 <p id="displayError"></p>
-                                <input id='newDisplay' placeholder={"Enter new display name"}></input>
+                                <input type="text" id='newDisplay' class='w3-input' placeholder={"Enter new display name"}></input>
                                 <p></p>
-                                <input style={{backgroundColor:'#525252',color:'white'}} class="w3-button w3-round w3-hover-red" type="submit" value="Submit" onClick={this.updateDisplayName.bind(this)}></input>
+                                <input style={{backgroundColor:'#585858',color:'white'}} class="w3-button w3-round w3-hover-red" type="submit" value="Submit" onClick={this.updateDisplayName.bind(this)}></input>
                             </form>
                         </div>
-                        <div style={{backgroundColor:'#333333',textAlign:'center',float:'left',overflow:'hidden',width:'45%', borderRadius:'10px'}}>
-                            <form id="passwordForm">
-                                <h6><b style={{color:'white'}}>Update your password</b></h6>
-                                <input type="password" id='oldPwd' placeholder={"Enter current password"}></input>
+                        <div style={{backgroundColor:'#FFFFFFF',textAlign:'center',float:'left',overflow:'hidden',width:'47%', borderRadius:'10px'}}>
+                            <form id="passwordForm" style={{margin:'5%'}}>
+                                <h6><b style={{color:'#f3e6de'}}>Update your password</b></h6>
+                                <input type="password" id='oldPwd' class='w3-input' placeholder={"Enter current password"} style={{width:'80%'}}></input>
                                 <p id="passwordError"></p>
-                                <input type="password" id='newPassword' placeholder={"Enter new password"}></input>
+                                <input type="password" id='newPassword' class='w3-input' placeholder={"Enter new password"} style={{width:'80%'}}></input>
                                 <p></p>
-                                <input type="password" id='confirm' placeholder={"Re-enter new password"}></input>
+                                <input type="password" id='confirm' class='w3-input' placeholder={"Re-enter new password"} style={{width:'80%'}}></input>
                                 <p></p>
-                                <input style={{backgroundColor:'#525252',color:'white' }} class="w3-button w3-round w3-hover-red" type="submit" value="Submit" onClick={this.updatePassword}></input>
+                                <input style={{backgroundColor:'#585858',color:'white' }} class="w3-button w3-round w3-hover-red" type="submit" value="Submit" onClick={this.updatePassword}></input>
                             </form>
                         </div>
+                    </div>
                     </div>
                     </div>
                 </div>
@@ -244,7 +244,7 @@ class App extends Component {
                             <h6><b>Enter Session Code:</b></h6>
                             <p id = "error"></p>
 
-                            <input id="code"></input>
+                            <input type="text" id="code" class='w3-input' style={{width:'60%'}}></input>
                             <br></br>
                             <br></br>
                             <button class="w3-button w3-large w3-round w3-hover-red" onClick={this.join} style={{backgroundColor:'#525252', color:'white'}}>Join a Session</button>
