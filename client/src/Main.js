@@ -135,6 +135,7 @@ class App extends Component {
 		updatePassword = function(ev) {
 				ev.preventDefault();
 
+				const oldpswd = document.getElementById('oldPassword').value;
 				const pswd1 = document.getElementById('newPassword').value;
 				const pswd2 = document.getElementById('confirm').value;
 				const error = document.getElementById('passwordError');
@@ -148,7 +149,7 @@ class App extends Component {
 				if(validations.every(Boolean)) {
 						error.innerHTML = "";
 						form.reset();
-						setPassword(pswd1).then((success) => {
+						setPassword(oldpswd, pswd1).then((success) => {
 								error.innerHTML = success;
 						}).catch((err) => {
 								error.innerHTML = err;
