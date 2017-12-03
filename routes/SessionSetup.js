@@ -38,10 +38,6 @@ router.post('/createSession', (req, res) => {
 			hasAudio: false
 		});
 
-		// add the session ID to the list of presented sessions in the user object
-		const json = {};
-		json[sessionID] = true;
-		userRef.child('hostedSessions').update(json);
 		res.json({
 			sessionID: sessionID,
 			accessCode: accessCode

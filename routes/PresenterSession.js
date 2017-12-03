@@ -46,10 +46,6 @@ router.post('/toggleActive', (req, res) => {
 			const json = {};
 			json[sessionID] = true;
 			userRef.child('hostedSessions').update(json);
-			res.json({
-				sessionID: sessionID,
-				accessCode: accessCode
-			});
 		});
 		
 	});
