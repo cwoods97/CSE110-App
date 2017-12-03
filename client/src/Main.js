@@ -76,69 +76,81 @@ class App extends Component {
         span.onclick = function(ev) {
             ev.preventDefault();
             modal.style.display = "none";
+						document.getElementById('displayForm').reset();
+						document.getElementById('passwordForm').reset();
+						document.getElementById('displayError').innerHTML = "";
+						document.getElementById('passwordError').innerHTML = "";
         }
 
         window.onclick = function(ev) {
             ev.preventDefault();
             if(ev.target == modal) {
                 modal.style.display = "none";
+								document.getElementById('displayForm').reset();
+								document.getElementById('passwordForm').reset();
+								document.getElementById('displayError').innerHTML = "";
+								document.getElementById('passwordError').innerHTML = "";
             }
         }
     };
 
-	updateDisplayName = function(ev) {
-			ev.preventDefault();
+		updateDisplayName = function(ev) {
+				ev.preventDefault();
 
-			const name = document.getElementById('newDisplay').value;
-			const error = document.getElementById('displayError');
-			const form = document.getElementById('displayForm');
-			var validation = [Boolean(name) && !name.includes(' ')];
+				const name = document.getElementById('newDisplay').value;
+				const error = document.getElementById('displayError');
+				const form = document.getElementById('displayForm');
+				var validation = [Boolean(name) && !name.includes(' ')];
 
-			if(validation.every(Boolean)) {
-					error.innerHTML = "";
-					form.reset();
-					setDisplayName(name).then((success) => {
-							if(success){
-									error.innerHTML = "Display Name Updated";
-									this.setState({display: name});
-							}
-					}).catch((err) => {
-							error.innerHTML = err;
-					});
-			} else {
-					error.innerHTML = "Please enter a valid display name (Spaces not allowed)";
-			}
-	};
+				if(validation.every(Boolean)) {
+						error.innerHTML = "";
+						form.reset();
+						setDisplayName(name).then((success) => {
+								if(success){
+										error.innerHTML = "Display Name Updated";
+										this.setState({display: name});
+								}
+						}).catch((err) => {
+								error.innerHTML = err;
+						});
+				} else {
+						error.innerHTML = "Please enter a valid display name (Spaces not allowed)";
+				}
+		};
 
-	updatePassword = function(ev) {
-			ev.preventDefault();
+		updatePassword = function(ev) {
+				ev.preventDefault();
 
-			const pswd1 = document.getElementById('newPassword').value;
-			const pswd2 = document.getElementById('confirm').value;
-			const error = document.getElementById('passwordError');
-			const form = document.getElementById('passwordForm');
+				const oldpswd = document.getElementById('oldPwd').value;
+				const pswd1 = document.getElementById('newPassword').value;
+				const pswd2 = document.getElementById('confirm').value;
+				const error = document.getElementById('passwordError');
+				const form = document.getElementById('passwordForm');
 
-			var validations = [
-					Boolean(pswd1) && !pswd1.includes(' ') && pswd1.length >= 6,
-					pswd1 == pswd2
-			]
+				var validations = [
+						Boolean(pswd1) && !pswd1.includes(' ') && pswd1.length >= 6,
+						pswd1 == pswd2,
+						oldpswd != pswd1
+				]
 
-			if(validations.every(Boolean)) {
-					error.innerHTML = "";
-					form.reset();
-					setPassword(pswd1).then((success) => {
-							error.innerHTML = success;
-					}).catch((err) => {
-							error.innerHTML = err;
-					});
-			} else {
-					if(!validations[0]) {
-							error.innerHTML = "Please enter a valid password (Spaces not allowed; must be at least 6 characters)";
-					} else {
-							error.innerHTML = "Passwords do not match";
-					}
-			}
-	};
+				if(validations.every(Boolean)) {
+						error.innerHTML = "";
+						form.reset();
+						setPassword(oldpswd, pswd1).then((success) => {
+								error.innerHTML = success;
+						}).catch((err) => {
+								error.innerHTML = err;
+						});
+				} else {
+						if(!validations[0]) {
+								error.innerHTML = "Please enter a valid password (Spaces not allowed; must be at least 6 characters)";
+						} else if(!validations[1]){
+								error.innerHTML = "Passwords do not match";
+						} else {
+								error.innerHTML = "New password cannot be old password";
+						}
+				}
+		};
 
     render() {
         return (
