@@ -5,6 +5,7 @@ import './styles/App.css';
 import App from './App';
 import Main from './Main';
 import { createAccount } from './RegisterFirebaseUser';
+import logo from './Logo.png';
 
 class CreateAccount extends Component {
 
@@ -88,22 +89,25 @@ class CreateAccount extends Component {
 
     }
 
+
+
     render() {
         return (
-            <div style={{height:'100%',width:'100%'}}>
+            <div style={{height:'100%',width:'100%', backgroundColor:'#F3E6DE'}}>
                 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"></link>
-                <div style={{backgroundColor:'#c4a5ff',height:"100%"}}>
+                <div style={{backgroundColor:'#333333',height:"100%"}}>
 
-                    <h3 onClick={this.goHome} style={{cursor:'pointer',marginLeft:'10px',marginTop:'0px',marginBottom:'1px',height:'35px',fontFamily:'cursive'}}><b>speakeasy</b>
-                    </h3>
+                    <h2 onClick={this.goHome} style={{cursor:'pointer',marginLeft:'8px',marginTop:'0px',marginBottom:'0px',height:'50px',fontFamily:'cursive'}}><b></b>
+                        <img src={logo} width="125" height="50" onClick={this.goHome}/>
+                    </h2>
                 </div>
 
                 <div style={{display:'flex',alightItems:'center',justifyContent:'center',margin:'0 auto'}}>
 
-                    <div style={{backgroundColor:'#c4a5ff',padding:"20px",marginTop:'25px',textAlign:'center'}}>
+                    <div style={{backgroundColor:'#333333',padding:"20px",marginTop:'25px',textAlign:'center', color:'white', borderRadius:'10px'}}>
                         <h2>Create an Account</h2>
 
-                        <form action="">
+                        <form action="" style={{color:'#525252'}}>
                             <p id="emailError"></p>
                             <input class="w3-input" id="email" type="text" name="fname" placeholder={"Email"}></input><br></br>
                             <p id="displayNameError"></p>
@@ -113,7 +117,7 @@ class CreateAccount extends Component {
                             <p></p>
                             <input class="w3-input" id="pwd2" type="password" name="reenter" placeholder={"Re-enter Password"}></input><br></br>
                             <br></br>
-                            <input onClick={this.createMain.bind(this)} style={{float:"left",backgroundColor:"#665084",color:"white"}} class="w3-btn w3-round" type="submit" value="Create"></input>
+                            <input onClick={this.createMain.bind(this)} style={{float:"left",backgroundColor:"#525252",color:"white"}} class="w3-button w3-round w3-hover-red" type="submit" value="Create"></input>
                         </form>
                     </div>
                 </div >
