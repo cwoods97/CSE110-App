@@ -37,10 +37,21 @@ router.post('/toggleActive', (req, res) => {
 	sessionRef.orderByChild("accessCode").equalTo(accessCode).once('value', function(snapshot) {
 		//should be only one loop, but this is the only way I know how to code
 		snapshot.forEach(function(childSnapshot) {
-			var thisSession = sessionRef.child(childSnapshot.key); //gets the session
+			var sessionID = childSnapshot.key;
+			var thisSession = sessionRef.child(sessionID); //gets the session
 			var active = childSnapshot.child("isActive").val();
 			thisSession.child("isActive").set(!Boolean(active));
+			
+			// add the session ID to the list of presented sessions in the user object
+			const json = {};
+			json[sessionID] = true;
+			userRef.child('hostedSessions').update(json);
+			res.json({
+				sessionID: sessionID,
+				accessCode: accessCode
+			});
 		});
+		
 	});
 
 	res.sendStatus(200);
