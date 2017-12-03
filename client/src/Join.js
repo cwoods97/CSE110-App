@@ -146,11 +146,11 @@ class Join extends Component {
                 </div>
 
 
-                <div id='navigationJoin' class=" w3-sidebar w3-bar-block w3-responsive" style={{borderRight:'1px solid #665084', float:'both',margin:'auto',height:'100%',backgroundColor:'lightgrey',zIndex:'0'}}>
+                <div id='navigationJoin' class=" w3-sidebar w3-bar-block w3-responsive" style={{boxShadow:'1px 1px 2px #f44336', float:'both',margin:'auto',height:'100%',backgroundColor:'#585858',zIndex:'0', color:'#F3E6DE'}}>
 
 
-                    <a class="w3-bar-item" style={{backgroundColor:'PaleVioletRed'}}><b>{this.state.display}</b></a>
-                    <a class="w3-bar-item w3-button" onClick={this.main} style={{backgroundColor:'lightgrey'}}><b>Leave Session</b></a>
+                    <a class="w3-bar-item HoverRed" style={{fontSize:'20px', outline:'2px solid #333333'}}><b>{this.state.display}</b></a>
+                    <a class="w3-bar-item w3-button w3-hover-red" onClick={this.main} style={{boxShadow:'1px 0px 1px #333333'}}><b>Leave Session</b></a>
 
 
                 </div>
@@ -163,8 +163,8 @@ class Join extends Component {
 
                     <div id='left' class= 'w3-responsive' style={{display:'inline-block', float:'left', width:'50%',height:'100%'}}>
 
-                        <h5><b>Session Title:</b> {this.state.title} </h5>
-                        <h5><b>Session Code:</b> {this.sessionAccessCode}</h5>
+                        <h5 style={{marginLeft:'5px'}}><b>Session Title:</b> {this.state.title} </h5>
+                        <h5 style={{marginLeft:'5px'}}><b>Session Code:</b> {this.sessionAccessCode}</h5>
 
                         <center>
                             <p style={{marginTop:'1em', overflow:'hidden'}}><h3><b>Give Predefined Feedback</b></h3></p>
