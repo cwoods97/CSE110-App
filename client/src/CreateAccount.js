@@ -6,7 +6,6 @@ import App from './App';
 import Main from './Main';
 import { createAccount } from './RegisterFirebaseUser';
 import logo from './Logo.png';
-import './styles/CreateAccount.css';
 
 class CreateAccount extends Component {
 
@@ -109,11 +108,11 @@ class CreateAccount extends Component {
                         <h2>Create an Account</h2>
 
                         <form action="" style={{color:'#525252'}}>
-                            <p id="emailError"></p>
+                            <p id="emailError" style={{color:'white'}}></p>
                             <input class="w3-input" id="email" type="text" name="fname" placeholder={"Email"}></input>
-                            <p id="displayNameError"></p>
+                            <p id="displayNameError"style={{color:'white'}}></p>
                             <input class="w3-input" id="display" type="text" name="dname" placeholder={"Display Name"}></input>
-                            <p id="pwdError"></p>
+                            <p id="pwdError"style={{color:'white'}}></p>
                             <input class="w3-input" id="pwd1" type="password" name="pwd" placeholder={"Password"}></input>
                             <p></p>
                             <input class="w3-input" id="pwd2" type="password" name="reenter" placeholder={"Re-enter Password"}></input>

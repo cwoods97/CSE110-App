@@ -52,17 +52,12 @@ class AppFront extends Component {
         // regex from http://stackoverflow.com/questions/46155/validate-email-address-in-javascript
         var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
-        var errors = [];
+
         if (!re.test(email)) {
-            errors.push("Please enter a valid email address.");
+            document.getElementById('error').innerHTML = "Please enter a valid email address";
         }
         if (password.length < 6) {
-            errors.push("Please enter a valid password.");
-        }
-
-        if (errors.length) {
-            document.getElementById('error').innerHTML = errors.join('<br />');
-            return;
+            document.getElementById('errora').innerHTML = "Please enter a valid password";
         }
 
         login(email, password)
@@ -175,6 +170,7 @@ class AppFront extends Component {
                             <p id="error"></p>
 
                             <input  ref = 'email' id = "email"class = "w3-input" type="text" name="fname" placeholder={"Email"} style={{color:'#525252'}}></input><br></br>
+                            <p id="errora"></p>
                             <input class= "w3-input" id = "password" type="password" name="lname" placeholder={"Password"} style={{color:'#525252'}}></input><br></br>
                             <input id= "submit" style={{backgroundColor:'#525252',color:'white'}} class="w3-button w3-round w3-hover-red" onClick= {this.main} type="submit" value="Submit"></input>
                         </form>
