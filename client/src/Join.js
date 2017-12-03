@@ -161,6 +161,10 @@ class Join extends Component {
 
 
                     <div id='left' class= 'w3-responsive' style={{display:'inline-block', float:'left', width:'50%',height:'100%'}}>
+
+                        <h5><b>Session Title:</b> </h5>
+                        <h5><b>Session Code:</b> {this.sessionAccessCode}</h5>
+
                         <center>
                             <p style={{marginTop:'1em', overflow:'hidden'}}><h3><b>Give Predefined Feedback</b></h3></p>
                         </center>
