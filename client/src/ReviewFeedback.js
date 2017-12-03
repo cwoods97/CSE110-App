@@ -46,10 +46,12 @@ class ReviewFeedback extends Component {
             })
             .then(response => response.json())
             .then((data) => {
-                this.setState({
-                    'predefinedFeedback' : data.predefinedFeedback,
-                    'customFeedback': data.customFeedback
-                })
+								if(data.predefinedFeedback){
+                		this.setState({
+                    		'predefinedFeedback' : data.predefinedFeedback,
+                   		  'customFeedback': data.customFeedback
+                		})
+								}
             })
         })
 
