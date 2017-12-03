@@ -12,6 +12,7 @@
     height: 150px;
     padding: 20px;
     color: white;
+
 }
 
 .App-title {
@@ -32,7 +33,7 @@
 }
 
 .header{
-    background-color:#665084 !important;
+    background-color:#333333 !important;
 
 
 }
@@ -139,9 +140,10 @@ img{
 }
 .message-text,.client{
 
-    background-color:#c4a5ff !important;
+    background-color: #585858 !important;
     width: 100% !important;
     max-width: 5000px !important;
+    color:white !important;
 
     /*
     Source: https://css-tricks.com/snippets/css/prevent-long-urls-from-breaking-out-of-container/
