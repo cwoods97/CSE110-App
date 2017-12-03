@@ -161,7 +161,7 @@ class App extends Component {
     render() {
         return (
 
-            <div style={{width:'100%',height:'100%',display:'inline-block',outline:'1px solid #525252'}}>
+            <div style={{width:'100%',height:'100%',display:'inline-block'}}>
                 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"></link>
                 <div style={{backgroundColor:'#333333',height:"100%"}}>
                     <h2 style={{marginLeft:'8px',marginTop:'0px',marginBottom:'0px',height:'50px', color:'white'}}><b></b>
@@ -212,42 +212,42 @@ class App extends Component {
                     </div>
                 </div>
 
-                <div id='content' class='w3-responsive' style={{display:'inline-block',float:'right',width:'85%',maxHeight:'700px', position:'fixed',left:'15%'}}>
+                <div id='content' class='w3-responsive' style={{display:'inline-block',float:'right',width:'85%',maxHeight:'90vh', position:'fixed',left:'15%'}}>
 
 
                     {/*<div style={{display:'flex',flexDirection:'row',justifyContent:'space-between'}}>*/}
                     {/*This will hold the the content for creating a session*/}
                     <div class='w3-responsive' style={{display:'inline-block', float:'left', width:'50%',height:'100%',margin:'auto'}}>
-                        <div style={{height:'50%',textAlign:'center'}}>
-                        <div class='w3-responsive' style={{margin:'25% 10% 20%', width:'80%', overflow:'hidden',textAlign:'center'}}>
+                        <div style={{textAlign:'center'}}>
+                        <div class='w3-responsive' style={{margin:'10% 10% 30%', width:'80%', overflow:'hidden',textAlign:'center'}}>
                             <p><b style={{fontSize:'22px', borderBottom: '2px solid #000000' }}>About to give a speech?</b></p>
-                                <p><br /> Click "Create a Session" so that audience members can join and give feedback to your speech.
+                                <p><b /> Click "Create a Session" so that audience members can join and give feedback to your speech.
                                 Save your speeches in order to listen and review speeches you have given, as well as improve on future speeches!</p>
                         </div>
                         </div>
-                        <div style={{height:'50%',textAlign:'center'}}>
-                        <div class='w3-responsive' style={{margin:'20% 10% 50%', display:'flex',justifyContent:'center'}}>
-                            <button class="w3-button w3-large w3-round w3-hover-red" onClick={this.create.bind(this)} style={{backgroundColor:'#525252', color:'white'}}>Create a Session</button>
+                        <div style={{height:'15em',textAlign:'center'}}>
+                        <div class='w3-responsive' style={{height:'100%'}}>
+
+                            <button class="w3-button w3-large w3-round w3-hover-red" onClick={this.create.bind(this)} style={{marginTop:'90px',backgroundColor:'#525252', color:'white'}}>Create a Session</button>
                         </div>
                         </div>
                     </div>
 
                     {/*This will hold the the content for joining a session*/}
                     <div class='w3-responsive' style={{display:'inline-block', float:'right', width:'50%', height:'100%', margin:'auto'}}>
-                        <div style={{height:'50%',textAlign:'center'}}>
-                        <div class='w3-responsive' style={{margin:'25% 10% 20%', width:'80%', overflow:'hidden',textAlign:'center'}}>
-                            <p><b style={{fontSize:'22px', borderBottom: '2px solid #000000'}}> Joining a speech as an audience member?</b></p>
-                            <p><br />Click "Join Session" in which you will be able to provide feedback to speakers.
+                        <div style={{textAlign:'center'}}>
+                        <div class='w3-responsive' style={{margin:'10% 10% 30%', width:'80%', overflow:'hidden',textAlign:'center'}}>
+                            <p><b style={{fontSize:'22px', borderBottom: '2px solid #000000'}}> Are you an audience member?</b></p>
+                            <p><b />Click "Join Session" in which you will be able to provide feedback to speakers.
                                 Give feedback to speakers in order to help them improve and let them know what they can do better!</p>
                         </div>
                         </div>
-                        <div style={{height:'50%',textAlign:'center'}}>
-                        <div class='w3-responsive' style={{margin:'20% 10% 50%',textAlign:'center'}}>
+                        <div style={{height: '15em',textAlign:'center'}}>
+                        <div class='w3-responsive' style={{textAlign:'center',margin:'0 10%'}}>
                             <h6><b>Enter Session Code:</b></h6>
                             <p id = "error"></p>
 
                             <input type="text" id="code" class='w3-input' style={{width:'60%'}}></input>
-                            <br></br>
                             <br></br>
                             <button class="w3-button w3-large w3-round w3-hover-red" onClick={this.join} style={{backgroundColor:'#525252', color:'white'}}>Join a Session</button>
 
