@@ -7,6 +7,7 @@ import 'bootstrap/dist/css/bootstrap-theme.css';
 import {getDisplayName} from "./RegisterFirebaseUser";
 
 import Main from './Main';
+//Plugin for customized feedback. Mainly used for its CSS formatting
 import { Widget, addResponseMessage, addUserMessage } from 'react-chat-widget';
 import {leaveBackendSession} from './FrontEndSession';
 import {getIdToken} from './RegisterFirebaseUser.js';
@@ -182,10 +183,10 @@ class Join extends Component {
 
                         <center>
 
-
+                            {/*Html code template and some classes taken from the react-chat-widget plugin. You can see the source code for this here: https://github.com/Wolox/react-chat-widget*/}
                         <div id = "comments"class="widget-container" ><div class="w3-responsive conversation-container">
                             <div class="header w3-responsive">
-                                <h4 class="title">Give Customized Feedback</h4><span></span></div>
+                                <h4 class="title">Give Customized Feedback</h4></div>
                             <div id="messages" class="messages-container w3-responsive">
 
                             </div>
