@@ -5,12 +5,12 @@ import './styles/SessionHistory.css';
 
 import Main from './Main';
 import AppFront from './App';
+import ReviewFeedback from './ReviewFeedback';
 
 import {getDisplayName} from './RegisterFirebaseUser.js';
 
 import ReactDOM from 'react-dom';
 
-import {getJoinedSessions, getPresentedSessions} from './RegisterFirebaseUser.js'
 class App extends Component {
 
     constructor(props) {
@@ -24,15 +24,65 @@ class App extends Component {
             joinedSessions: [],
             presentedSessions: []
         }
-        getJoinedSessions().then((response) => {
+        this.getJoinedSessions().then((response) => {
             this.setState({
                 joinedSessions : response
             });
         })
-        getPresentedSessions().then((response) => {
+        this.getPresentedSessions().then((response) => {
             this.setState({
                 presentedSessions : response
             })
+        })
+    }
+
+    getPresentedSessions() {
+        return new Promise((resolve, reject) => {
+            firebase.auth().currentUser.getIdToken()
+                .then(token => {
+                    fetch('/api/account/getPresentedSessions', {
+                    method: 'post',
+                    body: JSON.stringify({
+                        token: token
+                    }),
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    }
+                })
+                .then(response => response.json())
+                .then(response => {
+                    resolve(response);
+                })
+                .catch(error => {
+                    return reject(error);
+                });
+            }).catch(error => { reject(error); })
+        })
+    }
+
+    getJoinedSessions() {
+        return new Promise((resolve, reject) => {
+            firebase.auth().currentUser.getIdToken()
+                .then(token => {
+                    fetch('/api/account/getJoinedSessions', {
+                    method: 'post',
+                    body: JSON.stringify({
+                        token: token
+                    }),
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    }
+                })
+                .then(response => response.json())
+                .then(response => {
+                    resolve(response);
+                })
+                .catch(error => {
+                    return reject(error);
+                });
+            }).catch(error => { reject(error); })
         })
     }
 
@@ -84,6 +134,10 @@ class App extends Component {
 
     }
 
+    renderSession = (sessionID) => {
+        ReactDOM.render(<ReviewFeedback db={this.db} sessionid={sessionID} />, document.getElementById('root'));
+    }
+
 
     render() {
         return (
@@ -95,9 +149,8 @@ class App extends Component {
                     <div style={{backgroundColor:'#2C4A52',height:"100%"}}>
 
                         <center>
-                            <h1 style={{ fontFamily:'Poppins', marginLeft:'10px',marginTop:'0px',marginBottom:'1px',height:'35px', float:'left', color:'#E7E7E7'}}><b>SpeakEasy</b>
-
-
+                            <h1 style={{ fontFamily:'Poppins', marginLeft:'10px',marginTop:'0px',marginBottom:'1px',height:'35px', float:'left', color:'#E7E7E7'}}>
+                                <b>SpeakEasy</b>
                             </h1>
                         </center>
 
@@ -124,10 +177,10 @@ class App extends Component {
                     <br></br>
 
                     <div id="buttons" style={{margin:'0 auto',textAlign:'center'}}>
-                    <button id="jb"onClick={this.join} class="w3-btn w3-dark-grey" style={{borderRadius:'10px'}}>
+                    <button id="jb" onClick={this.join} class="w3-btn w3-dark-grey" style={{borderRadius:'10px',marginRight:'10px'}}>
                         Joined Sessions
                     </button>
-                    <button id="cb"onClick={this.create} class="w3-btn w3-grey" style={{borderRadius:'10px'}}>
+                    <button id="cb" onClick={this.create} class="w3-btn w3-grey" style={{borderRadius:'10px',marginLeft:'10px'}}>
                         Created Sessions
                     </button>
                     </div>
@@ -136,7 +189,7 @@ class App extends Component {
                 <div id="joined" >
                     {
                         this.state.joinedSessions.map((sessionData) => (
-                            <div class= 'sessions'>
+                            <div class='sessions' sessionid={sessionData.id} onClick={(e) => this.renderSession(sessionData.id)} style={{cursor:'pointer'}}>
 
                                 <center>
                                     <h4>
@@ -145,7 +198,6 @@ class App extends Component {
                                     <h6>
                                         {sessionData.displayName}
                                     </h6>
-
                                 </center>
 
                             </div>
@@ -155,7 +207,7 @@ class App extends Component {
                 <div id="created" style={{display:'none'}}>
                     {
                         this.state.presentedSessions.map((sessionData) => (
-                            <div class= 'sessions'>
+                            <div class='sessions' sessionid={sessionData.id} onClick={(e) => this.renderSession(sessionData.id)} style={{cursor:'pointer'}}>
 
                                 <center>
                                     <h4>

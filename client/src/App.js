@@ -31,6 +31,7 @@ class AppFront extends Component {
             firebase.initializeApp(config);
             firebase.auth().onAuthStateChanged((user) => {
                 if (user) {
+                    console.log("Logged in user with ID", user.uid);
                     ReactDOM.render(<Main db={firebase} />, document.getElementById('root'));
                 }
             })

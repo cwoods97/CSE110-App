@@ -146,11 +146,8 @@ export function toggleActive(idToken, code) {
 				}
 			})
 			.then(response => response.json())
-						.then(response => {
-							console.log(response);
-						})
+			.then(response => { resolve() })
 			.catch(error => {
-				console.log(error);
 				return reject(error);
 			});
 		}
