@@ -12,6 +12,7 @@ import SessionHistory from './SessionHistory';
 import ReviewFeedback from './ReviewFeedback';
 import {createBackendSession, joinBackendSession} from './FrontEndSession';
 import {getIdToken, getDisplayName, logout, setPassword, setDisplayName} from './RegisterFirebaseUser.js';
+import logo from './Logo.png';
 
 class App extends Component {
 
@@ -163,25 +164,26 @@ class App extends Component {
 
             <div style={{width:'100%',height:'100%',display:'inline-block',outline:'1px solid red'}}>
                 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"></link>
-                <div style={{backgroundColor:'#c4a5ff',height:"100%"}}>
+                <div style={{backgroundColor:'#333333',height:"100%"}}>
 
-                    <h2 style={{marginLeft:'10px',marginTop:'0px',marginBottom:'5px',height:'35px',fontFamily:'cursive',cursor:'pointer'}}><b>speakeasy</b>
+                    <h2 style={{marginLeft:'8px',marginTop:'0px',marginBottom:'0px',height:'50px',fontFamily:'cursive', color:'white'}}><b></b>
+                        <img src={logo} width={'125'} height={'50'}/>
 
                     </h2>
                 </div>
 
 
-                <div id='navMain' class="w3-sidebar w3-bar-block w3-responsive" style={{height:'100%',backgroundColor:'lightgrey',zIndex:'0'}}>
+                <div id='navMain' class="w3-sidebar w3-bar-block w3-responsive" style={{height:'100%',backgroundColor:'#585858',zIndex:'0', color:'#F3E6DE', boxShadow:'1px 1px 2px #f44336'}}>
 
-                    <a class="w3-bar-item" id="name" style={{backgroundColor:'aqua'}}>{this.state.currentUser.displayName}</a>
-                    <a class="w3-bar-item w3-button" id='profile' onClick={this.settings} style={{backgroundColor:'lightgrey'}}>Profile Settings</a>
-                    <a class="w3-bar-item w3-button" onClick={this.history.bind(this)} style={{backgroundColor:'lightgrey'}}>Session History</a>
-                    <a class="w3-bar-item w3-button" onClick={this.front} style={{backgroundColor:'lightgrey'}}>Logout</a>
+                    <a class="w3-bar-item HoverRed" id="name" style={{fontSize:'20px', outline:'2px solid #333333'}}>{this.state.currentUser.displayName}</a>
+                    <a class="w3-bar-item w3-button w3-hover-red" id='profile' onClick={this.settings} style={{boxShadow:'1px 0px 1px#333333'}}>Profile Settings</a>
+                    <a class="w3-bar-item w3-button w3-hover-red" onClick={this.history.bind(this)}style={{boxShadow:'1px 0px 1px#333333'}}>Session History</a>
+                    <a class="w3-bar-item w3-button w3-hover-red" onClick={this.front}style={{boxShadow:'1px 0px 1px#333333'}}>Logout</a>
 
                 </div>
 
                 <div id='popup' class="modal" style={{display:'none', position:'fixed', zIndex:'1', left:'0', top:'0', width:'100%', height:'100%', overflow:'auto'}}>
-                    <div class="modal-content" style={{margin:'15% auto', padding:'20px', border:'1px solid #888', width:'45%'}}>
+                    <div class="modal-content" style={{margin:'15% auto', padding:'0px 20px 20px 20px ', border:'1px solid #888', width:'45%'}}>
                         <span id="close" style={{float:'right', fontSize:'28px', fontWeight:'bold',cursor:'pointer'}}>&times;</span>
                         <br></br>
                         <h2 style={{textAlign:'center'}}><b>Profile Settings</b></h2>
@@ -193,7 +195,7 @@ class App extends Component {
                                 <p id="displayError"></p>
                                 <input id='newDisplay' placeholder={"Enter new display name"}></input>
                                 <p></p>
-                                <input style={{backgroundColor:'#665084',color:'white'}} class="w3-btn w3-round" type="submit" value="Submit" onClick={this.updateDisplayName.bind(this)}></input>
+                                <input style={{backgroundColor:'#665084',color:'white'}} class="w3-button w3-round w3-hover-red" type="submit" value="Submit" onClick={this.updateDisplayName.bind(this)}></input>
                             </form>
                         </div>
                         <div style={{backgroundColor:'#999999',textAlign:'center',float:'left',overflow:'hidden',width:'45%'}}>
@@ -205,7 +207,7 @@ class App extends Component {
                                 <p></p>
                                 <input type="password" id='confirm' placeholder={"Re-enter new password"}></input>
                                 <p></p>
-                                <input style={{backgroundColor:'#665084',color:'white'}} class="w3-btn w3-round" type="submit" value="Submit" onClick={this.updatePassword}></input>
+                                <input style={{backgroundColor:'#665084',color:'white' }} class="w3-button w3-round w3-hover-red" type="submit" value="Submit" onClick={this.updatePassword}></input>
                             </form>
                         </div>
                     </div>
@@ -220,12 +222,13 @@ class App extends Component {
                     <div class='w3-responsive' style={{display:'inline-block', float:'left', width:'50%',height:'100%',margin:'auto'}}>
                         <div style={{height:'50%',textAlign:'center'}}>
                         <div class='w3-responsive' style={{margin:'25% 10% 20%', width:'80%', overflow:'hidden',textAlign:'center'}}>
-                            <p>Are you about to give a speech? If you answered yes then click "Create a Session" in which audience members can join and give feedback to your speech</p>
+                            <p><b style={{fontSize:'22px', borderBottom: '2px solid #000000' }}>About to give a speech?</b> <br /> Click "Create a Session" so that audience members can join and give feedback to your speech.
+                                Save your speeches in order to listen and review speeches you have given, as well as improve on future speeches!</p>
                         </div>
                         </div>
                         <div style={{height:'50%',textAlign:'center'}}>
                         <div class='w3-responsive' style={{margin:'20% 10% 50%', display:'flex',justifyContent:'center'}}>
-                            <button class="w3-btn w3-large w3-round" onClick={this.create.bind(this)} style={{backgroundColor:'#665084'}}>Create a Session</button>
+                            <button class="w3-button w3-large w3-round w3-hover-red" onClick={this.create.bind(this)} style={{backgroundColor:'#525252', color:'white'}}>Create a Session</button>
                         </div>
                         </div>
                     </div>
@@ -234,7 +237,8 @@ class App extends Component {
                     <div class='w3-responsive' style={{display:'inline-block', float:'right', width:'50%', height:'100%', margin:'auto'}}>
                         <div style={{height:'50%',textAlign:'center'}}>
                         <div class='w3-responsive' style={{margin:'25% 10% 20%', width:'80%', overflow:'hidden',textAlign:'center'}}>
-                            <p>Are you an audience member of a speech? If you answered yes then click "Join Session" in which you will be able to provide feedback to whoevers speech you are listening to</p>
+                            <p><b style={{fontSize:'22px', borderBottom: '2px solid #000000'}}> Joining a speech as an audience member?</b> <br /> Click "Join Session" in which you will be able to provide feedback to speakers.
+                                Give feedback to speakers in order to help them improve and let them know what they can do better!</p>
                         </div>
                         </div>
                         <div style={{height:'50%',textAlign:'center'}}>
@@ -245,7 +249,7 @@ class App extends Component {
                             <input id="code"></input>
                             <br></br>
                             <br></br>
-                            <button class="w3-btn w3-large w3-round" onClick={this.join} style={{backgroundColor:'#6164a3'}}>Join a Session</button>
+                            <button class="w3-button w3-large w3-round w3-hover-red" onClick={this.join} style={{backgroundColor:'#525252', color:'white'}}>Join a Session</button>
 
                         </div>
                     </div>
