@@ -166,12 +166,9 @@ class CreateSession extends Component {
                     </h2>
                 </div>
 
-                <div id="navigation" class="w3-sidebar w3-bar-block" style={{borderRight:'1px solid #665084', height:'100%',backgroundColor:'lightgrey',zIndex:'-1',overflow:'hidden'}}>
-
-                    <a id='display' class="w3-bar-item menuLeft" style={{backgroundColor:'PaleVioletRed',fontFamily:'Poppins, sans-serif'}}><b>{this.state.display}</b></a>
-                    <a class="w3-bar-item w3-button menuLeft" onClick={this.close} style={{backgroundColor:'lightgrey',fontFamily:'Poppins, sans-serif'}}><b>Close Session</b></a>
-
-
+                <div id='navMain' class="w3-sidebar w3-bar-block w3-responsive" style={{height:'100%',backgroundColor:'#585858',zIndex:'0', color:'#F3E6DE', boxShadow:'1px 1px 2px #f44336'}}>
+                    <a class="w3-bar-item HoverRed" id="name" style={{fontSize:'20px', outline:'2px solid #333333'}}>{this.state.display}</a>
+                    <a class="w3-bar-item w3-button w3-hover-red" onClick={this.close}style={{boxShadow:'1px 0px 1px#333333'}}>Close Session</a>
                 </div>
 
                 <div id="center" style={{width:'85%',float:'right',marginTop:'4px',height:'100%'}}>
@@ -183,15 +180,14 @@ class CreateSession extends Component {
                             className="sound-wave"
                             onStop={this.onStop}
                             strokeColor="#000000"
-                            backgroundColor="Plum"
+                            backgroundColor="#F3E6DE"
 
                         />
 
 
                     </div>
 
-                    <div id = 'right' class="w3-col" style={{borderLeft:'1px solid #665084',float:'right',width:'15%',height:'60em',backgroundColor:'#c4a5ff',display:'inline-block',position:'fixed'}}>
-
+                    <div id = 'right' class="w3-col" style={{float:'right',width:'15%', height:'100%', backgroundColor:'#585858', display:'inline-block', position:'fixed', boxShadow:'1px 1px 2px #f44336', color:'#F3E6DE'}}>
                         <br></br>
                         <p id= 'titleDisplay' style={{fontFamily:'Poppins, sans-serif'}}><b>Session Title:</b> {this.state.title}</p>
 
@@ -210,6 +206,8 @@ class CreateSession extends Component {
 
                             <br></br>
 
+                            <a class="w3-bar-item w3-button w3-hover-red" disabled={this.state.end} onClick={this.startRecording} style={{boxShadow:'1px 0px 1px#333333'}}>Start</a>
+                            <a class="w3-bar-item w3-button w3-hover-red" disabled={this.state.started} onClick={this.stopRecording} style={{boxShadow:'1px 0px 1px#333333'}}>Stop</a>
                             <Button id='buttons' disabled={this.state.end} onClick={this.startRecording} style={{margin:'1px',fontFamily:'Poppins, sans-serif'}} type="button">Start</Button>
                             <Button id='buttons' disabled={!this.state.started} onClick={this.stopRecording} style={{margin:'1px',fontFamily:'Poppins, sans-serif'}} type="button">Stop</Button>
                         </form>
