@@ -7,7 +7,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 
 
 import './styles/ReviewFeedback.css';
-import Chart from './components/Chart';
+//import Chart from './components/Chart';
 
 import { ReactMic } from 'react-mic';
 
@@ -18,20 +18,40 @@ class ReviewFeedback extends Component {
         super(props);
 
         this.db = props.db;
-        this.sessionID = props.sessionID;
+        this.sessionID = props.sessionid;
         this.onStop = this.onStop.bind(this);
         this.state = {
-            message: "",
+            predefinedFeedback: [],
+            customFeedback: [],
             blobObject: null,
-            display: "",
-            coder: props.code
+            display: ""
         };
+
+        this.db.auth().currentUser.getIdToken().then((token) => {
+            fetch("/api/sessionReview/sessionData", {
+                method: 'post',
+                body: JSON.stringify({
+                    token: token,
+                    sessionID: this.sessionID
+                }),
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                }
+            })
+            .then(response => response.json())
+            .then((data) => {
+                this.setState({
+                    'predefinedFeedback' : data.predefinedFeedback,
+                    'customFeedback': data.customFeedback
+                })
+            })
+        })
     }
 
     componentDidMount() {
-     //   getDisplayName().then(name =>{this.setState({display: name});});
-    }
 
+    }
 
 
     onStop = (blobObject) => {
@@ -84,23 +104,6 @@ class ReviewFeedback extends Component {
                     </div>
 
 
-                    <div id= 'chartReview' style={{width:'65%',height:'30em',display:'inline-block',float:'left'}}>
-                        <div class='chart' style={{width:'33%',display:'inline-block',height:'100%'}}>
-
-                            <Chart/>
-
-                        </div>
-                        <div class="chart"style={{width:'33%',display:'inline-block',height:'100%'}}>
-                            <Chart/>
-
-                        </div>
-                        <div class = 'chart' style={{width:'33%',display:'inline-block',height:'100%'}}>
-
-                            <Chart/>
-                        </div>
-                    </div>
-
-
                     <div id='titleReview' style={{width:'35%',display:'inline-block',float:'both',overflow:'auto'}}>
                         <center><h3>
                         Feedback
@@ -110,68 +113,15 @@ class ReviewFeedback extends Component {
 
                     <div id = 'rightReview' class='w3-round' style={{float:'right',border:'2px solid #665084',width:'35%',backgroundColor:'#c4a5ff',overflow:'auto',maxHeight:'33em'}}>
 
-                            <div class="reviewContainer w3-round-xlarge">
-                            <p class="'reviewContent">
-                            Display Name:
-                            </p>
-
-                             <p class="reviewContent">
-                                 TimeStamp:
-                             </p>
-
-                             <p class="reviewContent" >
-                                I thought the session was very nice alkdfn lknavlk liasd fiah daudhgiadhg aui auhgai ga uh g pgadh gpiahg ash dgpiashg piahs gpia async ai gai ghai
-                                 ai gia gia gaig async augi ia g akjdnf jkadf kahkdjf kkjak fk hkjahfkhakfh kjah fkjah kah fk hakjfh kjsadhfkasdhf ksdafh kdsah fkasdfhkdsaf hkasdfh kas kajdfnkadsjf kahfk hakf kjah fkah sfkjh aksfdh kasf async akf kahf ka false
-                                 ajdsfbj a fkas hfk kjdfh kah fkjsaf ha
-                                 akjfd kjah fkahfka gag
-                                 akgj kajg kasg asg
-                                 jkag aksdg ag async
-                             </p>
-
-                            </div>
-
-                            <div class="reviewContainer w3-round-xlarge">
-                            <p class="'reviewContent">
-                            Display Name:
-                            </p>
-
-                             <p class="reviewContent">
-                                 TimeStamp:
-                             </p>
-
-                             <p class="reviewContent" >
-                                I thought the session was very nice alkdfn lknavlk liasd fiah daudhgiadhg aui auhgai ga uh g pgadh gpiahg ash dgpiashg piahs gpia async ai gai ghai
-                                 ai gia gia gaig async augi ia g akjdnf jkadf kahkdjf kkjak fk hkjahfkhakfh kjah fkjah kah fk hakjfh kjsadhfkasdhf ksdafh kdsah fkasdfhkdsaf hkasdfh kas kajdfnkadsjf kahfk hakf kjah fkah sfkjh aksfdh kasf async akf kahf ka false
-                                 ajdsfbj a fkas hfk kjdfh kah fkjsaf ha
-                                 akjfd kjah fkahfka gag
-                                 akgj kajg kasg asg
-                                 jkag aksdg ag async
-                             </p>
-
-                            </div>
-
-                             <div class="reviewContainer w3-round-xlarge">
-                            <p class="'reviewContent">
-                            Display Name:
-                            </p>
-
-                             <p class="reviewContent">
-                                 TimeStamp:
-                             </p>
-
-                             <p class="reviewContent" >
-                                I thought the session was very nice alkdfn lknavlk liasd fiah daudhgiadhg aui auhgai ga uh g pgadh gpiahg ash dgpiashg piahs gpia async ai gai ghai
-                                 ai gia gia gaig async augi ia g akjdnf jkadf kahkdjf kkjak fk hkjahfkhakfh kjah fkjah kah fk hakjfh kjsadhfkasdhf ksdafh kdsah fkasdfhkdsaf hkasdfh kas kajdfnkadsjf kahfk hakf kjah fkah sfkjh aksfdh kasf async akf kahf ka false
-                                 ajdsfbj a fkas hfk kjdfh kah fkjsaf ha
-                                 akjfd kjah fkahfka gag
-                                 akgj kajg kasg asg
-                                 jkag aksdg ag async
-                             </p>
-
-                            </div>
-
-
-
+                            {
+                                this.state.customFeedback.map((feedbackData) => (
+                                    <div class="reviewContainer w3-round-xlarge">
+                                        <p class="reviewContent">Display Name: </p>
+                                        <p class="reviewContent">Timestamp: {feedbackData.timestamp}</p>
+                                        <p class="reviewContent">{feedbackData.message}</p>
+                                    </div>
+                                ))
+                            }
 
                     </div>
 

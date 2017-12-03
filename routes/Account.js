@@ -96,7 +96,8 @@ router.post('/getPresentedSessions', (req, res) => {
 						admin.auth().getUser(uid).then((userRecord) => {
 							sessions.push({
 								title: (sessionData.val().title ? sessionData.val().title : "UNTITLED"),
-								displayName: userRecord.displayName
+								displayName: userRecord.displayName,
+								id: sessionID
 							})
 							resolve();
 						})
@@ -126,7 +127,8 @@ router.post('/getJoinedSessions', (req, res) => {
 						admin.auth().getUser(sessionData.val().presenter).then((userRecord) => {
 							sessions.push({
 								title: (sessionData.val().title ? sessionData.val().title : "UNTITLED"),
-								displayName: userRecord.displayName
+								displayName: userRecord.displayName,
+								id: sessionID
 							});
 							resolve();
 						});
