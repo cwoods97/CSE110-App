@@ -27,9 +27,15 @@ class ReviewFeedback extends Component {
             predefinedFeedback: [],
             customFeedback: [],
             blobObject: null,
-            display: ""
+            display: "",
+            src: ""
         };
 
+        setInterval(() => {
+            if (this.state.ready) {
+                console.log(this.player.getCurrentTime());
+            }
+        }, 1000)
     }
 
     componentWillMount() {
@@ -49,8 +55,8 @@ class ReviewFeedback extends Component {
             .then((data) => {
                 console.log(data.customFeedback)
                 this.setState({
-                    'predefinedFeedback' : data.predefinedFeedback,
-                    'customFeedback': data.customFeedback
+                    'predefinedFeedback' : data.predefinedFeedback ? data.predefinedFeedback : [],
+                    'customFeedback': data.customFeedback ? data.customFeedback : []
                 })
             })
         })
@@ -75,10 +81,8 @@ class ReviewFeedback extends Component {
 
         gsReference.child(childURL).getDownloadURL().then(function(url){
             console.log(url);
-            var player = document.getElementById("player");
-            player.src = url;
-            console.log(player.src);
-        }).catch(function(error){
+            this.setState({'src': url});
+        }.bind(this)).catch(function(error){
             console.log(error);
         });
     }
@@ -122,10 +126,12 @@ class ReviewFeedback extends Component {
                 </div>
 
                 <div id="center" style={{width:'85%',float:'right',marginTop:'4px',height:'100%'}}>
-                    <div id= 'innerReview' style={{width:'65%',display:'inline-block',float:'left'}}>
-
-
-
+                    <div id= 'innerReview' style={{width:'65%',display:'inline-block',float:'left',margin:'auto'}}>
+                        <audio
+                            id="audio"
+                            controls={true}
+                            src={this.state.src}
+                        />
                     </div>
 
 
