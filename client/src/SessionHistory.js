@@ -178,7 +178,7 @@ class App extends Component {
                 <div id="joined" >
                     {
                         this.state.joinedSessions.map((sessionData) => (
-                            <div class='sessions' sessionid={sessionData.id} onClick={(e) => this.renderSession(sessionData.id)} style={{cursor:'pointer'}}>
+                            <div class='sessions' sessionid={sessionData.id}>
 
                                 <center>
                                     <h4>
