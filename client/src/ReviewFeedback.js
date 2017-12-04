@@ -135,13 +135,13 @@ class ReviewFeedback extends Component {
 
                 </div>
 
-                <div id="center" style={{width:'85%',float:'right',marginTop:'4px',height:'100%'}}>
-                    <div id= 'innerReview' style={{width:'65%',display:'inline-block',float:'left',margin:'auto'}}>
+                <div id="center" style={{width:'85%',float:'right',height:'100%'}}>
+                    <div id= 'innerReview' style={{width:'100%',display:'inline-block',float:'left',margin:'auto'}}>
                         <audio
                             id="audio"
                             controls={true}
                             src={this.state.src}
-                            style={{width:'98%',float:'both',marginLeft:'2px'}}
+                            style={{width:'100%',float:'both',margin:'2px'}}
                         />
                     </div>
 
