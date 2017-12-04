@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import './styles/Main.css';
+import './styles/App.css';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/css/bootstrap-theme.css';
 
@@ -231,7 +232,7 @@ class App extends Component {
                         <div style={{height:'15em',textAlign:'center'}}>
                         <div class='w3-responsive' style={{height:'100%'}}>
 
-                            <button class="w3-button w3-large w3-round w3-hover-red" onClick={this.create.bind(this)} style={{marginTop:'90px',backgroundColor:'#525252', color:'white'}}>Create a Session</button>
+                            <button class="w3-button w3-large w3-round w3-hover-red" onClick={this.create.bind(this)} style={{marginTop:'110px',backgroundColor:'#525252', color:'white'}}>Create a Session</button>
                         </div>
                         </div>
                     </div>
@@ -246,11 +247,11 @@ class App extends Component {
                         </div>
                         </div>
                         <div style={{height: '15em',textAlign:'center'}}>
-                        <div class='w3-responsive' style={{textAlign:'center',margin:'0 10%'}}>
+                        <div class='w3-responsive' style={{display:'inline-block', textAlign:'center',margin:'0 10%',width:'30%'}}>
                             <h6><b>Enter Session Code:</b></h6>
                             <p id = "error"></p>
 
-                            <input type="text" id="code" class='w3-input' style={{width:'60%'}}></input>
+                            <input type="text" id="code" class='w3-input'></input>
                             <br></br>
                             <button class="w3-button w3-large w3-round w3-hover-red" onClick={this.join} style={{backgroundColor:'#525252', color:'white'}}>Join a Session</button>
 
