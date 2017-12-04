@@ -229,12 +229,6 @@ class Chart extends Component {
                     },
                     maintainAspectRatio: false,
                     responsive: true,
-                    onClick: function () {
-                        this.data.datasets[0].data[0] = 0;
-                        this.data.datasets[0].data[1] = 0;
-                        console.log(this.update);
-                        this.update();
-                    },
                     width: this.props.width,
                     height: this.props.height
                 }}

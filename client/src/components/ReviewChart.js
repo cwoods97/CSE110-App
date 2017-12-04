@@ -85,7 +85,6 @@ class Chart extends Component {
         this.type = props.type;
 
         this.state = {
-            // chartData: chart,
             chartData1: chart1,
             chartData2: chart2,
             chartData3: chart3
@@ -93,7 +92,6 @@ class Chart extends Component {
 
         var type = this.type;
 
-        var chartData = this.state.chartData;
         var chartData1 = this.state.chartData1;
         var chartData2 = this.state.chartData2;
         var chartData3 = this.state.chartData3;
@@ -110,8 +108,101 @@ class Chart extends Component {
             this.chartData = this.state.chartData3;
             this.title = "Clarity";
         }
+    }
 
+    displayFeedback(feedback) {
+        var type = this.type;
+        var chartData1 = this.state.chartData1;
+        var chartData2 = this.state.chartData2;
+        var chartData3 = this.state.chartData3;
 
+        if (type === 'pace') {
+            if (feedback.message == "slow"){
+                this.state.chartData1.datasets[0].data[0]++;
+                setTimeout(function () {
+                    this.expireFeedback(1);
+                }.bind(this), 60000);
+            } else if (feedback.message == "fast"){
+                console.log('p message', feedback);
+                this.state.chartData1.datasets[0].data[1]++;
+                setTimeout(function () {
+                    this.expireFeedback(2);
+                }.bind(this), 60000);
+            }
+            this.setState({chartData1});
+        } else if (type === 'volume') {
+            if (feedback.message == "quiet"){
+                this.state.chartData2.datasets[0].data[0]++;
+                setTimeout(function () {
+                    this.expireFeedback(3);
+                }.bind(this), 60000);
+            } else if (feedback.message == "loud"){
+                console.log('v message', feedback);
+                this.state.chartData2.datasets[0].data[1]++;
+                setTimeout(function () {
+                    this.expireFeedback(4);
+                }.bind(this), 60000);
+            }
+            this.setState({chartData2});
+        } else if (type === 'clarity') {
+            if (feedback.message == "unclear"){
+                this.state.chartData3.datasets[0].data[0]++;
+                setTimeout(function () {
+                    this.expireFeedback(5);
+                }.bind(this), 60000);
+            } else if (feedback.message == "clear"){
+                console.log('c message', feedback);
+                this.state.chartData3.datasets[0].data[1]++;
+                setTimeout(function () {
+                    this.expireFeedback(6);
+                }.bind(this), 60000);
+            }
+            this.setState({chartData3});
+        }
+    }
+
+    expireFeedback(feedbackType) {
+        var chartData1 = this.state.chartData1;
+        var chartData2 = this.state.chartData2;
+        var chartData3 = this.state.chartData3;
+
+        switch (feedbackType) {
+            case 1:
+                if (chartData1.datasets[0].data[0] !== 0) {
+                    chartData1.datasets[0].data[0]--;
+                    this.setState({chartData1});
+                }
+                break;
+            case 2:
+                if (chartData1.datasets[0].data[1] !== 0) {
+                    chartData1.datasets[0].data[1]--;
+                    this.setState({chartData1});
+                }
+                break;
+            case 3:
+                if (chartData2.datasets[0].data[0] !== 0) {
+                    chartData2.datasets[0].data[0]--;
+                    this.setState({chartData2});
+                }
+                break;
+            case 4:
+                if (chartData2.datasets[0].data[1] !== 0) {
+                    chartData2.datasets[0].data[1]--;
+                    this.setState({chartData2});
+                }
+                break;
+            case 5:
+                if (chartData3.datasets[0].data[0] !== 0) {
+                    chartData3.datasets[0].data[0]--;
+                    this.setState({chartData3});
+                }
+                break;
+            case 6:
+                if (chartData3.datasets[0].data[1] !== 0) {
+                    chartData3.datasets[0].data[1]--;
+                    this.setState({chartData3});
+                }
+        }
     }
 
 
@@ -144,11 +235,6 @@ class Chart extends Component {
                     },
                     maintainAspectRatio: false,
                     responsive: true,
-                    onClick: function () {
-                        this.data.datasets[0].data[0] = 0;
-                        this.data.datasets[0].data[1] = 0;
-                        this.update();
-                    },
                     width: this.props.width,
                     height: this.props.height
                 }}

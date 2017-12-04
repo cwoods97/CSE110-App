@@ -30,12 +30,6 @@ class ReviewFeedback extends Component {
             display: "",
             src: ""
         };
-
-        setInterval(() => {
-            if (this.state.ready) {
-                console.log(this.player.getCurrentTime());
-            }
-        }, 1000)
     }
 
     componentWillMount() {
@@ -85,6 +79,22 @@ class ReviewFeedback extends Component {
         }.bind(this)).catch(function(error){
             console.log(error);
         });
+
+        this.pChart = document.getElementById('pChart');
+        this.vChart = document.getElementById('vChart');
+        this.cChart = document.getElementById('cChart');
+
+        this.audio = document.getElementById('audio');
+
+        setInterval(() => {
+            this.state.predefinedFeedback.forEach((feedback) => {
+                if (this.audio.currentTime - feedback.timestamp < 5) {
+                    this.pChart.displayFeedback(feedback);
+                    this.vChart.displayFeedback(feedback);
+                    this.cChart.displayFeedback(feedback);
+                }
+            }, this)
+        }, 5000)
     }
 
     history = function(ev){
@@ -138,17 +148,20 @@ class ReviewFeedback extends Component {
                     <div id= 'chartReview' style={{width:'65%',height:'30em',display:'inline-block',float:'left'}}>
                         <div class='chart' style={{width:'33%',display:'inline-block',height:'100%'}}>
 
-                            <ReviewChart type='pace' data={this.state.predefinedFeedback}/>
+                            <ReviewChart
+                                ref={(chart) => {this.pChart = chart}}
+                                type='pace'
+                                data={this.state.predefinedFeedback} />
 
                         </div>
                         <div class="chart"style={{width:'33%',display:'inline-block',height:'100%'}}>
 
-                            <ReviewChart type='volume'/>
+                            <ReviewChart ref={(chart) => {this.vChart = chart}} type='volume' data={this.state.predefinedFeedback} />
 
                         </div>
                         <div class = 'chart' style={{width:'33%',display:'inline-block',height:'100%'}}>
 
-                            <ReviewChart type='clarity' />
+                            <ReviewChart ref={(chart) => {this.cChart = chart}} type='clarity' data={this.state.predefinedFeedback} />
                         </div>
                     </div>
 
