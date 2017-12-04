@@ -149,7 +149,6 @@ class App extends Component {
                     color:'#F3E6DE', zIndex:'0',overflow:'hidden', boxShadow:'1px 1px 2px #F3E6DE'}}>
 
                     <a href="#" class="w3-bar-item HoverRed" style={{outline:'2px solid #333333', fontSize:'20px'}}>{this.state.display}</a>
-                    <a href="#" class="w3-bar-item w3-button w3-hover-red" onClick={this.home}style={{boxShadow:'1px 0px 1px #333333'}}>Home</a>
                     <br></br>
                     <br></br>
                     <br></br>

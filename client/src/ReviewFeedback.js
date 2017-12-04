@@ -120,7 +120,7 @@ class ReviewFeedback extends Component {
                 <div id="navigation" class="w3-sidebar w3-bar-block w3-responsive" style={{height:'100%',backgroundColor:'#585858',zIndex:'0', color:'#F3E6DE', boxShadow:'1px 1px 2px #525252'}}>
 
                     <a id='display' class="w3-bar-item HoverRed" style={{fontSize:'20px', outline:'2px solid #333333'}}>{this.state.display}</a>
-                    <a class="w3-bar-item w3-button w3-hover-red" onClick={this.history.bind(this)} style={{color:'white', boxShadow:'1px 0px 1px #333333'}}>Session History</a>
+                    <a class="w3-bar-item w3-button w3-hover-red" onClick={this.history.bind(this)} style={{color:'white', boxShadow:'1px 0px 1px #333333'}}>Back</a>
 
 
                 </div>
