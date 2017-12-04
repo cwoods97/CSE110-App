@@ -43,7 +43,7 @@ function borderColors(type) {
     }
 
 var chart1 = {
-    labels: ['Bad', 'Good'],
+    labels: ['Slow', 'Fast'],
     datasets: [{
         data: [0,0],
         label: 'Votes',
@@ -54,7 +54,7 @@ var chart1 = {
 }
 
 var chart2 = {
-    labels: ['Bad', 'Good'],
+    labels: ['Quiet', 'Loud'],
     datasets: [{
         data: [0,0],
         label: 'Votes',
@@ -65,7 +65,7 @@ var chart2 = {
 }
 
 var chart3 = {
-    labels: ['Bad', 'Good'],
+    labels: ['Unclear', 'Clear'],
     datasets: [{
         data: [0,0],
         label: 'Votes',
