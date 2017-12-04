@@ -22,6 +22,7 @@ class ReviewFeedback extends Component {
 
         this.db = props.db;
         this.sessionID = props.sessionid;
+        console.log("Session ID", this.sessionID)
 
         this.state = {
             predefinedFeedback: [],
@@ -88,7 +89,9 @@ class ReviewFeedback extends Component {
 
         setInterval(() => {
             this.state.predefinedFeedback.forEach((feedback) => {
-                if (this.audio.currentTime - feedback.timestamp < 5) {
+                if (feedback.timestamp - this.audio.currentTime < 5) {
+                    console.log("CT", this.audio.currentTime);
+                    console.log("TS", feedback.timestamp);
                     this.pChart.displayFeedback(feedback);
                     this.vChart.displayFeedback(feedback);
                     this.cChart.displayFeedback(feedback);
