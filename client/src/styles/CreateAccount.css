@@ -1,0 +1,23 @@
+
+input[type="text"], input[type="password"] {
+    width: 100% !important;
+    margin: 8px 0 !important;
+    box-sizing: border-box !important;
+    border: 3px solid #585858 !important;
+    border-radius: 15px !important;
+    -webkit-transition: 0.5s !important;
+    transition: 0.5s !important;
+    outline: none !important;
+}
+
+input[type="submit"] {
+    width: 40% !important;
+    margin: 8px 0 !important;
+    box-sizing: border-box !important;
+    border-radius: 15px !important;
+    outline: none !important;
+}
+
+input[type="text"]:focus, input[type="password"]:focus {
+    border: 3px solid #f3e6de !important;
+}
