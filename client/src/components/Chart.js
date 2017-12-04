@@ -152,9 +152,6 @@ class Chart extends Component {
                 }
                 this.setState({chartData3});
             }
-            console.log("pace dataset: " + this.state.chartData1.datasets[0].data[0] + this.state.chartData1.datasets[0].data[1]);
-            console.log("volume dataset: " + this.state.chartData2.datasets[0].data[0] + this.state.chartData2.datasets[0].data[1]);
-            console.log("speed dataset: " + this.state.chartData3.datasets[0].data[0] + this.state.chartData3.datasets[0].data[1]);
         }.bind(this));
     }
 

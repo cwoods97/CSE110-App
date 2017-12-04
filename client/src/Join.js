@@ -131,7 +131,7 @@ class Join extends Component {
                 </div>
 
 
-                <div id='navigationJoin' class=" w3-sidebar w3-bar-block w3-responsive" style={{boxShadow:'1px 1px 2px #f44336', float:'both',margin:'auto',height:'100%',backgroundColor:'#585858',zIndex:'0', color:'#F3E6DE'}}>
+                <div id='navigationJoin' class=" w3-sidebar w3-bar-block w3-responsive" style={{boxShadow:'1px 1px 2px #525252', float:'both',margin:'auto',height:'100%',backgroundColor:'#585858',zIndex:'0', color:'#F3E6DE'}}>
 
 
                     <a class="w3-bar-item HoverRed" style={{fontSize:'20px', outline:'2px solid #333333'}}><b>{this.state.display}</b></a>

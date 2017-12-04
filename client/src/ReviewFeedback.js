@@ -8,6 +8,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 import './styles/ReviewFeedback.css';
 import ReviewChart from './components/ReviewChart';
 import SessionHistory from './SessionHistory';
+import Main from './Main';
 
 import { ReactMic } from 'react-mic';
 import {getDisplayName} from "./RegisterFirebaseUser";
@@ -26,9 +27,15 @@ class ReviewFeedback extends Component {
             predefinedFeedback: [],
             customFeedback: [],
             blobObject: null,
-            display: ""
+            display: "",
+            src: ""
         };
 
+        setInterval(() => {
+            if (this.state.ready) {
+                console.log(this.player.getCurrentTime());
+            }
+        }, 1000)
     }
 
     componentWillMount() {
@@ -48,11 +55,19 @@ class ReviewFeedback extends Component {
             .then((data) => {
                 console.log(data.customFeedback)
                 this.setState({
-                    'predefinedFeedback' : data.predefinedFeedback,
-                    'customFeedback': data.customFeedback
+                    'predefinedFeedback' : data.predefinedFeedback ? data.predefinedFeedback : [],
+                    'customFeedback': data.customFeedback ? data.customFeedback : []
                 })
             })
         })
+
+
+    }
+
+    main = function(ev) {
+
+        ev.preventDefault();
+        ReactDOM.render(<Main db={this.db} />, document.getElementById('root'));
 
 
     }
@@ -66,10 +81,8 @@ class ReviewFeedback extends Component {
 
         gsReference.child(childURL).getDownloadURL().then(function(url){
             console.log(url);
-            var player = document.getElementById("player");
-            player.src = url;
-            console.log(player.src);
-        }).catch(function(error){
+            this.setState({'src': url});
+        }.bind(this)).catch(function(error){
             console.log(error);
         });
     }
@@ -95,12 +108,12 @@ class ReviewFeedback extends Component {
 
         return (
 
-            <div style={{width:'100%',height:'100%',borderBottom:'1px solid red',zIndex:'9' }}>
+            <div style={{width:'100%',height:'100%',borderBottom:'1px solid #F3E6DE',zIndex:'9' }}>
                 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"></link>
 
                 <div style={{backgroundColor:'#333333',height:"100%"}}>
                     <h2 style={{marginLeft:'8px',marginTop:'0px',marginBottom:'0px',height:'50px', color:'white'}}><b></b>
-                        <img src={logo} width="125" height="50" />
+                        <img src={logo} width="125" height="50" style={{cursor:'pointer'}} onClick={this.main.bind(this)}/>
                     </h2>
                 </div>
 
@@ -113,10 +126,12 @@ class ReviewFeedback extends Component {
                 </div>
 
                 <div id="center" style={{width:'85%',float:'right',marginTop:'4px',height:'100%'}}>
-                    <div id= 'innerReview' style={{width:'65%',display:'inline-block',float:'left'}}>
-
-
-
+                    <div id= 'innerReview' style={{width:'65%',display:'inline-block',float:'left',margin:'auto'}}>
+                        <audio
+                            id="audio"
+                            controls={true}
+                            src={this.state.src}
+                        />
                     </div>
 
 
