@@ -27,6 +27,8 @@ router.post('/sessionData', (req, res) => {
 		})
 
 		Promise.all(promises).then(() => {
+			predefinedFeedback = predefinedFeedback.sort((a,b)=> a.timestamp > b.timestamp)
+			customFeedback = customFeedback.sort((a,b)=> a.timestamp > b.timestamp)
 			res.status(200).json({
 				'predefinedFeedback' : predefinedFeedback,
 				'customFeedback' : customFeedback
