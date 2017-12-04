@@ -167,20 +167,20 @@ class Join extends Component {
                         <center>
 
                             <p>The speaker is too slow or too fast.</p>
-                            <button  onClick={(e) => this.sendPredef('slow', e)} class="predefined w3-button w3-round" style={{backgroundColor:'#525252',color:'#f44336',width:'45px',height:'40px'}}><img src={slow} height='40' width='40'></img> </button>
-                            <button  onClick={(e) => this.sendPredef('fast', e)} class="predefined w3-button w3-round" style={{backgroundColor:'#525252',color:'#f44336',width:'45px',height:'40px'}}><img src={fast} height="40" width="40"></img></button>
+                            <button  onClick={(e) => this.sendPredef('slow', e)} class="predefined w3-button w3-round w3-hover-red" style={{backgroundColor:'#525252',color:'#f44336',width:'45px',height:'40px'}}><img src={slow} height='40' width='40'></img> </button>
+                            <button  onClick={(e) => this.sendPredef('fast', e)} class="predefined w3-button w3-round w3-hover-red" style={{backgroundColor:'#525252',color:'#f44336',width:'45px',height:'40px'}}><img src={fast} height="40" width="40"></img></button>
 
                             <br></br>
 
                             <p>The speaker is too quiet or too loud.</p>
-                            <button  onClick={(e) => this.sendPredef('quiet', e)} class="predefined w3-button w3-round" style={{backgroundColor:'#665084',color:'white',width:'45px',height:'40px'}}><img src={quiet} height='40' width='40'></img> </button>
-                            <button  onClick={(e) => this.sendPredef('loud', e)} class="predefined w3-round w3-button" style={{backgroundColor:'#665084',width:'45px',height:'40px',border:'none'}}><img src={loud} height="40" width="40"></img></button>
+                            <button  onClick={(e) => this.sendPredef('quiet', e)} class="predefined w3-button w3-round w3-hover-red" style={{backgroundColor:'#525252',color:'white',width:'45px',height:'40px'}}><img src={quiet} height='40' width='40'></img> </button>
+                            <button  onClick={(e) => this.sendPredef('loud', e)} class="predefined w3-round w3-button w3-hover-red" style={{backgroundColor:'#525252',width:'45px',height:'40px',border:'none'}}><img src={loud} height="40" width="40"></img></button>
 
                             <br></br>
 
                             <p>The speaker is clear or unclear.</p>
-                            <button  onClick={(e) => this.sendPredef('unclear', e)} class="predefined w3-button w3-round" style={{backgroundColor:'#f44336',color:'white',width:'45px',height:'40px'}}><img src={unclear} height='40' width='40'></img> </button>
-                            <button  onClick={(e) => this.sendPredef('clear', e)} class="predefined w3-round w3-button" style={{backgroundColor:'#525252',width:'45px',height:'40px',border:'none'}}><img src={clear} height="40" width="40"></img></button>
+                            <button  onClick={(e) => this.sendPredef('unclear', e)} class="predefined w3-button w3-round w3-hover-red" style={{backgroundColor:'#525252',color:'white',width:'45px',height:'40px'}}><img src={unclear} height='40' width='40'></img> </button>
+                            <button  onClick={(e) => this.sendPredef('clear', e)} class="predefined w3-round w3-button w3-hover-red" style={{backgroundColor:'#525252',width:'45px',height:'40px',border:'none'}}><img src={clear} height="40" width="40"></img></button>
 
                         </center>
 
@@ -203,10 +203,10 @@ class Join extends Component {
 
                             <form class="sender w3-responsive">
 
-                                <input id="comment" style={{display:'inline-block'}}type="text" class="new-message" name="message" placeholder="Type a message..." autocomplete="off"></input>
+                                <input id="comment" style={{display:'inline-block'}} class="new-message" name="message" placeholder="Type a message..." autocomplete="off"></input>
 
 
-                                <button id='post' type="submit" style={{display:'inline-block'}} class="send" onClick={this.sendComment.bind(this)} >Post</button>
+                                <button id='post' type="submit" style={{display:'inline-block',margin:'5px 0'}} class="send" onClick={this.sendComment.bind(this)} >Post</button>
                             </form>
                         </div>
                         </div>
