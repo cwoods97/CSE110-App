@@ -21,7 +21,6 @@ router.post('/createAccount', (req, res) => {
 	});
 })
 
-// TODO Add a permanent exception in server.js to allow verification requests to pass thru w/o authentication
 router.post('/verify', (req, res) => {
 	var admin = req.locals.admin;
 	var displayName = req.locals.displayName;
@@ -88,7 +87,12 @@ router.post('/getPresentedSessions', (req, res) => {
 	var sessions = [];
 	admin.database().ref("users").child(uid).child("hostedSessions").once('value').then((presentedSessions) => {
 		var promises = [];
-		presentedSessions = Object.keys(presentedSessions.val());
+
+		presentedSessions = presentedSessions.val();
+		if (!presentedSessions) { return res.json([]) }
+
+		presentedSessions = Object.keys(presentedSessions);
+
 		presentedSessions.forEach((sessionID) => {
 			promises.push(
 				new Promise((resolve, reject) => {
@@ -101,8 +105,8 @@ router.post('/getPresentedSessions', (req, res) => {
 								id: sessionID
 							})
 							resolve();
-						})
-					});
+						}).catch((error) => console.log(error))
+					}).catch((error) => console.log(error));
 				})
 			);
 		});
@@ -110,7 +114,7 @@ router.post('/getPresentedSessions', (req, res) => {
 		Promise.all(promises).then(() => {
 			res.json(sessions);
 		});
-	});
+	}).catch((error) => console.log(error));
 })
 
 router.post('/getJoinedSessions', (req, res) => {
@@ -120,7 +124,12 @@ router.post('/getJoinedSessions', (req, res) => {
 	var sessions = [];
 	admin.database().ref("users").child(uid).child("joinedSessions").once('value').then((joinedSessions) => {
 		var promises = [];
-		joinedSessions = Object.keys(joinedSessions.val());
+
+		joinedSessions = joinedSessions.val();
+		if (!joinedSessions) { return res.json([]) }
+
+		joinedSessions = Object.keys(joinedSessions);
+
 		joinedSessions.forEach((sessionID) => {
 			promises.push(
 				new Promise((resolve, reject) => {
@@ -133,8 +142,8 @@ router.post('/getJoinedSessions', (req, res) => {
 								id: sessionID
 							});
 							resolve();
-						});
-					});
+						}).catch((error) => console.log(error))
+					}).catch((error) => console.log(error));
 				})
 			);
 		});
@@ -142,7 +151,7 @@ router.post('/getJoinedSessions', (req, res) => {
 		Promise.all(promises).then(() => {
 			res.json(sessions);
 		});
-	});
+	}).catch((error) => console.log(error));
 })
 
 

@@ -21,7 +21,7 @@ class ReviewFeedback extends Component {
 
         this.db = props.db;
         this.sessionID = props.sessionid;
-        this.onStop = this.onStop.bind(this);
+
         this.state = {
             predefinedFeedback: [],
             customFeedback: [],
@@ -30,8 +30,8 @@ class ReviewFeedback extends Component {
         };
 
     }
-   componentWillMount() {
 
+    componentWillMount() {
         this.db.auth().currentUser.getIdToken().then((token) => {
             fetch("/api/sessionReview/sessionData", {
                 method: 'post',
@@ -46,12 +46,11 @@ class ReviewFeedback extends Component {
             })
             .then(response => response.json())
             .then((data) => {
-								if(data.predefinedFeedback){
-                		this.setState({
-                    		'predefinedFeedback' : data.predefinedFeedback,
-                   		  'customFeedback': data.customFeedback
-                		})
-								}
+                console.log(data.customFeedback)
+                this.setState({
+                    'predefinedFeedback' : data.predefinedFeedback,
+                    'customFeedback': data.customFeedback
+                })
             })
         })
 
@@ -60,12 +59,9 @@ class ReviewFeedback extends Component {
 
     componentDidMount(){
         getDisplayName().then(name =>{this.setState({display: name});})
-        
+
         var storage = this.db.storage();
         var gsReference = storage.refFromURL('gs://speakeasy-25a66.appspot.com');
-
-        // var childURL = "-L-4ElT12kH_Hd0xBT1C/media" // TESTING URL
-        console.log(this.sessionID);
         var childURL = this.sessionID + "/media";
 
         gsReference.child(childURL).getDownloadURL().then(function(url){
@@ -74,24 +70,26 @@ class ReviewFeedback extends Component {
             player.src = url;
             console.log(player.src);
         }).catch(function(error){
-
-        });
-    }
-
-    onStop = (blobObject) => {
-        const storageRef = this.db.storage().ref().child(this.sessionID);
-        const recordingRef = storageRef.child('media');
-        recordingRef.put(blobObject.blob).then((snapshot) => {
-            console.log("Successfully uploaded audio recording to Firebase.");
-        }).catch((error) => {
             console.log(error);
         });
-    };
+    }
 
     history = function(ev){
         //ev.preventDefault();
         ReactDOM.render(<SessionHistory db={this.db} />, document.getElementById('root'));
     };
+
+    formatTimestamp = (timestamp) => {
+        let seconds = Math.floor(parseFloat(timestamp));
+
+        var minutes = Math.floor(seconds / 60);
+        seconds = seconds - (minutes * 60);
+
+        minutes = minutes.toString().length > 1 ? minutes.toString() : "0".repeat(2 - minutes.toString().length) + minutes.toString();
+        seconds = seconds.toString().length > 1 ? seconds.toString() : "0".repeat(2 - seconds.toString().length) + seconds.toString();
+
+        return minutes.toString() + ":" + seconds.toString();
+    }
 
     render() {
 
@@ -151,8 +149,8 @@ class ReviewFeedback extends Component {
                             {
                                 this.state.customFeedback.map((feedbackData) => (
                                     <div class="reviewContainer w3-round-xlarge">
-                                        <p class="reviewContent">Display Name: </p>
-                                        <p class="reviewContent">Timestamp: {feedbackData.timestamp}</p>
+                                        <p class="reviewContent">Display Name: {feedbackData.uid}</p>
+                                        <p class="reviewContent">Timestamp: {this.formatTimestamp(feedbackData.timestamp)}</p>
                                         <p class="reviewContent">{feedbackData.message}</p>
                                     </div>
                                 ))

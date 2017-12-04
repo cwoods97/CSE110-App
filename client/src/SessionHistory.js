@@ -25,23 +25,25 @@ class App extends Component {
             joinedSessions: [],
             presentedSessions: []
         }
+
         this.getJoinedSessions().then((response) => {
             this.setState({
                 joinedSessions : response
             });
-        })
+        }).catch((error) => { console.log(error) })
+
         this.getPresentedSessions().then((response) => {
             this.setState({
                 presentedSessions : response
             })
-        })
+        }).catch((error) => { console.log(error) })
     }
 
     getPresentedSessions() {
         return new Promise((resolve, reject) => {
             firebase.auth().currentUser.getIdToken()
-                .then(token => {
-                    fetch('/api/account/getPresentedSessions', {
+            .then(token => {
+                fetch('/api/account/getPresentedSessions', {
                     method: 'post',
                     body: JSON.stringify({
                         token: token
@@ -52,21 +54,17 @@ class App extends Component {
                     }
                 })
                 .then(response => response.json())
-                .then(response => {
-                    resolve(response);
-                })
-                .catch(error => {
-                    return reject(error);
-                });
-            }).catch(error => { reject(error); })
+                .then(response => { resolve(response) })
+                .catch(error => { return reject(error) });
+            }).catch(error => { return reject(error); })
         })
     }
 
     getJoinedSessions() {
         return new Promise((resolve, reject) => {
             firebase.auth().currentUser.getIdToken()
-                .then(token => {
-                    fetch('/api/account/getJoinedSessions', {
+            .then(token => {
+                fetch('/api/account/getJoinedSessions', {
                     method: 'post',
                     body: JSON.stringify({
                         token: token
@@ -77,13 +75,9 @@ class App extends Component {
                     }
                 })
                 .then(response => response.json())
-                .then(response => {
-                    resolve(response);
-                })
-                .catch(error => {
-                    return reject(error);
-                });
-            }).catch(error => { reject(error); })
+                .then(response => { resolve(response) })
+                .catch(error => { return reject(error) });
+            }).catch(error => { return reject(error); })
         })
     }
 
@@ -193,9 +187,9 @@ class App extends Component {
                                     <h6>
                                         {sessionData.displayName}
                                     </h6>
-																		<h7>
-																				{sessionData.creationTime}
-																		</h7>
+    								<h6>
+										{sessionData.creationTime}
+    								</h6>
                                 </center>
 
                             </div>
@@ -214,9 +208,9 @@ class App extends Component {
                                     <h6>
                                         {sessionData.displayName}
                                     </h6>
-																		<h7>
-																				{sessionData.creationTime}
-																		</h7>
+									<h6>
+										{sessionData.creationTime}
+									</h6>
 
                                 </center>
 
