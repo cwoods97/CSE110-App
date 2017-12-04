@@ -131,7 +131,7 @@ class ReviewFeedback extends Component {
                             id="audio"
                             controls={true}
                             src={this.state.src}
-                            style={{width:'98%',float:'both',marginLeft:'2px',backgroundColor:'#333333'}}
+                            style={{width:'98%',float:'both',marginLeft:'2px'}}
                         />
                     </div>
 
