@@ -57,7 +57,7 @@ class CreateAccount extends Component {
                     } else if (errorCode === 'auth/name-already-in-use') {
                         getById('displayNameError').innerHTML = "Display name is already in use";
                     } else if (errorCode === 'auth/email-already-in-use') {
-                        getById('emailError').innerHTML = "Email is already in use";
+                        getById("emailError").innerHTML = "Email is already in use";
                     } else if (errorCode === 'auth/weak-password') {
                         getById('pwdError').innerHTML = "Password must be at least 6 characters";
                     }

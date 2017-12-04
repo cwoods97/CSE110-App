@@ -119,8 +119,8 @@ class ReviewFeedback extends Component {
 
                 <div id="navigation" class="w3-sidebar w3-bar-block w3-responsive" style={{height:'100%',backgroundColor:'#585858',zIndex:'0', color:'#F3E6DE', boxShadow:'1px 1px 2px #525252'}}>
 
-                    <a id='display' class="w3-bar-item HoverRed" style={{fontSize:'20px', outline:'2px solid #333333'}}><b>{this.state.display}</b></a>
-                    <a class="w3-bar-item w3-button w3-hover-red" onClick={this.history.bind(this)} style={{color:'white', boxShadow:'1px 0px 1px #333333'}}><b>Session History</b></a>
+                    <a id='display' class="w3-bar-item HoverRed" style={{fontSize:'20px', outline:'2px solid #333333'}}>{this.state.display}</a>
+                    <a class="w3-bar-item w3-button w3-hover-red" onClick={this.history.bind(this)} style={{color:'white', boxShadow:'1px 0px 1px #333333'}}>Back</a>
 
 
                 </div>
@@ -131,6 +131,7 @@ class ReviewFeedback extends Component {
                             id="audio"
                             controls={true}
                             src={this.state.src}
+                            style={{width:'98%',float:'both',marginLeft:'2px'}}
                         />
                     </div>
 
@@ -152,21 +153,23 @@ class ReviewFeedback extends Component {
                         </div>
                     </div>
 
-                    <div id='titleReview' style={{width:'35%',display:'inline-block',float:'both',overflow:'auto'}}>
+                    <div id='titleReview' style={{width:'34%',marginRight:'1%',display:'inline-block',float:'both',overflow:'auto'}}>
                         <center><h3>
                         Feedback
                         </h3>
                         </center>
                     </div>
 
-                    <div id = 'rightReview' class='w3-round' style={{float:'right',border:'2px solid #f44336',width:'35%',backgroundColor:'#585858',overflow:'auto',maxHeight:'33em'}}>
+                    <div id = 'rightReview' class='w3-round' style={{float:'right',width:'34%',marginRight:'1%',backgroundColor:'#585858',overflow:'auto',height:'33em',maxHeight:'33em',boxShadow:'1px 1px 2px #525252'}}>
 
                             {
                                 this.state.customFeedback.map((feedbackData) => (
                                     <div class="reviewContainer w3-round-xlarge">
-                                        <p class="reviewContent">Display Name: {feedbackData.uid}</p>
-                                        <p class="reviewContent">Timestamp: {this.formatTimestamp(feedbackData.timestamp)}</p>
                                         <p class="reviewContent">{feedbackData.message}</p>
+                                        <div style={{borderTop: '1px solid #000000'}}>
+                                            <p style={{fontSize:'10px', float:'left'}} class="reviewContent">from: {feedbackData.uid}</p>
+                                            <p style={{fontSize:'10px', float:'right'}} class="reviewContent">{this.formatTimestamp(feedbackData.timestamp)}</p>
+                                        </div>
                                     </div>
                                 ))
 
