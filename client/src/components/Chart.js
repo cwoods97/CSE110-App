@@ -35,7 +35,7 @@ function borderColors(type) {
     }
 
 var chart1 = {
-    labels: ['Slow', 'Fast'],
+    labels: ['Bad', 'Good'],
     datasets: [{
         data: [0,0],
         label: 'Votes',
@@ -46,7 +46,7 @@ var chart1 = {
 }
 
 var chart2 = {
-    labels: ['Quiet', 'Loud'],
+    labels: ['Bad', 'Good'],
     datasets: [{
         data: [0,0],
         label: 'Votes',
@@ -57,7 +57,7 @@ var chart2 = {
 }
 
 var chart3 = {
-    labels: ['Unclear', 'Clear'],
+    labels: ['Bad', 'Good'],
     datasets: [{
         data: [0,0],
         label: 'Votes',
@@ -229,6 +229,11 @@ class Chart extends Component {
                     },
                     maintainAspectRatio: false,
                     responsive: true,
+                    onClick: function () {
+                        this.data.datasets[0].data[0] = 0;
+                        this.data.datasets[0].data[1] = 0;
+                        this.update();
+                    },
                     width: this.props.width,
                     height: this.props.height
                 }}
