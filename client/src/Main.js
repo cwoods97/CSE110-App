@@ -253,7 +253,7 @@ class App extends Component {
 
                             <input type="text" id="code" class='w3-input'></input>
                             <br></br>
-                            <button class="w3-button w3-large w3-round w3-hover-red" onClick={this.join} style={{backgroundColor:'#525252', color:'white'}}>Join a Session</button>
+                            <button class="w3-button w3-large w3-round w3-hover-red" onClick={this.join} style={{backgroundColor:'#525252', color:'white'}} >Join a Session</button>
 
                         </div>
                     </div>
