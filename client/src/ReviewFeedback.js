@@ -89,7 +89,7 @@ class ReviewFeedback extends Component {
 
         setInterval(() => {
             this.state.predefinedFeedback.forEach((feedback) => {
-                if (feedback.timestamp - this.audio.currentTime < 5) {
+                if (Math.abs(feedback.timestamp - this.audio.currentTime) < 5 && feedback.timestamp < this.audio.currentTime) {
                     console.log("CT", this.audio.currentTime);
                     console.log("TS", feedback.timestamp);
                     this.pChart.displayFeedback(feedback);
