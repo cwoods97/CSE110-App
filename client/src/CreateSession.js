@@ -169,8 +169,7 @@ class CreateSession extends Component {
                     <input id="title" style={{color:'black'}}class="w3-input" type="input" name="editTitle" placeholder={"Edit Title"}></input>
                     <p id="titleError"></p>
 
-                    <a class="w3-bar-item w3-button w3-hover-red" onClick={this.updateTitle} style={{boxShadow:'1px 0px 1px#333333'}}>Change</a>
-                    <Button onClick={this.updateTitle}>Change</Button>
+                    <button class="w3-button w3-round w3-hover-red" onClick={this.updateTitle} style={{width:'40%',margin:'8px 0', boxSizing:'border-box',borderRadius:'15px',outline:'none',backgroundColor:'#333333'}}>Change</button>
 
                     <br></br>
                     <br></br>
@@ -185,11 +184,10 @@ class CreateSession extends Component {
 
                         <br></br>
 
-                        <a class="w3-bar-item w3-button w3-hover-red" disabled={this.state.end} onClick={this.startRecording} style={{boxShadow:'1px 0px 1px#333333'}}>Start</a>
-                        <a class="w3-bar-item w3-button w3-hover-red" disabled={this.state.started} onClick={this.stopRecording} style={{boxShadow:'1px 0px 1px#333333'}}>Stop</a>
-                        <Button id='buttons' disabled={this.state.end} onClick={this.startRecording} style={{margin:'1px',fontFamily:'Poppins, sans-serif'}} type="button">Start</Button>
-                        <Button id='buttons' disabled={!this.state.started} onClick={this.stopRecording} style={{margin:'1px',fontFamily:'Poppins, sans-serif'}} type="button">Stop</Button>
+                        <button id='buttons' class="w3-button w3-round w3-hover-red" disabled={this.state.end} onClick={this.startRecording} style={{width:'40%',margin:'8px 0', boxSizing:'border-box',borderRadius:'15px',outline:'none',backgroundColor:'#333333'}}>Start</button>
+                        <button id='buttons' class="w3-button w3-round w3-hover-red" disabled={!this.state.started} onClick={this.stopRecording} style={{width:'40%',margin:'8px 0', boxSizing:'border-box',borderRadius:'15px',outline:'none',backgroundColor:'#333333'}}>Stop</button>
                     </form>
+
                 </div>
 
                 <div id="center" style={{width:'85%',float:'right',height:'100%'}}>

@@ -139,14 +139,14 @@ class App extends Component {
             <div >
                 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"></link>
 
-                <div style={{backgroundColor:'#333333',height:"100%", outline: '1px solid red'}}>
+                <div style={{backgroundColor:'#333333',height:"100%", outline: '1px solid #F3E6DE'}}>
                     <h2 style={{marginLeft:'8px',marginTop:'0px',marginBottom:'0px',height:'50px', color:'white', cursor:'pointer'}}><b></b>
                         <img src={logo} width="125" height="50" onClick={this.home}/>
                     </h2>
                 </div>
 
                 <div id="sidebar" className="w3-sidebar w3-bar-block" style={{width:'20%',height:'100%',backgroundColor:'#585858',
-                    color:'#F3E6DE', zIndex:'0',overflow:'hidden', boxShadow:'1px 1px 2px #f44336'}}>
+                    color:'#F3E6DE', zIndex:'0',overflow:'hidden', boxShadow:'1px 1px 2px #F3E6DE'}}>
 
                     <a href="#" class="w3-bar-item HoverRed" style={{outline:'2px solid #333333', fontSize:'20px'}}>{this.state.display}</a>
                     <a href="#" class="w3-bar-item w3-button w3-hover-red" onClick={this.home}style={{boxShadow:'1px 0px 1px #333333'}}>Home</a>
