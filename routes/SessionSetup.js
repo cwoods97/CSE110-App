@@ -2,9 +2,22 @@ var express = require('express');
 var router = express.Router();
 
 router.post('/createSession', (req, res) => {
+
+		const date = new Date();
+		const month = date.getMonth() + 1;
+		let day = date.getDate();
+		if(day < 10) day = "0" + day;
+		const year = date.getFullYear();
+		let hour = date.getHours();
+		if(hour < 10) hour = "0" + hour;
+		let minute = date.getMinutes();
+		if(minute < 10) minute = "0" + minute;
+		let seconds = date.getSeconds();
+		if(seconds < 10) seconds = "0" + seconds;
+		const creationTime = month + "-" + day + "-" + year + " " + hour + ":" + minute + ":" + seconds;
+
 	const uid = req.locals.uid;
 	const admin = req.locals.admin;
-	const creationTime = req.body.creationTime;
 
 	var sessionRef = admin.database().ref('sessions');
 	var userRef = admin.database().ref("users").child(uid);

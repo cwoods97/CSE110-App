@@ -50,9 +50,10 @@ router.post('/toggleActive', (req, res) => {
 
 router.post('/addStartTime', (req, res) => {
 
+		const timestamp = Date.now() / 1000;
+
 		const admin = req.locals.admin;
 		const session = req.body.sessionCode;
-		const timestamp = req.body.time;
 		const audio = req.body.audio;
 
 		ref = admin.database().ref("sessions").child(session);

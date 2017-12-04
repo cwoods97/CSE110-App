@@ -1,5 +1,5 @@
 
-export function createBackendSession(idToken, creationTime) {
+export function createBackendSession(idToken) {
 
     return new Promise((resolve, reject) => {
 
@@ -9,7 +9,6 @@ export function createBackendSession(idToken, creationTime) {
 				method: 'post',
 				body: JSON.stringify({
 					token: idToken,
-					creationTime: creationTime
 				}),
 				headers: {
 					'Content-Type': 'application/json',
@@ -154,14 +153,13 @@ export function toggleActive(idToken, code) {
 	});
 }
 
-export function setStartTime(idToken, sessionId, timestamp, type){
+export function setStartTime(idToken, sessionId, type){
 		return new Promise((resolve, reject) => {
 			fetch('/api/PresenterSession/addStartTime', {
 					method: 'post',
 					body: JSON.stringify({
 							token: idToken,
 							sessionCode: sessionId,
-							time: timestamp,
 							audio: type
 					}),
 					headers: {

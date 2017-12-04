@@ -50,11 +50,10 @@ class Join extends Component {
     }
 
     sendPredef = function(comment, e){
-		var currTime = Date.now() / 1000;
 
         e.preventDefault();
         getIdToken().then(token =>{
-            sendPredefinedFeedback(token, this.sessionID, comment, currTime, 0)
+            sendPredefinedFeedback(token, this.sessionID, comment, 0)
 			.then((message) => {
                 console.log("Message sent.")
 			})
@@ -67,7 +66,6 @@ class Join extends Component {
 
     sendComment = function (e){
 
-		var currTime = Date.now() / 1000;
 		var session = this.sessionID;
 
         e.preventDefault()
@@ -79,7 +77,7 @@ class Join extends Component {
         else {
 
 			getIdToken().then(token => {
-				sendPredefinedFeedback(token, session, comment, currTime, 1)
+				sendPredefinedFeedback(token, session, comment, 1)
 				.then((message) => {
 					var mList = document.getElementById('messages');
 
