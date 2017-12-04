@@ -14,12 +14,12 @@ import {getIdToken} from './RegisterFirebaseUser.js';
 import {sendPredefinedFeedback} from './SendFeedback.js';
 
 import logo from './Logo.png';
-import slow from './Slow.png';
-import fast from './Fast.png';
-import quiet from './Quiet.png';
-import loud from './Loud.png';
-import unclear from './Unclear.png';
-import clear from './Clear.png';
+import slowB from './Slow.png';
+import fastB from './Fast.png';
+import quietB from './Quiet.png';
+import loudB from './Loud.png';
+import unclearB from './Unclear.png';
+import clearB from './Clear.png';
 
 class Join extends Component {
 
@@ -167,20 +167,20 @@ class Join extends Component {
                         <center>
 
                             <p>The speaker is too slow or too fast.</p>
-                            <button  onClick={(e) => this.sendPredef('slow', e)} class="predefined w3-button w3-round w3-hover-red" style={{backgroundColor:'#525252',color:'#f44336',width:'45px',height:'40px'}}><img src={slow} height='40' width='40'></img> </button>
-                            <button  onClick={(e) => this.sendPredef('fast', e)} class="predefined w3-button w3-round w3-hover-red" style={{backgroundColor:'#525252',color:'#f44336',width:'45px',height:'40px'}}><img src={fast} height="40" width="40"></img></button>
+                            <button  onClick={(e) => this.sendPredef('slow', e)} class="predefined w3-button w3-round w3-hover-red" style={{backgroundColor:'#525252',color:'#f44336',width:'45px',height:'40px'}}><img src={slowB} height='40' width='40'></img> </button>
+                            <button  onClick={(e) => this.sendPredef('fast', e)} class="predefined w3-button w3-round w3-hover-red" style={{backgroundColor:'#525252',color:'#f44336',width:'45px',height:'40px'}}><img src={fastB} height="40" width="40"></img></button>
 
                             <br></br>
 
                             <p>The speaker is too quiet or too loud.</p>
-                            <button  onClick={(e) => this.sendPredef('quiet', e)} class="predefined w3-button w3-round w3-hover-red" style={{backgroundColor:'#525252',color:'white',width:'45px',height:'40px'}}><img src={quiet} height='40' width='40'></img> </button>
-                            <button  onClick={(e) => this.sendPredef('loud', e)} class="predefined w3-round w3-button w3-hover-red" style={{backgroundColor:'#525252',width:'45px',height:'40px',border:'none'}}><img src={loud} height="40" width="40"></img></button>
+                            <button  onClick={(e) => this.sendPredef('quiet', e)} class="predefined w3-button w3-round w3-hover-red" style={{backgroundColor:'#525252',color:'white',width:'45px',height:'40px'}}><img src={quietB} height='40' width='40'></img> </button>
+                            <button  onClick={(e) => this.sendPredef('loud', e)} class="predefined w3-round w3-button w3-hover-red" style={{backgroundColor:'#525252',width:'45px',height:'40px',border:'none'}}><img src={loudB} height="40" width="40"></img></button>
 
                             <br></br>
 
                             <p>The speaker is clear or unclear.</p>
-                            <button  onClick={(e) => this.sendPredef('unclear', e)} class="predefined w3-button w3-round w3-hover-red" style={{backgroundColor:'#525252',color:'white',width:'45px',height:'40px'}}><img src={unclear} height='40' width='40'></img> </button>
-                            <button  onClick={(e) => this.sendPredef('clear', e)} class="predefined w3-round w3-button w3-hover-red" style={{backgroundColor:'#525252',width:'45px',height:'40px',border:'none'}}><img src={clear} height="40" width="40"></img></button>
+                            <button  onClick={(e) => this.sendPredef('unclear', e)} class="predefined w3-button w3-round w3-hover-red" style={{backgroundColor:'#525252',color:'white',width:'45px',height:'40px'}}><img src={unclearB} height='40' width='40'></img> </button>
+                            <button  onClick={(e) => this.sendPredef('clear', e)} class="predefined w3-round w3-button w3-hover-red" style={{backgroundColor:'#525252',width:'45px',height:'40px',border:'none'}}><img src={clearB} height="40" width="40"></img></button>
 
                         </center>
 

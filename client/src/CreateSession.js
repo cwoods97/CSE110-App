@@ -171,7 +171,7 @@ class CreateSession extends Component {
                     <input id="title" style={{color:'black'}}class="w3-input" type="input" name="editTitle" placeholder={"Edit Title"}></input>
                     <p id="titleError"></p>
 
-                    <button class="w3-button w3-round w3-hover-red" onClick={this.updateTitle} style={{width:'40%',margin:'8px 0', boxSizing:'border-box',borderRadius:'15px',outline:'none',backgroundColor:'#333333'}}>Change</button>
+                    <button class="w3-button w3-round w3-hover-red" onClick={this.updateTitle} style={{width:'45%',margin:'8px 0', boxSizing:'border-box',borderRadius:'15px',outline:'none',backgroundColor:'#333333'}}>Change</button>
                     </div>
 
 
@@ -184,8 +184,8 @@ class CreateSession extends Component {
                     <p id='code' style={{fontFamily:'Poppins, sans-serif'}}><b>Session Code:</b> {this.state.coder}</p>
 
                     <form action="">
-                        <input id='nAudio' onClick={this.noAudio} type="radio" name="audioOff" value="noaudio" defaultChecked={true} style={{fontFamily:'Poppins, sans-serif'}}></input>No Audio<br></br>
-                        <input id= 'audio' onClick={this.audioOn} type="radio" name="audioOn" value="record" style={{fontFamily:'Poppins, sans-serif'}}></input>Record<br></br>
+                        <input id='nAudio' onClick={this.noAudio} type="radio" name="audioOff" value="noaudio" defaultChecked={true} style={{marginRight:'8px',fontFamily:'Poppins, sans-serif'}}></input>No Audio<br></br>
+                        <input id= 'audio' onClick={this.audioOn} type="radio" name="audioOn" value="record" style={{marginRight:'8px',fontFamily:'Poppins, sans-serif'}}></input>Record<br></br>
 
                         <br></br>
 
