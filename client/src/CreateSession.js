@@ -161,21 +161,26 @@ class CreateSession extends Component {
                     </h2>
                 </div>
 
-                <div id='navMain' class="w3-sidebar w3-bar-block w3-responsive" style={{height:'100%',backgroundColor:'#585858',zIndex:'0', color:'#F3E6DE', boxShadow:'1px 1px 2px #f44336'}}>
+                <div id='navMain' class="w3-sidebar w3-bar-block w3-responsive" style={{height:'100%',backgroundColor:'#585858',zIndex:'0', color:'#F3E6DE', boxShadow:'1px 1px 2px #525252'}}>
                     <a class="w3-bar-item HoverRed" id="name" style={{fontSize:'20px', outline:'2px solid #333333'}}>{this.state.display}</a>
-                    <a class="w3-bar-item w3-button w3-hover-red" onClick={this.close}style={{boxShadow:'1px 0px 1px#333333'}}>Close Session</a><br /><br />
+
+
+                    <div style={{padding:'10px',boxShadow:'1px 0px 1px#333333'}}>
                     <p id= 'titleDisplay' style={{fontFamily:'Poppins, sans-serif'}}><b>Session Title:</b> {this.state.title}</p>
 
                     <input id="title" style={{color:'black'}}class="w3-input" type="input" name="editTitle" placeholder={"Edit Title"}></input>
                     <p id="titleError"></p>
 
                     <button class="w3-button w3-round w3-hover-red" onClick={this.updateTitle} style={{width:'40%',margin:'8px 0', boxSizing:'border-box',borderRadius:'15px',outline:'none',backgroundColor:'#333333'}}>Change</button>
+                    </div>
 
-                    <br></br>
-                    <br></br>
-                    <br />
-                    <br />
-                    <br />
+
+
+
+
+
+
+                    <div style={{padding:'10px',boxShadow:'1px 0px 1px#333333'}}>
                     <p id='code' style={{fontFamily:'Poppins, sans-serif'}}><b>Session Code:</b> {this.state.coder}</p>
 
                     <form action="">
@@ -187,6 +192,13 @@ class CreateSession extends Component {
                         <button id='buttons' class="w3-button w3-round w3-hover-red" disabled={this.state.end} onClick={this.startRecording} style={{width:'40%',margin:'8px 0', boxSizing:'border-box',borderRadius:'15px',outline:'none',backgroundColor:'#333333'}}>Start</button>
                         <button id='buttons' class="w3-button w3-round w3-hover-red" disabled={!this.state.started} onClick={this.stopRecording} style={{width:'40%',margin:'8px 0', boxSizing:'border-box',borderRadius:'15px',outline:'none',backgroundColor:'#333333'}}>Stop</button>
                     </form>
+                    </div>
+
+
+
+                    <a class="w3-bar-item w3-button w3-hover-red" onClick={this.close}style={{boxShadow:'1px 0px 1px#333333'}}>Close Session</a>
+
+
 
                 </div>
 

@@ -61,8 +61,18 @@ class App extends Component {
         ev.preventDefault();
 
 				const date = new Date();
-				const creationTime = date.getMonth() + 1 + "-" + date.getDate() + "-" + date.getFullYear() + " " + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
-
+				const month = date.getMonth() + 1;
+				let day = date.getDate();
+				if(day < 10) day = "0" + day;
+				const year = date.getFullYear();
+				let hour = date.getHours();
+				if(hour < 10) hour = "0" + hour;
+				let minute = date.getMinutes();
+				if(minute < 10) minute = "0" + minute;
+				let seconds = date.getSeconds();
+				if(seconds < 10) seconds = "0" + seconds;
+				const creationTime = month + "-" + day + "-" + year + " " + hour + ":" + minute + ":" + seconds;
+				
 		getIdToken().then(token => {
 			createBackendSession(token, creationTime).then((response) => {
                 ReactDOM.render(<CreateSession code={response.accessCode} db={this.db} sessionID={response.sessionID} />, document.getElementById('root'));

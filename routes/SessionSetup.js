@@ -41,6 +41,10 @@ router.post('/createSession', (req, res) => {
 			creationTime: creationTime
 		});
 
+		let json = {};
+		json[sessionID] = true;
+		userRef.child('hostedSessions').update(json);
+
 		res.json({
 			sessionID: sessionID,
 			accessCode: accessCode

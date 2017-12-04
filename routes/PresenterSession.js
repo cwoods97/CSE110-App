@@ -40,12 +40,7 @@ router.post('/toggleActive', (req, res) => {
 			var sessionID = childSnapshot.key;
 			var thisSession = sessionRef.child(sessionID); //gets the session
 			var active = childSnapshot.child("isActive").val();
-			thisSession.child("isActive").set(!Boolean(active));
-			
-			// add the session ID to the list of presented sessions in the user object
-			const json = {};
-			json[sessionID] = true;
-			userRef.child('hostedSessions').update(json);
+			thisSession.child("isActive").set(!Boolean(active));	
 		});
 		
 	});
