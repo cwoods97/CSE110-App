@@ -84,7 +84,7 @@ class CreateSession extends Component {
     };
 
     onStop = (blobObject) => {
-				this.setState({endTime: Math.floor(Date.now() / 1000)});
+		this.setState({endTime: Math.floor(Date.now() / 1000)});
         const storageRef = this.db.storage().ref().child(this.sessionID);
         const recordingRef = storageRef.child('media');
         recordingRef.put(blobObject.blob).then((snapshot) => {

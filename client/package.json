@@ -17,6 +17,7 @@
     "react-chat-widget": "^2.1.2",
     "react-dom": "^16.0.0",
     "react-mic": "^9.0.0",
+    "react-player": "^0.25.3",
     "react-scripts": "1.0.14"
   },
   "scripts": {
