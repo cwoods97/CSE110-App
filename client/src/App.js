@@ -8,7 +8,6 @@ import 'bootstrap/dist/css/bootstrap-theme.css';
 import Main from './Main';
 import About from './About';
 import CreateAccount from './CreateAccount';
-import Reset from './Reset';
 import { login } from './RegisterFirebaseUser'
 import logo from './Logo.png';
 
@@ -148,8 +147,8 @@ class AppFront extends Component {
                 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"></link>
                 <div style={{backgroundColor:'#333333',height:"100%"}}>
                     <h2 style={{marginLeft:'8px',marginTop:'0px',marginBottom:'0px',height:'50px', color:'white'}}><b></b>
-                        <img src={logo} width="125" height="50" />
-                        <a href={"#"} onClick={this.about} class = {'HoverRed'} style={{textDecoration:'underline', float:'right', marginTop:'17px', marginRight:'10px', height:'100%', fontSize:'50%'}} >About Us</a>
+                        <img src={logo} width="125" height="50" alt="SpeakEasy logo"/>
+                        <a onClick={this.about} class = {'HoverRed'} style={{textDecoration:'underline', float:'right', marginTop:'17px', marginRight:'10px', height:'100%', fontSize:'50%'}} >About Us</a>
                     </h2>
                 </div>
                 <div id='infocontianer' style={{width:'60%',float:'left'}}>
@@ -177,11 +176,11 @@ class AppFront extends Component {
 
                         <br></br>
 
-                        <a href="#" onClick={this.create} class={'HoverRed'} style={{textDecoration:'underline' }}>Create an Account</a>
+                        <a onClick={this.create} class={'HoverRed'} style={{textDecoration:'underline' }}>Create an Account</a>
 
                         <br></br>
 
-                        <a href="#" ref="res" id="reset" class={'HoverRed'} onClick = {this.reset.bind(this)} style={{textDecoration:'underline'}}>Forgot Your Password?</a>
+                        <a ref="res" id="reset" class={'HoverRed'} onClick = {this.reset.bind(this)} style={{textDecoration:'underline'}}>Forgot Your Password?</a>
                     </div>
 
                 </div >

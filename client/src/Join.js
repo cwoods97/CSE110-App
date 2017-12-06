@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import firebase from 'firebase';
 import './styles/Join.css';
 import ReactDOM from 'react-dom';
 import 'bootstrap/dist/css/bootstrap.css';
@@ -11,7 +10,7 @@ import Main from './Main';
 import { Widget, addResponseMessage, addUserMessage } from 'react-chat-widget';
 import {leaveBackendSession} from './FrontEndSession';
 import {getIdToken} from './RegisterFirebaseUser.js';
-import {sendPredefinedFeedback} from './SendFeedback.js';
+import {sendFeedback} from './SendFeedback.js';
 
 import logo from './Logo.png';
 import slowB from './Slow.png';
@@ -44,7 +43,6 @@ class Join extends Component {
 		});
     }
 
-
     componentDidMount() {
         getDisplayName().then(name =>{this.setState({display: name});});
     }
@@ -53,7 +51,7 @@ class Join extends Component {
 
         e.preventDefault();
         getIdToken().then(token =>{
-            sendPredefinedFeedback(token, this.sessionID, comment, 0)
+            sendFeedback(token, this.sessionID, comment, 0)
 			.then((message) => {
                 console.log("Message sent.")
 			})
@@ -77,7 +75,7 @@ class Join extends Component {
         else {
 
 			getIdToken().then(token => {
-				sendPredefinedFeedback(token, session, comment, 1)
+				sendFeedback(token, session, comment, 1)
 				.then((message) => {
 					var mList = document.getElementById('messages');
 
@@ -130,7 +128,7 @@ class Join extends Component {
 
                 <div style={{backgroundColor:'#333333',height:"100%"}}>
                     <h2 style={{marginLeft:'8px',marginTop:'0px',marginBottom:'0px',height:'50px', color:'white'}}><b></b>
-                        <img src={logo} width="125" height="50" />
+                        <img src={logo} width="125" height="50" alt="SpeakEasy logo"/>
                     </h2>
                 </div>
 
@@ -165,20 +163,20 @@ class Join extends Component {
                         <center>
 
                             <p>The speaker is too slow or too fast.</p>
-                            <button  onClick={(e) => this.sendPredef('slow', e)} class="predefined w3-button w3-round w3-hover-red" style={{backgroundColor:'#525252',color:'#f44336',width:'45px',height:'40px'}}><img src={slowB} height='40' width='40'></img> </button>
-                            <button  onClick={(e) => this.sendPredef('fast', e)} class="predefined w3-button w3-round w3-hover-red" style={{backgroundColor:'#525252',color:'#f44336',width:'45px',height:'40px'}}><img src={fastB} height="40" width="40"></img></button>
+                            <button  onClick={(e) => this.sendPredef('slow', e)} class="predefined w3-button w3-round w3-hover-red" style={{backgroundColor:'#525252',color:'#f44336',width:'45px',height:'40px'}}><img src={slowB} height='40' width='40' alt="slow"></img> </button>
+                            <button  onClick={(e) => this.sendPredef('fast', e)} class="predefined w3-button w3-round w3-hover-red" style={{backgroundColor:'#525252',color:'#f44336',width:'45px',height:'40px'}}><img src={fastB} height="40" width="40" alt="fast"></img></button>
 
                             <br></br>
 
                             <p>The speaker is too quiet or too loud.</p>
-                            <button  onClick={(e) => this.sendPredef('quiet', e)} class="predefined w3-button w3-round w3-hover-red" style={{backgroundColor:'#525252',color:'white',width:'45px',height:'40px'}}><img src={quietB} height='40' width='40'></img> </button>
-                            <button  onClick={(e) => this.sendPredef('loud', e)} class="predefined w3-round w3-button w3-hover-red" style={{backgroundColor:'#525252',width:'45px',height:'40px',border:'none'}}><img src={loudB} height="40" width="40"></img></button>
+                            <button  onClick={(e) => this.sendPredef('quiet', e)} class="predefined w3-button w3-round w3-hover-red" style={{backgroundColor:'#525252',color:'white',width:'45px',height:'40px'}}><img src={quietB} height='40' width='40' alt="quiet"></img> </button>
+                            <button  onClick={(e) => this.sendPredef('loud', e)} class="predefined w3-round w3-button w3-hover-red" style={{backgroundColor:'#525252',width:'45px',height:'40px',border:'none'}}><img src={loudB} height="40" width="40" alt="loud"></img></button>
 
                             <br></br>
 
                             <p>The speaker is clear or unclear.</p>
-                            <button  onClick={(e) => this.sendPredef('unclear', e)} class="predefined w3-button w3-round w3-hover-red" style={{backgroundColor:'#525252',color:'white',width:'45px',height:'40px'}}><img src={unclearB} height='40' width='40'></img> </button>
-                            <button  onClick={(e) => this.sendPredef('clear', e)} class="predefined w3-round w3-button w3-hover-red" style={{backgroundColor:'#525252',width:'45px',height:'40px',border:'none'}}><img src={clearB} height="40" width="40"></img></button>
+                            <button  onClick={(e) => this.sendPredef('unclear', e)} class="predefined w3-button w3-round w3-hover-red" style={{backgroundColor:'#525252',color:'white',width:'45px',height:'40px'}}><img src={unclearB} height='40' width='40' alt="unclear"></img> </button>
+                            <button  onClick={(e) => this.sendPredef('clear', e)} class="predefined w3-round w3-button w3-hover-red" style={{backgroundColor:'#525252',width:'45px',height:'40px',border:'none'}}><img src={clearB} height="40" width="40" alt="clear"></img></button>
 
                         </center>
 

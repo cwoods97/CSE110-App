@@ -19,7 +19,7 @@ class About extends Component {
             storageBucket: "speakeasy-25a66.appspot.com",
             messagingSenderId: "836790794762"
         };
-        if (firebase.apps.length == 0){
+        if (firebase.apps.length === 0){
             firebase.initializeApp(config);
         }
         else{
@@ -51,7 +51,7 @@ class About extends Component {
               <div style={{backgroundColor:'#333333',height:"100%"}}>
 
                   <h2 style={{marginLeft:'8px',marginTop:'0px',marginBottom:'0px',height:'50px',fontFamily:'cursive', color:'white', cursor:'pointer'}}><b></b>
-                      <img src={logo} width={'125'} height={'50'} onClick={this.app}/>
+                      <img src={logo} width={'125'} height={'50'} onClick={this.app} alt="SpeakEasy logo"/>
 
                 </h2>
               </div>

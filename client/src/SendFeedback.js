@@ -1,4 +1,4 @@
-export function sendPredefinedFeedback(token, session, comment, type) {
+export function sendFeedback(token, session, comment, type) {
     //todo for organization
     return new Promise((resolve, reject) => {
     fetch('api/feedback/predefined_feedback', {

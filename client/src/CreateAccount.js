@@ -98,7 +98,7 @@ class CreateAccount extends Component {
                 <div style={{backgroundColor:'#333333',height:"100%"}}>
 
                     <h2 onClick={this.goHome} style={{cursor:'pointer',marginLeft:'8px',marginTop:'0px',marginBottom:'0px',height:'50px',fontFamily:'cursive'}}><b></b>
-                        <img src={logo} width="125" height="50" onClick={this.goHome}/>
+                        <img src={logo} width="125" height="50" onClick={this.goHome} alt="SpeakEasy logo"/>
                     </h2>
                 </div>
 

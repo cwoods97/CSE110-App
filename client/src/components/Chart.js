@@ -1,15 +1,14 @@
 import React, {Component} from 'react';
-import ReactDOM from 'react-dom';
 import {Bar} from 'react-chartjs-2';
 
  /*
      * Function to decide color of bar based on type
      */
 function backgroundColors(type) {
-        if (type == 1) {
+        if (type === 1) {
             return ['rgba(255, 99, 132, 0.2)',
             'rgba(255, 159, 64, 0.2)'];
-        } else if (type == 2) {
+        } else if (type === 2) {
             return ['rgba(255, 205, 86, 0.2)',
             'rgba(75, 192, 192, 0.2)'];
         } else {
@@ -22,10 +21,10 @@ function backgroundColors(type) {
      * Function to decide color of bar border based on type
      */
 function borderColors(type) {
-        if (type == 1) {
+        if (type === 1) {
             return ['rgb(255, 99, 132)',
             'rgb(255, 159, 64)'];
-        } else if (type == 2) {
+        } else if (type === 2) {
             return ['rgb(255, 205, 86)',
             'rgb(75, 192, 192)'];
         } else {
@@ -90,28 +89,28 @@ class Chart extends Component {
 
         this.chartData = this.state.chartData;
         this.title = "";
-        if(type == "pace"){
+        if(type === "pace"){
             this.chartData = this.state.chartData1;
             this.title = "Rate of Speech";
-        }else if(type == "volume"){
+        }else if(type === "volume"){
             this.chartData = this.state.chartData2;
             this.title = "Volume";
-        }else if(type == "clarity"){
+        }else if(type === "clarity"){
             this.chartData = this.state.chartData3;
             this.title = "Clarity";
         }
 
         var feedbackRef = this.db.database().ref("feedback").child(this.sessionID);
         feedbackRef.on("child_added", function(snapshot, prevChildKey){
-            if(type == 'pace'){
-                var parsedFeedback = snapshot.val();
-                if(parsedFeedback.type == 0){
-                    if(parsedFeedback.message == "slow"){
+            var parsedFeedback = snapshot.val();
+            if(type === 'pace'){
+                if(parsedFeedback.type === 0){
+                    if(parsedFeedback.message === "slow"){
                         this.state.chartData1.datasets[0].data[0]++;
                         setTimeout(function () {
                             this.expireFeedback(1);
                         }.bind(this), 60000);
-                    }else if(parsedFeedback.message == "fast"){
+                    }else if(parsedFeedback.message === "fast"){
                         this.state.chartData1.datasets[0].data[1]++;
                         setTimeout(function () {
                             this.expireFeedback(2);
@@ -119,15 +118,14 @@ class Chart extends Component {
                     }
                 }
                 this.setState({chartData1});
-            }else if(type == 'volume'){
-                var parsedFeedback = snapshot.val();
-                if(parsedFeedback.type == 0){
-                    if(parsedFeedback.message == "quiet"){
+            }else if(type === 'volume'){
+                if(parsedFeedback.type === 0){
+                    if(parsedFeedback.message === "quiet"){
                         this.state.chartData2.datasets[0].data[0]++;
                         setTimeout(function () {
                             this.expireFeedback(3);
                         }.bind(this), 60000);
-                    }else if(parsedFeedback.message == "loud"){
+                    }else if(parsedFeedback.message === "loud"){
                         this.state.chartData2.datasets[0].data[1]++;
                         setTimeout(function () {
                             this.expireFeedback(4);
@@ -135,15 +133,14 @@ class Chart extends Component {
                     }
                 }
                 this.setState({chartData2});
-            }else if(type == 'clarity'){
-                var parsedFeedback = snapshot.val();
-                if(parsedFeedback.type == 0){
-                    if(parsedFeedback.message == "unclear"){
+            }else if(type === 'clarity'){
+                if(parsedFeedback.type === 0){
+                    if(parsedFeedback.message === "unclear"){
                         this.state.chartData3.datasets[0].data[0]++;
                         setTimeout(function () {
                             this.expireFeedback(5);
                         }.bind(this), 60000);
-                    }else if(parsedFeedback.message == "clear"){
+                    }else if(parsedFeedback.message === "clear"){
                         this.state.chartData3.datasets[0].data[1]++;
                         setTimeout(function () {
                             this.expireFeedback(6);
@@ -196,6 +193,9 @@ class Chart extends Component {
                     chartData3.datasets[0].data[1]--;
                     this.setState({chartData3});
                 }
+                break;
+            default:
+                break;
         }
     }
 

@@ -1,4 +1,3 @@
-
 import React, { Component } from 'react';
 import './styles/CreateSession.css';
 import ReactDOM from 'react-dom';
@@ -10,7 +9,7 @@ import ReviewChart from './components/ReviewChart';
 import SessionHistory from './SessionHistory';
 import Main from './Main';
 
-import { ReactMic } from 'react-mic';
+//import { ReactMic } from 'react-mic';
 import {getDisplayName} from "./RegisterFirebaseUser";
 
 import logo from './Logo.png';
@@ -126,7 +125,7 @@ class ReviewFeedback extends Component {
 
                 <div style={{backgroundColor:'#333333',height:"100%"}}>
                     <h2 style={{marginLeft:'8px',marginTop:'0px',marginBottom:'0px',height:'50px', color:'white'}}><b></b>
-                        <img src={logo} width="125" height="50" style={{cursor:'pointer'}} onClick={this.main.bind(this)}/>
+                        <img src={logo} width="125" height="50" style={{cursor:'pointer'}} onClick={this.main.bind(this)} alt="SpeakEasy logo"/>
                     </h2>
                 </div>
 
