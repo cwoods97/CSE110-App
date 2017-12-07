@@ -212,7 +212,7 @@ class App extends Component {
                     </div>
                 </div>
 
-                <div id='content' class='w3-responsive' style={{display:'inline-block',float:'right',width:'85%',maxHeight:'90vh', position:'fixed',left:'15%'}}>
+                <div id='contentMain' class='w3-responsive' style={{display:'inline-block',float:'right',width:'85%',maxHeight:'90vh', position:'fixed',left:'15%'}}>
 
 
                     {/*<div style={{display:'flex',flexDirection:'row',justifyContent:'space-between'}}>*/}

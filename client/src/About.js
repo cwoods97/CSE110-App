@@ -59,7 +59,7 @@ class About extends Component {
 
                 <center>
                     <h3 style={{marginTop:'50px', fontSize:'35px'}}><b>About Us</b></h3>
-                <p style={{margin:'50px 250px 250px 200px', fontSize:'18px'}}>
+                <p id = 'AboutText' style={{textAlign:'center',marginRight:'20%',marginLeft:'20%', fontSize:'18px'}}>
                     SpeakEasy is a web application developed and created by eleven UCSD students with the goal of improving future speeches of both speakers and presenters. SpeakyEasy empowers
                     speakers and presenters with the ability to easily review speeches they have given in the past in order to identify elements they may improve in. Audience members can
                     actively engage with speakers with quick and easy predefined feedback, such as communcicating they are speaking too fast/slow, to the speaker who can view it effortlessly.

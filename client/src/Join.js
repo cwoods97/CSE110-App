@@ -7,7 +7,7 @@ import {getDisplayName} from "./RegisterFirebaseUser";
 
 import Main from './Main';
 //Plugin for customized feedback. Mainly used for its CSS formatting
-import { Widget, addResponseMessage, addUserMessage } from 'react-chat-widget';
+import 'react-chat-widget';
 import {leaveBackendSession} from './FrontEndSession';
 import {getIdToken} from './RegisterFirebaseUser.js';
 import {sendFeedback} from './SendFeedback.js';

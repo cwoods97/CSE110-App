@@ -175,7 +175,7 @@ class ReviewFeedback extends Component {
                         </center>
                     </div>
 
-                    <div id = 'rightReview' class='w3-round' style={{float:'right',width:'34%',marginRight:'1%',backgroundColor:'#585858',overflow:'auto',height:'33em',maxHeight:'33em',boxShadow:'1px 1px 2px #525252'}}>
+                    <div id = 'rightReview' class='w3-round' style={{float:'right',width:'34%',marginRight:'1%',marginBottom:'1%',backgroundColor:'#585858',overflow:'auto',height:'33em',maxHeight:'33em',boxShadow:'1px 1px 2px #525252'}}>
 
                             {
                                 this.state.customFeedback.map((feedbackData) => (
