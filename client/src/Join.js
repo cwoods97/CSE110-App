@@ -95,6 +95,9 @@ class Join extends Component {
                     div1.appendChild(div2);
         		    mList.appendChild(div1);
 
+        		    //From https://stackoverflow.com/questions/7303948/how-to-auto-scroll-to-end-of-div-when-data-is-added
+        		    mList.scrollTop = mList.scrollHeight;
+
 				}).catch((error) => {
                     console.log(error);
 				});
