@@ -9,9 +9,8 @@ import Join from './Join';
 import AppFront from './App';
 import CreateSession from './CreateSession';
 import SessionHistory from './SessionHistory';
-import ReviewFeedback from './ReviewFeedback';
 import {createBackendSession, joinBackendSession} from './FrontEndSession';
-import {getIdToken, getDisplayName, logout, setPassword, setDisplayName} from './RegisterFirebaseUser.js';
+import {getIdToken, logout, setPassword, setDisplayName} from './RegisterFirebaseUser.js';
 import logo from './Logo.png';
 
 class App extends Component {
@@ -91,7 +90,7 @@ class App extends Component {
 
         window.onclick = function(ev) {
             ev.preventDefault();
-            if(ev.target == modal) {
+            if(ev.target === modal) {
                 modal.style.display = "none";
 								document.getElementById('displayForm').reset();
 								document.getElementById('passwordForm').reset();
@@ -136,8 +135,8 @@ class App extends Component {
 
 				var validations = [
 						Boolean(pswd1) && !pswd1.includes(' ') && pswd1.length >= 6,
-						pswd1 == pswd2,
-						oldpswd != pswd1
+						pswd1 === pswd2,
+						oldpswd !== pswd1
 				]
 
 				if(validations.every(Boolean)) {
@@ -166,7 +165,7 @@ class App extends Component {
                 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"></link>
                 <div style={{backgroundColor:'#333333',height:"100%"}}>
                     <h2 style={{marginLeft:'8px',marginTop:'0px',marginBottom:'0px',height:'50px', color:'white'}}><b></b>
-                        <img src={logo} width="125" height="50" />
+                        <img src={logo} width="125" height="50" alt="SpeakEasy logo"/>
                     </h2>
                 </div>
 
@@ -213,7 +212,7 @@ class App extends Component {
                     </div>
                 </div>
 
-                <div id='content' class='w3-responsive' style={{display:'inline-block',float:'right',width:'85%',maxHeight:'90vh', position:'fixed',left:'15%'}}>
+                <div id='contentMain' class='w3-responsive' style={{display:'inline-block',float:'right',width:'85%',maxHeight:'90vh', position:'fixed',left:'15%'}}>
 
 
                     {/*<div style={{display:'flex',flexDirection:'row',justifyContent:'space-between'}}>*/}

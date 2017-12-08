@@ -3,7 +3,6 @@ import './styles/CreateSession.css';
 import ReactDOM from 'react-dom';
 import 'bootstrap/dist/css/bootstrap-theme.css';
 import 'bootstrap/dist/css/bootstrap.css';
-import {Button} from 'react-bootstrap';
 import {getDisplayName} from "./RegisterFirebaseUser";
 
 import Chart from './components/Chart';
@@ -114,7 +113,7 @@ class CreateSession extends Component {
 		var title = document.getElementById("title").value;
 		var session = this.sessionID;
 
-		if(title.length > 0 && title.charAt(0) != ' ') {
+		if(title.length > 0 && title.charAt(0) !== ' ') {
 				document.getElementById('titleError').innerHTML = "";
 				getIdToken().then(token => {
 						updateTitle(token, session, title).then((title) => {
@@ -129,7 +128,7 @@ class CreateSession extends Component {
 
 	noAudio = () => {
 
-        if ((this.state.record == false && this.state.end == false)) {
+        if ((this.state.record === false && this.state.end === false)) {
             this.setState({
                 audio: false
             });
@@ -139,7 +138,7 @@ class CreateSession extends Component {
 
     audioOn = () => {
 
-        if ( this.state.record == false && this.state.end == false) {
+        if ( this.state.record === false && this.state.end === false) {
             this.setState({
                 audio: true
             });
@@ -156,7 +155,7 @@ class CreateSession extends Component {
 
                 <div style={{backgroundColor:'#333333',height:"100%"}}>
                     <h2 style={{marginLeft:'8px',marginTop:'0px',marginBottom:'0px',height:'50px', color:'white'}}><b></b>
-                        <img src={logo} width="125" height="50" />
+                        <img src={logo} width="125" height="50" alt="SpeakEasy logo"/>
                     </h2>
                 </div>
 

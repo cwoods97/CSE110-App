@@ -143,3 +143,19 @@ input[type="text"]:focus, input[type="password"]:focus, input[type="input"]:focu
 .HoverRed:hover {
   color: #f44336;
 }
+
+/*
+For About.js
+ */
+
+
+@media screen and (max-width: 600px) {
+    #AboutText {
+
+        font-size: 14px !important;
+
+    }
+}
+
+
+
