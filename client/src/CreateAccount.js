@@ -43,6 +43,8 @@ class CreateAccount extends Component {
         ]
 
         if (validations.every(Boolean)) {
+
+            document.getElementById('createBtn').disabled = true;
             createAccount(display,email,pwd2)
                 .then(() => {
                     // Only render user's main page when successfully logged in
@@ -117,7 +119,7 @@ class CreateAccount extends Component {
                             <p></p>
                             <input class="w3-input" id="pwd2" type="password" name="reenter" placeholder={"Re-enter Password"}></input>
                             <br></br>
-                            <input onClick={this.createMain.bind(this)} style={{float:"left",backgroundColor:"#525252",color:"white"}} class="w3-button w3-round w3-hover-red" type="submit" value="Create"></input>
+                            <input id="createBtn" onClick={this.createMain.bind(this)} style={{float:"left",backgroundColor:"#525252",color:"white"}} class="w3-button w3-round w3-hover-red" type="submit" value="Create"></input>
                         </form>
                     </div>
                 </div >
