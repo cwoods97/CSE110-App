@@ -1,3 +1,4 @@
+//Necessary Imports
 import React, { Component } from 'react';
 import './styles/CreateSession.css';
 import ReactDOM from 'react-dom';
@@ -14,8 +15,10 @@ import {getDisplayName} from "./RegisterFirebaseUser";
 
 import logo from './Logo.png';
 
+//For the actual reviewing of feedback
 class ReviewFeedback extends Component {
 
+    //Constructor for this page
     constructor(props) {
         super(props);
 
@@ -23,6 +26,8 @@ class ReviewFeedback extends Component {
         this.sessionID = props.sessionid;
         console.log("Session ID", this.sessionID)
 
+        //States used to access types of feedback and audio where applicable
+        //Also allows access to display name
         this.state = {
             predefinedFeedback: [],
             customFeedback: [],
@@ -58,6 +63,7 @@ class ReviewFeedback extends Component {
 
     }
 
+    //Allows one to go back to the main page
     main = function(ev) {
 
         ev.preventDefault();
@@ -67,6 +73,7 @@ class ReviewFeedback extends Component {
     }
 
     componentDidMount(){
+        //Allows displaying of correct display name
         getDisplayName().then(name =>{this.setState({display: name});})
 
         var storage = this.db.storage();
@@ -99,8 +106,8 @@ class ReviewFeedback extends Component {
         }, 5000)
     }
 
-    history = function(ev){
-        //ev.preventDefault();
+    //Allows one to go back to the session history page
+    history = function(){
         ReactDOM.render(<SessionHistory db={this.db} />, document.getElementById('root'));
     };
 
@@ -116,19 +123,23 @@ class ReviewFeedback extends Component {
         return minutes.toString() + ":" + seconds.toString();
     }
 
+    //Where html is located
     render() {
 
         return (
 
             <div style={{width:'100%',height:'100%',borderBottom:'1px solid #F3E6DE',zIndex:'9' }}>
+                {/*Necessary for styling*/}
                 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"></link>
 
+                {/*Top bar and logo*/}
                 <div style={{backgroundColor:'#333333',height:"100%"}}>
                     <h2 style={{marginLeft:'8px',marginTop:'0px',marginBottom:'0px',height:'50px', color:'white'}}><b></b>
                         <img src={logo} width="125" height="50" style={{cursor:'pointer'}} onClick={this.main.bind(this)} alt="SpeakEasy logo"/>
                     </h2>
                 </div>
 
+                {/*Side menu showing display name and allowing one to go back to the Session History page*/}
                 <div id="navigation" class="w3-sidebar w3-bar-block w3-responsive" style={{height:'100%',backgroundColor:'#585858',zIndex:'0', color:'#F3E6DE', boxShadow:'1px 1px 2px #525252'}}>
 
                     <a id='display' class="w3-bar-item HoverRed" style={{fontSize:'20px', outline:'2px solid #333333'}}>{this.state.display}</a>
@@ -137,7 +148,10 @@ class ReviewFeedback extends Component {
 
                 </div>
 
+                {/*Main content of page, where all of the relevant feedback/charts/audio when applicable is accessible*/}
                 <div id="center" style={{width:'85%',float:'right',height:'100%'}}>
+
+                    {/*Allows access to audio/ where the audio is located*/}
                     <div id= 'innerReview' style={{width:'100%',display:'inline-block',float:'left',margin:'auto'}}>
                         <audio
                             id="audio"
@@ -148,6 +162,7 @@ class ReviewFeedback extends Component {
                     </div>
 
 
+                    {/*Where the predefined chart data is shown for each of the three charts*/}
                     <div id= 'chartReview' style={{width:'65%',height:'30em',display:'inline-block',float:'left'}}>
                         <div class='chart' style={{width:'33%',display:'inline-block',height:'100%'}}>
 
@@ -168,6 +183,7 @@ class ReviewFeedback extends Component {
                         </div>
                     </div>
 
+                    {/*Where the title "Feedback" is located*/}
                     <div id='titleReview' style={{width:'34%',marginRight:'1%',display:'inline-block',float:'both',overflow:'auto'}}>
                         <center><h3>
                         Feedback
@@ -175,6 +191,7 @@ class ReviewFeedback extends Component {
                         </center>
                     </div>
 
+                    {/*Where one can view the customized feedback of a user's session*/}
                     <div id = 'rightReview' class='w3-round' style={{float:'right',width:'34%',marginRight:'1%',marginBottom:'1%',backgroundColor:'#585858',overflow:'auto',height:'33em',maxHeight:'33em',boxShadow:'1px 1px 2px #525252'}}>
 
                             {
@@ -203,5 +220,5 @@ class ReviewFeedback extends Component {
         );
     }
 }
-
+//Allows use of this page
 export default ReviewFeedback;
