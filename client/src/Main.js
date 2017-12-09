@@ -296,5 +296,5 @@ class App extends Component {
         );
     }
 }
-//Allows usage on page
+//Allows usage of page
 export default App;
