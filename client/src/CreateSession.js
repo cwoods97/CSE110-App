@@ -205,12 +205,14 @@ class CreateSession extends Component {
                     <div style={{padding:'10px',boxShadow:'1px 0px 1px#333333'}}>
                     <p id='code' style={{fontFamily:'Poppins, sans-serif'}}><b>Session Code:</b> {this.state.coder}</p>
 
+                    <p><b>Status:</b> Active/Not Active</p>
                     {/*Audio/No Audio options and starting/stopping*/}
                     <form action="">
                         <input id='nAudio' onClick={this.noAudio} type="radio" name="audioOff" value="noaudio" defaultChecked={true} style={{marginRight:'8px',fontFamily:'Poppins, sans-serif'}}></input>No Audio<br></br>
                         <input id= 'audio' onClick={this.audioOn} type="radio" name="audioOn" value="record" style={{marginRight:'8px',fontFamily:'Poppins, sans-serif'}}></input>Record<br></br>
 
                         <br></br>
+
 
                         <button id='buttons' class="w3-button w3-round w3-hover-red" disabled={this.state.end} onClick={this.startRecording} style={{width:'40%',margin:'8px 0', boxSizing:'border-box',borderRadius:'15px',outline:'none',backgroundColor:'#333333'}}>Start</button>
                         <button id='buttons' class="w3-button w3-round w3-hover-red" disabled={!this.state.started} onClick={this.stopRecording} style={{width:'40%',margin:'8px 0', boxSizing:'border-box',borderRadius:'15px',outline:'none',backgroundColor:'#333333'}}>Stop</button>
