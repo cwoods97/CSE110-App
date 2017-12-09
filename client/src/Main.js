@@ -27,7 +27,7 @@ class App extends Component {
 
 
         this.state = {
-            currentUser: this.db.auth().currentUser
+            currentUser: this.db.auth().currentUser.displayName
         }
 
     }
@@ -130,7 +130,7 @@ class App extends Component {
 						setDisplayName(name).then((success) => {
 								if(success){
 										error.innerHTML = "Display Name Updated";
-										this.setState({display: name});
+										this.setState({currentUser: name});
 								}
 						}).catch((err) => {
 								error.innerHTML = err;
@@ -197,7 +197,7 @@ class App extends Component {
                 {/*For the side menu and its buttons*/}
                 <div id='navMain' class="w3-sidebar w3-bar-block w3-responsive" style={{height:'100%',backgroundColor:'#585858',zIndex:'0', color:'#F3E6DE', boxShadow:'1px 1px 2px #525252'}}>
 
-                    <a class="w3-bar-item HoverRed" id="name" style={{fontSize:'20px', outline:'2px solid #333333'}}>{this.state.currentUser.displayName}</a>
+                    <a class="w3-bar-item HoverRed" id="name" style={{fontSize:'20px', outline:'2px solid #333333'}}>{this.state.currentUser}</a>
                     <a class="w3-bar-item w3-button w3-hover-red" id='profile' onClick={this.settings} style={{boxShadow:'1px 0px 1px #333333'}}>Profile Settings</a>
                     <a class="w3-bar-item w3-button w3-hover-red" onClick={this.history.bind(this)}style={{boxShadow:'1px 0px 1px#333333'}}>Session History</a>
                     <a class="w3-bar-item w3-button w3-hover-red" onClick={this.front}style={{boxShadow:'1px 0px 1px#333333'}}>Logout</a>
