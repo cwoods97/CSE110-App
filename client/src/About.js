@@ -43,7 +43,7 @@ class About extends Component {
 
     }
 
-    //Bulk of html code is located here
+    //Html code is located here
     render() {
         return (
 

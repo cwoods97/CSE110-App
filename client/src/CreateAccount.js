@@ -1,3 +1,4 @@
+//Necessary Imports
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import './styles/App.css';
@@ -7,8 +8,10 @@ import Main from './Main';
 import { createAccount } from './RegisterFirebaseUser';
 import logo from './Logo.png';
 
+//For the create an account page
 class CreateAccount extends Component {
 
+    //Constructor for this page
     constructor(props) {
         super(props);
 
@@ -18,20 +21,24 @@ class CreateAccount extends Component {
         }
     }
 
-    componentDidMount() {}
-
+    //Brings one back to the login/front page
     goHome = function(ev) {
         ReactDOM.render(<App />, document.getElementById('root'));
     }
 
+    //Actually creates one's account after validation checks and brings one to the main page
     createMain = function(ev) {
 
         ev.preventDefault();
+
+        //Gets html elements
 
         const email = document.getElementById("email").value;
         const display = document.getElementById("display").value;
         const pwd1 = document.getElementById("pwd1").value;
         const pwd2 = document.getElementById("pwd2").value;
+
+        //Validation checks below
 
         // regex from http://stackoverflow.com/questions/46155/validate-email-address-in-javascript
         const re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -42,6 +49,7 @@ class CreateAccount extends Component {
             pwd1 === pwd2
         ]
 
+        //More validation checks and possible login if everything checks out
         if (validations.every(Boolean)) {
 
             document.getElementById('createBtn').disabled = true;
@@ -65,6 +73,7 @@ class CreateAccount extends Component {
                     }
                 });
 
+            //Error messages
         } else {
 
             if (validations[0]) {
@@ -92,11 +101,13 @@ class CreateAccount extends Component {
     }
 
 
-
+    //Html code located here
     render() {
         return (
             <div style={{height:'100%',width:'100%', backgroundColor:'#F3E6DE'}}>
+                {/*Necessary Styling included*/}
                 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"></link>
+                {/*For top bar and logo*/}
                 <div style={{backgroundColor:'#333333',height:"100%"}}>
 
                     <h2 onClick={this.goHome} style={{cursor:'pointer',marginLeft:'8px',marginTop:'0px',marginBottom:'0px',height:'50px',fontFamily:'cursive'}}><b></b>
@@ -104,6 +115,7 @@ class CreateAccount extends Component {
                     </h2>
                 </div>
 
+                {/*For main content of page such as input areas for the users email, display name, and password*/}
                 <div style={{display:'flex',alightItems:'center',justifyContent:'center',margin:'0 auto'}}>
 
                     <div style={{backgroundColor:'#333333',padding:"20px",marginTop:'25px',textAlign:'center', color:'white', borderRadius:'10px'}}>
@@ -128,5 +140,5 @@ class CreateAccount extends Component {
         );
     }
 }
-
+//Allows use of page
 export default CreateAccount;
