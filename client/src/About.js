@@ -1,3 +1,4 @@
+//Necessary imports
 import React, { Component } from 'react';
 import firebase from 'firebase';
 import './styles/App.css';
@@ -6,8 +7,10 @@ import ReactDOM from 'react-dom';
 import App from  "./App";
 import logo from './Logo.png';
 
+//For About Us page
 class About extends Component {
 
+    //Constructor for this page
     constructor(props) {
         super(props);
         // Initialize Firebase
@@ -30,6 +33,7 @@ class About extends Component {
         }
     }
 
+    //Brings one back to the login front page
     app = function(ev){
 
         ev.preventDefault();
@@ -39,15 +43,15 @@ class About extends Component {
 
     }
 
-
-
-
-
+    //Bulk of html code is located here
     render() {
         return (
 
             <div style={{backgroundColor:'#F3E6DE'}}>
+                {/*Styling import*/}
               <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"></link>
+
+                {/*For the top bar and logo for the page*/}
               <div style={{backgroundColor:'#333333',height:"100%"}}>
 
                   <h2 style={{marginLeft:'8px',marginTop:'0px',marginBottom:'0px',height:'50px',fontFamily:'cursive', color:'white', cursor:'pointer'}}><b></b>
@@ -57,6 +61,7 @@ class About extends Component {
               </div>
 
 
+                {/* For the main text of the page */}
                 <center>
                     <h3 style={{marginTop:'50px', fontSize:'35px'}}><b>About Us</b></h3>
                 <p id = 'AboutText' style={{textAlign:'center',marginRight:'20%',marginLeft:'20%', fontSize:'18px'}}>
@@ -84,4 +89,5 @@ class About extends Component {
         );
     }
 }
+//exports to allow page to be shown
 export default About

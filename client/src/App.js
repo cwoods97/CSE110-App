@@ -1,3 +1,4 @@
+//Necessary Imports
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import firebase from 'firebase';
@@ -11,9 +12,10 @@ import CreateAccount from './CreateAccount';
 import { login } from './RegisterFirebaseUser'
 import logo from './Logo.png';
 
-
+//For the login/front page
 class AppFront extends Component {
 
+    //Constructor for the page
     constructor(props) {
         super(props);
         //Initialize Firebase
@@ -26,6 +28,7 @@ class AppFront extends Component {
             messagingSenderId: "836790794762"
         };
 
+        //To stop an error if one is switching between pages
         if (firebase.apps.length === 0) {
             firebase.initializeApp(config);
             firebase.auth().onAuthStateChanged((user) => {
@@ -41,11 +44,12 @@ class AppFront extends Component {
         }
     }
 
-    componentDidMount() {}
 
+    //Brings one to the main page if the "Submit" button is clicked
     main = function(ev){
         ev.preventDefault();
 
+        //Code for input validity and to actually log in
         var email = document.getElementById("email").value;
         var password = document.getElementById("password").value;
         // regex from http://stackoverflow.com/questions/46155/validate-email-address-in-javascript
@@ -69,6 +73,7 @@ class AppFront extends Component {
         });
     }
 
+    //Brings one to the About Us page
     about= function(ev){
 
         ev.preventDefault();
@@ -76,12 +81,14 @@ class AppFront extends Component {
 
     }
 
+    //Brings one to the Create Account page
     create= function(ev) {
         ev.preventDefault()
         ReactDOM.render(<CreateAccount db={firebase} />, document.getElementById('root'));
 
     }
 
+    //Displays the reset password portion of the page
     reset = function(ev){
         ev.preventDefault()
 
@@ -108,6 +115,8 @@ class AppFront extends Component {
         but.style.backgroundColor = '#525252'
         but.style.color = 'white'
         but.classList.add('w3-hover-red')
+
+        //Some validity checks on input here when one wants to reset their password
         but.onclick = function() {  var x = document.getElementById("rset").value;
             // regex from http://stackoverflow.com/questions/46155/validate-email-address-in-javascript
             var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -140,17 +149,22 @@ class AppFront extends Component {
     }
 
 
+    //Bulk of html code
     render() {
         return (
 
             <div id='startpage' style={{width:'100%',height:'100%',display:'inline-block', backgroundColor:'#F3E6DE'}}>
+
+                {/*For styling*/}
                 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"></link>
+                {/*For top bar and logo and About Us link*/}
                 <div style={{backgroundColor:'#333333',height:"100%"}}>
                     <h2 style={{marginLeft:'8px',marginTop:'0px',marginBottom:'0px',height:'50px', color:'white'}}><b></b>
                         <img src={logo} width="125" height="50" alt="SpeakEasy logo"/>
-                        <a onClick={this.about} class = {'HoverRed'} style={{textDecoration:'underline', float:'right', marginTop:'17px', marginRight:'10px', height:'100%', fontSize:'50%'}} >About Us</a>
+                        <a onClick={this.about} class = {'HoverRed'} style={{textDecoration:'underline', float:'right', marginTop:'17px', marginRight:'10px',fontSize:'50%',cursor:'pointer'}} >About Us</a>
                     </h2>
                 </div>
+                {/*For brief text intro to the webpage*/}
                 <div id='infocontianer' style={{width:'60%',float:'left'}}>
                     <div id='info' style={{padding:"20px", margin:'100px'}}>
                         <h3 id='infoheader'>
@@ -161,6 +175,7 @@ class AppFront extends Component {
                     </div>
                 </div>
 
+                {/*For the main login/create/reset portion of the page*/}
                 <div id='startcontianer' style={{width:'40%',float:'right'}}>
 
                     <div id='startform' ref="login" style={{borderRadius:'10px',backgroundColor:'#333333',padding:"20px",width:'80%',marginRight:'auto',marginLeft:'auto' ,marginTop:"50px", color:'#F3E6DE'}}>
@@ -195,4 +210,5 @@ class AppFront extends Component {
     }
 }
 
+//Exports to allow page to be shown
 export default AppFront;
