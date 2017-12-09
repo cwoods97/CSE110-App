@@ -158,6 +158,7 @@ class Join extends Component {
                     <div style={{padding:'10px',boxShadow:'1px 0px 1px#333333'}}>
                     <p><b>Session Title:</b> {this.state.title}</p>
                     <p><b>Session Code:</b> {this.sessionAccessCode}</p>
+                    <p><b>Status:</b> Active/Not Active</p>
                     </div>
                     <a class="w3-bar-item w3-button w3-hover-red" onClick={this.main} style={{boxShadow:'1px 0px 1px #333333'}}>Leave Session</a>
 
