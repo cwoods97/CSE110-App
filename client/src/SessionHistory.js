@@ -1,3 +1,4 @@
+//Necessary Imports
 import React, { Component } from 'react';
 import firebase from 'firebase';
 import './styles/App.css';
@@ -12,13 +13,16 @@ import logo from './Logo.png';
 
 import ReactDOM from 'react-dom';
 
-class App extends Component {
+//For the session history page
+class SessionHistory extends Component {
 
+    //Constructor for this page
     constructor(props) {
         super(props);
 
         this.db = props.db;
         this.home = this.home.bind(this);
+        //Some states allow access to one's display name and passed joined/created sessions
         this.state = {
             message: "",
             display: "",
@@ -26,12 +30,14 @@ class App extends Component {
             presentedSessions: []
         }
 
+        //Get joined Sessions
         this.getJoinedSessions().then((response) => {
             this.setState({
                 joinedSessions : response
             });
         }).catch((error) => { console.log(error) })
 
+        //Get created Sessions
         this.getPresentedSessions().then((response) => {
             this.setState({
                 presentedSessions : response
@@ -39,6 +45,7 @@ class App extends Component {
         }).catch((error) => { console.log(error) })
     }
 
+    //Full function to get presented sessions
     getPresentedSessions() {
         return new Promise((resolve, reject) => {
             firebase.auth().currentUser.getIdToken()
@@ -60,6 +67,7 @@ class App extends Component {
         })
     }
 
+    //Full function to get joined sessions
     getJoinedSessions() {
         return new Promise((resolve, reject) => {
             firebase.auth().currentUser.getIdToken()
@@ -81,11 +89,13 @@ class App extends Component {
         })
     }
 
+    //Makes it so the the user's correct display name is shown
     componentDidMount() {
         getDisplayName().then(name => {this.setState({display: name});});
 
     }
 
+    //Brings one back to the main page of the web app
     home = function(ev) {
 
         ev.preventDefault();
@@ -94,26 +104,18 @@ class App extends Component {
 
     }
 
-    front = function(ev) {
 
-        ev.preventDefault();
-        ReactDOM.render(<AppFront />, document.getElementById('root'));
-
-    }
-
+    //Makes it so the Joined session and Created Sessions are displayed properly based on what tab: "Joined Sessions" or "Created Sessions" is selected
     join = function(ev){
 
         ev.preventDefault();
 
         document.getElementById('joined').style.display = 'inline'
         document.getElementById('created').style.display = 'none'
-        /*document.getElementById("jb").classList.remove('w3-grey');
-        document.getElementById("jb").classList.add('w3-dark-grey');
 
-        document.getElementById("cb").classList.remove('w3-dark-grey');
-        document.getElementById("cb").classList.add('w3-grey');*/
     }
 
+    //Makes it so the Joined session and Created Sessions are displayed properly based on what tab: "Joined Sessions" or "Created Sessions" is selected
     create = function(ev){
 
         ev.preventDefault();
@@ -121,49 +123,42 @@ class App extends Component {
         document.getElementById('created').style.display = 'inline'
         document.getElementById('joined').style.display = 'none'
 
-        /*document.getElementById("jb").classList.remove('w3-dark-grey');
-        document.getElementById("jb").classList.add('w3-grey');
-        document.getElementById("cb").classList.remove('w3-grey');
-        document.getElementById("cb").classList.add('w3-dark-grey');*/
-
     }
 
+    //Brings one to the ReviewFeedback page for a specific session clicked on
     renderSession = (sessionID) => {
         ReactDOM.render(<ReviewFeedback db={this.db} sessionid={sessionID} />, document.getElementById('root'));
     }
 
-
+    //Where html is located
     render() {
         return (
 
             <div >
+                {/*For styling purposes*/}
                 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"></link>
 
+                {/*For top bar and and logo*/}
                 <div style={{backgroundColor:'#333333',height:"100%", outline: '1px solid #F3E6DE'}}>
                     <h2 style={{marginLeft:'8px',marginTop:'0px',marginBottom:'0px',height:'50px', color:'white', cursor:'pointer'}}><b></b>
                         <img src={logo} width="125" height="50" onClick={this.home} alt="SpeakEasy logo"/>
                     </h2>
                 </div>
 
+                {/*For the side menu displaying the display name of the user*/}
                 <div id="sidebar" className="w3-sidebar w3-bar-block" style={{width:'20%',height:'100%',backgroundColor:'#585858',
                     color:'#F3E6DE', zIndex:'0',overflow:'hidden', boxShadow:'1px 1px 2px #F3E6DE'}}>
 
                     <a class="w3-bar-item HoverRed" style={{outline:'2px solid #333333', fontSize:'20px'}}>{this.state.display}</a>
-                    <br></br>
-                    <br></br>
-                    <br></br>
-                    <br></br>
-                    <br></br>
-                    <br></br>
-                    <br></br>
-                    <br></br>
-                    <br></br>
+
                 </div>
 
 
+                {/*For the main content*/}
                 <div style={{width:'80%',float:'right'}}>
                     <br></br>
 
+                    {/*For the "Joined Sessions" and "Created Sessions" tabs*/}
                     <div id="buttons" style={{margin:'0 auto',textAlign:'center'}}>
                     <button id="jb" onClick={this.join} class="w3-button w3-round w3-hover-red" style={{backgroundColor:'#525252', color:'white', marginRight:'10px'}}>
                         Joined Sessions
@@ -174,9 +169,12 @@ class App extends Component {
                     </div>
 
                 </div>
+
+                {/*Where the joined session content is displayed*/}
                 <div id="joined" >
                     {
                         this.state.joinedSessions.map((sessionData) => (
+                            /*Specific format for joined session info that can be shown on the page*/
                             <div class='sessions' sessionid={sessionData.id} onClick={(e) => this.renderSession(sessionData.id)} style={{cursor:'pointer'}}>
 
                                 <center>
@@ -195,9 +193,12 @@ class App extends Component {
                         ))
                     }
                 </div>
+                {/*Where the created session content is displayed*/}
                 <div id="created" style={{display:'none'}}>
                     {
                         this.state.presentedSessions.map((sessionData) => (
+
+                            /*Specific format for created session info that can be shown on the page*/
                             <div class='sessions' sessionid={sessionData.id} onClick={(e) => this.renderSession(sessionData.id)} style={{cursor:'pointer'}}>
 
                                 <center>
@@ -222,5 +223,5 @@ class App extends Component {
         );
     }
 }
-
-export default App;
+//Allows use of page
+export default SessionHistory;
