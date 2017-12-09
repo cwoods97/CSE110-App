@@ -112,6 +112,8 @@ class SessionHistory extends Component {
 
         document.getElementById('joined').style.display = 'inline'
         document.getElementById('created').style.display = 'none'
+        document.getElementById('jb').style.backgroundColor = '#525252'
+        document.getElementById('cb').style.backgroundColor = '#999999'
 
     }
 
@@ -122,6 +124,8 @@ class SessionHistory extends Component {
 
         document.getElementById('created').style.display = 'inline'
         document.getElementById('joined').style.display = 'none'
+        document.getElementById('cb').style.backgroundColor = '#525252'
+        document.getElementById('jb').style.backgroundColor = '#999999'
 
     }
 
@@ -163,7 +167,7 @@ class SessionHistory extends Component {
                     <button id="jb" onClick={this.join} class="w3-button w3-round w3-hover-red" style={{backgroundColor:'#525252', color:'white', marginRight:'10px'}}>
                         Joined Sessions
                     </button>
-                    <button id="cb" onClick={this.create} class="w3-button w3-round w3-hover-red" style={{backgroundColor:'#525252', color:'white',marginLeft:'10px'}}>
+                    <button id="cb" onClick={this.create} class="w3-button w3-round w3-hover-red" style={{backgroundColor:'#999999', color:'white',marginLeft:'10px'}}>
                         Created Sessions
                     </button>
                     </div>
