@@ -102,16 +102,36 @@ class ReviewFeedback extends Component {
 
 		//updates the chart
         setInterval(() => {
-            this.state.predefinedFeedback.forEach((feedback) => {
-                if (Math.abs(feedback.timestamp - this.audio.currentTime) < 5 && feedback.timestamp < this.audio.currentTime) {
-                    console.log("CT", this.audio.currentTime);
-                    console.log("TS", feedback.timestamp);
-                    this.pChart.displayFeedback(feedback);
-                    this.vChart.displayFeedback(feedback);
-                    this.cChart.displayFeedback(feedback);
-                }
-            }, this)
-        }, 5000)
+			var feedbackArray = this.state.predefinedFeedback;
+			var returnArray = ['0','0','0','0','0','0'];
+			for (var i = 0; i < feedbackArray.length; i++) {
+				if(this.audio.currentTime - feedbackArray[i].timestamp < 60 && this.audio.currentTime - feedbackArray[i].timestamp >= 0) {
+					if(feedbackArray[i].message === 'slow') {
+						returnArray[0]++;
+					}
+					if(feedbackArray[i].message === 'fast') {
+						returnArray[1]++;
+					}
+					if(feedbackArray[i].message === 'quiet') {
+						returnArray[2]++;
+					}
+					if(feedbackArray[i].message === 'loud') {
+						returnArray[3]++;
+					}
+					if(feedbackArray[i].message === 'unclear') {
+						returnArray[4]++;
+					}
+					if(feedbackArray[i].message === 'clear') {
+						returnArray[5]++;
+					}
+				}
+			}
+			this.pChart.setGraph(returnArray);
+			this.vChart.setGraph(returnArray);
+			this.cChart.setGraph(returnArray);
+			
+            
+        }, 200)
     }
 
     //Allows one to go back to the session history page
