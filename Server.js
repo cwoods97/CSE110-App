@@ -1,3 +1,4 @@
+/* This file contains the main interface for communicating with backend */
 const admin = require('firebase-admin');
 const express = require('express');
 const path = require('path');
@@ -5,7 +6,7 @@ const bodyParser = require('body-parser')
 
 const log = (message) => { console.log("[Server.js] " + message); }
 
-// Initialize a connection to Firebase
+/* Initialize a connection to Firebase */
 var serviceAccount = require("./FirebaseSac.json");
 admin.initializeApp({
     credential: admin.credential.cert(serviceAccount),
@@ -13,8 +14,8 @@ admin.initializeApp({
 });
 
 const app = express();
-app.use(bodyParser.json());         // to support JSON-encoded bodies
-app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
+app.use(bodyParser.json());         /* to support JSON-encoded bodies */
+app.use(bodyParser.urlencoded({     /* to support URL-encoded bodies */
     extended: true
 }));
 
@@ -24,14 +25,12 @@ app.use(function(req, res, next) {
   	next();
 });
 
-/*
-The following method is executed before all other routing logic.
-All requests to the API require authentication.
-The token provided with the HTTP request will be verified with Firebase.
-
-Precondition: The request must populate a 'token' key in the header (as assigned by Firebase).
-Postcondition: The decoded token will be stored in 'req.decodedToken'
-*/
+/* The following method is executed before all other routing logic. All 
+requests to the API require authentication. The token provided with the HTTP 
+request will be verified with Firebase.
+Precondition: The request must populate a 'token' key in the header (as 
+assigned by Firebase).
+Postcondition: The decoded token will be stored in 'req.decodedToken' */
 app.use(function(req, res, next) {
   	log("Authenticating request for " + req.originalUrl);
 
@@ -54,27 +53,27 @@ app.use(function(req, res, next) {
             next();
         } else {
             log("Authentication token not provided. Rejecting request.");
+            res.sendStatus(404);
         }
   	}
 });
 
-// Serves static files from the 'client/build' directory
-// Navigating to root of webserver serves, by default, the built 'index.html'
-// Disabled by default - Activate functionality by running 'node server.js 1'
+/* Serves static files from the 'client/build' directory. Navigating to root 
+of webserver serves, by default, the built 'index.html'. Disabled by default 
+- Activate functionality by running 'node server.js 1' */
 var is_production = process.argv[2]
 if (Boolean(parseInt(is_production))) {
   	log('Serving files');
   	app.use(express.static(path.join(__dirname, 'client/build')));
 }
 
-// Express routers
+/* Express routers */
 const account = require('./routes/Account');
 const session = require('./routes/Session');
 const sessionSetup = require('./routes/sessionSetup');
 const feedback = require('./routes/Feedback');
 const presenterSession = require('./routes/PresenterSession');
 const sessionReview = require('./routes/SessionReview');
-const user = require('./routes/User');
 
 app.use('/api/account', account);
 app.use('/api/session', session);
@@ -82,7 +81,6 @@ app.use('/api/feedback', feedback);
 app.use('/api/presenterSession', presenterSession)
 app.use('/api/sessionReview', sessionReview)
 app.use('/api/sessionSetup', sessionSetup)
-app.use('/api/user', user)
 
 const port = process.env.PORT || 3000;
 app.listen(port, function() {

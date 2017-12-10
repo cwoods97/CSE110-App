@@ -65,18 +65,20 @@ class CreateAccount extends Component {
                     document.getElementById('createBtn').disabled = false;
                     var errorCode = error.code;
                     const getById = document.getElementById.bind(document);
-
                     //Resets Variables
                     getById('displayNameError').innerHTML = '';
                     getById('emailError').innerHTML = '';
                     getById('pwdError').innerHTML = '';
                     if (errorCode === 'auth/invalid-name') {
                         getById('displayNameError').innerHTML = "Please enter a valid display name";
-                    } else if (errorCode === 'auth/name-already-in-use') {
+                    }
+					if (errorCode === 'auth/name-already-in-use') {
                         getById('displayNameError').innerHTML = "Display name is already in use";
-                    } else if (errorCode === 'auth/email-already-in-use') {
+                    }
+					if (errorCode === 'auth/email-already-in-use') {
                         getById("emailError").innerHTML = "Email is already in use";
-                    } else if (errorCode === 'auth/weak-password') {
+                    }
+					if (errorCode === 'auth/weak-password') {
                         getById('pwdError').innerHTML = "Password must be at least 6 characters";
                     }
                 });
