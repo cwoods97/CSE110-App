@@ -1,6 +1,10 @@
+/*
+This function contains the methods regarding sessions.
+*/
 var express = require('express');
 var router = express.Router();
 
+// Allows the user to join the session by adding it to the list of audience
 router.post('/join', (req, res) => {
 
 		const user = req.locals.uid;
@@ -8,10 +12,12 @@ router.post('/join', (req, res) => {
 
 		const db = req.locals.admin.database();
 
+		//finds the session associated with the accessCode
 		const ref = db.ref("sessions").orderByChild("accessCode").equalTo(session);
 		ref.once('value').then(function (snapshot) {
 				if(snapshot.val()){
 						snapshot.forEach(function(child) {
+								//Updates the list of participants and the audienceCount
 								const value = child.val();
 								if(value){
 										const sessionRef = db.ref("sessions").child(child.key);
@@ -45,6 +51,7 @@ router.post('/join', (req, res) => {
 
 });
 
+// Allows the user to leave the session by subtracting from the audience count
 router.post('/leave', (req, res) => {
 
 		const db = req.locals.admin.database();
@@ -65,6 +72,7 @@ router.post('/leave', (req, res) => {
 
 });
 
+// Updates the title
 router.post('/title', (req, res) => {
 
 		const session = req.body.code;
@@ -73,6 +81,7 @@ router.post('/title', (req, res) => {
 		const db = req.locals.admin.database();
 
 		const ref = db.ref("sessions").child(session);
+		//puts title in the database
 		ref.child('title').set(title);
 
 		res.json({title: title});

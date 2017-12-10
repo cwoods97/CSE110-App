@@ -1,6 +1,10 @@
+/*
+This file contains the methods for a created session for the presenter
+*/
 const express = require('express');
 const router = express.Router();
 
+//This function ends the session
 router.post('/endSession', (req, res) => {
 
 	const uid = req.locals.uid;
@@ -10,19 +14,19 @@ router.post('/endSession', (req, res) => {
 	var userRef = admin.database().ref(userPath);
 
     var accessCode = req.body.accessCode;
-
-  	//query the database for session with accessCode
+	
+  	//query the database for session with accessCode and erases the field so that the accessCode can be reused
 	sessionRef.orderByChild("accessCode").equalTo(accessCode).once('value', function(snapshot) {
-
-		//should be only one loop, but this is the only way I know how to code
+		//gets the session id (only one loop)
 		snapshot.forEach(function(childSnapshot) {
-			var thisSession = sessionRef.child(childSnapshot.key) //gets the session
+			var thisSession = sessionRef.child(childSnapshot.key) //gets the session reference
 			thisSession.child("accessCode").set('');
 			console.log("ended session with accessCode: ", accessCode);
 		});
 	});
 })
 
+//Toggles whether the session is currently active (accepting feedback)
 router.post('/toggleActive', (req, res) => {
 
 	const uid = req.locals.uid;
@@ -33,9 +37,9 @@ router.post('/toggleActive', (req, res) => {
 
     var accessCode = req.body.accessCode;
 
-  	//query the database for session with accessCode
+  	//query the database for session with accessCode and erases the field so that the accessCode can be reused
 	sessionRef.orderByChild("accessCode").equalTo(accessCode).once('value', function(snapshot) {
-		//should be only one loop, but this is the only way I know how to code
+		//gets the session id (only one loop)
 		snapshot.forEach(function(childSnapshot) {
 			var sessionID = childSnapshot.key;
 			var thisSession = sessionRef.child(sessionID); //gets the session
@@ -48,6 +52,7 @@ router.post('/toggleActive', (req, res) => {
 	res.sendStatus(200);
 })
 
+//adds the start time to the session
 router.post('/addStartTime', (req, res) => {
 
 		const timestamp = Date.now() / 1000;
@@ -56,6 +61,7 @@ router.post('/addStartTime', (req, res) => {
 		const session = req.body.sessionCode;
 		const audio = req.body.audio;
 
+		//adds the start time to the database
 		ref = admin.database().ref("sessions").child(session);
 		ref.child('startTime').set(timestamp);
 		ref.child('hasAudio').set(audio);

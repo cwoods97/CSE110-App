@@ -1,6 +1,11 @@
+/*
+This file contains methods to get the predefined feedback
+*/
+
 var express = require('express');
 var router = express.Router();
 
+// Puts the input message in the database
 router.post('/predefined_feedback', (req, res) => {
 
 	const timestamp = Date.now() / 1000;
@@ -13,7 +18,9 @@ router.post('/predefined_feedback', (req, res) => {
 
 	const sessionRef = admin.database().ref('sessions').orderByKey().equalTo(sessionID);
 	sessionRef.once('value').then(function (snapshot) {
+			// Gets the corresponding sessions (loops only once)
 			snapshot.forEach(function(child) {
+					//Puts the feedback in the list of feedbacks of this sessions
 					const value = child.val();
 					if(value.isActive){
 							const startTime = value.startTime;

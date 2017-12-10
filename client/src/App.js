@@ -51,23 +51,29 @@ class AppFront extends Component {
         var password = document.getElementById("password").value;
         // regex from http://stackoverflow.com/questions/46155/validate-email-address-in-javascript
         var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-
-
+		var errorb = false;
+		
+		document.getElementById('error').innerHTML = ""
+		document.getElementById('errora').innerHTML = ""
+		
         if (!re.test(email)) {
             document.getElementById('error').innerHTML = "Please enter a valid email address";
+			errorb = true;
         }
         if (password.length < 6) {
             document.getElementById('errora').innerHTML = "Please enter a valid password";
+			errorb = true;
         }
-
-        login(email, password)
-        .then((success) => {
-            if (success) {
-                ReactDOM.render(<Main db={firebase} />, document.getElementById('root'));
-            }
-        }).catch((error) => {
-            document.getElementById('error').innerHTML = "The credentials are invalid";
-        });
+		if(!errorb) {
+			login(email, password)
+			.then((success) => {
+				if (success) {
+					ReactDOM.render(<Main db={firebase} />, document.getElementById('root'));
+				}
+			}).catch((error) => {
+				document.getElementById('error').innerHTML = "The credentials are invalid";
+			});
+		}
     }
 
     about= function(ev){
@@ -123,7 +129,7 @@ class AppFront extends Component {
                     .then(() => {
                         document.getElementById('rError').innerHTML = "Password reset email sent!";
                     }).catch((error) => {
-                        document.getElementById('rError').innerHTML = "Unable to reset password. Please try again later.";
+                        document.getElementById('rError').innerHTML = "Unable to reset password. This email is possibly not associated with a registered user.";
                 });
             }
         };
