@@ -1,3 +1,7 @@
+/*
+ * This file contains the class ReviewFeedback, which displays a page for reviewing feedback
+ * from a previous completed session.
+ */
 //Necessary Imports
 import React, { Component } from 'react';
 import './styles/CreateSession.css';
@@ -10,7 +14,6 @@ import ReviewChart from './components/ReviewChart';
 import SessionHistory from './SessionHistory';
 import Main from './Main';
 
-//import { ReactMic } from 'react-mic';
 import {getDisplayName} from "./RegisterFirebaseUser";
 
 import logo from './Logo.png';
@@ -38,6 +41,8 @@ class ReviewFeedback extends Component {
     }
 
     componentWillMount() {
+		
+		//posts a request to backend for getting the feedbacks (predefined and custom)
         this.db.auth().currentUser.getIdToken().then((token) => {
             fetch("/api/sessionReview/sessionData", {
                 method: 'post',
@@ -80,6 +85,7 @@ class ReviewFeedback extends Component {
         var gsReference = storage.refFromURL('gs://speakeasy-25a66.appspot.com');
         var childURL = this.sessionID + "/media";
 
+		//Gets the audio if exists
         gsReference.child(childURL).getDownloadURL().then(function(url){
             console.log(url);
             this.setState({'src': url});
@@ -87,12 +93,14 @@ class ReviewFeedback extends Component {
             console.log(error);
         });
 
+		//Sets up the review charts
         this.pChart = document.getElementById('pChart');
         this.vChart = document.getElementById('vChart');
         this.cChart = document.getElementById('cChart');
 
         this.audio = document.getElementById('audio');
 
+		//updates the chart
         setInterval(() => {
             this.state.predefinedFeedback.forEach((feedback) => {
                 if (Math.abs(feedback.timestamp - this.audio.currentTime) < 5 && feedback.timestamp < this.audio.currentTime) {
