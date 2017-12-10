@@ -49,43 +49,27 @@ class About extends Component {
 
             <div style={{backgroundColor:'#F3E6DE'}}>
                 {/*Styling import*/}
-              <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"></link>
+                <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"></link>
 
                 {/*For the top bar and logo for the page*/}
-              <div style={{backgroundColor:'#333333',height:"100%"}}>
+                <div style={{backgroundColor:'#333333',height:"100%"}}>
 
-                  <h2 style={{marginLeft:'8px',marginTop:'0px',marginBottom:'0px',height:'50px',fontFamily:'cursive', color:'white', cursor:'pointer'}}><b></b>
-                      <img src={logo} width={'125'} height={'50'} onClick={this.app} alt="SpeakEasy logo"/>
+                    <h2 style={{marginLeft:'8px',marginTop:'0px',marginBottom:'0px',height:'50px',fontFamily:'cursive', color:'white', cursor:'pointer'}}><b></b>
+                        <img src={logo} width={'125'} height={'50'} onClick={this.app} alt="SpeakEasy logo"/>
 
-                </h2>
-              </div>
-
+                    </h2>
+                </div>
 
                 {/* For the main text of the page */}
                 <center>
                     <h3 style={{marginTop:'50px', fontSize:'35px'}}><b>About Us</b></h3>
-                <p id = 'AboutText' style={{textAlign:'center',marginRight:'20%',marginLeft:'20%', fontSize:'18px'}}>
-                    SpeakEasy is a web application developed and created by eleven UCSD students with the goal of improving future speeches of both speakers and presenters. SpeakyEasy empowers
-                    speakers and presenters with the ability to easily review speeches they have given in the past in order to identify elements they may improve in. Audience members can
-                    actively engage with speakers with quick and easy predefined feedback, such as communcicating they are speaking too fast/slow, to the speaker who can view it effortlessly.
-                    This in contrast to the current traditional and disruptive way of interrupting the speaker in order to tell them a piece of information that is trivial and interrupts the flow
-                    of the speaker. All of this is available to the audience at the tap of a simple button.
-
-                    Developed with a growth mindset, we believe that there is always room for improvement. SpeakEasy can be used in a range of environments, from small lectures to presentations
-                    with hundreds of people. Our application is easy to use with a simple goal to provide a positive experience with all users.
-
-                </p>
-                <p></p>
-                <p></p>
-                <p></p>
-                <p></p>
-
+                    <p id = 'AboutText' style={{textAlign:'center',marginRight:'20%',marginLeft:'20%', fontSize:'18px'}}>
+                        SpeakEasy is a web application developed by eleven UCSD students with the goal of helping speakers improve their public speaking skills and the process of receiving feedback. SpeakyEasy empowers speakers with the ability to easily review speeches they have given in the past to identify elements they can improve. Audience members can actively engage with the speaker with quick and easy predefined feedback, such as indicating that they are speaking too fast or slow, which the speaker can view effortlessly. This contrasts with the current traditional and disruptive way of interrupting the speaker to tell them a trivial piece of information. All of this is available to the audience at the tap of a simple button.
+                        <br></br>
+                        Developed with a growth mindset, we believe that there is always room for improvement. SpeakEasy can be used in a range of environments, from small lectures to presentations with hundreds of people. Our application is easy to use with a simple goal to provide a positive experience for all users.
+                    </p>
                 </center>
-
             </div>
-
-
-
         );
     }
 }
