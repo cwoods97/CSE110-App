@@ -13,7 +13,7 @@ Google Chrome
 # How To Run:
 
 Navigate to www.speakeasy.ml in your browser <br />
-Login with test account credentials below <br />
+Login with a test account's credentials below <br />
 
 # Test Account Credentials:
 Email: test2@test.edu, Password: test123 <br />
