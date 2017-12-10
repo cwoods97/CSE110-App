@@ -41,6 +41,9 @@ function borderColors(type) {
         }
     }
 
+/*
+ * The first chart represents whether the speaker is going too fast or too slow
+ */
 var chart1 = {
     labels: ['Slow', 'Fast'],
     datasets: [{
@@ -51,7 +54,9 @@ var chart1 = {
         borderWidth: 1
     }]
 }
-
+/*
+ * The second chart represents whether the speaker is talking too loud or quiet
+ */
 var chart2 = {
     labels: ['Quiet', 'Loud'],
     datasets: [{
@@ -62,7 +67,9 @@ var chart2 = {
         borderWidth: 1
     }]
 }
-
+/*
+ * The third chart represents whether the speaker is being clear or unclear
+ */
 var chart3 = {
     labels: ['Unclear', 'Clear'],
     datasets: [{
@@ -79,6 +86,7 @@ class Chart extends Component {
     constructor(props) {
         super(props);
 
+		// initializes the chart with the specific type (pace, volume, or clarity)
         this.db = props.db;
         this.sessionID = props.sessionID;
         this.type = props.type;
@@ -105,15 +113,18 @@ class Chart extends Component {
         }
     }
 
+	// Shows the feedback to the presenter by updating the graph
     displayFeedback(feedback) {
         var type = this.type;
         var chartData1 = this.state.chartData1;
         var chartData2 = this.state.chartData2;
         var chartData3 = this.state.chartData3;
 
+		// updates the graph depending on the type of the graph
         if (type === 'pace') {
             if (feedback.message === "slow"){
                 this.state.chartData1.datasets[0].data[0]++;
+				//expires the feedback after 60 seconds (it no longer is considered relevant)
                 setTimeout(function () {
                     this.expireFeedback(1);
                 }.bind(this), 60000);
@@ -156,11 +167,13 @@ class Chart extends Component {
         }
     }
 
+	//expires the given feedback type by reducing the count
     expireFeedback(feedbackType) {
         var chartData1 = this.state.chartData1;
         var chartData2 = this.state.chartData2;
         var chartData3 = this.state.chartData3;
 
+		//reduces the correct count, depending on the chart type
         switch (feedbackType) {
             case 1:
                 if (chartData1.datasets[0].data[0] !== 0) {
@@ -208,6 +221,7 @@ class Chart extends Component {
         return (
             <Bar
                 data={this.chartData}
+				//default chart characteristics
                 options={{
                     title: {
                         display: true,
