@@ -16,7 +16,6 @@ Navigate to www.speakeasy.ml in your browser <br />
 Login with test account credentials below <br />
 
 # Test Account Credentials:
-Email: test@test.edu, Password: test123 <br />
 Email: test2@test.edu, Password: test123 <br />
 Email: teamSMHTest@gmail.com, Password: test123456
 
