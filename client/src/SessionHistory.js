@@ -163,42 +163,19 @@ class SessionHistory extends Component {
                     <br></br>
 
                     {/*For the "Joined Sessions" and "Created Sessions" tabs*/}
-                    <div id="buttons" style={{margin:'0 auto',textAlign:'center'}}>
-                    <button id="jb" onClick={this.join} class="w3-button w3-round w3-hover-red" style={{backgroundColor:'#525252', color:'white', marginRight:'10px'}}>
-                        Joined Sessions
-                    </button>
-                    <button id="cb" onClick={this.create} class="w3-button w3-round w3-hover-red" style={{backgroundColor:'#999999', color:'white',marginLeft:'10px'}}>
+                    <div id="buttons" style={{margin:'0 auto', textAlign:'center'}}>
+                    <button id="cb" onClick={this.create} class="w3-button w3-round w3-hover-red" style={{backgroundColor:'#525252', color:'white',marginRight:'10px'}}>
                         Created Sessions
+                    </button>
+                    <button id="jb" onClick={this.join} class="w3-button w3-round w3-hover-red" style={{backgroundColor:'#999999', color:'white', marginLeft:'10px'}}>
+                        Joined Sessions
                     </button>
                     </div>
 
                 </div>
 
-                {/*Where the joined session content is displayed*/}
-                <div id="joined" >
-                    {
-                        this.state.joinedSessions.map((sessionData) => (
-                            /*Specific format for joined session info that can be shown on the page*/
-                            <div class='sessions' sessionid={sessionData.id} onClick={(e) => this.renderSession(sessionData.id)} style={{cursor:'pointer'}}>
-
-                                <center>
-                                    <h4>
-                                        {sessionData.title}
-                                    </h4>
-                                    <h6>
-                                        {sessionData.displayName}
-                                    </h6>
-    								<h6>
-										{sessionData.creationTime}
-    								</h6>
-                                </center>
-
-                            </div>
-                        ))
-                    }
-                </div>
                 {/*Where the created session content is displayed*/}
-                <div id="created" style={{display:'none'}}>
+                <div id="created">
                     {
                         this.state.presentedSessions.map((sessionData) => (
 
@@ -216,6 +193,29 @@ class SessionHistory extends Component {
 										{sessionData.creationTime}
 									</h6>
 
+                                </center>
+
+                            </div>
+                        ))
+                    }
+                </div>
+                {/*Where the joined session content is displayed*/}
+                <div id="joined" style={{display:'none'}}>
+                    {
+                        this.state.joinedSessions.map((sessionData) => (
+                            /*Specific format for joined session info that can be shown on the page*/
+                            <div class='sessions' sessionid={sessionData.id}>
+
+                                <center>
+                                    <h4>
+                                        {sessionData.title}
+                                    </h4>
+                                    <h6>
+                                        {sessionData.displayName}
+                                    </h6>
+    								<h6>
+										{sessionData.creationTime}
+    								</h6>
                                 </center>
 
                             </div>

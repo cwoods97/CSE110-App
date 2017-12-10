@@ -31,20 +31,33 @@ class Join extends Component {
 		this.sessionAccessCode = props.code;
 		this.sessionID = props.session;
 		this.db = props.db;
+        this.sessionRef = this.db.database().ref("sessions").child(this.sessionID);
+
 		this.main = this.main.bind(this);
 		this.sendComment = this.sendComment.bind(this);
 
-		//Some states for display name and title of session
+		// Some states for display name and title of session
         this.state = {
             message: "",
             display: "",
-			title: "untitled"
+			title: "untitled",
+            isActive: "Not Active"
         }
 
-		var sessRef = this.db.database().ref("sessions").child(this.sessionID);
-		sessRef.child('title').on('value', (snapshot) => {
-				this.setState({title: snapshot.val()});
-		});
+        var onTitleChange = (snapshot) => { this.setState({title: snapshot.val()}); }
+        var onActiveChange = (snapshot) => {
+            let isActive = snapshot.val() ? "Active" : "Not Active";
+            this.setState({'isActive': isActive});
+        };
+
+        this.sessionRef.child('title').on('value', onTitleChange);
+        this.sessionRef.child('isActive').on('value', onActiveChange);
+
+        // Storing callbacks in order to stop listening for them when leaving session
+        this.callbacks = {
+            'title': onTitleChange,
+            'isActive': onActiveChange
+        }
     }
 
     //Displays correct display name one page is generated
@@ -124,6 +137,11 @@ class Join extends Component {
         ev.preventDefault();
 
 		getIdToken().then(token => {
+            let cb = this.callbacks;
+            for (var childName in cb) {
+                this.sessionRef.child(childName).off('value', cb[childName]);
+            }
+
 			leaveBackendSession(token, this.sessionID).then((message) => {
     	        ReactDOM.render(<Main db={this.db}/>, document.getElementById('root'));
 			});
@@ -158,7 +176,7 @@ class Join extends Component {
                     <div style={{padding:'10px',boxShadow:'1px 0px 1px#333333'}}>
                     <p><b>Session Title:</b> {this.state.title}</p>
                     <p><b>Session Code:</b> {this.sessionAccessCode}</p>
-                    <p><b>Status:</b> Active/Not Active</p>
+                    <p><b>Status:</b> {this.state.isActive}</p>
                     </div>
                     <a class="w3-bar-item w3-button w3-hover-red" onClick={this.main} style={{boxShadow:'1px 0px 1px #333333'}}>Leave Session</a>
 

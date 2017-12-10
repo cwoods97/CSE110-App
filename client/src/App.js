@@ -191,11 +191,11 @@ class AppFront extends Component {
 
                         <br></br>
 
-                        <a onClick={this.create} class={'HoverRed'} style={{textDecoration:'underline' }}>Create an Account</a>
+                        <a onClick={this.create} class={'HoverRed'} style={{textDecoration:'underline', cursor:'pointer'}}>Create an Account</a>
 
                         <br></br>
 
-                        <a ref="res" id="reset" class={'HoverRed'} onClick = {this.reset.bind(this)} style={{textDecoration:'underline'}}>Forgot Your Password?</a>
+                        <a ref="res" id="reset" class={'HoverRed'} onClick = {this.reset.bind(this)} style={{textDecoration:'underline', cursor:'pointer'}}>Forgot Your Password?</a>
                     </div>
 
                 </div >

@@ -37,8 +37,16 @@ class CreateSession extends Component {
             end: false,
             display: "",
             coder: props.code,
-            title: "Untitled"
+            title: "Untitled",
+            isActive: "Not Active"
         };
+
+        let onActiveChange = (snapshot) => {
+            let isActive = snapshot.val() ? "Active" : "Not Active";
+            this.setState({'isActive': isActive});
+        };
+        let sessionRef = this.db.database().ref("sessions").child(this.sessionID);
+        sessionRef.child('isActive').on('value', onActiveChange);
     }
 
     //Display the right display name when the page generates
@@ -73,9 +81,9 @@ class CreateSession extends Component {
         document.getElementById('nAudio').disabled = true;
         document.getElementById('audio').disabled = true;
 
-				getIdToken().then(token => {
-						setStartTime(token, this.sessionID, type);
-				});
+		getIdToken().then(token => {
+			setStartTime(token, this.sessionID, type);
+		});
     };
 
     //For when one stops a recording
@@ -205,7 +213,7 @@ class CreateSession extends Component {
                     <div style={{padding:'10px',boxShadow:'1px 0px 1px#333333'}}>
                     <p id='code' style={{fontFamily:'Poppins, sans-serif'}}><b>Session Code:</b> {this.state.coder}</p>
 
-                    <p><b>Status:</b> Active/Not Active</p>
+                    <p><b>Status:</b> {this.state.isActive}</p>
                     {/*Audio/No Audio options and starting/stopping*/}
                     <form action="">
                         <input id='nAudio' onClick={this.noAudio} type="radio" name="audioOff" value="noaudio" defaultChecked={true} style={{marginRight:'8px',fontFamily:'Poppins, sans-serif'}}></input>No Audio<br></br>
