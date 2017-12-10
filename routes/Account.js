@@ -14,8 +14,7 @@ router.post('/createAccount', (req, res) => {
 	/* Creates the account with default values in the database */
 	admin.database().ref("users").child(uid).set({
 		hostedSessions: '',
-		joinedSessions: '',
-		experience: '0',
+		joinedSessions: ''
 	}).then(() => {
 		log("Registered backend user with the following uid: " + uid);
 		res.status(200).end();
@@ -113,7 +112,7 @@ router.post('/getPresentedSessions', (req, res) => {
 		Promise.all(promises).then(() => {
 			/* Sorts the sessions by time */
 			sessions = sessions.sort((session1,session2)=> {
-				
+
 				var a = session2.creationTime;
 				var b = session1.creationTime;
 				/* a>b is true a<b is false */
@@ -132,7 +131,7 @@ router.post('/getPresentedSessions', (req, res) => {
 				var hours1 = Number(s3[0]);
 				var minutes1 = Number(s3[1]);
 				var seconds1 = Number(s3[2]);
-				
+
 				s1 = b.split("-");
 				var month2 = Number(s1[0]);
 				var date2 = Number(s1[1]);
@@ -142,42 +141,42 @@ router.post('/getPresentedSessions', (req, res) => {
 				var hours2 = Number(s3[0]);
 				var minutes2 = Number(s3[1]);
 				var seconds2 = Number(s3[2]);
-				
+
 				if(year1 > year2) {
 					return 1;
 				}
 				else if(year1 < year2) {
 					return -1;
 				}
-				
+
 				if(month1 > month2) {
 					return 1;
 				}
 				else if(month1 < month2) {
 					return -1;
 				}
-				
+
 				if(date1 > date2) {
 					return 1;
 				}
 				else if(date1 < date2) {
 					return -1;
 				}
-				
+
 				if(hours1 > hours2) {
 					return 1;
 				}
 				else if(hours1 < hours2) {
 					return -1;
 				}
-				
+
 				if(minutes1 > minutes2) {
 					return 1;
 				}
 				else if(minutes1 < minutes2) {
 					return -1;
 				}
-				
+
 				if(seconds1 > seconds2) {
 					return 1;
 				}
@@ -201,7 +200,7 @@ router.post('/getJoinedSessions', (req, res) => {
 		if (!joinedSessions) { return res.json([]) }
 
 		joinedSessions = Object.keys(joinedSessions);
-		
+
 		/* Adds metadata of the sessions to the list sessions */
 		joinedSessions.forEach((sessionID) => {
 			promises.push(
@@ -288,7 +287,7 @@ router.post('/getJoinedSessions', (req, res) => {
 				else if(minutes1 < minutes2) {
 					return -1;
 				}
-				
+
 				if(seconds1 > seconds2) {
 					return 1;
 				}

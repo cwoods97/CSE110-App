@@ -1,22 +1,25 @@
 /*
- * This file contains the class SessionHistory, which displays a page for reviewing past
- * sessions, joined or created.
+ * This file defines the SessionHistory component, which acts a View class
+ * (of the MVC framework) in acting as a portal page which displays all of
+ * the sessions that the currently logged-in user has either joined or hosted.
+ * This view also acts as an interface for the user in selecting one of their
+ * created sessions in order to review the associated feedback.
  */
-//Necessary Imports
 import React, { Component } from 'react';
-import firebase from 'firebase';
+import ReactDOM from 'react-dom';
+
+/* Selectively rendered based on user actions */
+import ReviewFeedback from './ReviewFeedback';
+import Main from './Main';
+
+import { getDisplayName } from './RegisterFirebaseUser.js';
+
 import './styles/App.css';
 import './styles/SessionHistory.css';
 
-import Main from './Main';
-import ReviewFeedback from './ReviewFeedback';
-
-import {getDisplayName} from './RegisterFirebaseUser.js';
 import logo from './Logo.png';
 import mic from './Mic.png';
 import noMic from './NoMic.png';
-
-import ReactDOM from 'react-dom';
 
 //For the session history page
 class SessionHistory extends Component {
@@ -27,33 +30,29 @@ class SessionHistory extends Component {
 
         this.db = props.db;
         this.home = this.home.bind(this);
-        //Some states allow access to one's display name and passed joined/created sessions
+
+        //Contains the information that populates this page's view
         this.state = {
-            message: "",
             display: "",
             joinedSessions: [],
             presentedSessions: []
         }
 
-        //Get joined Sessions
-        this.getJoinedSessions().then((response) => {
-            this.setState({
-                joinedSessions : response
-            });
-        }).catch((error) => { console.log(error) })
+        //Populating list of user's created sessions with backend data
+        this.getJoinedSessions()
+        .then((response) => { this.setState({joinedSessions : response}) })
+        .catch((error) => { console.log(error) })
 
-        //Get created Sessions
-        this.getPresentedSessions().then((response) => {
-            this.setState({
-                presentedSessions : response
-            })
-        }).catch((error) => { console.log(error) })
+        //Populating list of user's joined sessions with backend data
+        this.getPresentedSessions()
+        .then((response) => { this.setState({presentedSessions : response}) })
+        .catch((error) => { console.log(error) })
     }
 
-    //Full function to get presented sessions
+    //Query controller for the model data containing this user's created sessions
     getPresentedSessions() {
         return new Promise((resolve, reject) => {
-            firebase.auth().currentUser.getIdToken()
+            this.db.auth().currentUser.getIdToken()
             .then(token => {
                 fetch('/api/account/getPresentedSessions', {
                     method: 'post',
@@ -72,10 +71,10 @@ class SessionHistory extends Component {
         })
     }
 
-    //Full function to get joined sessions
+    //Query controller for the model data containing this user's joined sessions
     getJoinedSessions() {
         return new Promise((resolve, reject) => {
-            firebase.auth().currentUser.getIdToken()
+            this.db.auth().currentUser.getIdToken()
             .then(token => {
                 fetch('/api/account/getJoinedSessions', {
                     method: 'post',
@@ -94,52 +93,51 @@ class SessionHistory extends Component {
         })
     }
 
-    //Makes it so the the user's correct display name is shown
+    //Retrieve current user's display name to update the sidebar
     componentDidMount() {
-        getDisplayName().then(name => {this.setState({display: name});});
-
+        getDisplayName().then(name => {this.setState({display: name})})
     }
 
-    //Brings one back to the main page of the web app
+    //Return to the website's main page
     home = function(ev) {
-
         ev.preventDefault();
         ReactDOM.render(<Main db={this.db} />, document.getElementById('root'));
-
-
     }
 
 
-    //Makes it so the Joined session and Created Sessions are displayed properly based on what tab: "Joined Sessions" or "Created Sessions" is selected
+    //Event handler for clicking the "Joined Sessions" button
     join = function(ev){
-
         ev.preventDefault();
 
+        //Switches view to show sessions that the user has joined
         document.getElementById('joined').style.display = 'inline'
         document.getElementById('created').style.display = 'none'
+        //Updates view to indicate that the 'Joined Sessions' tab is selected
         document.getElementById('jb').style.backgroundColor = '#525252'
         document.getElementById('cb').style.backgroundColor = '#999999'
-
     }
 
-    //Makes it so the Joined session and Created Sessions are displayed properly based on what tab: "Joined Sessions" or "Created Sessions" is selected
+    //Event handler for clicking the "Created Sessions" button
     create = function(ev){
-
         ev.preventDefault();
 
+        //Switches view to show sessions that the user has created
         document.getElementById('created').style.display = 'inline'
         document.getElementById('joined').style.display = 'none'
+        //Updates view to indicate that the 'Created Sessions' tab is selected
         document.getElementById('cb').style.backgroundColor = '#525252'
         document.getElementById('jb').style.backgroundColor = '#999999'
-
     }
 
-    //Brings one to the ReviewFeedback page for a specific session clicked on
+    //Renders ReviewFeedback page for the specific session that the user has
+    //selected (via the onClick event handler)
     renderSession = (sessionID) => {
-        ReactDOM.render(<ReviewFeedback db={this.db} sessionid={sessionID} />, document.getElementById('root'));
+        ReactDOM.render(
+            <ReviewFeedback db={this.db} sessionid={sessionID} />,
+            document.getElementById('root')
+        );
     }
 
-    //Where html is located
     render() {
         return (
 
@@ -183,10 +181,8 @@ class SessionHistory extends Component {
                 {/*Where the created session content is displayed*/}
                 <div id="created">
                     {
+                        /* Automatically populated when backend returns the model data for the user's created sessions */
                         this.state.presentedSessions.map((sessionData) => (
-
-
-
                             /*Specific format for created session info that can be shown on the page*/
                             <div class='sessions' sessionid={sessionData.id} onClick={(e) => this.renderSession(sessionData.id)} style={{cursor:'pointer'}}>
 
@@ -215,6 +211,7 @@ class SessionHistory extends Component {
                 {/*Where the joined session content is displayed*/}
                 <div id="joined" style={{display:'none'}}>
                     {
+                        /* Automatically populated when backend returns the model data for the user's joined sessions */
                         this.state.joinedSessions.map((sessionData) => (
                             /*Specific format for joined session info that can be shown on the page*/
                             <div class='sessions' sessionid={sessionData.id}>

@@ -25,10 +25,10 @@ app.use(function(req, res, next) {
   	next();
 });
 
-/* The following method is executed before all other routing logic. All 
-requests to the API require authentication. The token provided with the HTTP 
+/* The following method is executed before all other routing logic. All
+requests to the API require authentication. The token provided with the HTTP
 request will be verified with Firebase.
-Precondition: The request must populate a 'token' key in the header (as 
+Precondition: The request must populate a 'token' key in the header (as
 assigned by Firebase).
 Postcondition: The decoded token will be stored in 'req.decodedToken' */
 app.use(function(req, res, next) {
@@ -48,6 +48,7 @@ app.use(function(req, res, next) {
 			                     + "\n" + error.message );
 		})
   	} else {
+        /* Unauthenticated requests are allowed only for the sake of verifying unique user input on account creation */
         if (req.path === "/api/account/verify" && req.body.displayName) {
             req.locals = { 'displayName': req.body.displayName, 'admin': admin };
             next();
@@ -58,8 +59,8 @@ app.use(function(req, res, next) {
   	}
 });
 
-/* Serves static files from the 'client/build' directory. Navigating to root 
-of webserver serves, by default, the built 'index.html'. Disabled by default 
+/* Serves static files from the 'client/build' directory. Navigating to root
+of webserver serves, by default, the built 'index.html'. Disabled by default
 - Activate functionality by running 'node server.js 1' */
 var is_production = process.argv[2]
 if (Boolean(parseInt(is_production))) {
