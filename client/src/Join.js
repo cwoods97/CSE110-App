@@ -48,6 +48,17 @@ class Join extends Component {
         var onActiveChange = (snapshot) => {
             let isActive = snapshot.val() ? "Active" : "Not Active";
             this.setState({'isActive': isActive});
+             //For Styling of the Status option
+             if (isActive === 'Active'){
+                //For changing the color of the Status option
+                document.getElementById('activity').style.color = 'chartreuse';
+             }
+             if(isActive === 'Not Active'){
+                //For changing the color of the Status option
+                document.getElementById('activity').style.color = 'red';
+
+             }
+
         };
 
         this.sessionRef.child('title').on('value', onTitleChange);
@@ -176,7 +187,7 @@ class Join extends Component {
                     <div style={{padding:'10px',boxShadow:'1px 0px 1px#333333'}}>
                     <p><b>Session Title:</b> {this.state.title}</p>
                     <p><b>Session Code:</b> {this.sessionAccessCode}</p>
-                    <p><b>Status:</b> {this.state.isActive}</p>
+                    <p id='activity' style={{color:'red'}}><b style={{color:'white'}}>Status:</b> {this.state.isActive}</p>
                     </div>
                     <a class="w3-bar-item w3-button w3-hover-red" onClick={this.main} style={{boxShadow:'1px 0px 1px #333333'}}>Leave Session</a>
 
