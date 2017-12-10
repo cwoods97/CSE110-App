@@ -59,14 +59,8 @@ app.use(function(req, res, next) {
   	}
 });
 
-/* Serves static files from the 'client/build' directory. Navigating to root
-of webserver serves, by default, the built 'index.html'. Disabled by default
-- Activate functionality by running 'node server.js 1' */
-var is_production = process.argv[2]
-if (Boolean(parseInt(is_production))) {
-  	log('Serving files');
-  	app.use(express.static(path.join(__dirname, 'client/build')));
-}
+log('Serving files');
+app.use(express.static(path.join(__dirname, 'client/build')));
 
 /* Express routers */
 const account = require('./routes/Account');
