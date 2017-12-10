@@ -52,12 +52,17 @@ class CreateAccount extends Component {
         //More validation checks and possible login if everything checks out
         if (validations.every(Boolean)) {
 
+            //For preventing spamming of create button
+            document.getElementById('createBtn').disabled = true;
             createAccount(display,email,pwd2)
                 .then(() => {
                     // Only render user's main page when successfully logged in
                     ReactDOM.render(<Main db={this.db} />, document.getElementById('root'));
                 })
                 .catch((error) => {
+
+                    //Allows user to fix their input
+                    document.getElementById('createBtn').disabled = false;
                     var errorCode = error.code;
                     const getById = document.getElementById.bind(document);
 
