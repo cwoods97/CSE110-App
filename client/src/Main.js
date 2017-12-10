@@ -125,10 +125,11 @@ class App extends Component {
 				const name = document.getElementById('newDisplay').value;
 				const error = document.getElementById('displayError');
 				const form = document.getElementById('displayForm');
-				var validation = [Boolean(name) && !name.includes(' ')];
+				var validations = [Boolean(name) && !name.includes(' '), 
+					name.length <= 16];
 
 				//Validation for this update
-				if(validation.every(Boolean)) {
+				if(validations.every(Boolean)) {
 						error.innerHTML = "";
 						form.reset();
 						setDisplayName(name).then((success) => {
@@ -141,7 +142,11 @@ class App extends Component {
 						});
 				//Error message
 				} else {
-						error.innerHTML = "Please enter a valid display name (Spaces not allowed)";
+						if(!validations[0]){
+							error.innerHTML = "Please enter a valid display name (Spaces not allowed)";
+						} else {
+							error.innerHTML = "Display name can be no more than 16 characters";
+						}
 				}
 		};
 
@@ -169,7 +174,7 @@ class App extends Component {
 						setPassword(oldpswd, pswd1).then((success) => {
 								error.innerHTML = success;
 						}).catch((err) => {
-								error.innerHTML = err;
+								error.innerHTML = "Please enter your current password to change your password.";
 						});
 				//Error messages
 				} else {
