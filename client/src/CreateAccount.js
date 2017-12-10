@@ -52,7 +52,6 @@ class CreateAccount extends Component {
         //More validation checks and possible login if everything checks out
         if (validations.every(Boolean)) {
 
-            document.getElementById('createBtn').disabled = true;
             createAccount(display,email,pwd2)
                 .then(() => {
                     // Only render user's main page when successfully logged in
@@ -62,6 +61,10 @@ class CreateAccount extends Component {
                     var errorCode = error.code;
                     const getById = document.getElementById.bind(document);
 
+                    //Resets Variables
+                    getById('displayNameError').innerHTML = '';
+                    getById('emailError').innerHTML = '';
+                    getById('pwdError').innerHTML = '';
                     if (errorCode === 'auth/invalid-name') {
                         getById('displayNameError').innerHTML = "Please enter a valid display name";
                     } else if (errorCode === 'auth/name-already-in-use') {
@@ -73,7 +76,7 @@ class CreateAccount extends Component {
                     }
                 });
 
-            //Error messages
+        //Error messages
         } else {
 
             if (validations[0]) {
