@@ -1,3 +1,6 @@
+/*
+This function contains the methods regarding sessions.
+*/
 var express = require('express');
 var router = express.Router();
 

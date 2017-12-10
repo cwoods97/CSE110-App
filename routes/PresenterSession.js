@@ -1,3 +1,6 @@
+/*
+This file contains the methods for a created session for the presenter
+*/
 const express = require('express');
 const router = express.Router();
 

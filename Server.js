@@ -1,3 +1,6 @@
+/*
+This file contains the main interface for communicating with backend
+*/
 const admin = require('firebase-admin');
 const express = require('express');
 const path = require('path');
@@ -54,6 +57,7 @@ app.use(function(req, res, next) {
             next();
         } else {
             log("Authentication token not provided. Rejecting request.");
+            res.sendStatus(404);
         }
   	}
 });
@@ -74,7 +78,6 @@ const sessionSetup = require('./routes/sessionSetup');
 const feedback = require('./routes/Feedback');
 const presenterSession = require('./routes/PresenterSession');
 const sessionReview = require('./routes/SessionReview');
-const user = require('./routes/User');
 
 app.use('/api/account', account);
 app.use('/api/session', session);
@@ -82,7 +85,6 @@ app.use('/api/feedback', feedback);
 app.use('/api/presenterSession', presenterSession)
 app.use('/api/sessionReview', sessionReview)
 app.use('/api/sessionSetup', sessionSetup)
-app.use('/api/user', user)
 
 const port = process.env.PORT || 3000;
 app.listen(port, function() {
