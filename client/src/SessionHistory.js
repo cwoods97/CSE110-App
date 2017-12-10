@@ -179,7 +179,7 @@ class SessionHistory extends Component {
                     {
                         this.state.joinedSessions.map((sessionData) => (
                             /*Specific format for joined session info that can be shown on the page*/
-                            <div class='sessions' sessionid={sessionData.id} onClick={(e) => this.renderSession(sessionData.id)} style={{cursor:'pointer'}}>
+                            <div class='sessions' sessionid={sessionData.id}>
 
                                 <center>
                                     <h4>
