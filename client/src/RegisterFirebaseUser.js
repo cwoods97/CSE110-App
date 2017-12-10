@@ -17,8 +17,7 @@ On Success: Returned promise resolves as true. */
 export function createAccount(displayName, email, password) {
     return new Promise((resolve, reject) => {
         if (displayName && email && password) {
-			/* Posts a request to the backend to check if the display 
-			name is unique */
+			/* Posts a request to the backend to check if the display name is unique */
             fetch('/api/account/verify', {
                 method: 'post',
                 body: JSON.stringify({
@@ -47,13 +46,12 @@ export function createAccount(displayName, email, password) {
                         	reject('auth/invalid-name');
                         });
 
-                        /* Create backend account upon successful 
-						firebase registration */
+                        /* Create backend account upon successful firebase registration */
                         var backendAccountCreated = new Promise((resolve, reject) => {
                             user.getIdToken()
                             .then((token) => {
-								/* Posts a request to the backend to add an 
-								entry to the "users" table in the database */
+								/* Posts a request to the backend to add an entry to the "users" table in the database */
+                                /* Delegates to the manager method stored at API endpoint /api/account/craeteAccount */
                                 fetch('/api/account/createAccount', {
                                     method: 'post',
                                     body: JSON.stringify({
@@ -148,7 +146,7 @@ export function getDisplayName() {
 	});
 }
 
-/* Description: Change the user's password 
+/* Description: Change the user's password
 Precondition: user is logged in and has supplied their current password
 Postcondition: user has a new password */
 export function setPassword(oldPassword, newPassword) {
@@ -178,7 +176,7 @@ export function setDisplayName(name) {
 		/* Get the current user */
 		const user = firebase.auth().currentUser;
 		if(user != null) {
-			/* Posts a request to the backend to check the uniqueness of 
+			/* Posts a request to the backend to check the uniqueness of
 			the display name */
 			fetch('/api/account/verify', {
                 method: 'post',

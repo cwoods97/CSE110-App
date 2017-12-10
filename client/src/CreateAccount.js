@@ -1,4 +1,10 @@
-//Necessary Imports
+/*
+ * This file defines the CreateAccount component, which acts a View class
+ * (of the MVC framework) in acting as a portal page which displays all of
+ * the sessions that the currently logged-in user has either joined or hosted.
+ * This view also acts as an interface for the user in selecting one of their
+ * created sessions in order to review the associated feedback.
+ */
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import './styles/App.css';
@@ -8,38 +14,22 @@ import Main from './Main';
 import { createAccount } from './RegisterFirebaseUser';
 import logo from './Logo.png';
 
-//For the create an account page
-class CreateAccount extends Component {
+class AddUserDispatch {
+    addUser(display, email, pwd) {
+        //Passing input to dispatch method which validates business logic (see lines 17-94 in './RegisterFirebaseUser.js')
+        createAccount(display, email, pwd)
+        .then(() => {
+            //Only render user's main page when successfully logged in
+            ReactDOM.render(<Main name={display} db={this.db} />, document.getElementById('root'));
+        })
+        .catch((error) => {
+            return error.code;
+        });
+    };
+}
 
-    //Constructor for this page
-    constructor(props) {
-        super(props);
-
-        this.db = props.db;
-        this.state = {
-            message: ""
-        }
-    }
-
-    //Brings one back to the login/front page
-    goHome = function(ev) {
-        ReactDOM.render(<App />, document.getElementById('root'));
-    }
-
-    //Actually creates one's account after validation checks and brings one to the main page
-    createMain = function(ev) {
-
-        ev.preventDefault();
-
-        //Gets html elements
-
-        const email = document.getElementById("email").value;
-        const display = document.getElementById("display").value;
-        const pwd1 = document.getElementById("pwd1").value;
-        const pwd2 = document.getElementById("pwd2").value;
-
-        //Validation checks below
-
+class AddUserForm {
+    validateData(email, display, pwd1, pwd2) {
         // regex from http://stackoverflow.com/questions/46155/validate-email-address-in-javascript
         const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         var validations = [
@@ -49,43 +39,38 @@ class CreateAccount extends Component {
             pwd1 === pwd2
         ]
 
-        //More validation checks and possible login if everything checks out
         if (validations.every(Boolean)) {
-
-            //For preventing spamming of create button
+            //To preventing spamming of create button until account creation passes or fails
             document.getElementById('createBtn').disabled = true;
-            createAccount(display,email,pwd2)
-                .then(() => {
-                    // Only render user's main page when successfully logged in
-                    ReactDOM.render(<Main name={display} db={this.db} />, document.getElementById('root'));
-                })
-                .catch((error) => {
 
-                    //Allows user to fix their input
-                    document.getElementById('createBtn').disabled = false;
-                    var errorCode = error.code;
-                    const getById = document.getElementById.bind(document);
-                    //Resets Variables
-                    getById('displayNameError').innerHTML = '';
-                    getById('emailError').innerHTML = '';
-                    getById('pwdError').innerHTML = '';
-                    if (errorCode === 'auth/invalid-name') {
-                        getById('displayNameError').innerHTML = "Please enter a valid display name";
-                    }
-					if (errorCode === 'auth/name-already-in-use') {
-                        getById('displayNameError').innerHTML = "Display name is already in use";
-                    }
-					if (errorCode === 'auth/email-already-in-use') {
-                        getById("emailError").innerHTML = "Email is already in use";
-                    }
-					if (errorCode === 'auth/weak-password') {
-                        getById('pwdError').innerHTML = "Password must be at least 6 characters";
-                    }
-                });
+            /* No need for further processing of input data - Dispatch user data to the backend for further validation */
+            var error = this.addUserAction.addUser(display, email, pwd1);
 
-        //Error messages
+            if (error) {
+                //Enables the create button, allowing user to fix input and try again
+                document.getElementById('createBtn').disabled = false;
+
+                var errorCode = error.code;
+                const getById = document.getElementById.bind(document);
+
+                //Resets Variables
+                getById('displayNameError').innerHTML = '';
+                getById('emailError').innerHTML = '';
+                getById('pwdError').innerHTML = '';
+                if (errorCode === 'auth/invalid-name') {
+                    getById('displayNameError').innerHTML = "Please enter a valid display name";
+                }
+                if (errorCode === 'auth/name-already-in-use') {
+                    getById('displayNameError').innerHTML = "Display name is already in use";
+                }
+                if (errorCode === 'auth/email-already-in-use') {
+                    getById("emailError").innerHTML = "Email is already in use";
+                }
+                if (errorCode === 'auth/weak-password') {
+                    getById('pwdError').innerHTML = "Password must be at least 6 characters";
+                }
+            }
         } else {
-
             if (validations[0]) {
                 document.getElementById('emailError').innerHTML = "";
             } else {
@@ -105,9 +90,41 @@ class CreateAccount extends Component {
             } else if (validations[3]) {
                 document.getElementById('pwdError').innerHTML = "Please enter a valid password (Spaces not allowed)";
             }
-
         }
+    }
+}
 
+//For the create an account page
+class CreateAccount extends Component {
+
+    //Constructor for this page
+    constructor(props) {
+        super(props);
+
+        this.db = props.db;
+        this.state = {
+            message: ""
+        }
+        this.addUserForm = new AddUserForm();
+    }
+
+    //Brings one back to the login/front page
+    goHome = function(ev) {
+        ReactDOM.render(<App />, document.getElementById('root'));
+    }
+
+    //Actually creates one's account after validation checks and brings one to the main page
+    createMain = function(ev) {
+        ev.preventDefault();
+
+        //Gets html elements
+        const email = document.getElementById("email").value;
+        const display = document.getElementById("display").value;
+        const pwd1 = document.getElementById("pwd1").value;
+        const pwd2 = document.getElementById("pwd2").value;
+
+        // Results in creation of user accounts if user inputs are valid
+        this.addUserForm.validateData(email, display, pwd1, pwd2);
     }
 
 
