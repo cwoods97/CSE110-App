@@ -1,3 +1,4 @@
+//Necessary Imports
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import './styles/App.css';
@@ -7,8 +8,10 @@ import Main from './Main';
 import { createAccount } from './RegisterFirebaseUser';
 import logo from './Logo.png';
 
+//For the create an account page
 class CreateAccount extends Component {
 
+    //Constructor for this page
     constructor(props) {
         super(props);
 
@@ -18,20 +21,24 @@ class CreateAccount extends Component {
         }
     }
 
-    componentDidMount() {}
-
+    //Brings one back to the login/front page
     goHome = function(ev) {
         ReactDOM.render(<App />, document.getElementById('root'));
     }
 
+    //Actually creates one's account after validation checks and brings one to the main page
     createMain = function(ev) {
 
         ev.preventDefault();
+
+        //Gets html elements
 
         const email = document.getElementById("email").value;
         const display = document.getElementById("display").value;
         const pwd1 = document.getElementById("pwd1").value;
         const pwd2 = document.getElementById("pwd2").value;
+
+        //Validation checks below
 
         // regex from http://stackoverflow.com/questions/46155/validate-email-address-in-javascript
         const re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -42,20 +49,26 @@ class CreateAccount extends Component {
             pwd1 === pwd2
         ]
 
+        //More validation checks and possible login if everything checks out
         if (validations.every(Boolean)) {
+
+            //For preventing spamming of create button
+            document.getElementById('createBtn').disabled = true;
             createAccount(display,email,pwd2)
                 .then(() => {
                     // Only render user's main page when successfully logged in
-                    ReactDOM.render(<Main db={this.db} />, document.getElementById('root'));
+                    ReactDOM.render(<Main name={display} db={this.db} />, document.getElementById('root'));
                 })
                 .catch((error) => {
+
+                    //Allows user to fix their input
+                    document.getElementById('createBtn').disabled = false;
                     var errorCode = error.code;
                     const getById = document.getElementById.bind(document);
-					
-					getById("displayNameError").innerHTML = "";
-                    getById("emailError").innerHTML = "";
-                    getById("pwdError").innerHTML = "";
-					
+                    //Resets Variables
+                    getById('displayNameError').innerHTML = '';
+                    getById('emailError').innerHTML = '';
+                    getById('pwdError').innerHTML = '';
                     if (errorCode === 'auth/invalid-name') {
                         getById('displayNameError').innerHTML = "Please enter a valid display name";
                     }
@@ -70,6 +83,7 @@ class CreateAccount extends Component {
                     }
                 });
 
+        //Error messages
         } else {
 
             if (validations[0]) {
@@ -97,18 +111,21 @@ class CreateAccount extends Component {
     }
 
 
-
+    //Html code located here
     render() {
         return (
             <div style={{height:'100%',width:'100%', backgroundColor:'#F3E6DE'}}>
+                {/*Necessary Styling included*/}
                 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"></link>
+                {/*For top bar and logo*/}
                 <div style={{backgroundColor:'#333333',height:"100%"}}>
 
                     <h2 onClick={this.goHome} style={{cursor:'pointer',marginLeft:'8px',marginTop:'0px',marginBottom:'0px',height:'50px',fontFamily:'cursive'}}><b></b>
-                        <img src={logo} width="125" height="50" onClick={this.goHome}/>
+                        <img src={logo} width="125" height="50" onClick={this.goHome} alt="SpeakEasy logo"/>
                     </h2>
                 </div>
 
+                {/*For main content of page such as input areas for the users email, display name, and password*/}
                 <div style={{display:'flex',alightItems:'center',justifyContent:'center',margin:'0 auto'}}>
 
                     <div style={{backgroundColor:'#333333',padding:"20px",marginTop:'25px',textAlign:'center', color:'white', borderRadius:'10px'}}>
@@ -124,7 +141,7 @@ class CreateAccount extends Component {
                             <p></p>
                             <input class="w3-input" id="pwd2" type="password" name="reenter" placeholder={"Re-enter Password"}></input>
                             <br></br>
-                            <input onClick={this.createMain.bind(this)} style={{float:"left",backgroundColor:"#525252",color:"white"}} class="w3-button w3-round w3-hover-red" type="submit" value="Create"></input>
+                            <input id="createBtn" onClick={this.createMain.bind(this)} style={{float:"left",backgroundColor:"#525252",color:"white"}} class="w3-button w3-round w3-hover-red" type="submit" value="Create"></input>
                         </form>
                     </div>
                 </div >
@@ -133,5 +150,5 @@ class CreateAccount extends Component {
         );
     }
 }
-
+//Allows use of page
 export default CreateAccount;

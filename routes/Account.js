@@ -78,18 +78,6 @@ router.post('/verify', (req, res) => {
 	})
 })
 
-//Updates the displayName associated with the account of the given uid with the given displayName
-router.post('/updateDisplayName', (req, res) => {
-		const uid = req.locals.uid;
-		const admin = req.locals.admin;
-		const display = req.body.displayName;
-
-		const ref = admin.database().ref("users").child(uid);
-		ref.child('displayName').set(display);
-
-		res.json({success: true})
-});
-
 //Gets the presented sessions of a user in order from newest to oldest
 router.post('/getPresentedSessions', (req, res) => {
 	const uid = req.locals.uid;

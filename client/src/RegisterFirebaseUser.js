@@ -5,7 +5,9 @@ Available functions:
     createAccount(displayName, email, password)
     login(email, password)
     getIdToken()
-		getDisplayName()
+	getDisplayName()
+	setPassword(oldpassword, newpassword)
+	setDisplayName(dispName)
 */
 const log = (message) => { console.log("[RegisterFirebaseUser.js] " + message); }
 
@@ -22,6 +24,8 @@ export function createAccount(displayName, email, password) {
         if (displayName && email && password) {
             log("Creating parallel Firebase and backend user accounts for " + displayName + ".");
 
+			//posts a request to the backend to check if the display name
+			//is unique
             fetch('/api/account/verify', {
                 method: 'post',
                 body: JSON.stringify({
@@ -38,9 +42,12 @@ export function createAccount(displayName, email, password) {
                     reject({ code: 'auth/backend-error'});
                 }
             }).then((data) => {
+				//only create the account if the display name is unique
                 if (data.isUnique) {
+					//create the user account with firebase
                     firebase.auth().createUserWithEmailAndPassword(email, password)
                     .then(user => {
+						//add the user's display name to their firebase profile
                         var profileUpdated = user.updateProfile({ displayName: displayName })
                                             .then(() => {
                                                 log("Firebase user successfully created.");
@@ -52,6 +59,8 @@ export function createAccount(displayName, email, password) {
                         var backendAccountCreated = new Promise((resolve, reject) => {
                             user.getIdToken()
                             .then((token) => {
+								//posts a request to the backend to add an 
+								//entry to the "users" table in the database
                                 fetch('/api/account/createAccount', {
                                     method: 'post',
                                     body: JSON.stringify({
@@ -115,15 +124,19 @@ export function login(email, password) {
     })
 }
 
+/*
+Description: Logs a user out using Firebase's authentication service.
+Precondition: the user is logged in.
+Postcondition: the user is not logged in.
+*/
 export function logout() {
 	firebase.auth().signOut();
 }
 
 /*
-Description: Creates a login session using Firebase's authentication service.
-Precondition: User must be logged in.
-Postconditions: The user shall be logged in to Firebase.
-On Success: Returned promise resolves to authentication token.
+Description: gets the token of the currently logged in user
+Precondition: user is logged in.
+On Success: return the user's idToken
 */
 export function getIdToken() {
     return new Promise((resolve, reject) => {
@@ -136,6 +149,11 @@ export function getIdToken() {
     })
 }
 
+/*
+Description: gets the display name of the currently logged in user
+Precondition: user is logged in
+On Success: return the user's display name
+*/
 export function getDisplayName() {
 	return new Promise((resolve, reject) => {
 		const user = firebase.auth().currentUser;
@@ -146,25 +164,42 @@ export function getDisplayName() {
 	});
 }
 
+/*
+Description: Change the user's password 
+Precondition: user is logged in and has supplied their current password
+Postcondition: user has a new password
+*/
 export function setPassword(oldPassword, newPassword) {
 		return new Promise((resolve, reject) => {
 				const user = firebase.auth().currentUser;
+				//check that the user entered their current password correctly
 				user.reauthenticateWithCredential(firebase.auth.EmailAuthProvider.credential(user.email, oldPassword)).then(function() {
+						//update the user's password
 						user.updatePassword(newPassword).then(function() {
 								resolve("Password updated");
+						//firebase was unable to update the password
 						}).catch(function(error) {
 								reject(error);
 						});
+				//the user supplied the wrong password
 				}).catch(function(error) {
 						reject(error);
 				});
 		});
 }
 
+/* 
+Description: Change the user's display name
+Precondition: User is logged in
+Postcondition: User has a new display name
+*/
 export function setDisplayName(name) {
 		return new Promise((resolve, reject) => {
+				//get the current user
 				const user = firebase.auth().currentUser;
 				if(user != null) {
+						//posts a request to the backend to check the 
+						//uniqueness of the display name
 						fetch('/api/account/verify', {
                 method: 'post',
                 body: JSON.stringify({
@@ -181,38 +216,20 @@ export function setDisplayName(name) {
                     reject({ code: 'auth/backend-error'});
                 }
             }).then((data) => {
+				//only update the display name if it's unique
                 if (data.isUnique) {
-										user.updateProfile({displayName: name}).then(function() {
-
-										}).catch(function(error) {
-												reject(error);
-										});
-
-										user.getIdToken().then(token => {
-												fetch('/api/account/updateDisplayName', {
-														method: 'post',
-														body: JSON.stringify({
-																token: token,
-																displayName: name
-														}),
-														headers: {
-																'Content-Type': 'application/json',
-																'Accept': 'application/json'
-														}
-												}).then(response => response.json())
-												.then(response => {
-														resolve(response);
-												})
-												.catch(error => {
-														return reject(error);
-												});
-											}).catch(error => {reject(error);});
-								} else {
-										reject("Display name is already in use");
-								}
+					//call Firebase's updateProfile method
+					user.updateProfile({displayName: name}).then(function() {
+						resolve("Display Name Updated");
+					}).catch(function(error) {
+						reject(error);
 					});
 				} else {
-						reject("User is not logged in");
+					reject("Display name is already in use");
 				}
+			});
+			} else {
+				reject("User is not logged in");
+			}
 		});
 }

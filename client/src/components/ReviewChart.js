@@ -7,17 +7,16 @@
  */
 
 import React, {Component} from 'react';
-import ReactDOM from 'react-dom';
 import {Bar} from 'react-chartjs-2';
 
  /*
  * Function to decide color of bar based on type
  */
 function backgroundColors(type) {
-        if (type == 1) {
+        if (type === 1) {
             return ['rgba(255, 99, 132, 0.2)',
             'rgba(255, 159, 64, 0.2)'];
-        } else if (type == 2) {
+        } else if (type === 2) {
             return ['rgba(255, 205, 86, 0.2)',
             'rgba(75, 192, 192, 0.2)'];
         } else {
@@ -30,10 +29,10 @@ function backgroundColors(type) {
      * Function to decide color of bar border based on type
      */
 function borderColors(type) {
-        if (type == 1) {
+        if (type === 1) {
             return ['rgb(255, 99, 132)',
             'rgb(255, 159, 64)'];
-        } else if (type == 2) {
+        } else if (type === 2) {
             return ['rgb(255, 205, 86)',
             'rgb(75, 192, 192)'];
         } else {
@@ -92,19 +91,15 @@ class Chart extends Component {
 
         var type = this.type;
 
-        var chartData1 = this.state.chartData1;
-        var chartData2 = this.state.chartData2;
-        var chartData3 = this.state.chartData3;
-
         this.chartData = this.state.chartData;
         this.title = "";
-        if(type == "pace"){
+        if(type === "pace"){
             this.chartData = this.state.chartData1;
             this.title = "Rate of Speech";
-        }else if(type == "volume"){
+        }else if(type === "volume"){
             this.chartData = this.state.chartData2;
             this.title = "Volume";
-        }else if(type == "clarity"){
+        }else if(type === "clarity"){
             this.chartData = this.state.chartData3;
             this.title = "Clarity";
         }
@@ -117,12 +112,12 @@ class Chart extends Component {
         var chartData3 = this.state.chartData3;
 
         if (type === 'pace') {
-            if (feedback.message == "slow"){
+            if (feedback.message === "slow"){
                 this.state.chartData1.datasets[0].data[0]++;
                 setTimeout(function () {
                     this.expireFeedback(1);
                 }.bind(this), 60000);
-            } else if (feedback.message == "fast"){
+            } else if (feedback.message === "fast"){
                 console.log('p message', feedback);
                 this.state.chartData1.datasets[0].data[1]++;
                 setTimeout(function () {
@@ -131,12 +126,12 @@ class Chart extends Component {
             }
             this.setState({chartData1});
         } else if (type === 'volume') {
-            if (feedback.message == "quiet"){
+            if (feedback.message === "quiet"){
                 this.state.chartData2.datasets[0].data[0]++;
                 setTimeout(function () {
                     this.expireFeedback(3);
                 }.bind(this), 60000);
-            } else if (feedback.message == "loud"){
+            } else if (feedback.message === "loud"){
                 console.log('v message', feedback);
                 this.state.chartData2.datasets[0].data[1]++;
                 setTimeout(function () {
@@ -145,12 +140,12 @@ class Chart extends Component {
             }
             this.setState({chartData2});
         } else if (type === 'clarity') {
-            if (feedback.message == "unclear"){
+            if (feedback.message === "unclear"){
                 this.state.chartData3.datasets[0].data[0]++;
                 setTimeout(function () {
                     this.expireFeedback(5);
                 }.bind(this), 60000);
-            } else if (feedback.message == "clear"){
+            } else if (feedback.message === "clear"){
                 console.log('c message', feedback);
                 this.state.chartData3.datasets[0].data[1]++;
                 setTimeout(function () {
@@ -202,6 +197,9 @@ class Chart extends Component {
                     chartData3.datasets[0].data[1]--;
                     this.setState({chartData3});
                 }
+                break;
+            default:
+                break;
         }
     }
 

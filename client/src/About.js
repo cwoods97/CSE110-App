@@ -1,3 +1,4 @@
+//Necessary imports
 import React, { Component } from 'react';
 import firebase from 'firebase';
 import './styles/App.css';
@@ -6,8 +7,10 @@ import ReactDOM from 'react-dom';
 import App from  "./App";
 import logo from './Logo.png';
 
+//For About Us page
 class About extends Component {
 
+    //Constructor for this page
     constructor(props) {
         super(props);
         // Initialize Firebase
@@ -19,7 +22,7 @@ class About extends Component {
             storageBucket: "speakeasy-25a66.appspot.com",
             messagingSenderId: "836790794762"
         };
-        if (firebase.apps.length == 0){
+        if (firebase.apps.length === 0){
             firebase.initializeApp(config);
         }
         else{
@@ -30,6 +33,7 @@ class About extends Component {
         }
     }
 
+    //Brings one back to the login front page
     app = function(ev){
 
         ev.preventDefault();
@@ -39,27 +43,28 @@ class About extends Component {
 
     }
 
-
-
-
-
+    //Html code is located here
     render() {
         return (
 
             <div style={{backgroundColor:'#F3E6DE'}}>
+                {/*Styling import*/}
               <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"></link>
+
+                {/*For the top bar and logo for the page*/}
               <div style={{backgroundColor:'#333333',height:"100%"}}>
 
                   <h2 style={{marginLeft:'8px',marginTop:'0px',marginBottom:'0px',height:'50px',fontFamily:'cursive', color:'white', cursor:'pointer'}}><b></b>
-                      <img src={logo} width={'125'} height={'50'} onClick={this.app}/>
+                      <img src={logo} width={'125'} height={'50'} onClick={this.app} alt="SpeakEasy logo"/>
 
                 </h2>
               </div>
 
 
+                {/* For the main text of the page */}
                 <center>
                     <h3 style={{marginTop:'50px', fontSize:'35px'}}><b>About Us</b></h3>
-                <p style={{margin:'50px 250px 250px 200px', fontSize:'18px'}}>
+                <p id = 'AboutText' style={{textAlign:'center',marginRight:'20%',marginLeft:'20%', fontSize:'18px'}}>
                     SpeakEasy is a web application developed and created by eleven UCSD students with the goal of improving future speeches of both speakers and presenters. SpeakyEasy empowers
                     speakers and presenters with the ability to easily review speeches they have given in the past in order to identify elements they may improve in. Audience members can
                     actively engage with speakers with quick and easy predefined feedback, such as communcicating they are speaking too fast/slow, to the speaker who can view it effortlessly.
@@ -84,4 +89,5 @@ class About extends Component {
         );
     }
 }
+//exports to allow page to be shown
 export default About
