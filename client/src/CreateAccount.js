@@ -14,7 +14,7 @@ import Main from './Main';
 import { createAccount } from './RegisterFirebaseUser';
 import logo from './Logo.png';
 
-class AddUserDispatch {
+class AddUserManager {
     addUser(display, email, pwd) {
         //Passing input to dispatch method which validates business logic (see lines 17-94 in './RegisterFirebaseUser.js')
         createAccount(display, email, pwd)
@@ -23,12 +23,50 @@ class AddUserDispatch {
             ReactDOM.render(<Main name={display} db={this.db} />, document.getElementById('root'));
         })
         .catch((error) => {
-            return error.code;
+            return error;
         });
-    };
+    }
+}
+
+class AddUserDispatch {
+
+    constructor() {
+        this.addUserManager = new AddUserManager();
+    }
+
+    addUser(display, email, pwd) {
+        /* Posts a request to the backend to check if the display name is unique */
+        fetch('/api/account/verify', {
+            method: 'post',
+            body: JSON.stringify({
+                displayName: displayName
+            }),
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            }
+        }).then((response) => {
+            if (response.status === 200) {
+                return response.json();
+            } else if (response.status === 500) {
+                reject({ code: 'auth/backend-error'});
+            }
+        }).then((data) => {
+            if (data.isUnique) {
+                return this.addUserManager.addUser(display, email, pwd);
+            } else {
+                return { code: 'auth/name-already-in-use'};
+            }
+        }
+    }
 }
 
 class AddUserForm {
+
+    constructor() {
+        this.addUserDispatch = new AddUserDispatch();
+    }
+
     validateData(email, display, pwd1, pwd2) {
         // regex from http://stackoverflow.com/questions/46155/validate-email-address-in-javascript
         const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -44,7 +82,7 @@ class AddUserForm {
             document.getElementById('createBtn').disabled = true;
 
             /* No need for further processing of input data - Dispatch user data to the backend for further validation */
-            var error = this.addUserAction.addUser(display, email, pwd1);
+            var error = this.addUserDispatch.addUser(display, email, pwd1);
 
             if (error) {
                 //Enables the create button, allowing user to fix input and try again
