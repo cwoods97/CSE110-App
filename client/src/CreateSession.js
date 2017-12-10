@@ -131,7 +131,7 @@ class CreateSession extends Component {
 		var session = this.sessionID;
 
 		//Validity checks before changes are done
-		if(title.length > 0 && title.charAt(0) !== ' ') {
+		if(title.length > 0 && title.charAt(0) !== ' ' && title.length <= 16) {
 				document.getElementById('titleError').innerHTML = "";
 				getIdToken().then(token => {
 						updateTitle(token, session, title).then((title) => {
@@ -141,7 +141,7 @@ class CreateSession extends Component {
 				});
 		//Error message
 		} else {
-				document.getElementById('titleError').innerHTML = "Title must contain at least one character and cannot start with a space"
+				document.getElementById('titleError').innerHTML = "Title must contain between 1 and 16 characters and cannot start with a space"
 		}
 	}
 
