@@ -42,22 +42,7 @@ class CreateSession extends Component {
         };
 
         let onActiveChange = (snapshot) => {
-            let isActive = snapshot.val() ? "Active" : "Not Active";
-
-            this.setState({'isActive': isActive});
-
-            //For Styling of the Status option
-            if (isActive === 'Active'){
-                //For changing the color of the Status option
-                document.getElementById('activity').style.color = 'chartreuse';
-            }
-            if(isActive === 'Not Active'){
-                //For changing the color of the Status option
-                document.getElementById('activity').style.color = 'red';
-
-            }
-
-
+            this.setState({'isActive': snapshot.val() ? "Active" : "Not Active"});
         };
         let sessionRef = this.db.database().ref("sessions").child(this.sessionID);
         sessionRef.child('isActive').on('value', onActiveChange);
@@ -65,7 +50,9 @@ class CreateSession extends Component {
 
     //Display the right display name when the page generates
     componentDidMount() {
-        getDisplayName().then(name =>{this.setState({display: name});});
+        getDisplayName().then((name) => { this.setState({display: name}) });
+        document.getElementById('activity').style.color =
+            this.state.isActive === 'Not Active' ? 'chartreuse' : 'red';
     }
 
     //For when one starts a recording
