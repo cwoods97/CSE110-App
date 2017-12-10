@@ -181,12 +181,18 @@ class SessionHistory extends Component {
                     {
                         this.state.presentedSessions.map((sessionData) => (
 
+
+
                             /*Specific format for created session info that can be shown on the page*/
                             <div class='sessions' sessionid={sessionData.id} onClick={(e) => this.renderSession(sessionData.id)} style={{cursor:'pointer'}}>
 
                                 <center>
                                     <h4>
-                                        <img src={sessionData.hasAudio ? mic : noMic} style={{width:'20px',height:'20px',float:'left'}}/>
+                                        <div>
+                                            {sessionData.hasAudio === true
+                                                ? <img src={mic} style={{width:'20px',height:'20px',float:'left'}} alt={"Has Audio"}/>
+                                                : <img src={noMic} style={{width:'20px',height:'20px',float:'left'}} alt={"No Audio"} />}
+                                        </div>
                                         {sessionData.title}
                                     </h4>
                                     <h6>

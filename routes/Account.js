@@ -102,6 +102,7 @@ router.post('/getPresentedSessions', (req, res) => {
 								title: (sessionData.val().title ? sessionData.val().title : "UNTITLED"),
 								displayName: userRecord.displayName,
 								creationTime: sessionData.val().creationTime,
+								hasAudio: sessionData.val().hasAudio,
 								id: sessionID
 							})
 							resolve();
