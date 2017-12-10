@@ -225,7 +225,7 @@ router.post('/getJoinedSessions', (req, res) => {
 		Promise.all(promises).then(() => {
 			//sorts the sessions by time
 			sessions = sessions.sort((session1,session2)=> {
-				
+
 				var a = session2.creationTime;
 				var b = session1.creationTime;
 				//a>b is true a<b is false
@@ -244,7 +244,7 @@ router.post('/getJoinedSessions', (req, res) => {
 				var hours1 = Number(s3[0]);
 				var minutes1 = Number(s3[1]);
 				var seconds1 = Number(s3[2]);
-				
+
 				s1 = b.split("-");
 				var month2 = Number(s1[0]);
 				var date2 = Number(s1[1]);
@@ -254,35 +254,35 @@ router.post('/getJoinedSessions', (req, res) => {
 				var hours2 = Number(s3[0]);
 				var minutes2 = Number(s3[1]);
 				var seconds2 = Number(s3[2]);
-				
+
 				if(year1 > year2) {
 					return 1;
 				}
 				else if(year1 < year2) {
 					return -1;
 				}
-				
+
 				if(month1 > month2) {
 					return 1;
 				}
 				else if(month1 < month2) {
 					return -1;
 				}
-				
+
 				if(date1 > date2) {
 					return 1;
 				}
 				else if(date1 < date2) {
 					return -1;
 				}
-				
+
 				if(hours1 > hours2) {
 					return 1;
 				}
 				else if(hours1 < hours2) {
 					return -1;
 				}
-				
+
 				if(minutes1 > minutes2) {
 					return 1;
 				}
