@@ -57,7 +57,7 @@ class CreateAccount extends Component {
             createAccount(display,email,pwd2)
                 .then(() => {
                     // Only render user's main page when successfully logged in
-                    ReactDOM.render(<Main db={this.db} />, document.getElementById('root'));
+                    ReactDOM.render(<Main name={display} db={this.db} />, document.getElementById('root'));
                 })
                 .catch((error) => {
 

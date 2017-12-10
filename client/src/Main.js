@@ -25,12 +25,16 @@ class App extends Component {
         this.root = document.getElementById('root');
         this.join = this.join.bind(this);
 
-
         this.state = {
             currentUser: this.db.auth().currentUser.displayName
-        }
+		}
 
     }
+
+	//sets display name when user is logged in after creating an account
+	componentWillReceiveProps(nextProps) {
+		this.setState({currentUser: nextProps.name});
+	}
 
     //Logs one out and brings them to the front/login page
     front = function(ev) {
@@ -50,7 +54,7 @@ class App extends Component {
 			getIdToken().then(token => {
 				joinBackendSession(token, accessCode)
                 .then((session) => {
-		            ReactDOM.render(<Join code={accessCode} session={session.id} db={this.db}/>, document.getElementById('root'));
+					ReactDOM.render(<Join code={accessCode} session={session.id} db={this.db}/>, document.getElementById('root'));
 				}).catch((error) => {
 					document.getElementById("error").innerHTML = error;
 				});
