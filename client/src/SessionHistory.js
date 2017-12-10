@@ -9,6 +9,8 @@ import ReviewFeedback from './ReviewFeedback';
 
 import {getDisplayName} from './RegisterFirebaseUser.js';
 import logo from './Logo.png';
+import mic from './Mic.png';
+import noMic from './NoMic.png';
 
 import ReactDOM from 'react-dom';
 
@@ -183,6 +185,7 @@ class SessionHistory extends Component {
 
                                 <center>
                                     <h4>
+                                        <img src={sessionData.hasAudio ? mic : noMic} style={{width:'20px',height:'20px',float:'left'}}/>
                                         {sessionData.title}
                                     </h4>
                                     <h6>
@@ -204,7 +207,6 @@ class SessionHistory extends Component {
                         this.state.joinedSessions.map((sessionData) => (
                             /*Specific format for joined session info that can be shown on the page*/
                             <div class='sessions' sessionid={sessionData.id}>
-
                                 <center>
                                     <h4>
                                         {sessionData.title}
