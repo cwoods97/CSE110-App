@@ -1,6 +1,4 @@
-/*
-This file contains methods to get the predefined feedback
-*/
+/* This file contains methods to get the predefined feedback */
 
 var express = require('express');
 var router = express.Router();
