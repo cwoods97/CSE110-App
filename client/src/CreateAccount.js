@@ -16,15 +16,17 @@ import logo from './Logo.png';
 
 class AddUserManager {
     addUser(display, email, pwd) {
-        //Passing input to dispatch method which validates business logic
-        createAccount(display, email, pwd)
-        .then(() => {
-            //Only render user's main page when successfully logged in
-            ReactDOM.render(<Main name={display} db={this.db} />, document.getElementById('root'));
+        return new Promise((resolve, reject) => {
+            //Passing input to dispatch method which validates business logic
+            createAccount(display, email, pwd)
+            .then(() => {
+                //Only render user's main page when successfully logged in
+                resolve(ReactDOM.render(<Main name={display} db={this.db} />, document.getElementById('root')));
+            })
+            .catch((error) => {
+                reject(error);
+            });
         })
-        .catch((error) => {
-            return error;
-        });
     }
 }
 
@@ -54,7 +56,9 @@ class AddUserDispatch {
                 }
             }).then((data) => {
                 if (data.isUnique) {
-                    resolve(this.addUserManager.addUser(displayName, email, pwd));
+                    this.addUserManager.addUser(displayName, email, pwd)
+                    .then(() => {resolve()})
+                    .catch((error) => {reject(error)});
                 } else {
                     var returnValue = {code: 'auth/name-already-in-use'};
                     reject(returnValue);
