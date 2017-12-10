@@ -17,78 +17,52 @@ On Success: Returned promise resolves as true. */
 export function createAccount(displayName, email, password) {
     return new Promise((resolve, reject) => {
         if (displayName && email && password) {
-			/* Posts a request to the backend to check if the display 
-			name is unique */
-            fetch('/api/account/verify', {
-                method: 'post',
-                body: JSON.stringify({
-                    displayName: displayName
-                }),
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json'
-                }
-            }).then((response) => {
-                if (response.status === 200) {
-                    return response.json();
-                } else if (response.status === 500) {
-                    reject({ code: 'auth/backend-error'});
-                }
-            }).then((data) => {
-				/* Only create the account if the display name is unique */
-                if (data.isUnique) {
-					/* Create the user account with firebase */
-                    firebase.auth().createUserWithEmailAndPassword(email, password)
-                    .then(user => {
-						/* Add user's display name to their firebase profile */
-                        var profileUpdated = user.updateProfile({ displayName: displayName })
-                        .then(() => {
-                        }).catch(error => {
-                        	reject('auth/invalid-name');
-                        });
+			/* Create the user account with firebase */
+            firebase.auth().createUserWithEmailAndPassword(email, password)
+            .then(user => {
+				/* Add user's display name to their firebase profile */
+                var profileUpdated = user.updateProfile({ displayName: displayName })
+                .then(() => {
+                }).catch(error => {
+                	reject('auth/invalid-name');
+                });
 
-                        /* Create backend account upon successful 
-						firebase registration */
-                        var backendAccountCreated = new Promise((resolve, reject) => {
-                            user.getIdToken()
-                            .then((token) => {
-								/* Posts a request to the backend to add an 
-								entry to the "users" table in the database */
-                                fetch('/api/account/createAccount', {
-                                    method: 'post',
-                                    body: JSON.stringify({
-                                        displayName: displayName,
-                                        email: email,
-                                        token: token
-                                    }),
-                                    headers: {
-                                        'Content-Type': 'application/json',
-                                        'Accept': 'application/json'
-                                    }
-                                }).then((response) => {
-                                    if (response.status === 200) {
-                                        resolve();
-                                    } else {
-                                        reject({ code: 'auth/backend-error' });
-                                    }
-                                /* Backend API returned an error */
-                                }).catch(error => { reject(error); })
-                            /* Unable to retrieve user login session */
-                            }).catch(error => { reject(error); });
-                        })
-
-                        Promise.all([profileUpdated, backendAccountCreated]).then(() => {
-                            resolve();
-                        }).catch((error) => {
-                            reject(error);
-                        })
-                    /* Unable to create user in Firebase */
+                /* Create backend account upon successful firebase registration */
+                var backendAccountCreated = new Promise((resolve, reject) => {
+                    user.getIdToken()
+                    .then((token) => {
+						/* Posts a request to the backend to add an entry to the "users" table in the database */
+                        /* Delegates to the manager method stored at API endpoint /api/account/craeteAccount */
+                        fetch('/api/account/createAccount', {
+                            method: 'post',
+                            body: JSON.stringify({
+                                displayName: displayName,
+                                email: email,
+                                token: token
+                            }),
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Accept': 'application/json'
+                            }
+                        }).then((response) => {
+                            if (response.status === 200) {
+                                resolve();
+                            } else {
+                                reject({ code: 'auth/backend-error' });
+                            }
+                        /* Backend API returned an error */
+                        }).catch(error => { reject(error); })
+                    /* Unable to retrieve user login session */
                     }).catch(error => { reject(error); });
-                } else {
-                    reject({ code: 'auth/name-already-in-use'});
-                }
-            /* Network failure in communicating with backend */
-            }).catch((error) => { reject(error); })
+                })
+
+                Promise.all([profileUpdated, backendAccountCreated]).then(() => {
+                    resolve();
+                }).catch((error) => {
+                    reject(error);
+                })
+            /* Unable to create user in Firebase */
+            }).catch(error => { reject(error); });
         }
     })
 }
@@ -148,7 +122,7 @@ export function getDisplayName() {
 	});
 }
 
-/* Description: Change the user's password 
+/* Description: Change the user's password
 Precondition: user is logged in and has supplied their current password
 Postcondition: user has a new password */
 export function setPassword(oldPassword, newPassword) {
@@ -178,7 +152,7 @@ export function setDisplayName(name) {
 		/* Get the current user */
 		const user = firebase.auth().currentUser;
 		if(user != null) {
-			/* Posts a request to the backend to check the uniqueness of 
+			/* Posts a request to the backend to check the uniqueness of
 			the display name */
 			fetch('/api/account/verify', {
                 method: 'post',

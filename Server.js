@@ -61,8 +61,10 @@ app.use(function(req, res, next) {
   	}
 });
 
+/*
 log('Serving files');
 app.use(express.static(path.join(__dirname, 'client/build')));
+*/
 
 /* Express routers */
 const account = require('./routes/Account');
@@ -79,9 +81,11 @@ app.use('/api/presenterSession', presenterSession)
 app.use('/api/sessionReview', sessionReview)
 app.use('/api/sessionSetup', sessionSetup)
 
+/*
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname+'/client/build/index.html'));
 });
+*/
 
 const port = process.env.PORT || 3000;
 app.listen(port, function() {
