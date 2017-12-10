@@ -1,8 +1,13 @@
+/*
+This function contains methods regarding setting up a session.
+*/
 var express = require('express');
 var router = express.Router();
 
+// Creates sessions with the given presenter (given by uid)
 router.post('/createSession', (req, res) => {
-
+	
+	// Gets the timestamp
 		const date = new Date();
 		const month = date.getMonth() + 1;
 		let day = date.getDate();

@@ -5,7 +5,6 @@ import './styles/App.css';
 import './styles/SessionHistory.css';
 
 import Main from './Main';
-import AppFront from './App';
 import ReviewFeedback from './ReviewFeedback';
 
 import {getDisplayName} from './RegisterFirebaseUser.js';
@@ -154,6 +153,7 @@ class SessionHistory extends Component {
                     color:'#F3E6DE', zIndex:'0',overflow:'hidden', boxShadow:'1px 1px 2px #F3E6DE'}}>
 
                     <a class="w3-bar-item HoverRed" style={{outline:'2px solid #333333', fontSize:'20px'}}>{this.state.display}</a>
+                    <a class="w3-bar-item w3-button w3-hover-red" onClick={this.home.bind(this)} style={{color:'white', boxShadow:'1px 0px 1px #333333'}}>Back</a>
 
                 </div>
 

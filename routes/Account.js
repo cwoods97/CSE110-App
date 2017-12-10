@@ -1,13 +1,19 @@
+/*
+This file is contains the methods regarding manipulating accounts.
+*/
+
 var express = require('express');
 var router = express.Router();
 
 const log = (message) => { console.log("[Account.js] " + message); }
 const NON_UNIQUE_DNAME = "Display name is not unique.";
 
+//This method creates an account using the given uid
 router.post('/createAccount', (req, res) => {
 	const uid = req.locals.uid;
 	const admin = req.locals.admin;
 
+	//creates the account with default values in the database
 	admin.database().ref("users").child(uid).set({
 		hostedSessions: '',
 		joinedSessions: '',
@@ -21,10 +27,12 @@ router.post('/createAccount', (req, res) => {
 	});
 })
 
+//This method makes sure that the input displayName is unique
 router.post('/verify', (req, res) => {
 	var admin = req.locals.admin;
 	var displayName = req.locals.displayName;
 
+	//Checks that the input displayName is unique
 	var verifyDisplayNames = new Promise((resolve, reject) => {
 		function checkDisplayNames(nextPageToken) {
 			admin.auth().listUsers(1000, nextPageToken)
@@ -54,6 +62,7 @@ router.post('/verify', (req, res) => {
 		checkDisplayNames(undefined);
 	});
 
+	//returns the actual response whether the displayName is unique or not
 	verifyDisplayNames
 	.then(() => {
 		log(displayName + " is unique.");
@@ -69,11 +78,12 @@ router.post('/verify', (req, res) => {
 	})
 })
 
+//Gets the presented sessions of a user in order from newest to oldest
 router.post('/getPresentedSessions', (req, res) => {
 	const uid = req.locals.uid;
 	const admin = req.locals.admin;
 
-	var sessions = [];
+	var sessions = []; // The sessions of the user
 	admin.database().ref("users").child(uid).child("hostedSessions").once('value').then((presentedSessions) => {
 		var promises = [];
 
@@ -81,12 +91,13 @@ router.post('/getPresentedSessions', (req, res) => {
 		if (!presentedSessions) { return res.json([]) }
 
 		presentedSessions = Object.keys(presentedSessions);
-
+		//adds metadata of the sessions to the list sessions
 		presentedSessions.forEach((sessionID) => {
 			promises.push(
 				new Promise((resolve, reject) => {
 					admin.database().ref("sessions/" + sessionID).once('value').then((sessionData) => {
 						admin.auth().getUser(uid).then((userRecord) => {
+							//adds the metadata to the sessions list
 							sessions.push({
 								title: (sessionData.val().title ? sessionData.val().title : "UNTITLED"),
 								displayName: userRecord.displayName,
@@ -101,6 +112,7 @@ router.post('/getPresentedSessions', (req, res) => {
 		});
 
 		Promise.all(promises).then(() => {
+			//sorts the sessions by time
 			sessions = sessions.sort((session1,session2)=> {
 				
 				var a = session2.creationTime;
@@ -133,53 +145,56 @@ router.post('/getPresentedSessions', (req, res) => {
 				var seconds2 = Number(s3[2]);
 				
 				if(year1 > year2) {
-					return true;
+					return 1;
 				}
 				else if(year1 < year2) {
-					return false;
+					return -1;
 				}
 				
 				if(month1 > month2) {
-					return true;
+					return 1;
 				}
 				else if(month1 < month2) {
-					return false;
+					return -1;
 				}
 				
 				if(date1 > date2) {
-					return true;
+					return 1;
 				}
 				else if(date1 < date2) {
-					return false;
+					return -1;
 				}
 				
 				if(hours1 > hours2) {
-					return true;
+					return 1;
 				}
 				else if(hours1 < hours2) {
-					return false;
+					return -1;
 				}
 				
 				if(minutes1 > minutes2) {
-					return true;
+					return 1;
 				}
 				else if(minutes1 < minutes2) {
-					return false;
+					return -1;
 				}
 				
-				return seconds1 > seconds2;
-				
+				if(seconds1 > seconds2) {
+					return 1;
+				}
+				return -1;
 			})
 			res.json(sessions);
 		});
 	}).catch((error) => console.log(error));
 })
 
+//Gets the joined sessions of a user in order from newest to oldest
 router.post('/getJoinedSessions', (req, res) => {
 	const uid = req.locals.uid;
 	const admin = req.locals.admin;
 
-	var sessions = [];
+	var sessions = []; //the list of joined sessions
 	admin.database().ref("users").child(uid).child("joinedSessions").once('value').then((joinedSessions) => {
 		var promises = [];
 
@@ -187,7 +202,8 @@ router.post('/getJoinedSessions', (req, res) => {
 		if (!joinedSessions) { return res.json([]) }
 
 		joinedSessions = Object.keys(joinedSessions);
-
+		
+		//adds metadata of the sessions to the list sessions
 		joinedSessions.forEach((sessionID) => {
 			promises.push(
 				new Promise((resolve, reject) => {
@@ -207,8 +223,9 @@ router.post('/getJoinedSessions', (req, res) => {
 		});
 
 		Promise.all(promises).then(() => {
+			//sorts the sessions by time
 			sessions = sessions.sort((session1,session2)=> {
-				
+
 				var a = session2.creationTime;
 				var b = session1.creationTime;
 				//a>b is true a<b is false
@@ -227,7 +244,7 @@ router.post('/getJoinedSessions', (req, res) => {
 				var hours1 = Number(s3[0]);
 				var minutes1 = Number(s3[1]);
 				var seconds1 = Number(s3[2]);
-				
+
 				s1 = b.split("-");
 				var month2 = Number(s1[0]);
 				var date2 = Number(s1[1]);
@@ -237,49 +254,50 @@ router.post('/getJoinedSessions', (req, res) => {
 				var hours2 = Number(s3[0]);
 				var minutes2 = Number(s3[1]);
 				var seconds2 = Number(s3[2]);
-				
+
 				if(year1 > year2) {
-					return true;
+					return 1;
 				}
 				else if(year1 < year2) {
-					return false;
+					return -1;
 				}
-				
+
 				if(month1 > month2) {
-					return true;
+					return 1;
 				}
 				else if(month1 < month2) {
-					return false;
+					return -1;
 				}
-				
+
 				if(date1 > date2) {
-					return true;
+					return 1;
 				}
 				else if(date1 < date2) {
-					return false;
+					return -1;
 				}
-				
+
 				if(hours1 > hours2) {
-					return true;
+					return 1;
 				}
 				else if(hours1 < hours2) {
-					return false;
+					return -1;
 				}
-				
+
 				if(minutes1 > minutes2) {
-					return true;
+					return 1;
 				}
 				else if(minutes1 < minutes2) {
-					return false;
+					return -1;
 				}
 				
-				return seconds1 > seconds2;
-				
+				if(seconds1 > seconds2) {
+					return 1;
+				}
+				return -1;
 			})
 			res.json(sessions);
 		});
 	}).catch((error) => console.log(error));
 })
-
 
 module.exports = router;

@@ -133,6 +133,13 @@ class CreateSession extends Component {
     //Closes the session and brings one back to the main page
     close = (ev) => {
         ev.preventDefault();
+
+				if(this.state.started){
+					getIdToken().then(token => {
+						toggleActive(token, this.state.coder);
+					});
+				}
+
         //Sets relevant states
         this.setState({
             record: false,
