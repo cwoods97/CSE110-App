@@ -7,6 +7,7 @@
   "engines": {
     "node": "6.11.5"
   },
+  "homepage": "https://speakeasy.herokuapp.com",
   "dependencies": {
     "bootstrap": "^3.3.7",
     "chart.js": "^2.7.1",
