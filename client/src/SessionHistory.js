@@ -191,12 +191,12 @@ class SessionHistory extends Component {
                             <div class='sessions' sessionid={sessionData.id} onClick={(e) => this.renderSession(sessionData.id)} style={{cursor:'pointer'}}>
 
                                 <center>
-                                    <h4>
-                                        <div style={{marginLeft:'5px'}}>
+                                    <div style={{marginLeft:'5px'}}>
                                             {sessionData.hasAudio === true
                                                 ? <img src={mic} style={{width:'20px',height:'20px',float:'left'}} alt={"Has Audio"}/>
                                                 : <img src={noMic} style={{width:'20px',height:'20px',float:'left'}} alt={"No Audio"} />}
-                                        </div>
+                                    </div>
+                                    <h4 style={{width:'85%'}}>
                                         {sessionData.title}
                                     </h4>
                                     <h6>
