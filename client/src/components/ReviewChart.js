@@ -113,6 +113,27 @@ class Chart extends Component {
         }
     }
 
+	setGraph(feedbackArray) {
+		var type = this.type;
+        var chartData1 = this.state.chartData1;
+        var chartData2 = this.state.chartData2;
+        var chartData3 = this.state.chartData3;
+
+		// updates the graph depending on the type of the graph
+        if (type === 'pace') {
+            this.state.chartData1.datasets[0].data[0]=feedbackArray[0];
+            this.state.chartData1.datasets[0].data[1]=feedbackArray[1];
+            this.setState({chartData1});
+        } else if (type === 'volume') {
+            this.state.chartData2.datasets[0].data[0]=feedbackArray[2];
+            this.state.chartData2.datasets[0].data[1]=feedbackArray[3];
+            this.setState({chartData2});
+        } else if (type === 'clarity') {
+			this.state.chartData3.datasets[0].data[0]=feedbackArray[4];
+			this.state.chartData3.datasets[0].data[1]=feedbackArray[5]
+            this.setState({chartData3});
+        }
+	}
 	// Shows the feedback to the presenter by updating the graph
     displayFeedback(feedback) {
         var type = this.type;
