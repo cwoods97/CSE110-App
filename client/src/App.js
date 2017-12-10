@@ -53,7 +53,7 @@ class AppFront extends Component {
         var email = document.getElementById("email").value;
         var password = document.getElementById("password").value;
         // regex from http://stackoverflow.com/questions/46155/validate-email-address-in-javascript
-        var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        var re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 		var errorb = false;
 		
 		document.getElementById('error').innerHTML = ""
@@ -125,8 +125,8 @@ class AppFront extends Component {
         //Some validity checks on input here when one wants to reset their password
         but.onclick = function() {  var x = document.getElementById("rset").value;
             // regex from http://stackoverflow.com/questions/46155/validate-email-address-in-javascript
-            var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-            ;
+            var re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+            
             if(!re.test(x)){
 
                 document.getElementById("rError").innerHTML = "Please enter a valid email address"
