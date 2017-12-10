@@ -1,18 +1,5 @@
 
-/*Modifies the sidebar for various screen sizes*/
-@media screen and (max-width:1000px) {
-    #sidebar{
-        font-size: 80% !important;
-    }
-
-}
-@media screen and (max-width:890px) {
-    #sidebar {
-        font-size: 65% !important;
-    }
-
-
-}
+/*Modifies the sidebar for a smaller screen size*/
 @media screen and (max-width:590px) {
 
     #sidebar{
