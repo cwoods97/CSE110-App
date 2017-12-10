@@ -27,7 +27,7 @@ router.post('/predefined_feedback', (req, res) => {
 			/* Only accept feedback if the session is active */
 			if(value.isActive){
 
-				/* Get the timestamp for the feedback by comparing the start 
+				/* Get the timestamp for the feedback by comparing the start
 				time of the session to the time the feedback was received */
 				const startTime = value.startTime;
 				const relTime = timestamp - startTime;
@@ -39,8 +39,7 @@ router.post('/predefined_feedback', (req, res) => {
 					uid: uid,
 					timestamp: relTime,
 					type: type,
-					message: message,
-					starred: false
+					message: message
 				});
 
 				res.json({message: message});
