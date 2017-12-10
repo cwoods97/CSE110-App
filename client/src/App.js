@@ -171,7 +171,7 @@ class AppFront extends Component {
                     </h2>
                 </div>
                 {/*For brief text intro to the webpage*/}
-                <div id='infocontianer' style={{width:'60%',float:'left'}}>
+                <div id='infocontainer' style={{width:'60%',float:'left'}}>
                     <div id='info' style={{padding:"20px", margin:'100px'}}>
                         <h3 id='infoheader'>
                             <b>Welcome to SpeakEasy.</b> <br />A web application designed to enhance presentations, speeches,
