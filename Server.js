@@ -67,7 +67,7 @@ app.use(express.static(path.join(__dirname, 'client/build')));
 /* Express routers */
 const account = require('./routes/Account');
 const session = require('./routes/Session');
-const sessionSetup = require('./routes/sessionSetup');
+const sessionSetup = require('./routes/SessionSetup');
 const feedback = require('./routes/Feedback');
 const presenterSession = require('./routes/PresenterSession');
 const sessionReview = require('./routes/SessionReview');
