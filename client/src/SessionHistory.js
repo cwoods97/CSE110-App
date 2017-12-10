@@ -192,7 +192,7 @@ class SessionHistory extends Component {
 
                                 <center>
                                     <h4>
-                                        <div>
+                                        <div style={{marginLeft:'5px'}}>
                                             {sessionData.hasAudio === true
                                                 ? <img src={mic} style={{width:'20px',height:'20px',float:'left'}} alt={"Has Audio"}/>
                                                 : <img src={noMic} style={{width:'20px',height:'20px',float:'left'}} alt={"No Audio"} />}
