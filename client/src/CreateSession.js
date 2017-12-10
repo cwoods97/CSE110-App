@@ -43,7 +43,21 @@ class CreateSession extends Component {
 
         let onActiveChange = (snapshot) => {
             let isActive = snapshot.val() ? "Active" : "Not Active";
+
             this.setState({'isActive': isActive});
+
+            //For Styling of the Status option
+            if (isActive === 'Active'){
+                //For changing the color of the Status option
+                document.getElementById('activity').style.color = 'chartreuse';
+            }
+            if(isActive === 'Not Active'){
+                //For changing the color of the Status option
+                document.getElementById('activity').style.color = 'red';
+
+            }
+
+
         };
         let sessionRef = this.db.database().ref("sessions").child(this.sessionID);
         sessionRef.child('isActive').on('value', onActiveChange);
@@ -81,6 +95,8 @@ class CreateSession extends Component {
         document.getElementById('nAudio').disabled = true;
         document.getElementById('audio').disabled = true;
 
+
+
 		getIdToken().then(token => {
 			setStartTime(token, this.sessionID, type);
 		});
@@ -97,6 +113,8 @@ class CreateSession extends Component {
             started: false,
             end: true
         });
+        //For changing the color of the Status option
+        document.getElementById('activity').style.color = 'red';
 
     };
 
@@ -220,7 +238,7 @@ class CreateSession extends Component {
                     <div style={{padding:'10px',boxShadow:'1px 0px 1px#333333'}}>
                     <p id='code' style={{fontFamily:'Poppins, sans-serif'}}><b>Session Code:</b> {this.state.coder}</p>
 
-                    <p><b>Status:</b> {this.state.isActive}</p>
+                    <p id='activity' style={{color:'red'}}><b style={{color:'white'}}>Status:</b> {this.state.isActive}</p>
                     {/*Audio/No Audio options and starting/stopping*/}
                     <form action="">
                         <input id='nAudio' onClick={this.noAudio} type="radio" name="audioOff" value="noaudio" defaultChecked={true} style={{marginRight:'8px',fontFamily:'Poppins, sans-serif'}}></input>No Audio<br></br>
