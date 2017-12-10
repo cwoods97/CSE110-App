@@ -1,0 +1,175 @@
+/*Default Styling*/
+.App {
+    text-align: center;
+}
+
+.App-logo {
+    animation: App-logo-spin infinite 20s linear;
+    height: 80px;
+}
+
+.App-header {
+    background-color: #222;
+    height: 150px;
+    padding: 20px;
+    color: white;
+
+}
+
+.App-title {
+    font-size: 1.5em;
+}
+
+.App-intro {
+    font-size: large;
+}
+
+@keyframes App-logo-spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+/*For comments area*/
+#comments{
+    border-radius: 10px !important;
+    position:static;
+}
+
+/*Commenting header*/
+.header{
+    background-color:#333333 !important;
+
+
+}
+
+/*For images on the page*/
+img{
+
+    margin:0 !important;
+    background-size: 100%;
+
+}
+
+/*To get rid of link underlines*/
+*{
+    text-decoration: none !important;
+
+}
+
+/*
+For the plugin
+ */
+.widget-container{
+    z-index: 0 !important;
+    margin: 0 !important;
+
+}
+
+/*For predefined buttons*/
+.predefined{
+
+    padding: 0 !important;
+    margin: 0em 0em 4em 1em;
+
+}
+
+/*For smaller screens on the join session page*/
+@media screen and (max-width: 800px){
+
+    /*For the customized feedback container*/
+    #customized {
+
+        width: 100% !important;
+        height: 100% !important;
+
+    }
+    /*For comments area*/
+    #comments{
+
+        height: 100% !important;
+        width: 100% !important;
+
+    }
+    /*For container carrying predefined feedback*/
+    #left{
+        width:100% !important;
+
+
+    }
+    /*For the messages in the message box*/
+    #messages{
+        height: 50vh;
+
+    }
+    /*For the header in the customized feedback area*/
+    .header{
+        font-size: 70%;
+
+
+
+    }
+
+}
+
+/*More specified smaller screen sctyling*/
+@media screen and (max-width: 600px) {
+
+    #navigationJoin{
+        width:30% !important;
+        font-size: 75% !important;
+
+    }
+    #content{
+        width: 70% !important;
+
+    }
+
+    .predefined{
+
+        margin: 0 0 2em 3px !important;
+
+    }
+
+
+}
+
+/*Universal font styling*/
+*{
+    font-family: Poppins, sans-serif;
+
+}
+
+
+/*To overwrite w3 defaults*/
+.w3-sidebar{
+    width: 15% !important;
+}
+
+/*Customized feedback input box*/
+.new-message{
+    width: 80% !important;
+    float: left !important;
+
+}
+
+/*For post button*/
+#post{
+    float: right !important;
+
+}
+
+/*For containers of customized feedback text*/
+.message-text,.client{
+
+    background-color: #585858 !important;
+    width: 100% !important;
+    max-width: 5000px !important;
+    color:white !important;
+
+    /*
+    Source: https://css-tricks.com/snippets/css/prevent-long-urls-from-breaking-out-of-container/
+     */
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+
+}

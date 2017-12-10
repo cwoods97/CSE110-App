@@ -1,0 +1,35 @@
+
+/*Modifies the sidebar for a smaller screen size*/
+@media screen and (max-width:590px) {
+
+    #sidebar{
+        width: 20% !important;
+
+    }
+
+
+
+}
+
+/*For the joined and created session containers displaying the history of one's sessions they have either joined or created*/
+#joined,#created{
+    height: auto;
+    max-height: 70vh;
+    overflow:auto;
+    float:right;
+    width: 85%;
+    margin-top: 1em;
+}
+
+/*Container for the actual sessions dynamically appended*/
+.sessions{
+    margin: 1em auto;
+    padding: 2px 0 1px 0;
+    width:75%;
+    text-align: center;
+    background-color:lightgrey;
+    border-radius:10px;
+
+}
+
+

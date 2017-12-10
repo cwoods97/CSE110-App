@@ -1,0 +1,11 @@
+/*For main reset box on this page*/
+.Boxed {
+    margin:auto;
+    text-align: center;
+    padding-top: 10px;
+    padding-left: 20px;
+    width: 580px;
+    height: 500px;
+    background-color:#EDEDED;
+    border-radius: 15px;
+}

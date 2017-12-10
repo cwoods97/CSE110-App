@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import firebase from 'firebase';
-import Users from './components/Users.js';
-import DisplayUserData from './components/DisplayUserData.js';
-import './components/Reset.css';
+import './styles/Reset.css';
 
 class Reset extends Component {
 
@@ -31,15 +29,7 @@ class Reset extends Component {
         this.handleEmailChange = this.handleEmailChange.bind(this);
     }
 
-    componentDidMount() {
-        return fetch('/api/hello')
-            .then((response) => response.json())
-            .then((responseJson) => {
-                this.setState({
-                    message: responseJson.message
-                });
-            })
-    }
+    componentDidMount() {}
 
     checkInput = function(event) {
 

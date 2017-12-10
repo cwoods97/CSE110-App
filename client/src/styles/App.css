@@ -1,3 +1,11 @@
+/*
+Below was defaulted in styling
+*/
+
+html {
+  background-color: #F3E6DE;
+}
+
 .App {
   text-align: center;
 }
@@ -26,3 +34,129 @@
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
+
+/*
+To get rid of default underlines under links
+*/
+a{
+  text-decoration: none;
+
+}
+
+/*
+For input styling
+ */
+input[type="text"], input[type="password"], input[type="input"] {
+    width: 100% !important;
+    margin: 8px 0 !important;
+    box-sizing: border-box !important;
+    border: 3px solid #585858 !important;
+    border-radius: 15px !important;
+    -webkit-transition: 0.5s !important;
+    transition: 0.5s !important;
+    outline: none !important;
+}
+
+
+input[type="text"]{
+    width: 100% !important;
+    margin: 8px 0 !important;
+    box-sizing: border-box !important;
+    border: 3px solid #585858 !important;
+    border-radius: 15px !important;
+    -webkit-transition: 0.5s !important;
+    transition: 0.5s !important;
+    outline: none !important;
+}
+
+/*
+More input box styling
+ */
+input[type="input"] {
+    width: 100% !important;
+    margin: 8px 0 !important;
+    box-sizing: border-box !important;
+    border: 3px solid #333333 !important;
+    border-radius: 15px !important;
+    -webkit-transition: 0.5s !important;
+    transition: 0.5s !important;
+    outline: none !important;
+}
+
+input[type="submit"] {
+    width: 40% !important;
+    margin: 8px 0 !important;
+    box-sizing: border-box !important;
+    border-radius: 15px !important;
+    outline: none !important;
+}
+
+/*
+Styling for when input boxes are focused
+ */
+input[type="text"]:focus, input[type="password"]:focus, input[type="input"]:focus {
+    border: 3px solid #f3e6de !important;
+}
+
+
+/*
+To overwrite w3 built in styling
+ */
+.w3-sidebar{
+  width: 15% !important;
+}
+
+/*
+Responsiveness for Login Page
+ */
+@media screen and (max-width: 1000px) {
+
+  /*Login page main container*/
+  #startpage {
+    display: block !important;
+    position: relative !important;
+  }
+
+  /*Login page credential container*/
+  #startcontainer {
+    position: absolute !important;
+    z-index: 1 !important;
+    width: 100% !important;
+    height: auto !important;
+    margin: 0 auto !important;
+    padding: 10px !important;
+    position: relative !important;
+  }
+
+  /*The form on the login page*/
+  #startform{
+    min-width: 60% !important;
+  }
+
+  /*For the text of the page description on the login page*/
+  #infoheader {
+    font-size: 150% !important;
+  }
+
+}
+
+/*
+For when certain objects are hovered over
+ */
+.HoverRed:hover {
+  color: #f44336;
+}
+
+/*
+For About.js
+ */
+@media screen and (max-width: 600px) {
+    #AboutText {
+
+        font-size: 14px !important;
+
+    }
+}
+
+
+

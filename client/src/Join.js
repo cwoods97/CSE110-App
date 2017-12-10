@@ -1,131 +1,265 @@
+//Necessary imports
 import React, { Component } from 'react';
-import firebase from 'firebase';
-import Users from './components/Users.js';
-import DisplayUserData from './components/DisplayUserData.js';
-import './styles/App.css';
+import './styles/Join.css';
 import ReactDOM from 'react-dom';
+import 'bootstrap/dist/css/bootstrap.css';
+import 'bootstrap/dist/css/bootstrap-theme.css';
+import {getDisplayName} from "./RegisterFirebaseUser";
 
 import Main from './Main';
+//Plugin for customized feedback. Mainly used for its CSS formatting
+import 'react-chat-widget';
+import {leaveBackendSession} from './FrontEndSession';
+import {getIdToken} from './RegisterFirebaseUser.js';
+import {sendFeedback} from './SendFeedback.js';
 
+import logo from './Logo.png';
+import slowB from './Slow.png';
+import fastB from './Fast.png';
+import quietB from './Quiet.png';
+import loudB from './Loud.png';
+import unclearB from './Unclear.png';
+import clearB from './Clear.png';
+
+//For page when one joins a session
 class Join extends Component {
 
+    //Constructor for page
     constructor(props) {
         super(props);
-        // Initialize Firebase
-        var config = {
-            apiKey: "AIzaSyDSQVw9KUjmxhlxILCousROVR6PfOFcYQg",
-            authDomain: "speakeasy-25a66.firebaseapp.com",
-            databaseURL: "https://speakeasy-25a66.firebaseio.com",
-            projectId: "speakeasy-25a66",
-            storageBucket: "speakeasy-25a66.appspot.com",
-            messagingSenderId: "836790794762"
-        };
-        if (firebase.apps.length == 0){
-            firebase.initializeApp(config);
-        }
-        else{
-            firebase.app()
-        }
+
+		this.sessionAccessCode = props.code;
+		this.sessionID = props.session;
+		this.db = props.db;
+        this.sessionRef = this.db.database().ref("sessions").child(this.sessionID);
+
+		this.main = this.main.bind(this);
+		this.sendComment = this.sendComment.bind(this);
+
+		// Some states for display name and title of session
         this.state = {
-            message: ""
+            message: "",
+            display: "",
+			title: "untitled",
+            isActive: "Not Active"
+        }
+
+        var onTitleChange = (snapshot) => { this.setState({title: snapshot.val()}); }
+        var onActiveChange = (snapshot) => {
+            let isActive = snapshot.val() ? "Active" : "Not Active";
+            this.setState({'isActive': isActive});
+             //For Styling of the Status option
+             if (isActive === 'Active'){
+                //For changing the color of the Status option
+                document.getElementById('activity').style.color = 'chartreuse';
+             }
+             if(isActive === 'Not Active'){
+                //For changing the color of the Status option
+                document.getElementById('activity').style.color = 'red';
+
+             }
+
+        };
+
+        this.sessionRef.child('title').on('value', onTitleChange);
+        this.sessionRef.child('isActive').on('value', onActiveChange);
+
+        // Storing callbacks in order to stop listening for them when leaving session
+        this.callbacks = {
+            'title': onTitleChange,
+            'isActive': onActiveChange
         }
     }
 
+    //Displays correct display name one page is generated
     componentDidMount() {
-        return fetch('/api/hello')
-            .then((response) => response.json())
-            .then((responseJson) => {
-                this.setState({
-                    message: responseJson.message
-                });
-            })
+        getDisplayName().then(name =>{this.setState({display: name});});
     }
 
+    //Sends predefined feedback
+    sendPredef = function(comment, e){
+
+        e.preventDefault();
+        getIdToken().then(token =>{
+            sendFeedback(token, this.sessionID, comment, 0)
+			.then((message) => {
+                console.log("Message sent.")
+			})
+			.catch((error) => {
+                console.log(error);
+                console.log("Failed to send message.")
+			});
+        })
+    }
+
+    //Sends customized feedback comments
+    sendComment = function (e){
+
+		var session = this.sessionID;
+
+        e.preventDefault()
+        var comment = document.getElementById("comment").value;
+
+        if (comment === ""){
+
+        }
+        else {
+
+			getIdToken().then(token => {
+				sendFeedback(token, session, comment, 1)
+				.then((message) => {
+				    //For creation of customized feedback to appear in the customized feedback box
+					var mList = document.getElementById('messages');
+
+        		    var div1 = document.createElement('div');
+                    div1.classList.add('message')
+        		    var div2 = document.createElement('div');
+                    div2.classList.add('client')
+        		    var div3 = document.createElement('div');
+                    div3.classList.add('message-text');
+        		    var p = document.createElement('p');
+
+                    p.innerHTML = comment;
+                    console.log("sending comment" + comment);
+
+                    div3.appendChild(p);
+        		    div2.appendChild(div3);
+                    div1.appendChild(div2);
+        		    mList.appendChild(div1);
+
+        		    //From https://stackoverflow.com/questions/7303948/how-to-auto-scroll-to-end-of-div-when-data-is-added
+        		    mList.scrollTop = mList.scrollHeight;
+
+				}).catch((error) => {
+                    console.log(error);
+				});
+			});
+
+
+            document.getElementById("comment").value = ""
+
+        }
+
+    };
+
+    //Brings one back to the main page when one leaves a session
     main= function(ev){
 
         ev.preventDefault();
 
-        ReactDOM.render(<Main />, document.getElementById('root'));
+		getIdToken().then(token => {
+            let cb = this.callbacks;
+            for (var childName in cb) {
+                this.sessionRef.child(childName).off('value', cb[childName]);
+            }
+
+			leaveBackendSession(token, this.sessionID).then((message) => {
+    	        ReactDOM.render(<Main db={this.db}/>, document.getElementById('root'));
+			});
+		});
+
 
     }
 
+    //Html code is located here
     render() {
         return (
 
-            <div >
+            <div style={{height:'100%'}}>
+                {/*For necessary styling*/}
                 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"></link>
 
-                <div style={{height:'75px'}}>
-                    <div style={{backgroundColor:'CornFlowerBlue',height:"100%"}}>
+                {/*For top bar and logo*/}
+                <div style={{backgroundColor:'#333333',height:"100%"}}>
+                    <h2 style={{marginLeft:'8px',marginTop:'0px',marginBottom:'0px',height:'50px', color:'white'}}><b></b>
+                        <img src={logo} width="125" height="50" alt="SpeakEasy logo"/>
+                    </h2>
+                </div>
 
-                        <center>
-                            <h1 style={{marginLeft:'10px',marginTop:'0px',marginBottom:'1px',height:'35px',fontFamily:'cursive'}}><b>speakeasy</b>
+
+                {/*For side menu*/}
+                <div id='navigationJoin' class=" w3-sidebar w3-bar-block w3-responsive" style={{boxShadow:'1px 1px 2px #525252', float:'both',margin:'auto',height:'100%',backgroundColor:'#585858',zIndex:'0', color:'#F3E6DE'}}>
 
 
-                            </h1>
-                        </center>
+                    {/*For display name session title and access code*/}
+                    <a class="w3-bar-item HoverRed" style={{fontSize:'20px', outline:'2px solid #333333'}}><b>{this.state.display}</b></a>
 
+                    <div style={{padding:'10px',boxShadow:'1px 0px 1px#333333'}}>
+                    <p><b>Session Title:</b> {this.state.title}</p>
+                    <p><b>Session Code:</b> {this.sessionAccessCode}</p>
+                    <p id='activity' style={{color:'red'}}><b style={{color:'white'}}>Status:</b> {this.state.isActive}</p>
                     </div>
+                    <a class="w3-bar-item w3-button w3-hover-red" onClick={this.main} style={{boxShadow:'1px 0px 1px #333333'}}>Leave Session</a>
+
+
                 </div>
 
-                <div class="w3-sidebar w3-bar-block" style={{width:'20%',height:'100%',backgroundColor:'lightgrey',zIndex:'0',overflow:'hidden'}}>
-
-                    <a href="#" class="w3-bar-item" style={{backgroundColor:'aqua'}}>Michael Harasti</a>
-                    <a href="#" class="w3-bar-item w3-button" onClick={this.main} style={{backgroundColor:'lightgrey'}}>Leave Session</a>
-                    <a href="#" class="w3-bar-item w3-button" style={{backgroundColor:'lightgrey'}}>Share</a>
-                    <br></br>
-                    <br></br>
-                    <br></br>
-                    <br></br>
-                    <br></br>
-                    <br></br>
-                    <br></br>
-                    <br></br>
-                    <br></br>
-                </div>
+                {/*For main content such as the predefined feedback and customized feedback areas*/}
+                <div id='content' class='w3-responsive' style={{height:'100%',float:'right',width:'85%'}}>
 
 
+                    {/*For predefined feedback */}
+                    <div id='left' class= 'w3-responsive' style={{display:'inline-block', float:'left', width:'50%',height:'100%'}}>
 
 
-                <div style={{overflow:'hidden'}}>
-
-
-                    <div style={{borderRight:'6px solid black',float:'left',width:"45%", marginLeft:'330px',marginTop:'10px', height:'100%'}}>
+                        {/*For predefined feedback title*/}
                         <center>
-                            <p style={{width:'', overflow:'hidden'}}><h3><b>Give Predefined Feedback</b></h3></p>
+                            <p style={{marginTop:'1em', overflow:'hidden'}}><h3><b>Give Predefined Feedback</b></h3></p>
                         </center>
 
                         <center>
 
-                        <button class="w3-btn w3-large w3-round" style={{margin:'10px',backgroundColor:'palegreen'}}>Pace of Speech too Fast</button>
-                        <button class="w3-btn w3-large w3-round" style={{margin:'10px',backgroundColor:'palegreen'}}>Pace of Speech too Slow</button>
+                            {/*For predefined feedback buttons*/}
+                            <p>The speaker is too slow or too fast.</p>
+                            <button  onClick={(e) => this.sendPredef('slow', e)} class="predefined w3-button w3-round w3-hover-red" style={{backgroundColor:'#525252',color:'#f44336',width:'45px',height:'40px'}}><img src={slowB} height='40' width='40' alt="slow"></img> </button>
+                            <button  onClick={(e) => this.sendPredef('fast', e)} class="predefined w3-button w3-round w3-hover-red" style={{backgroundColor:'#525252',color:'#f44336',width:'45px',height:'40px'}}><img src={fastB} height="40" width="40" alt="fast"></img></button>
+
                             <br></br>
+
+                            <p>The speaker is too quiet or too loud.</p>
+                            <button  onClick={(e) => this.sendPredef('quiet', e)} class="predefined w3-button w3-round w3-hover-red" style={{backgroundColor:'#525252',color:'white',width:'45px',height:'40px'}}><img src={quietB} height='40' width='40' alt="quiet"></img> </button>
+                            <button  onClick={(e) => this.sendPredef('loud', e)} class="predefined w3-round w3-button w3-hover-red" style={{backgroundColor:'#525252',width:'45px',height:'40px',border:'none'}}><img src={loudB} height="40" width="40" alt="loud"></img></button>
+
                             <br></br>
-                            <br></br>
-                            <br></br>
-                            <br></br>
-                            <br></br>
-                        <button class="w3-btn w3-large w3-round" style={{margin:'10px',backgroundColor:'powderblue'}}>Speak Up</button>
-                        <button class="w3-btn w3-large w3-round" style={{margin:'10px',backgroundColor:'powderblue'}}>Too Loud</button>
-                            <br></br>
-                            <br></br>
-                            <br></br>
-                            <br></br>
-                            <br></br>
-                            <br></br>
-                        <button class="w3-btn w3-large w3-round" style={{margin:'10px',backgroundColor:'mediumorchid'}}>Talking too Fast</button>
-                        <button class="w3-btn w3-large w3-round" style={{margin:'10px',backgroundColor:'mediumorchid'}}>Talking too Slow</button>
+
+                            <p>The speaker is clear or unclear.</p>
+                            <button  onClick={(e) => this.sendPredef('unclear', e)} class="predefined w3-button w3-round w3-hover-red" style={{backgroundColor:'#525252',color:'white',width:'45px',height:'40px'}}><img src={unclearB} height='40' width='40' alt="unclear"></img> </button>
+                            <button  onClick={(e) => this.sendPredef('clear', e)} class="predefined w3-round w3-button w3-hover-red" style={{backgroundColor:'#525252',width:'45px',height:'40px',border:'none'}}><img src={clearB} height="40" width="40" alt="clear"></img></button>
 
                         </center>
+
 
 
                     </div>
 
-                    <div style={{backgroundColor:'',width:'25%',marginRight:'50px',marginTop:'10px',float:'right', height:'100%'}}>
-                        <center>
-                            <p style={{width:'',overflow:'hidden'}}><h3><b>Give Comments</b></h3></p>
-                        </center>
+                    {/*For customized feedback */}
+                    <div id='customized' class='w3-responsive' style={{marginTop:'1em' ,display:'inline-block', float:'right',width:'50%', height:'100%'}}>
 
+                        <center>
+
+
+                            {/*Where the customized feedback box will appear*/}
+                            {/*Html code template and some classes taken from the react-chat-widget plugin. You can see the source code for this here: https://github.com/Wolox/react-chat-widget*/}
+                        <div id = "comments"class="widget-container" ><div class="w3-responsive conversation-container">
+                            <div class="header w3-responsive">
+                                <h4 class="title">Give Customized Feedback</h4></div>
+                            <div id="messages" class="messages-container w3-responsive">
+
+                            </div>
+
+
+                            <form class="sender w3-responsive">
+
+                                <input id="comment" style={{display:'inline-block'}} class="new-message" name="message" placeholder="Type a message..." autocomplete="off"></input>
+
+
+                                <button id='post' type="submit" style={{display:'inline-block',margin:'5px 0'}} class="send" onClick={this.sendComment.bind(this)} >Post</button>
+                            </form>
+                        </div>
+                        </div>
+                            <br></br>
+
+                        </center>
 
 
                     </div>
@@ -139,5 +273,5 @@ class Join extends Component {
         );
     }
 }
-
+//So page can be used
 export default Join;

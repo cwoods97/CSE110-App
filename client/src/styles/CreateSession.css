@@ -1,0 +1,84 @@
+/*Defaulted in style*/
+.App {
+    text-align: center;
+}
+
+.App-logo {
+    animation: App-logo-spin infinite 20s linear;
+    height: 80px;
+}
+
+.App-header {
+    background-color: #222;
+    height: 150px;
+    padding: 20px;
+    color: white;
+}
+
+.App-title {
+    font-size: 1.5em;
+}
+
+.App-intro {
+    font-size: large;
+}
+
+@keyframes App-logo-spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+/*
+Gets rid of unwanted link underlines
+ */
+*{
+    text-decoration: none !important;
+
+}
+
+/*
+Screen responsiveness on the create session page
+ */
+@media screen and (max-width: 640px){
+
+    /*For the chart area */
+    #chart{
+
+        width:72% !important;
+    }
+    /*Sound container*/
+    .inner{
+        width:72% !important;
+
+    }
+    /*For the start stop buttons*/
+    #buttons{
+        display:block;
+
+    }
+    /*For the session code*/
+    #code{
+        font-size: 70% !important;
+
+    }
+
+}
+
+/*For the display of the session title*/
+#titleDisplay{
+    width: 80% !important;
+    /*
+    Source: https://css-tricks.com/snippets/css/prevent-long-urls-from-breaking-out-of-container/
+     */
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+
+
+}
+
+/*For the sound itself*/
+.sound-wave{
+    width:100% !important;
+    height: 60px !important;
+
+}
