@@ -16,7 +16,7 @@ import logo from './Logo.png';
 
 class AddUserManager {
     addUser(display, email, pwd) {
-        //Passing input to dispatch method which validates business logic (see lines 17-94 in './RegisterFirebaseUser.js')
+        //Passing input to dispatch method which validates business logic
         createAccount(display, email, pwd)
         .then(() => {
             //Only render user's main page when successfully logged in
@@ -34,30 +34,33 @@ class AddUserDispatch {
         this.addUserManager = new AddUserManager();
     }
 
-    addUser(display, email, pwd) {
+    addUser(displayName, email, pwd) {
         /* Posts a request to the backend to check if the display name is unique */
-        fetch('/api/account/verify', {
-            method: 'post',
-            body: JSON.stringify({
-                displayName: displayName
-            }),
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
-            }
-        }).then((response) => {
-            if (response.status === 200) {
-                return response.json();
-            } else if (response.status === 500) {
-                reject({ code: 'auth/backend-error'});
-            }
-        }).then((data) => {
-            if (data.isUnique) {
-                return this.addUserManager.addUser(display, email, pwd);
-            } else {
-                return { code: 'auth/name-already-in-use'};
-            }
-        }
+        return new Promise((resolve, reject) => {
+            fetch('/api/account/verify', {
+                method: 'post',
+                body: JSON.stringify({
+                    displayName: displayName
+                }),
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                }
+            }).then((response) => {
+                if (response.status === 200) {
+                    return response.json();
+                } else if (response.status === 500) {
+                    return {code: 'auth/backend-error'};
+                }
+            }).then((data) => {
+                if (data.isUnique) {
+                    resolve(this.addUserManager.addUser(displayName, email, pwd));
+                } else {
+                    var returnValue = {code: 'auth/name-already-in-use'};
+                    reject(returnValue);
+                }
+            })
+        })
     }
 }
 
@@ -82,32 +85,34 @@ class AddUserForm {
             document.getElementById('createBtn').disabled = true;
 
             /* No need for further processing of input data - Dispatch user data to the backend for further validation */
-            var error = this.addUserDispatch.addUser(display, email, pwd1);
+            this.addUserDispatch.addUser(display, email, pwd1)
+            .then(() => {})
+            .catch((error) => {
+                if (error) {
+                    //Enables the create button, allowing user to fix input and try again
+                    document.getElementById('createBtn').disabled = false;
 
-            if (error) {
-                //Enables the create button, allowing user to fix input and try again
-                document.getElementById('createBtn').disabled = false;
+                    var errorCode = error.code;
+                    const getById = document.getElementById.bind(document);
 
-                var errorCode = error.code;
-                const getById = document.getElementById.bind(document);
-
-                //Resets Variables
-                getById('displayNameError').innerHTML = '';
-                getById('emailError').innerHTML = '';
-                getById('pwdError').innerHTML = '';
-                if (errorCode === 'auth/invalid-name') {
-                    getById('displayNameError').innerHTML = "Please enter a valid display name";
+                    //Resets Variables
+                    getById('displayNameError').innerHTML = '';
+                    getById('emailError').innerHTML = '';
+                    getById('pwdError').innerHTML = '';
+                    if (errorCode === 'auth/invalid-name') {
+                        getById('displayNameError').innerHTML = "Please enter a valid display name";
+                    }
+                    if (errorCode === 'auth/name-already-in-use') {
+                        getById('displayNameError').innerHTML = "Display name is already in use";
+                    }
+                    if (errorCode === 'auth/email-already-in-use') {
+                        getById("emailError").innerHTML = "Email is already in use";
+                    }
+                    if (errorCode === 'auth/weak-password') {
+                        getById('pwdError').innerHTML = "Password must be at least 6 characters";
+                    }
                 }
-                if (errorCode === 'auth/name-already-in-use') {
-                    getById('displayNameError').innerHTML = "Display name is already in use";
-                }
-                if (errorCode === 'auth/email-already-in-use') {
-                    getById("emailError").innerHTML = "Email is already in use";
-                }
-                if (errorCode === 'auth/weak-password') {
-                    getById('pwdError').innerHTML = "Password must be at least 6 characters";
-                }
-            }
+            })
         } else {
             if (validations[0]) {
                 document.getElementById('emailError').innerHTML = "";
