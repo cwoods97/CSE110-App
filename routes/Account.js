@@ -1,6 +1,4 @@
-/*
-This file is contains the methods regarding manipulating accounts.
-*/
+/* This file is contains the methods regarding manipulating accounts. */
 
 var express = require('express');
 var router = express.Router();
@@ -8,12 +6,12 @@ var router = express.Router();
 const log = (message) => { console.log("[Account.js] " + message); }
 const NON_UNIQUE_DNAME = "Display name is not unique.";
 
-//This method creates an account using the given uid
+/* This method creates an account using the given uid */
 router.post('/createAccount', (req, res) => {
 	const uid = req.locals.uid;
 	const admin = req.locals.admin;
 
-	//creates the account with default values in the database
+	/* Creates the account with default values in the database */
 	admin.database().ref("users").child(uid).set({
 		hostedSessions: '',
 		joinedSessions: '',
@@ -27,19 +25,19 @@ router.post('/createAccount', (req, res) => {
 	});
 })
 
-//This method makes sure that the input displayName is unique
+/* This method makes sure that the input displayName is unique */
 router.post('/verify', (req, res) => {
 	var admin = req.locals.admin;
 	var displayName = req.locals.displayName;
 
-	//Checks that the input displayName is unique
+	/* Checks that the input displayName is unique */
 	var verifyDisplayNames = new Promise((resolve, reject) => {
 		function checkDisplayNames(nextPageToken) {
 			admin.auth().listUsers(1000, nextPageToken)
 			.then((listUsersResult) => {
 				var isUnique = true;
 				listUsersResult.users.forEach((userRecord) => {
-					// The provided display name is not unique
+					/* The provided display name is not unique */
 					if (userRecord.toJSON().displayName === displayName) {
 						isUnique = false;
 					}
@@ -48,7 +46,7 @@ router.post('/verify', (req, res) => {
 					log(displayName + " is already registered under a user account with Firebase.");
 					return reject(NON_UNIQUE_DNAME);
 				}
-				// Continue checking through next batch of users
+				/* Continue checking through next batch of users */
 				if (listUsersResult.pageToken) {
 					checkDisplayNames(listUsersResult.pageToken);
 				} else {
@@ -62,7 +60,7 @@ router.post('/verify', (req, res) => {
 		checkDisplayNames(undefined);
 	});
 
-	//returns the actual response whether the displayName is unique or not
+	/* Returns the actual response whether the displayName is unique or not */
 	verifyDisplayNames
 	.then(() => {
 		log(displayName + " is unique.");
@@ -78,12 +76,12 @@ router.post('/verify', (req, res) => {
 	})
 })
 
-//Gets the presented sessions of a user in order from newest to oldest
+/* Gets the presented sessions of a user in order from newest to oldest */
 router.post('/getPresentedSessions', (req, res) => {
 	const uid = req.locals.uid;
 	const admin = req.locals.admin;
 
-	var sessions = []; // The sessions of the user
+	var sessions = []; /* The sessions of the user */
 	admin.database().ref("users").child(uid).child("hostedSessions").once('value').then((presentedSessions) => {
 		var promises = [];
 
@@ -91,13 +89,13 @@ router.post('/getPresentedSessions', (req, res) => {
 		if (!presentedSessions) { return res.json([]) }
 
 		presentedSessions = Object.keys(presentedSessions);
-		//adds metadata of the sessions to the list sessions
+		/* Adds metadata of the sessions to the list sessions */
 		presentedSessions.forEach((sessionID) => {
 			promises.push(
 				new Promise((resolve, reject) => {
 					admin.database().ref("sessions/" + sessionID).once('value').then((sessionData) => {
 						admin.auth().getUser(uid).then((userRecord) => {
-							//adds the metadata to the sessions list
+							/* Adds the metadata to the sessions list */
 							sessions.push({
 								title: (sessionData.val().title ? sessionData.val().title : "UNTITLED"),
 								displayName: userRecord.displayName,
@@ -113,12 +111,12 @@ router.post('/getPresentedSessions', (req, res) => {
 		});
 
 		Promise.all(promises).then(() => {
-			//sorts the sessions by time
+			/* Sorts the sessions by time */
 			sessions = sessions.sort((session1,session2)=> {
 				
 				var a = session2.creationTime;
 				var b = session1.creationTime;
-				//a>b is true a<b is false
+				/* a>b is true a<b is false */
 				if(!a) {
 					return false;
 				}
@@ -190,12 +188,12 @@ router.post('/getPresentedSessions', (req, res) => {
 	}).catch((error) => console.log(error));
 })
 
-//Gets the joined sessions of a user in order from newest to oldest
+/* Gets the joined sessions of a user in order from newest to oldest */
 router.post('/getJoinedSessions', (req, res) => {
 	const uid = req.locals.uid;
 	const admin = req.locals.admin;
 
-	var sessions = []; //the list of joined sessions
+	var sessions = []; /* The list of joined sessions */
 	admin.database().ref("users").child(uid).child("joinedSessions").once('value').then((joinedSessions) => {
 		var promises = [];
 
@@ -204,7 +202,7 @@ router.post('/getJoinedSessions', (req, res) => {
 
 		joinedSessions = Object.keys(joinedSessions);
 		
-		//adds metadata of the sessions to the list sessions
+		/* Adds metadata of the sessions to the list sessions */
 		joinedSessions.forEach((sessionID) => {
 			promises.push(
 				new Promise((resolve, reject) => {
@@ -224,12 +222,12 @@ router.post('/getJoinedSessions', (req, res) => {
 		});
 
 		Promise.all(promises).then(() => {
-			//sorts the sessions by time
+			/* Sorts the sessions by time */
 			sessions = sessions.sort((session1,session2)=> {
 
 				var a = session2.creationTime;
 				var b = session1.creationTime;
-				//a>b is true a<b is false
+				/* a>b is true a<b is false */
 				if(!a) {
 					return false;
 				}

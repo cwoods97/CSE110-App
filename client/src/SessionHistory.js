@@ -1,3 +1,7 @@
+/*
+ * This file contains the class SessionHistory, which displays a page for reviewing past
+ * sessions, joined or created.
+ */
 //Necessary Imports
 import React, { Component } from 'react';
 import firebase from 'firebase';

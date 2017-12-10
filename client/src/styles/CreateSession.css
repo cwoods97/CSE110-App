@@ -1,3 +1,4 @@
+/*Defaulted in style*/
 .App {
     text-align: center;
 }
@@ -27,41 +28,35 @@
     to { transform: rotate(360deg); }
 }
 
-
+/*
+Gets rid of unwanted link underlines
+ */
 *{
     text-decoration: none !important;
 
 }
 
-
+/*
+Screen responsiveness on the create session page
+ */
 @media screen and (max-width: 640px){
-    #center {
 
-       width: 79% !important;
-
-    }
-    #navigation{
-        width: 21% !important;
-        font-size: 75%;
-    }
-
+    /*For the chart area */
     #chart{
 
         width:72% !important;
     }
-    #right{
-        font-size: 75%;
-        width:28% !important;
-    }
+    /*Sound container*/
     .inner{
         width:72% !important;
 
     }
-
+    /*For the start stop buttons*/
     #buttons{
         display:block;
 
     }
+    /*For the session code*/
     #code{
         font-size: 70% !important;
 
@@ -69,6 +64,7 @@
 
 }
 
+/*For the display of the session title*/
 #titleDisplay{
     width: 80% !important;
     /*
@@ -80,8 +76,7 @@
 
 }
 
-
-
+/*For the sound itself*/
 .sound-wave{
     width:100% !important;
     height: 60px !important;
