@@ -10,10 +10,15 @@ Developed with a growth mindset, we believe that there is always room for improv
 Computer with internet connection <br />
 Google Chrome
 
-# How To Run:
+# How To Install and Run:
 
-Navigate to www.speakeasy.ml in your browser <br />
-Login with a test account's credentials below <br />
+Clone the git repository https://github.com/cwoods97/CSE110-App.git <br />
+Navigate to the root directory of the repo and run ‘npm install’. <br />
+Run ‘npm start’ in the root directory. <br />
+Navigate into the client/ directory and run ‘npm install’. <br />
+Run ‘npm start’ in the client/ directory. <br />
+Navigate to localhost:3001 in your browser. (note it may take awhile to compile and start) <br />
+Login with a test account’s credentials below.
 
 # Test Account Credentials:
 Email: test2@test.edu, Password: test123 <br />
@@ -33,6 +38,10 @@ If you are not logged in, you will be redirected to the login page.
 
 Audio Playbar Bug: <br />
   On a review session page of a session with audio recording, when the user clicks the triangular play button, the audio starts playing back. However, the user won’t be able to change the current position on the timeline. This bug is due to the recorder not successfully storing the metadata of the recording. We are working to fix this bug.
+  
+Recording Indication Bar Bug: <br />
+  When a user creates a session, starts an audio recording, makes noise to make the recording indication bar move, stops the session while the indication bar is still moving which freezes the bar as is, ends the session, then creates a new session, the recording indication bar stays frozen from the previous session. This bug is related to resetting the bar’s state and re-rendering. We are working to fix this bug.
+
 
 # Features In-Progress:
 
