@@ -69,17 +69,6 @@ router.post('/verify', (req, res) => {
 	})
 })
 
-router.post('/updateDisplayName', (req, res) => {
-		const uid = req.locals.uid;
-		const admin = req.locals.admin;
-		const display = req.body.displayName;
-
-		const ref = admin.database().ref("users").child(uid);
-		ref.child('displayName').set(display);
-
-		res.json({success: true})
-});
-
 router.post('/getPresentedSessions', (req, res) => {
 	const uid = req.locals.uid;
 	const admin = req.locals.admin;
