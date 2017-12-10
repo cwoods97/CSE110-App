@@ -57,6 +57,7 @@ app.use(function(req, res, next) {
             next();
         } else {
             log("Authentication token not provided. Rejecting request.");
+            res.sendStatus(404);
         }
   	}
 });
