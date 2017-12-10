@@ -52,6 +52,8 @@ app.use(function(req, res, next) {
         if (req.path === "/api/account/verify" && req.body.displayName) {
             req.locals = { 'displayName': req.body.displayName, 'admin': admin };
             next();
+        } else if (!req.path.startsWith("/api")) {
+            next();
         } else {
             log("Authentication token not provided. Rejecting request.");
             res.sendStatus(404);
