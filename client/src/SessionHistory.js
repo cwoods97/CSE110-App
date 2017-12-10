@@ -5,7 +5,6 @@ import './styles/App.css';
 import './styles/SessionHistory.css';
 
 import Main from './Main';
-import AppFront from './App';
 import ReviewFeedback from './ReviewFeedback';
 
 import {getDisplayName} from './RegisterFirebaseUser.js';
