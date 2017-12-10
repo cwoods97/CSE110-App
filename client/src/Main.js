@@ -33,7 +33,7 @@ class App extends Component {
 
 	//sets display name when user is logged in after creating an account
 	componentWillReceiveProps(nextProps) {
-		this.setState({currentUser: nextProps.name});
+		if(nextProps.name) this.setState({currentUser: nextProps.name});
 	}
 
     //Logs one out and brings them to the front/login page
