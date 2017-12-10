@@ -139,75 +139,7 @@ router.post('/getJoinedSessions', (req, res) => {
 		});
 
 		Promise.all(promises).then(() => {
-			sessions = sessions.sort((session1,session2)=> {
-
-				var a = session2.creationTime;
-				var b = session1.creationTime;
-				//a>b is true a<b is false
-				if(!a) {
-					return false;
-				}
-				if(!b) {
-					return true;
-				}
-				var s1 = a.split("-");
-				var month1 = Number(s1[0]);
-				var date1 = Number(s1[1]);
-				var s2 = s1[2].split(" ");
-				var year1 = Number(s2[0]);
-				var s3 = s2[1].split(":");
-				var hours1 = Number(s3[0]);
-				var minutes1 = Number(s3[1]);
-				var seconds1 = Number(s3[2]);
-
-				s1 = b.split("-");
-				var month2 = Number(s1[0]);
-				var date2 = Number(s1[1]);
-				s2 = s1[2].split(" ");
-				var year2 = Number(s2[0]);
-				s3 = s2[1].split(":");
-				var hours2 = Number(s3[0]);
-				var minutes2 = Number(s3[1]);
-				var seconds2 = Number(s3[2]);
-
-				if(year1 > year2) {
-					return true;
-				}
-				else if(year1 < year2) {
-					return false;
-				}
-
-				if(month1 > month2) {
-					return true;
-				}
-				else if(month1 < month2) {
-					return false;
-				}
-
-				if(date1 > date2) {
-					return true;
-				}
-				else if(date1 < date2) {
-					return false;
-				}
-
-				if(hours1 > hours2) {
-					return true;
-				}
-				else if(hours1 < hours2) {
-					return false;
-				}
-
-				if(minutes1 > minutes2) {
-					return true;
-				}
-				else if(minutes1 < minutes2) {
-					return false;
-				}
-
-				return seconds1 > seconds2;
-
-			})
+			sessions = sessions.sort((x, y) => { x.id > y.id });
 			res.json(sessions);
 		});
 	}).catch((error) => console.log(error));
