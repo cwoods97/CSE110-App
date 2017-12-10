@@ -7,8 +7,7 @@ Developed with a growth mindset, we believe that there is always room for improv
 
 # Requirements:
 
-Computer with internet connection
-Google Chrome
+Computer with internet connection. Google Chrome.
 
 # How To Run:
 
@@ -16,30 +15,22 @@ Navigate to www.speakeasy.ml in your browser
 Login with test account credentials below.
 
 # Test Account Credentials:
-# Email                         Password
-
-test@test.edu                 test123
-test2@test.edu                test123
-teamSMHTest@gmail.com         test123456
+Email: test@test.edu, Password: test123
+Email: test2@test.edu, Password: test123
+Email: teamSMHTest@gmail.com, Password: test123456
 
 # Google Account Credentials:
 
-Email: teamSMHTest@gmail.com
-Password: test123456
+Email: teamSMHTest@gmail.com, Password: test123456
 
 # Restart Application (in case it crashes):
 
-Refresh your browser.
-If you are logged in, you will be redirected to the main page of the app with the options to create or join a session.
-If you are not logged in, you will be redirected to the login page.
+Refresh your browser. If you are logged in, you will be redirected to the main page of the app with the options to create or join a session. If you are not logged in, you will be redirected to the login page.
 
 # Known Bugs:
 
-Audio Playbar Bug:
-On a review session page of a session with audio recording, when the user clicks the triangular play button, the audio starts playing back. However, the user won’t be able to change the current position on the timeline.
-This bug is due to the recorder not successfully storing the metadata of the recording. We are working to fix this bug.
+Audio Playbar Bug: On a review session page of a session with audio recording, when the user clicks the triangular play button, the audio starts playing back. However, the user won’t be able to change the current position on the timeline. This bug is due to the recorder not successfully storing the metadata of the recording. We are working to fix this bug.
 
 # Features In-Progress:
 
-Reviewing Predefined Feedback without Audio:
-On a review session page of a session without an audio recording, the user cannot review the predefined feedback. The user can review the customized feedback.
+Reviewing Predefined Feedback without Audio: On a review session page of a session without an audio recording, the user cannot review the predefined feedback. The user can review the customized feedback.
