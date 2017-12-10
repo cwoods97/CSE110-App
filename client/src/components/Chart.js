@@ -1,9 +1,17 @@
+/*
+ * Before using this file, type
+ * 'npm install react-chartjs-2 chart.js --save'
+ *
+ * Pass in various props (listed in the constructor) to the <Chart /> tag to
+ * edit certain aspects of the chart.
+ */
+
 import React, {Component} from 'react';
 import {Bar} from 'react-chartjs-2';
 
  /*
-     * Function to decide color of bar based on type
-     */
+ * Function to decide color of bar based on type
+ */
 function backgroundColors(type) {
         if (type === 1) {
             return ['rgba(255, 99, 132, 0.2)',
@@ -33,6 +41,9 @@ function borderColors(type) {
         }
     }
 
+/*
+ * The first chart represents whether the speaker is going too fast or too slow
+ */
 var chart1 = {
     labels: ['Slow', 'Fast'],
     datasets: [{
@@ -43,7 +54,9 @@ var chart1 = {
         borderWidth: 1
     }]
 }
-
+/*
+ * The second chart represents whether the speaker is talking too loud or quiet
+ */
 var chart2 = {
     labels: ['Quiet', 'Loud'],
     datasets: [{
@@ -54,7 +67,9 @@ var chart2 = {
         borderWidth: 1
     }]
 }
-
+/*
+ * The third chart represents whether the speaker is being clear or unclear
+ */
 var chart3 = {
     labels: ['Unclear', 'Clear'],
     datasets: [{
@@ -71,6 +86,7 @@ class Chart extends Component {
     constructor(props) {
         super(props);
 
+		// initializes the chart with the specific type (pace, volume, or clarity)
         this.db = props.db;
         this.sessionID = props.sessionID;
         this.type = props.type;
@@ -101,8 +117,11 @@ class Chart extends Component {
         }
 
         var feedbackRef = this.db.database().ref("feedback").child(this.sessionID);
+		//updates the graph whenever we get a new feedback in the database
         feedbackRef.on("child_added", function(snapshot, prevChildKey){
             var parsedFeedback = snapshot.val();
+			
+			//updates the graph based on the type of feedback/type of graph
             if(type === 'pace'){
                 if(parsedFeedback.type === 0){
                     if(parsedFeedback.message === "slow"){
@@ -152,11 +171,13 @@ class Chart extends Component {
         }.bind(this));
     }
 
+    //expires the given feedback type by reducing the count
     expireFeedback(feedbackType) {
         var chartData1 = this.state.chartData1;
         var chartData2 = this.state.chartData2;
         var chartData3 = this.state.chartData3;
 
+		//reduces the correct count, depending on the chart type
         switch (feedbackType) {
             case 1:
                 if (chartData1.datasets[0].data[0] !== 0) {
@@ -204,6 +225,7 @@ class Chart extends Component {
         return (
             <Bar
                 data={this.chartData}
+				//default chart characteristics
                 options={{
                     title: {
                         display: true,
@@ -212,7 +234,7 @@ class Chart extends Component {
                     },
                     legend: {
                         display: false
-                    },
+                        },
                     scales: {
                         xAxes: [{
                             display: true,
