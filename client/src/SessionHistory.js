@@ -131,9 +131,9 @@ class SessionHistory extends Component {
 
     //Renders ReviewFeedback page for the specific session that the user has
     //selected (via the onClick event handler)
-    renderSession = (sessionID) => {
+    renderSession = (sessionID, hasAudio) => {
         ReactDOM.render(
-            <ReviewFeedback db={this.db} sessionid={sessionID} />,
+            <ReviewFeedback db={this.db} hasaudio={hasAudio} sessionid={sessionID} />,
             document.getElementById('root')
         );
     }
@@ -184,7 +184,7 @@ class SessionHistory extends Component {
                         /* Automatically populated when backend returns the model data for the user's created sessions */
                         this.state.presentedSessions.map((sessionData) => (
                             /*Specific format for created session info that can be shown on the page*/
-                            <div class='sessions' sessionid={sessionData.id} onClick={(e) => this.renderSession(sessionData.id)} style={{cursor:'pointer'}}>
+                            <div class='sessions' sessionid={sessionData.id} onClick={(e) => this.renderSession(sessionData.id, sessionData.hasAudio)} style={{cursor:'pointer'}}>
 
                                 <center>
                                     <div style={{marginLeft:'5px'}}>

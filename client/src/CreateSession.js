@@ -38,11 +38,17 @@ class CreateSession extends Component {
             display: "",
             coder: props.code,
             title: "Untitled",
-            isActive: "Not Active"
+            isActive: "Not Active",
+            activeColor: 'red'
         };
 
         let onActiveChange = (snapshot) => {
-            this.setState({'isActive': snapshot.val() ? "Active" : "Not Active"});
+            let isActive = snapshot.val() ? "Active" : "Not Active";
+            let activeColor = snapshot.val() ? 'chartreuse' : 'red';
+            this.setState({
+                'isActive': isActive,
+                'activeColor': activeColor
+            });
         };
         let sessionRef = this.db.database().ref("sessions").child(this.sessionID);
         sessionRef.child('isActive').on('value', onActiveChange);
@@ -51,13 +57,18 @@ class CreateSession extends Component {
     //Display the right display name when the page generates
     componentDidMount() {
         getDisplayName().then((name) => { this.setState({display: name}) });
-        document.getElementById('activity').style.color =
-            this.state.isActive === 'Not Active' ? 'chartreuse' : 'red';
+    }
+
+    componentWillUnmount() {
+        let chartData = ['0','0','0','0','0','0'];
+        this.pChart.setGraph(chartData);
+        this.vChart.setGraph(chartData);
+        this.cChart.setGraph(chartData);
     }
 
     //For when one starts a recording
     startRecording = () => {
-				var type = false;
+		var type = false;
 
         getIdToken().then(token => {
 			toggleActive(token, this.state.coder);
@@ -70,19 +81,16 @@ class CreateSession extends Component {
 
 		//For audio
         if (this.state.audio) {
-
             this.setState({
                 record: true
             });
 
-						type = true;
+			type = true;
         }
 
         //For disabling buttons once session starts so workflow is not interrupted
         document.getElementById('nAudio').disabled = true;
         document.getElementById('audio').disabled = true;
-
-
 
 		getIdToken().then(token => {
 			setStartTime(token, this.sessionID, type);
@@ -100,9 +108,6 @@ class CreateSession extends Component {
             started: false,
             end: true
         });
-        //For changing the color of the Status option
-        document.getElementById('activity').style.color = 'red';
-
     };
 
     //Saves the actual audio recording away if session was created with audio
@@ -225,7 +230,7 @@ class CreateSession extends Component {
                     <div style={{padding:'10px',boxShadow:'1px 0px 1px#333333'}}>
                     <p id='code' style={{fontFamily:'Poppins, sans-serif'}}><b>Session Code:</b> {this.state.coder}</p>
 
-                    <p id='activity' style={{color:'red'}}><b style={{color:'white'}}>Status:</b> {this.state.isActive}</p>
+                    <p id='activity' style={{color: this.state.activeColor}}><b style={{color:'white'}}>Status:</b> {this.state.isActive}</p>
                     {/*Audio/No Audio options and starting/stopping*/}
                     <form action="">
                         <input id='nAudio' onClick={this.noAudio} type="radio" name="audioOff" value="noaudio" defaultChecked={true} style={{marginRight:'8px',fontFamily:'Poppins, sans-serif'}}></input>No Audio<br></br>
@@ -263,15 +268,15 @@ class CreateSession extends Component {
                     {/*Chart area*/}
                     <div id= 'chart' style={{left:'15%',width:'100%',height:'30em'}}>
                         <div class='chart' style={{width:'33%',display:'inline-block',height:'100%'}}>
-                            <Chart db={this.db} sessionID={this.sessionID} type='pace'/>
+                            <Chart ref={(chart) => {this.pChart = chart}} db={this.db} sessionID={this.sessionID} type='pace'/>
                         </div>
 
                         <div class="chart"style={{width:'33%',display:'inline-block',height:'100%'}}>
-                           <Chart db={this.db} sessionID={this.sessionID} type='volume'/>
+                           <Chart ref={(chart) => {this.vChart = chart}} db={this.db} sessionID={this.sessionID} type='volume'/>
                         </div>
 
                         <div class = 'chart' style={{width:'33%',display:'inline-block',height:'100%'}}>
-                            <Chart db={this.db} sessionID={this.sessionID} type='clarity'/>
+                            <Chart ref={(chart) => {this.cChart = chart}} db={this.db} sessionID={this.sessionID} type='clarity'/>
                         </div>
                     </div>
                 </div>

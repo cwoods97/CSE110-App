@@ -27,7 +27,7 @@ class ReviewFeedback extends Component {
 
         this.db = props.db;
         this.sessionID = props.sessionid;
-        console.log("Session ID", this.sessionID)
+        this.hasaudio = props.hasaudio;
 
         //States used to access types of feedback and audio where applicable
         //Also allows access to display name
@@ -41,7 +41,7 @@ class ReviewFeedback extends Component {
     }
 
     componentWillMount() {
-		
+
 		//posts a request to backend for getting the feedbacks (predefined and custom)
         this.db.auth().currentUser.getIdToken().then((token) => {
             fetch("/api/sessionReview/sessionData", {
@@ -57,14 +57,12 @@ class ReviewFeedback extends Component {
             })
             .then(response => response.json())
             .then((data) => {
-                console.log(data.customFeedback)
                 this.setState({
                     'predefinedFeedback' : data.predefinedFeedback ? data.predefinedFeedback : [],
                     'customFeedback': data.customFeedback ? data.customFeedback : []
                 })
             })
         })
-
 
     }
 
@@ -73,7 +71,6 @@ class ReviewFeedback extends Component {
 
         ev.preventDefault();
         ReactDOM.render(<Main db={this.db} />, document.getElementById('root'));
-
 
     }
 
@@ -86,12 +83,13 @@ class ReviewFeedback extends Component {
         var childURL = this.sessionID + "/media";
 
 		//Gets the audio if exists
-        gsReference.child(childURL).getDownloadURL().then(function(url){
-            console.log(url);
-            this.setState({'src': url});
-        }.bind(this)).catch(function(error){
-            console.log(error);
-        });
+        if (this.hasaudio) {
+            gsReference.child(childURL).getDownloadURL().then(function(url){
+                this.setState({'src': url});
+            }.bind(this)).catch(function(error){
+                console.log(error);
+            });
+        }
 
 		//Sets up the review charts
         this.pChart = document.getElementById('pChart');
@@ -99,9 +97,10 @@ class ReviewFeedback extends Component {
         this.cChart = document.getElementById('cChart');
 
         this.audio = document.getElementById('audio');
+        this.chartData = ['0','0','0','0','0','0'];
 
 		//updates the chart
-        setInterval(() => {
+        this.clock = setInterval(() => {
 			var feedbackArray = this.state.predefinedFeedback;
 			var returnArray = ['0','0','0','0','0','0'];
 			for (var i = 0; i < feedbackArray.length; i++) {
@@ -126,12 +125,24 @@ class ReviewFeedback extends Component {
 					}
 				}
 			}
-			this.pChart.setGraph(returnArray);
-			this.vChart.setGraph(returnArray);
-			this.cChart.setGraph(returnArray);
-			
-            
+            if (this.chartData.toString() !== returnArray.toString()) {
+                this.chartData = returnArray;
+
+    			this.pChart.setGraph(returnArray);
+    			this.vChart.setGraph(returnArray);
+    			this.cChart.setGraph(returnArray);
+            }
+
         }, 200)
+    }
+
+    componentWillUnmount() {
+        let chartData = ['0','0','0','0','0','0'];
+        this.pChart.setGraph(chartData);
+        this.vChart.setGraph(chartData);
+        this.cChart.setGraph(chartData);
+
+        clearInterval(this.clock);
     }
 
     //Allows one to go back to the session history page
@@ -234,12 +245,7 @@ class ReviewFeedback extends Component {
                                 ))
 
                             }
-
                     </div>
-
-
-
-
                 </div>
 
 
