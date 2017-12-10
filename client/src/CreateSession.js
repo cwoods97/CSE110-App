@@ -263,7 +263,7 @@ class CreateSession extends Component {
                 {/*For main content of page, such as charts and audio wave bar that moves in response to one speaking*/}
                 <div id="center" style={{width:'85%',float:'right',height:'100%'}}>
                     {/*Audio bar area*/}
-                    <div class= 'inner' style={{width:'100%',display:'inline-block'}}>
+                    <div class= 'inner' style={{width:'100%',display:'inline-block',backgroundColor:'#F3E6DE',paddingTop:'17px'}}>
                         <ReactMic
                             record={this.state.record}
                             className="sound-wave"
