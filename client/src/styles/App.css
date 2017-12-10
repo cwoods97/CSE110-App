@@ -1,3 +1,7 @@
+/*
+Below was defaulted in styling
+*/
+
 html {
   background-color: #F3E6DE;
 }
@@ -31,18 +35,17 @@ html {
   to { transform: rotate(360deg); }
 }
 
-.header{
-  background-color:#665084 !important;
-
-
-}
-
+/*
+To get rid of default underlines under links
+*/
 a{
   text-decoration: none;
 
 }
 
-
+/*
+For input styling
+ */
 input[type="text"], input[type="password"], input[type="input"] {
     width: 100% !important;
     margin: 8px 0 !important;
@@ -55,7 +58,7 @@ input[type="text"], input[type="password"], input[type="input"] {
 }
 
 
-Join input[type="text"]{
+input[type="text"]{
     width: 100% !important;
     margin: 8px 0 !important;
     box-sizing: border-box !important;
@@ -66,7 +69,9 @@ Join input[type="text"]{
     outline: none !important;
 }
 
-
+/*
+More input box styling
+ */
 input[type="input"] {
     width: 100% !important;
     margin: 8px 0 !important;
@@ -86,40 +91,33 @@ input[type="submit"] {
     outline: none !important;
 }
 
+/*
+Styling for when input boxes are focused
+ */
 input[type="text"]:focus, input[type="password"]:focus, input[type="input"]:focus {
     border: 3px solid #f3e6de !important;
 }
 
-@media screen and (max-width: 800px){
-  #comments {
 
-
-  }
-}
-
+/*
+To overwrite w3 built in styling
+ */
 .w3-sidebar{
   width: 15% !important;
 }
 
-.sound-wave{
-  width:100% !important;
-  height: 60px !important;
-
-}
-
-
+/*
+Responsiveness for Login Page
+ */
 @media screen and (max-width: 1000px) {
+
+  /*Login page main container*/
   #startpage {
     display: block !important;
     position: relative !important;
   }
 
-  #infocontainer {
-    width: 100% !important;
-    position: absolute !important;
-    z-index: 0 !important;
-  }
-
+  /*Login page credential container*/
   #startcontainer {
     position: absolute !important;
     z-index: 1 !important;
@@ -130,16 +128,21 @@ input[type="text"]:focus, input[type="password"]:focus, input[type="input"]:focu
     position: relative !important;
   }
 
+  /*The form on the login page*/
   #startform{
     min-width: 60% !important;
   }
 
+  /*For the text of the page description on the login page*/
   #infoheader {
     font-size: 150% !important;
   }
 
 }
 
+/*
+For when certain objects are hovered over
+ */
 .HoverRed:hover {
   color: #f44336;
 }
@@ -147,8 +150,6 @@ input[type="text"]:focus, input[type="password"]:focus, input[type="input"]:focu
 /*
 For About.js
  */
-
-
 @media screen and (max-width: 600px) {
     #AboutText {
 

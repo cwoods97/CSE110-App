@@ -1,3 +1,4 @@
+/*Default Styling*/
 .App {
     text-align: center;
 }
@@ -27,17 +28,21 @@
     from { transform: rotate(0deg); }
     to { transform: rotate(360deg); }
 }
+
+/*For comments area*/
 #comments{
     border-radius: 10px !important;
     position:static;
 }
 
+/*Commenting header*/
 .header{
     background-color:#333333 !important;
 
 
 }
 
+/*For images on the page*/
 img{
 
     margin:0 !important;
@@ -45,17 +50,22 @@ img{
 
 }
 
-
+/*To get rid of link underlines*/
 *{
     text-decoration: none !important;
 
 }
+
+/*
+For the plugin
+ */
 .widget-container{
     z-index: 0 !important;
     margin: 0 !important;
 
 }
 
+/*For predefined buttons*/
 .predefined{
 
     padding: 0 !important;
@@ -63,29 +73,35 @@ img{
 
 }
 
-
+/*For smaller screens on the join session page*/
 @media screen and (max-width: 800px){
+
+    /*For the customized feedback container*/
     #customized {
 
         width: 100% !important;
         height: 100% !important;
 
     }
+    /*For comments area*/
     #comments{
 
         height: 100% !important;
         width: 100% !important;
 
     }
+    /*For container carrying predefined feedback*/
     #left{
         width:100% !important;
 
 
     }
+    /*For the messages in the message box*/
     #messages{
         height: 50vh;
 
     }
+    /*For the header in the customized feedback area*/
     .header{
         font-size: 70%;
 
@@ -95,6 +111,7 @@ img{
 
 }
 
+/*More specified smaller screen sctyling*/
 @media screen and (max-width: 600px) {
 
     #navigationJoin{
@@ -115,30 +132,33 @@ img{
 
 
 }
-#mainTitle{
-    font-family: cursive, sans-serif !important;
 
-}
+/*Universal font styling*/
 *{
     font-family: Poppins, sans-serif;
 
 }
 
 
-
+/*To overwrite w3 defaults*/
 .w3-sidebar{
     width: 15% !important;
 }
 
+/*Customized feedback input box*/
 .new-message{
     width: 80% !important;
     float: left !important;
 
 }
+
+/*For post button*/
 #post{
     float: right !important;
 
 }
+
+/*For containers of customized feedback text*/
 .message-text,.client{
 
     background-color: #585858 !important;

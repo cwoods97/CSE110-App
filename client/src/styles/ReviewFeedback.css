@@ -1,5 +1,5 @@
 
-
+/*For the customized feedback message text*/
 .reviewContent{
 
     display:block;
@@ -7,6 +7,7 @@
 
 }
 
+/*For the container of the customized feedback to be reviewed*/
 .reviewContainer{
 
 
@@ -24,6 +25,7 @@
 
 }
 
+/*Smaller screen styling for the reviewing customized feedback container*/
 @media screen and (max-width: 700px) {
     .reviewContainer{
 
@@ -31,38 +33,38 @@
     }
 
 }
-@media screen and (max-width: 600px) {
-    .reviewContainer{
-
-        font-size: 70%;
-    }
-
-}
+/*Smaller screen styling for multiple elements*/
 @media screen and (max-width: 650px) {
 
+    /*For reviewing customized feedback messages*/
     .reviewContent{
         float:left;
 
     }
+    /*For the review customized feedback container */
     .reviewContainer{
 
         font-size: 70%;
     }
 
+    /*For audio*/
     #innerReview{
         width: 100% !important;
     }
 
+    /*For customized feedback outer container*/
     #rightReview{
 
         border: 1px solid #665084 !important;
         width: 100% !important;
     }
+    /*For charts*/
     #chartReview{
 
         width: 100% !important;
 
     }
+    /*For container of "Feedback" text*/
     #titleReview{
         width:100% !important;
     }
@@ -70,7 +72,7 @@
 }
 
 
-
+/*Overwrites default w3 values*/
 .w3-sidebar{
     width: 15% !important;
 }
